@@ -1,0 +1,39 @@
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.navbar {
+  width: 100%;
+  margin-bottom: 20px;
+  clear: left;
+}
+
+#logo {
+  float: left;
+}
+
+/* Changes the banner text (to the right of the logo) so it is inline with the logo */
+.banner-text {
+  text-align: right;
+  padding-top: 2%;
+}
+
+/* For the login page */
+.centered {
+  position: fixed;
+  min-width: 500px;
+  min-height: 500px;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
+.logout {
+  margin-top: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 10px;
+}

@@ -30,7 +30,7 @@ pipeline {
       steps {
         colourText("info","Running build ${env.BUILD_ID} on ${env.JENKINS_URL}...")
         checkout scm
-        stash name: 'app'
+        //stash name: 'app'
       }
     }
     stage('Install Dependancies') {
@@ -40,6 +40,7 @@ pipeline {
               npm --version'''
         colourText("info","Running NPM install...")
         sh 'npm install'
+        //stash name: 'test'
       }
     }
     stage('Test - Unit Tests') {
@@ -53,23 +54,30 @@ pipeline {
      agent { label 'adrianharristesting' }
       steps {
         colourText("info","Running server tests...")
-        sh 'node_modules/mocha/bin/mocha test/server.test.js'
+        //sh 'node_modules/mocha/bin/mocha test/server.test.js'
       }
     }
     stage('Build') {
       agent { label 'adrianharristesting' }
       steps {
-        sh '''npm run build
-              ls -la
-              tar -zcvf sbr-ui.tar.gz build/
-              ls -la'''
+        echo '...'
+        //sh '''npm run build
+        //      ls -la
+        //      tar -czvf sbr-ui.tar.gz -C build .
+        //      ls -la'''
+        //stash includes: '*.tar.gz', name: 'test'
       }
     }
     stage('Deploy - Dev') {
-      agent { label 'adrianharristesting' }
+      agent any
       steps {
+        //unstash 'test'
+        sh 'ls -la'
+        sh 'zip -r test-zip.zip build'
+        //sh 'tar -ztvf sbr-ui.tar.gz'
+        sh 'ls -la'
         colourText("info","Deploying to DEV...")
-        deployToCloudFoundry('cloud-foundry-sbr-dev-user','sbr','dev','dev-sbr-ui','sbr-ui.tar.gz','manifest.yml')
+        deployToCloudFoundry('cloud-foundry-sbr-dev-user','sbr','dev','dev-sbr-ui','test-zip.zip','manifest.yml')
       }
     }
     stage('Test - Integration') {

@@ -21,6 +21,9 @@ pipeline {
   options {
     skipDefaultCheckout()
   }
+  triggers {
+    pollSCM('*/5 * * * *') // pollSCM every 5 minutes
+  }
   stages {
     stage('Checkout') {
       agent any
@@ -60,14 +63,13 @@ pipeline {
               ls -la
               tar -zcvf sbr-ui.tar.gz build/
               ls -la'''
-        //sh 'zip -r sbr-ui.zip build/'
       }
     }
     stage('Deploy - Dev') {
       agent { label 'adrianharristesting' }
       steps {
         colourText("info","Deploying to DEV...")
-        deployToCloudFoundry('cloud-foundry-dev-user','sbr','dev','dev-sbr-ui-pipeline','sbr-ui.tar.gz','manifest.yml')
+        deployToCloudFoundry('cloud-foundry-sbr-dev-user','sbr','dev','dev-sbr-ui','sbr-ui.tar.gz','manifest.yml')
       }
     }
     stage('Test - Integration') {

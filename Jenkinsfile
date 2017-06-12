@@ -11,6 +11,10 @@
 * Only the master can check out the code as the 'adrianharristesting'
 * node is not behind the Artifactory proxy.
 *
+* The unit tests and server tests run before deployment, then once the app
+* has been deployed to CloudFoundry (Dev), the Selenium tests will run against
+* the deployed app. If these pass, it will be deployed to Test.
+*
 */
 pipeline {
   agent none
@@ -18,10 +22,10 @@ pipeline {
     skipDefaultCheckout()
   }
   stages {
-    stage('Information') {
+    stage('Checkout') {
       agent any
       steps {
-        colourText("info","Running build ${env.BUILD_ID} on ${env.JENKINS_URL}")
+        colourText("info","Running build ${env.BUILD_ID} on ${env.JENKINS_URL}...")
         checkout scm
         stash name: 'app'
       }
@@ -31,55 +35,49 @@ pipeline {
       steps {
         unstash 'app'
         sh '''node --version
-              npm --version
-              rm -rf node_modules'''
-        echo 'Running npm install...'
+              npm --version'''
+        colourText("info","Running NPM install...")
         sh 'npm install'
-      }
-    }
-    stage('Test - Server') {
-     agent { label 'adrianharristesting' }
-      steps {
-        unstash 'app'
-        echo 'Running server tests...'
-        sh 'node_modules/mocha/bin/mocha test/server.test.js'
-      }
-    }
-    stage('Test - Integration') {
-      agent { label 'adrianharristesting' }
-      steps {
-        unstash 'app'
-        // sh 'rm -rf chromedriver'
-        echo 'Running integration tests...'
-        //sh 'node_modules/.bin/jasmine test/integration-test.js'
       }
     }
     stage('Test - Unit Tests') {
       agent { label 'adrianharristesting' }
       steps {
-        unstash 'app'
-        echo 'Running unit tests...'
+        colourText("info","Running unit tests...")
         echo 'STUB: this will be completed once feature/utils-testing is merged into test/deploy'
+      }
+    }
+    stage('Test - Server') {
+     agent { label 'adrianharristesting' }
+      steps {
+        colourText("info","Running server tests...")
+        sh 'node_modules/mocha/bin/mocha test/server.test.js'
       }
     }
     stage('Deploy - Dev') {
       agent any
       steps {
-        unstash 'app'
-        echo 'CF push'
+        colourText("info","Deploying to DEV...")
+      }
+    }
+    stage('Test - Integration') {
+      agent { label 'adrianharristesting' }
+      steps {
+        // sh 'rm -rf chromedriver'
+        colourText("info","Running Selenium Integration tests against deployed DEV app...")
+        //sh 'UI_URL=http://localhost:3000 node_modules/.bin/jasmine test/integration-test.js'
+        //sh 'node_modules/.bin/jasmine test/integration-test.js'
       }
     }
     stage('Deploy - Test') {
       agent any
       steps {
-        unstash 'app'
-        echo 'CF push'
+        colourText("info","Deploying to TEST...")
       }
     }
     stage('Promote to Beta') {
       agent any
       steps {
-        unstash 'app'
         timeout(time: 1, unit: 'MINUTES') {
           input 'Deploy to Beta?'
         }
@@ -88,24 +86,7 @@ pipeline {
     stage('Deploy - Beta') {
       agent any
       steps {
-        unstash 'app'
-        echo 'Deploying to Beta...'
-      }
-    }
-    stage('Promote to Production?') {
-      agent any
-      steps {
-        unstash 'app'
-        timeout(time: 1, unit: 'MINUTES') {
-          input 'Deploy to Production?'
-        }
-      }
-    }
-    stage('Deploy - Production') {
-      agent any
-      steps {
-        unstash 'app'
-        echo 'Deploying to Production...'
+        colourText("info","Deploying to BETA...")
       }
     }
   }

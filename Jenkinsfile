@@ -30,10 +30,9 @@ pipeline {
         stash name: 'app'
       }
     }
-    stage('Build') {
+    stage('Install Dependancies') {
       agent { label 'adrianharristesting' }
       steps {
-        unstash 'app'
         sh '''node --version
               npm --version'''
         colourText("info","Running NPM install...")
@@ -54,10 +53,21 @@ pipeline {
         sh 'node_modules/mocha/bin/mocha test/server.test.js'
       }
     }
+    stage('Build') {
+      agent { label 'adrianharristesting' }
+      steps {
+        sh '''npm run build
+              ls -la
+              tar -zcvf sbr-ui.tar.gz build/
+              ls -la'''
+        //sh 'zip -r sbr-ui.zip build/'
+      }
+    }
     stage('Deploy - Dev') {
-      agent any
+      agent { label 'adrianharristesting' }
       steps {
         colourText("info","Deploying to DEV...")
+        deployToCloudFoundry('cloud-foundry-dev-user','sbr','dev','dev-sbr-ui-pipeline','sbr-ui.tar.gz','manifest.yml')
       }
     }
     stage('Test - Integration') {

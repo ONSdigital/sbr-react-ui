@@ -51,37 +51,39 @@ pipeline {
       }
     }
     stage('Test - Server') {
-     agent { label 'adrianharristesting' }
+      agent { label 'adrianharristesting' }
       steps {
         colourText("info","Running server tests...")
-        //sh 'node_modules/mocha/bin/mocha test/server.test.js'
+        sh 'node_modules/mocha/bin/mocha test/server.test.js'
       }
     }
     stage('Build') {
       agent { label 'adrianharristesting' }
       steps {
         echo '...'
-        //sh '''npm run build
-        //      ls -la
-        //      tar -czvf sbr-ui.tar.gz -C build .
-        //      ls -la'''
-        //stash includes: '*.tar.gz', name: 'test'
+        // zip -g sbr-ui.zip build
+        sh '''npm run build
+              ls -la
+              tar -czvf sbr-ui.tar.gz -C build .
+              ls -la'''
+        stash includes: '*.tar.gz', name: 'test'
       }
     }
     stage('Deploy - Dev') {
       agent any
       steps {
-        //unstash 'test'
+        unstash 'test'
         sh 'ls -la'
-        sh 'zip -r test-zip.zip build'
+        //sh 'zip -r test-zip.zip build'
         //sh 'tar -ztvf sbr-ui.tar.gz'
-        sh 'ls -la'
+        //sh 'ls -la'
         colourText("info","Deploying to DEV...")
-        deployToCloudFoundry('cloud-foundry-sbr-dev-user','sbr','dev','dev-sbr-ui','test-zip.zip','manifest.yml')
+        sh 'cf buildpacks'
+        deployToCloudFoundry('cloud-foundry-sbr-dev-user','sbr','dev','dev-sbr-ui','sbr-ui.tar.gz','manifest.yml')
       }
     }
     stage('Test - Integration') {
-      agent { label 'adrianharristesting' }
+      agent { label 'r-slave' }
       steps {
         // sh 'rm -rf chromedriver'
         colourText("info","Running Selenium Integration tests against deployed DEV app...")

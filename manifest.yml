@@ -2,4 +2,3 @@
 applications:
 - name: sbr-ui
   memory: 1024M
-  buildpack: nodejs_buildpack_offline

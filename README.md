@@ -33,12 +33,14 @@ The NPM start command uses the following commands:
 
 ```shell
 npm run build
-node server
+SERVE_HTML=true ENV=local node server
 ```
 
-This uses Node which does not have hot-reloading.
+This will run Node and React on localhost:3001, since Node is serving
+`index.html`, hot-reloading will not work.
 
-To use hot-reloading, use `npm restart` which runs `react-scripts start`
+To use hot-reloading, use `npm restart` which runs `react-scripts start`, this
+will start React on port 3000. To start the server, use `ENV=local node server/index.js`.
 
 ## Testing
 
@@ -58,12 +60,10 @@ brew install chromedriver
 
 ### Locally
 
-Username and password are `test` or `admin` (if you want to edit records/see edits).
+Username and password are `test` or `admin`.
 
 ### Deployed
 
-Use your ONS credentials, username and password.
+Use your ONS credentials.
 
 ## Troubleshooting
-
-### CORS

@@ -4,47 +4,58 @@ const morgan = require('morgan');
 const path = require('path');
 var myParser = require("body-parser");
 
+// To allow hot-reloading, the node server only serves the React.js index.html
+// in the /build file if SERVE_HTML is true
+const ENV = process.env.ENV;
+const SERVE_HTML = (process.env.SERVE_HTML === "true") ? true : false;
+
 // Get the admin/user credentials from environment variables
 const ADMIN_USERNAME = process.env.ONS_BI_UI_TEST_ADMIN_USERNAME;
 const ADMIN_PASSWORD = process.env.ONS_BI_UI_TEST_ADMIN_PASSWORD;
 const USER_USERNAME = process.env.ONS_BI_UI_TEST_USER_USERNAME;
 const USER_PASSWORD = process.env.ONS_BI_UI_TEST_USER_PASSWORD;
-const ENV = "LOCAL";
+
+// Store the user sessions
+let users = {};
 
 const app = express();
-
-let users = {};
 
 // Setup logger
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
 
-// Below is for CORS
-// Need if local add cors:
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// Serve static assets
+if (SERVE_HTML){
+  app.use(express.static(path.resolve(__dirname, '..', 'build')));
+}
 
-// On local environment, use environment variables for user/pass authorization
+// For parsing the body of POST requests
 app.use(myParser.json());
 
-app.post('/login', function (req, res, next) {
-  //const authHeader = req.get("Authorization");
-  // The header looks like the following:
-  // Authorization: Basic <Base 64 Encoded Username/Password>
-  // Only need to decode the encoded part, not the 'Basic'
-  // const authCredentials = authHeader.substring(6,authHeader.length);
-  // const base64Decode = new Buffer(authCredentials, 'base64');
-  // const decodedCredentials = base64Decode.toString();
-  // The username is everything before the first colon
-  //const username = decodedCredentials.substr(0, decodedCredentials.indexOf(':'));
-  //const password = decodedCredentials.substr(decodedCredentials.indexOf(':') + 1, decodedCredentials.length);
+// Always return the main index.html, so react-router renders the route in the client
+if (SERVE_HTML){
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+  });
+}
 
+// Below is for CORS, CORS is only needed when React/Node are on different ports
+// e.g. when testing locally and React is on 3000 and Node is on 3001
+if (ENV === "local"){
+  app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+}
+
+
+
+app.post('/login', function (req, res, next) {
+  // Get the username/password from the body of the POST
   const username = req.body.username;
   const password = req.body.password;
 
-  if (ENV === "LOCAL"){
+  if (ENV === "local"){
     /*
      * For local environment, need to compare username/password against
      * environment variables. If the provided username/password is correct, a
@@ -81,7 +92,7 @@ app.post('/login', function (req, res, next) {
        // Return 401 NOT AUTHORIZED if incorrect username/password
        res.sendStatus(401);
      }
-  } else if (ENV === "DEPLOYED"){
+  } else if (ENV === "deployed"){
     /*
      * For the deployed environment, the username/password is sent off to the
      * gateway, which will return 200 OK for a correct username/password or
@@ -116,7 +127,7 @@ app.post('/checkToken', function (req, res) {
 
 app.post('/logout', function (req, res) {
   const token = req.body.token;
-  // remove user from storage
+  // Remove user from storage
   delete users[token]
   res.sendStatus(200);
 });

@@ -5,6 +5,7 @@ import Button from 'react-bootstrap-button-loader';
 import { IndexLinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 import { logout } from '../actions/AppActions';
+import { Link } from 'react-router';
 
 class NavBar extends Component {
   render() {
@@ -13,7 +14,7 @@ class NavBar extends Component {
         <Navbar>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="/Home"><b>Statistical Business Register</b></a>
+              <b><Link to="/Home" style={{ textDecoration: 'none', color: 'black' }}>Statistical Business Register</Link></b>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>

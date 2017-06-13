@@ -32,7 +32,7 @@ class NavBar extends Component {
                 <NavItem>Help</NavItem>
               </IndexLinkContainer>
               <NavItem style={{paddingRight: "20px", paddingLeft: "60px"}}>
-              <p class="navbar-btn">
+              <p className="navbar-btn">
                 <Button
                   type="button"
                   className="logout"

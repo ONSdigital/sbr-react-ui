@@ -24,7 +24,7 @@
  */
 
 import bcrypt from 'bcryptjs';
-import { SET_AUTH, CHANGE_FORM, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/AppConstants';
+import { SET_AUTH, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/AppConstants';
 import * as errorMessages  from '../constants/MessageConstants';
 import auth from '../utils/auth';
 import genSalt from '../utils/salt';
@@ -67,10 +67,6 @@ export function login(username, password) {
             username: username,
             role: success.role,
             apiKey: success.apiKey,
-          }));
-          dispatch(changeForm({
-            username: "",
-            password: ""
           }));
           forwardTo('/Home');
         } else {
@@ -151,17 +147,6 @@ export function setUserState(newState) {
  */
 export function setAuthState(newState) {
   return { type: SET_AUTH, newState };
-}
-
-/**
- * Sets the form state
- * @param  {object} newState          The new state of the form
- * @param  {string} newState.username The new text of the username input field of the form
- * @param  {string} newState.password The new text of the password input field of the form
- * @return {object}                   Formatted action for the reducer to handle
- */
-export function changeForm(newState) {
-  return { type: CHANGE_FORM, newState };
 }
 
 /**

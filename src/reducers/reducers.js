@@ -10,7 +10,7 @@
  *   });
  */
 
-import { CHANGE_FORM, CHECK_AUTH, SET_AUTH, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/AppConstants';
+import { CHECK_AUTH, SET_AUTH, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/AppConstants';
 // Object.assign is not yet fully supported in all browsers, so we fallback to
 // a polyfill
 const assign = Object.assign;
@@ -18,10 +18,6 @@ import auth from '../utils/auth';
 
 // The initial application state
 const initialState = {
-  formState: {
-    username: '',
-    password: ''
-  },
   userDetails: {
     username: '',
     role: '',
@@ -38,11 +34,6 @@ export function homeReducer(state = initialState, action) {
     case SET_USER_DETAILS:
       return assign({}, state, {
         userDetails: action.newState
-      });
-
-    case CHANGE_FORM:
-      return assign({}, state, {
-        formState: action.newState
       });
     case SET_AUTH:
       return assign({}, state, {

@@ -63,5 +63,12 @@ function select(state) {
   };
 }
 
+// If we use 'export default connect()(NavBar)', there is an issue with redux
+// affecting shouldComponentUpdate(), which means the NavBar items don't
+// highlight on a change of route, the below fixes this issue.
+// https://github.com/reactjs/react-redux/blob/v4.0.0/docs/troubleshooting.md
+
 // Wrap the component to inject dispatch and state into it
-export default connect(select)(NavBar);
+export default connect(select, null, null, {
+  pure: false
+})(NavBar);

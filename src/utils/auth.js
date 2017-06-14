@@ -10,14 +10,8 @@ var auth = {
    * @param  {Function} callback Called after a user was logged in on the remote server
    */
   login(username, password, callback) {
-    // If there is a token in the localStorage, the user already is
-    // authenticated
-
-
-    // if (this.loggedIn()) {
-    //   callback(true);
-    //   return;
-    // }
+    // Do not need to check if user is already logged in, this is done in
+    // routes.js before this method is called
 
     // POST to the backend with username/password
     fetch("http://localhost:3001/login", {
@@ -25,7 +19,7 @@ var auth = {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({username: username, password: password})
+      body: JSON.stringify({username, password})
     }).then( (response) => {
       if (response.status === 200){
         return response.json().then(function(json) {
@@ -34,25 +28,12 @@ var auth = {
           const token = json.token;
           sessionStorage.setItem('token', token);
           //send auth request to save token username pair
-          callback({authenticated: true,apiKey,role,token});
+          callback(true,{ apiKey, role, token });
         });
       } else {
-        callback(false, "Error");
+        callback(false, { data: "Unable to login." });
       }
     });
-  },
-  old(token){
-    // This method needs refactoring to be asynchronous
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("POST","http://localhost:3001/checkToken",false); // false for synchronous request
-    // Only use Authorization header on deployed app, not locally
-    xmlHttp.setRequestHeader("Content-Type", "application/json");
-    xmlHttp.send(JSON.stringify({token: token}));
-    if (xmlHttp.status === 200){
-      return [true];
-    } else {
-      return [false];
-    }
   },
   checkToken(token,callback){
     fetch("http://localhost:3001/checkToken", {
@@ -79,12 +60,7 @@ var auth = {
    * Logs the current user out
    */
   logout(callback) {
-    //const obj = JSON.parse(sessionStorage.user);
-    // request.post('/logout', {}, () => {
-    //   callback(true);
-    // });
     const token = sessionStorage.token;
-    //const username = store.getState().userDetails.username;
     fetch("http://localhost:3001/logout", {
       method: 'POST',
       headers: {
@@ -97,28 +73,6 @@ var auth = {
         callback(true);
       }
     });
-  },
-  /**
-   * Checks if anybody is logged in
-   * @return {boolean} True if there is a logged in user, false if there isn't
-   */
-  loggedIn() {
-    const token = sessionStorage.token;
-    if (token !== undefined) {
-      // this.checkToken(token, (success, data) => {
-      //   console.log("send req")
-      //   console.log(success)
-      //   if (success) {
-      //     return true;
-      //   } else {
-      //     return false;
-      //   }
-      // });
-      var t = this.old(token);
-      return t;
-    } else {
-      return false;
-    }
   },
   onChange() {}
 }

@@ -57,20 +57,20 @@ export function login(username, password) {
       }
       // Use auth.js to fake a request
       // was hash below instead of password
-      auth.login(username, password, (success, err, test,token) => {
+      auth.login(username, password, (success, data) => {
         // When the request is finished, hide the loading indicator
         dispatch(sendingRequest(false));
         dispatch(setAuthState(success));
-        if (success.authenticated === true) {
+        if (success) {
           // If the login worked, forward the user to the dashboard and clear the form
           dispatch(setUserState({
             username: username,
-            role: success.role,
-            apiKey: success.apiKey,
+            role: data.role,
+            apiKey: data.apiKey,
           }));
           forwardTo('/Home');
         } else {
-          switch (err.type) {
+          switch (data.type) {
             case 'user-doesnt-exist':
               dispatch(setErrorMessage(errorMessages.USER_NOT_FOUND));
               return;
@@ -92,8 +92,8 @@ export function login(username, password) {
  */
 export function checkAuth(token) {
   return (dispatch) => {
-    //dispatch(sendingRequest(true));
     auth.checkToken(token, (success, data) => {
+      dispatch(setAuthState(success));
       if (success) {
         dispatch(setUserState({
           username: data.username,
@@ -101,8 +101,6 @@ export function checkAuth(token) {
           apiKey: data.apiKey,
         }));
         forwardTo('/Home');
-        //dispatch(sendingRequest(false))
-        //dispatch(setAuthState(false));
       } else {
         // could set error message here?
         //dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));

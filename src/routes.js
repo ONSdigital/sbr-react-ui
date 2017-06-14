@@ -18,8 +18,7 @@ import { checkAuth } from './actions/AppActions';
 // Creates the Redux reducer with the redux-thunk middleware, which allows us
 // to do asynchronous things in the actions
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
-// Should store be exported here? Needed for access in auth (non react)
-export const store = createStoreWithMiddleware(homeReducer);
+const store = createStoreWithMiddleware(homeReducer);
 
 // Redirect() is called on the Login page
 // If the token exists in sessionStorage, checkAuth() is called

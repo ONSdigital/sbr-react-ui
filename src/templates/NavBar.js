@@ -3,9 +3,9 @@ import '../resources/css/mycss.css';
 import { Navbar, Nav, NavItem } from "react-bootstrap";
 import Button from 'react-bootstrap-button-loader';
 import { IndexLinkContainer } from 'react-router-bootstrap';
-import { connect } from 'react-redux';
 import { logout } from '../actions/AppActions';
 import { Link } from 'react-router';
+import { store } from '../routes.js';
 
 class NavBar extends Component {
   render() {
@@ -38,10 +38,10 @@ class NavBar extends Component {
                   className="logout"
                   bsStyle="danger"
                   bsSize="small"
-                  loading={this.props.data.currentlySending}
-                  disabled={this.props.data.currentlySending}
+                  loading={store.getState().currentlySending}
+                  disabled={store.getState().currentlySending}
                   onClick={this._onLogout.bind(this)}>
-                    {this.props.data.currentlySending ? "" : "Logout" }
+                    {store.getState().currentlySending ? "" : "Logout" }
                 </Button>
               </p>
               </NavItem>
@@ -52,16 +52,9 @@ class NavBar extends Component {
     );
   }
   _onLogout() {
-    this.props.dispatch(logout());
+    store.dispatch(logout());
   }
 }
 
-// Which props do we want to inject, given the global state?
-function select(state) {
-  return {
-    data: state
-  };
-}
-
 // Wrap the component to inject dispatch and state into it
-export default connect(select)(NavBar);
+export default NavBar

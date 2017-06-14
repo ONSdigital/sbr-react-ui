@@ -21,11 +21,12 @@ export ONS_BI_UI_TEST_USER_PASSWORD=test
 
 ## Running the Demo UI:
 
-1. Clone this repo and start NPM
+1. Clone this repo, install dependencies and start NPM
 
 ```shell
 git clone https://github.com/ONSdigital/sbr-ui.git
 cd sbr-ui
+npm install
 npm start
 ```
 

@@ -29,18 +29,21 @@ pipeline {
       agent any
       steps {
         colourText("info","Running build ${env.BUILD_ID} on ${env.JENKINS_URL}...")
+        deleteDir()
         checkout scm
-        //stash name: 'app'
+        stash name: 'app'
       }
     }
     stage('Install Dependancies') {
       agent { label 'adrianharristesting' }
       steps {
-        sh '''node --version
-              npm --version'''
         colourText("info","Running NPM install...")
+        deleteDir()
+        sh 'node --version'
+        sh 'npm --version'
+        unstash 'app'
         sh 'npm install'
-        //stash name: 'test'
+        sh 'ls -la'
       }
     }
     stage('Test - Unit Tests') {
@@ -48,6 +51,7 @@ pipeline {
       steps {
         colourText("info","Running unit tests...")
         echo 'STUB: this will be completed once feature/utils-testing is merged into test/deploy'
+        sh 'ls -la'
       }
     }
     stage('Test - Server') {
@@ -60,35 +64,19 @@ pipeline {
     stage('Build') {
       agent { label 'adrianharristesting' }
       steps {
-        echo '...'
-        // zip -g sbr-ui.zip build
-        sh '''npm run build
-              ls -la
-              tar -czvf sbr-ui.tar.gz -C build .
-              ls -la'''
-        stash includes: '*.tar.gz', name: 'test'
+        colourText("info","Zipping project...")
       }
     }
     stage('Deploy - Dev') {
       agent any
       steps {
-        unstash 'test'
-        sh 'ls -la'
-        //sh 'zip -r test-zip.zip build'
-        //sh 'tar -ztvf sbr-ui.tar.gz'
-        //sh 'ls -la'
         colourText("info","Deploying to DEV...")
-        sh 'cf buildpacks'
-        deployToCloudFoundry('cloud-foundry-sbr-dev-user','sbr','dev','dev-sbr-ui','sbr-ui.tar.gz','manifest.yml')
       }
     }
     stage('Test - Integration') {
-      agent { label 'r-slave' }
+      agent { label 'adrianharristesting' }
       steps {
-        // sh 'rm -rf chromedriver'
         colourText("info","Running Selenium Integration tests against deployed DEV app...")
-        //sh 'UI_URL=http://localhost:3000 node_modules/.bin/jasmine test/integration-test.js'
-        //sh 'node_modules/.bin/jasmine test/integration-test.js'
       }
     }
     stage('Deploy - Test') {

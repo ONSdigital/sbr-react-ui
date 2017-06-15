@@ -102,8 +102,8 @@ export function checkAuth(token) {
         }));
         forwardTo('/Home');
       } else {
-        // could set error message here?
-        //dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
+        sessionStorage.clear();
+        forwardTo('/');
       }
     });
   }

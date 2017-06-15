@@ -120,6 +120,7 @@ app.post('/checkToken', function (req, res) {
     jwt.verify(token, SECRET, function(err, user) {
       if (err) {
         console.log("ERROR");
+        delete users[token];
         res.sendStatus(401);
       }
       else {
@@ -132,6 +133,7 @@ app.post('/checkToken', function (req, res) {
       }
     });
   } else {
+    delete users[token];
     res.sendStatus(401);
   }
 });

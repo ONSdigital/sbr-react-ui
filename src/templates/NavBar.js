@@ -3,9 +3,9 @@ import '../resources/css/mycss.css';
 import { Navbar, Nav, NavItem } from "react-bootstrap";
 import Button from 'react-bootstrap-button-loader';
 import { IndexLinkContainer } from 'react-router-bootstrap';
+import { connect } from 'react-redux';
 import { logout } from '../actions/AppActions';
 import { Link } from 'react-router';
-import { store } from '../routes.js';
 
 class NavBar extends Component {
   render() {
@@ -38,10 +38,10 @@ class NavBar extends Component {
                   className="logout"
                   bsStyle="danger"
                   bsSize="small"
-                  loading={store.getState().currentlySending}
-                  disabled={store.getState().currentlySending}
+                  loading={this.props.data.currentlySending}
+                  disabled={this.props.data.currentlySending}
                   onClick={this._onLogout.bind(this)}>
-                    {store.getState().currentlySending ? "" : "Logout" }
+                    {this.props.data.currentlySending ? "" : "Logout" }
                 </Button>
               </p>
               </NavItem>
@@ -52,9 +52,23 @@ class NavBar extends Component {
     );
   }
   _onLogout() {
-    store.dispatch(logout());
+    this.props.dispatch(logout());
   }
 }
 
+// Which props do we want to inject, given the global state?
+function select(state) {
+  return {
+    data: state
+  };
+}
+
+// If we use 'export default connect()(NavBar)', there is an issue with redux
+// affecting shouldComponentUpdate(), which means the NavBar items don't
+// highlight on a change of route, the below fixes this issue.
+// https://github.com/reactjs/react-redux/blob/v4.0.0/docs/troubleshooting.md
+
 // Wrap the component to inject dispatch and state into it
-export default NavBar
+export default connect(select, null, null, {
+  pure: false
+})(NavBar);

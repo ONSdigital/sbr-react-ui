@@ -23,11 +23,10 @@ var auth = {
     }).then( (response) => {
       if (response.status === 200){
         return response.json().then(function(json) {
-          const role = json.role;
           const token = json.jToken;
           sessionStorage.setItem('token', token);
           //send auth request to save token username pair
-          callback(true,{role,token});
+          callback(true,{token});
         });
       } else {
         callback(false, { data: "Unable to login." });
@@ -44,10 +43,9 @@ var auth = {
     }).then( (response) => {
       if (response.status === 200){
         return response.json().then(function(json) {
-          const role = json.role;
           const token = json.token;
           //send auth request to save token username pair
-          callback(true,{role,token});
+          callback(true,{token});
         });
       } else {
         callback(false);

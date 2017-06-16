@@ -3,7 +3,11 @@
   "version": "0.0.1",
   "private": false,
   "license": "MIT",
-  "repository": "https://github.com/ONSdigital/sbr-ui.git",
+  "description": "A user interface for the Statistical Business Register.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ONSdigital/sbr-ui.git"
+  },
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^3.0.2",

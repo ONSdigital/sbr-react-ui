@@ -57,6 +57,14 @@ For the Jasmine test to work, chromedriver is required, install this with the fo
 brew install chromedriver
 ```
 
+## Useful Extensions
+
+* (Advanced REST Client)[https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo] - for testing Node routes
+
+* (React Developer Tools)[https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi/related] - for viewing props & state of React components
+
+* (Redux DevTools)[https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd] - for seeing what is happening in your Redux store
+
 ## Logging into the Demo UI:
 
 ### Locally

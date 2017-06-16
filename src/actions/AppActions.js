@@ -23,12 +23,12 @@
  *    created in the second step
  */
 
+import { browserHistory } from 'react-router';
 import bcrypt from 'bcryptjs';
 import { SET_AUTH, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/AppConstants';
-import * as errorMessages  from '../constants/MessageConstants';
+import * as errorMessages from '../constants/MessageConstants';
 import auth from '../utils/auth';
 import genSalt from '../utils/salt';
-import { browserHistory } from 'react-router';
 
 /**
  * Logs an user in
@@ -49,7 +49,7 @@ export function login(username, password) {
     // Generate salt for password encryption
     const salt = genSalt(username);
     // Encrypt password
-    bcrypt.hash(password, salt, (err, hash) => {
+    bcrypt.hash(password, salt, (err) => {
       // Something wrong while hashing
       if (err) {
         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
@@ -64,7 +64,7 @@ export function login(username, password) {
         if (success) {
           // If the login worked, forward the user to the dashboard and clear the form
           dispatch(setUserState({
-            username: username,
+            username,
             role: data.role,
             apiKey: data.apiKey,
           }));
@@ -79,12 +79,11 @@ export function login(username, password) {
               return;
             default:
               dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
-              return;
           }
         }
       });
     });
-  }
+  };
 }
 
 /**
@@ -103,10 +102,10 @@ export function checkAuth(token) {
         forwardTo('/Home');
       } else {
         // could set error message here?
-        //dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
+        // dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
       }
     });
-  }
+  };
 }
 
 /**
@@ -115,16 +114,16 @@ export function checkAuth(token) {
 export function logout() {
   return (dispatch) => {
     dispatch(sendingRequest(true));
-    auth.logout((success, err) => {
+    auth.logout((success) => {
       if (success === true) {
-        dispatch(sendingRequest(false))
+        dispatch(sendingRequest(false));
         dispatch(setAuthState(false));
-        browserHistory.push("/")
+        browserHistory.push('/');
       } else {
         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
       }
     });
-  }
+  };
 }
 
 /**
@@ -169,7 +168,7 @@ function setErrorMessage(message) {
     setTimeout(() => {
       dispatch({ type: SET_ERROR_MESSAGE, message: '' });
     }, 3000);
-  }
+  };
 }
 
 /**
@@ -187,8 +186,8 @@ function forwardTo(location) {
  * @return {boolean}         True if there are empty elements, false if there aren't
  */
 function anyElementsEmpty(elements) {
-  for (let element in elements) {
-    if (!elements[element]) {
+  for (let i = 0; i < Object.keys(elements).length; i += 1) {
+    if (elements[Object.keys(elements)[i]] === '') {
       return true;
     }
   }

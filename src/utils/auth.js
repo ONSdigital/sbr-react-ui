@@ -4,7 +4,7 @@
  * Authentication lib
  * @type {Object}
  */
-var auth = {
+const auth = {
   /**
    * Logs a user in
    * @param  {string}   username The username of the user
@@ -16,46 +16,43 @@ var auth = {
     // routes.js before this method is called
 
     // POST to the backend with username/password
-    fetch("http://localhost:3001/login", {
+    fetch('http://localhost:3001/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({username, password})
-    }).then( (response) => {
-      if (response.status === 200){
-        return response.json().then(function(json) {
+      body: JSON.stringify({ username, password }),
+    }).then((response) => {
+      if (response.status === 200) {
+        return response.json().then((json) => {
           const apiKey: String = json.apiKey;
           const role: String = json.role;
           const token: String = json.token;
           sessionStorage.setItem('token', token);
-          //send auth request to save token username pair
-          callback(true,{ apiKey, role, token });
+          // send auth request to save token username pair
+          return callback(true, { apiKey, role, token });
         });
-      } else {
-        callback(false, { data: "Unable to login." });
       }
+      return callback(false, { data: 'Unable to login.' });
     });
   },
-  checkToken(token: String, callback: (success: boolean, data: ?{}) => void){
-    fetch("http://localhost:3001/checkToken", {
+  checkToken(token: String, callback: (success: boolean, data: ?{}) => void) {
+    fetch('http://localhost:3001/checkToken', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({token: token})
-    }).then( (response) => {
-      if (response.status === 200){
-        return response.json().then(function(json) {
+      body: JSON.stringify({ token }),
+    }).then((response) => {
+      if (response.status === 200) {
+        return response.json().then((json) => {
           const apiKey: String = json.apiKey;
           const role: String = json.role;
-          const token: String = json.token;
-          //send auth request to save token username pair
-          callback(true,{authenticated: true,apiKey,role,token});
+          // send auth request to save token username pair
+          return callback(true, { authenticated: true, apiKey, role });
         });
-      } else {
-        callback(false);
       }
+      return callback(false);
     });
   },
   /**
@@ -63,20 +60,20 @@ var auth = {
    */
   logout(callback: (success: boolean) => void) {
     const token: String = sessionStorage.token;
-    fetch("http://localhost:3001/logout", {
+    fetch('http://localhost:3001/logout', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({token})
-    }).then( (response) => {
-      if (response.status === 200){
+      body: JSON.stringify({ token }),
+    }).then((response) => {
+      if (response.status === 200) {
         sessionStorage.clear();
         callback(true);
       }
     });
   },
-  onChange() {}
-}
+  onChange() {},
+};
 
 module.exports = auth;

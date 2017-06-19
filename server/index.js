@@ -1,5 +1,7 @@
-// server/index.js
 'use strict';
+
+// Rule exceptions:
+/* eslint strict: "off" */
 
 const app = require('./app');
 

@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * Authentication lib
  * @type {Object}
@@ -9,7 +11,7 @@ const auth = {
    * @param  {string}   password The password of the user
    * @param  {Function} callback Called after a user was logged in on the remote server
    */
-  login(username, password, callback) {
+  login(username: String, password: String, callback: (success: boolean, data: {}) => void) {
     // Do not need to check if user is already logged in, this is done in
     // routes.js before this method is called
 
@@ -23,9 +25,9 @@ const auth = {
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {
-          const apiKey = json.apiKey;
-          const role = json.role;
-          const token = json.token;
+          const apiKey: String = json.apiKey;
+          const role: String = json.role;
+          const token: String = json.token;
           sessionStorage.setItem('token', token);
           // send auth request to save token username pair
           return callback(true, { apiKey, role, token });
@@ -34,7 +36,7 @@ const auth = {
       return callback(false, { data: 'Unable to login.' });
     });
   },
-  checkToken(token, callback) {
+  checkToken(token: String, callback: (success: boolean, data: ?{}) => void) {
     fetch('http://localhost:3001/checkToken', {
       method: 'POST',
       headers: {
@@ -44,8 +46,8 @@ const auth = {
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {
-          const apiKey = json.apiKey;
-          const role = json.role;
+          const apiKey: String = json.apiKey;
+          const role: String = json.role;
           // send auth request to save token username pair
           return callback(true, { authenticated: true, apiKey, role });
         });
@@ -56,8 +58,8 @@ const auth = {
   /**
    * Logs the current user out
    */
-  logout(callback) {
-    const token = sessionStorage.token;
+  logout(callback: (success: boolean) => void) {
+    const token: String = sessionStorage.token;
     fetch('http://localhost:3001/logout', {
       method: 'POST',
       headers: {

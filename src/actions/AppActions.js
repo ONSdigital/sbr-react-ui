@@ -24,7 +24,6 @@
  */
 
 import { browserHistory } from 'react-router';
-import bcrypt from 'bcryptjs';
 import { SET_AUTH, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/AppConstants';
 import * as errorMessages from '../constants/MessageConstants';
 import auth from '../utils/auth';

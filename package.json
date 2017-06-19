@@ -50,7 +50,7 @@
     "restart": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "test": "SERVE_HTML=true mocha test/server.test.js; NODE_ENV=test jasmine test/integration-test.js",
+    "test": "SERVE_HTML=true mocha test/server.test.js; NODE_ENV=test URL=http://localhost:3000 jasmine test/integration-test.js",
     "lint": "./node_modules/eslint/bin/eslint.js **/*.js --ignore-pattern /test/*.js"
   }
 }

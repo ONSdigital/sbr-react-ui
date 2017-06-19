@@ -46,9 +46,8 @@ const auth = {
         return response.json().then((json) => {
           const apiKey = json.apiKey;
           const role = json.role;
-          const token = json.token;
           // send auth request to save token username pair
-          return callback(true, { authenticated: true, apiKey, role, token });
+          return callback(true, { authenticated: true, apiKey, role });
         });
       }
       return callback(false);

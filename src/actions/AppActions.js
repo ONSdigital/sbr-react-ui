@@ -28,7 +28,6 @@ import bcrypt from 'bcryptjs';
 import { SET_AUTH, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/AppConstants';
 import * as errorMessages from '../constants/MessageConstants';
 import auth from '../utils/auth';
-import genSalt from '../utils/salt';
 
 /**
  * Logs an user in
@@ -46,42 +45,31 @@ export function login(username, password) {
       dispatch(sendingRequest(false));
       return;
     }
-    // Generate salt for password encryption
-    const salt = genSalt(username);
-    // Encrypt password
-    bcrypt.hash(password, salt, (err) => {
-      // Something wrong while hashing
-      if (err) {
-        dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
-        return;
-      }
-      // Use auth.js to fake a request
-      // was hash below instead of password
-      auth.login(username, password, (success, data) => {
-        // When the request is finished, hide the loading indicator
-        dispatch(sendingRequest(false));
-        dispatch(setAuthState(success));
-        if (success) {
-          // If the login worked, forward the user to the dashboard and clear the form
-          dispatch(setUserState({
-            username,
-            role: data.role,
-            apiKey: data.apiKey,
-          }));
-          forwardTo('/Home');
-        } else {
-          switch (data.type) {
-            case 'user-doesnt-exist':
-              dispatch(setErrorMessage(errorMessages.USER_NOT_FOUND));
-              return;
-            case 'password-wrong':
-              dispatch(setErrorMessage(errorMessages.WRONG_PASSWORD));
-              return;
-            default:
-              dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
-          }
+
+    auth.login(username, password, (success, data) => {
+      // When the request is finished, hide the loading indicator
+      dispatch(sendingRequest(false));
+      dispatch(setAuthState(success));
+      if (success) {
+        // If the login worked, forward the user to the dashboard and clear the form
+        dispatch(setUserState({
+          username,
+          role: data.role,
+          apiKey: data.apiKey,
+        }));
+        forwardTo('/Home');
+      } else {
+        switch (data.type) {
+          case 'user-doesnt-exist':
+            dispatch(setErrorMessage(errorMessages.USER_NOT_FOUND));
+            return;
+          case 'password-wrong':
+            dispatch(setErrorMessage(errorMessages.WRONG_PASSWORD));
+            return;
+          default:
+            dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
         }
-      });
+      }
     });
   };
 }

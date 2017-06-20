@@ -16,8 +16,7 @@ const ADMIN_USERNAME = process.env.ONS_BI_UI_TEST_ADMIN_USERNAME;
 const ADMIN_PASSWORD = process.env.ONS_BI_UI_TEST_ADMIN_PASSWORD;
 const USER_USERNAME = process.env.ONS_BI_UI_TEST_USER_USERNAME;
 const USER_PASSWORD = process.env.ONS_BI_UI_TEST_USER_PASSWORD;
-//const SECRET = process.env.JWT_SECRET;
-const SECRET = "secret";
+const SECRET = process.env.JWT_SECRET;
 
 // Store the user sessions
 let users = {};
@@ -81,21 +80,21 @@ app.post('/login', function (req, res, next) {
          role = "admin";
        }
 
-      var u = {
+      var payload = {
         username: username,
         role: role,
         apiKey: apiKey,
       }
-      const jToken = jwt.sign(u, SECRET, {
+      const token = jwt.sign(payload, SECRET, {
         expiresIn: 60 * 60 * 24 // expires in 24 hours
       });
 
       // Add user to key:value json store
-      users[jToken] = {username,role};
+      users[token] = {username,role};
 
       res.send(JSON.stringify(
         {
-          jToken
+          token
         }
       ));
      } else {

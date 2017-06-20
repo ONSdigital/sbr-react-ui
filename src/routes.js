@@ -11,14 +11,17 @@ import Support from './views/Support.js';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { homeReducer } from './reducers/reducers';
+import homeReducer from './reducers/reducers';
 import { checkAuth } from './actions/AppActions';
 
 
 // Creates the Redux reducer with the redux-thunk middleware, which allows us
 // to do asynchronous things in the actions
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
-const store = createStoreWithMiddleware(homeReducer);
+const store = createStoreWithMiddleware(
+  homeReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 // Redirect() is called on the Login page
 // If the token exists in sessionStorage, checkAuth() is called

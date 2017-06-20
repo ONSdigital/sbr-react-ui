@@ -23,12 +23,10 @@
  *    created in the second step
  */
 
-import bcrypt from 'bcryptjs';
-import { SET_AUTH, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/AppConstants';
-import * as errorMessages  from '../constants/MessageConstants';
-import auth from '../utils/auth';
-import genSalt from '../utils/salt';
 import { browserHistory } from 'react-router';
+import { SET_AUTH, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/AppConstants';
+import * as errorMessages from '../constants/MessageConstants';
+import auth from '../utils/auth';
 
 /**
  * Logs an user in
@@ -46,45 +44,33 @@ export function login(username, password) {
       dispatch(sendingRequest(false));
       return;
     }
-    // Generate salt for password encryption
-    const salt = genSalt(username);
-    // Encrypt password
-    bcrypt.hash(password, salt, (err, hash) => {
-      // Something wrong while hashing
-      if (err) {
-        dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
-        return;
-      }
-      // Use auth.js to fake a request
-      // was hash below instead of password
-      auth.login(username, password, (success, data) => {
-        // When the request is finished, hide the loading indicator
-        dispatch(sendingRequest(false));
-        dispatch(setAuthState(success));
-        if (success) {
-          // If the login worked, forward the user to the dashboard and clear the form
-          dispatch(setUserState({
-            username: username,
-            role: data.role,
-            apiKey: data.apiKey,
-          }));
-          forwardTo('/Home');
-        } else {
-          switch (data.type) {
-            case 'user-doesnt-exist':
-              dispatch(setErrorMessage(errorMessages.USER_NOT_FOUND));
-              return;
-            case 'password-wrong':
-              dispatch(setErrorMessage(errorMessages.WRONG_PASSWORD));
-              return;
-            default:
-              dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
-              return;
-          }
+
+    auth.login(username, password, (success, data) => {
+      // When the request is finished, hide the loading indicator
+      dispatch(sendingRequest(false));
+      dispatch(setAuthState(success));
+      if (success) {
+        // If the login worked, forward the user to the dashboard and clear the form
+        dispatch(setUserState({
+          username,
+          role: data.role,
+          apiKey: data.apiKey,
+        }));
+        forwardTo('/Home');
+      } else {
+        switch (data.type) {
+          case 'user-doesnt-exist':
+            dispatch(setErrorMessage(errorMessages.USER_NOT_FOUND));
+            return;
+          case 'password-wrong':
+            dispatch(setErrorMessage(errorMessages.WRONG_PASSWORD));
+            return;
+          default:
+            dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
         }
-      });
+      }
     });
-  }
+  };
 }
 
 /**
@@ -106,7 +92,7 @@ export function checkAuth(token) {
         forwardTo('/');
       }
     });
-  }
+  };
 }
 
 /**
@@ -115,16 +101,16 @@ export function checkAuth(token) {
 export function logout() {
   return (dispatch) => {
     dispatch(sendingRequest(true));
-    auth.logout((success, err) => {
+    auth.logout((success) => {
       if (success === true) {
-        dispatch(sendingRequest(false))
+        dispatch(sendingRequest(false));
         dispatch(setAuthState(false));
-        browserHistory.push("/")
+        browserHistory.push('/');
       } else {
         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
       }
     });
-  }
+  };
 }
 
 /**
@@ -169,7 +155,7 @@ function setErrorMessage(message) {
     setTimeout(() => {
       dispatch({ type: SET_ERROR_MESSAGE, message: '' });
     }, 3000);
-  }
+  };
 }
 
 /**
@@ -187,8 +173,8 @@ function forwardTo(location) {
  * @return {boolean}         True if there are empty elements, false if there aren't
  */
 function anyElementsEmpty(elements) {
-  for (let element in elements) {
-    if (!elements[element]) {
+  for (let i = 0; i < Object.keys(elements).length; i += 1) {
+    if (elements[Object.keys(elements)[i]] === '') {
       return true;
     }
   }

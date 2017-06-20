@@ -34,43 +34,48 @@ pipeline {
         stash name: 'app'
       }
     }
-    stage('Install Dependancies') {
+    stage('Install Dependancies & Build') {
       agent { label 'adrianharristesting' }
       steps {
-        colourText("info","Running NPM install...")
+        colourText("info","Running 'npm install' and 'npm build'...")
         deleteDir()
         sh 'node --version'
         sh 'npm --version'
         unstash 'app'
         sh 'npm install'
-        sh 'ls -la'
+        sh 'npm run build'
       }
     }
-    stage('Test - Unit Tests') {
+    stage('Test - Unit') {
       agent { label 'adrianharristesting' }
       steps {
         colourText("info","Running unit tests...")
         echo 'STUB: this will be completed once feature/utils-testing is merged into test/deploy'
-        sh 'ls -la'
       }
     }
     stage('Test - Server') {
       agent { label 'adrianharristesting' }
       steps {
         colourText("info","Running server tests...")
-        sh 'node_modules/mocha/bin/mocha test/server.test.js'
+        //sh 'SERVE_HTML=true node_modules/mocha/bin/mocha test/server.test.js'
       }
     }
     stage('Build') {
       agent { label 'adrianharristesting' }
       steps {
         colourText("info","Zipping project...")
+        //sh "sed -i 's/3001/3000/g' server/index.js"
+        sh 'zip -r sbr-ui.zip build package.json server node_modules manifest.yml'
+        stash name: 'zip'
       }
     }
     stage('Deploy - Dev') {
       agent any
       steps {
         colourText("info","Deploying to DEV...")
+        unstash 'zip'
+        //sh 'cf buildpacks'
+        deployToCloudFoundry('cloud-foundry-sbr-dev-user','sbr','dev','dev-sbr-ui','sbr-ui.zip','manifest.yml')
       }
     }
     stage('Test - Integration') {
@@ -88,9 +93,10 @@ pipeline {
     stage('Promote to Beta') {
       agent any
       steps {
-        timeout(time: 1, unit: 'MINUTES') {
-          input 'Deploy to Beta?'
-        }
+        colourText("info","Deploying to BETA...")
+        //timeout(time: 1, unit: 'MINUTES') {
+        //  input 'Deploy to Beta?'
+        //}
       }
     }
     stage('Deploy - Beta') {

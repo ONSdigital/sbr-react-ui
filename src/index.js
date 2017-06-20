@@ -6,5 +6,5 @@ import './resources/css/index.css';
 
 ReactDOM.render(
   <Routes history={browserHistory} />,
-  document.getElementById('root')
+  document.getElementById('root'),
 );

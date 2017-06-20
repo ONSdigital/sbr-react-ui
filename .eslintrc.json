@@ -1,0 +1,24 @@
+{
+    "extends": "airbnb",
+    "plugins": [
+        "react",
+        "jsx-a11y",
+        "import"
+    ],
+    "rules": {
+        "no-use-before-define": "off",
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "react/self-closing-comp": ["error", {
+          "component": false,
+          "html": false
+        }],
+        "arrow-body-style": ["error", "always"],
+        "global-require": "off",
+        "class-methods-use-this": "off",
+        "func-names": "off",
+        "react/forbid-prop-types": "off"
+    },
+    "env": {
+      "browser": true
+    }
+}

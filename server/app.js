@@ -73,10 +73,6 @@ app.post('/login', (req, res) => {
      */
     if ((username === ADMIN_USERNAME && password === ADMIN_PASSWORD)
       || (username === USER_USERNAME && password === USER_PASSWORD)) {
-      const token = Math.random().toString(36).substring(7);
-      const time = new Date();
-      time.setMinutes(time.getMinutes() + 1);
-      const expiry = time;
       const apiKey = 'API Key';
 
       let role = 'user';
@@ -89,18 +85,14 @@ app.post('/login', (req, res) => {
         role: role,
         apiKey: apiKey,
       }
-      const token = jwt.sign(payload, SECRET, {
+      const jToken = jwt.sign(payload, SECRET, {
         expiresIn: 60 * 60 * 24 // expires in 24 hours
       });
 
       // Add user to key:value json store
-      users[token] = {username,role};
+      users[jToken] = {username,role};
 
-      res.send(JSON.stringify(
-        {
-          token
-        }
-      ));
+      res.send(JSON.stringify({ jToken }));
      } else {
        // Return 401 NOT AUTHORIZED if incorrect username/password
        res.sendStatus(401);
@@ -126,15 +118,11 @@ app.post('/checkToken', (req, res) => {
         res.sendStatus(401);
       }
       else {
-        res.send(JSON.stringify(
-          {
-            token
-          }
-        ));
+        res.send(JSON.stringify({ token }));
       }
     });
   } else {
-    delete users[g];
+    delete users[token];
     res.sendStatus(401);
   }
 });

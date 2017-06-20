@@ -2,9 +2,9 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
-var myParser = require("body-parser");
-var jwt = require('jsonwebtoken');
-var jwtDecode = require('jwt-decode');
+const myParser = require("body-parser");
+const jwt = require('jsonwebtoken');
+const jwtDecode = require('jwt-decode');
 
 // To allow hot-reloading, the node server only serves the React.js index.html
 // in the /build file if SERVE_HTML is true
@@ -80,7 +80,7 @@ app.post('/login', function (req, res, next) {
          role = "admin";
        }
 
-      var payload = {
+      const payload = {
         username: username,
         role: role,
         apiKey: apiKey,
@@ -130,7 +130,7 @@ app.post('/checkToken', function (req, res) {
       }
     });
   } else {
-    delete users[token];
+    delete users[g];
     res.sendStatus(401);
   }
 });

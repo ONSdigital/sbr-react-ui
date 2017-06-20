@@ -21,16 +21,14 @@ const auth = {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, password }),
-    }).then((response) => {
-      if (response.status === 200) {
-        return response.json().then((json) => {
-          const apiKey: String = json.apiKey;
-          const role: String = json.role;
-          const token: String = json.token;
+      body: JSON.stringify({username, password})
+    }).then( (response) => {
+      if (response.status === 200){
+        return response.json().then(function(json) {
+          const token = json.jToken;
           sessionStorage.setItem('token', token);
-          // send auth request to save token username pair
-          return callback(true, { apiKey, role, token });
+          //send auth request to save token username pair
+          callback(true,{token});
         });
       }
       return callback(false, { data: 'Unable to login.' });
@@ -42,14 +40,13 @@ const auth = {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ token }),
-    }).then((response) => {
-      if (response.status === 200) {
-        return response.json().then((json) => {
-          const apiKey: String = json.apiKey;
-          const role: String = json.role;
-          // send auth request to save token username pair
-          return callback(true, { authenticated: true, apiKey, role });
+      body: JSON.stringify({token: token})
+    }).then( (response) => {
+      if (response.status === 200){
+        return response.json().then(function(json) {
+          const token = json.token;
+          //send auth request to save token username pair
+          callback(true,{token});
         });
       }
       return callback(false);

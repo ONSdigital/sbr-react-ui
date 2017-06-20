@@ -7,7 +7,9 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
-const myParser = require('body-parser');
+const myParser = require("body-parser");
+const jwt = require('jsonwebtoken');
+const jwtDecode = require('jwt-decode');
 
 // To allow hot-reloading, the node server only serves the React.js index.html
 // in the /build file if SERVE_HTML is true
@@ -19,6 +21,7 @@ const ADMIN_USERNAME = process.env.ONS_BI_UI_TEST_ADMIN_USERNAME;
 const ADMIN_PASSWORD = process.env.ONS_BI_UI_TEST_ADMIN_PASSWORD;
 const USER_USERNAME = process.env.ONS_BI_UI_TEST_USER_USERNAME;
 const USER_PASSWORD = process.env.ONS_BI_UI_TEST_USER_PASSWORD;
+const SECRET = process.env.JWT_SECRET;
 
 // Store the user sessions
 const users = {};
@@ -81,22 +84,28 @@ app.post('/login', (req, res) => {
         role = 'admin';
       }
 
-       // Add user to key:value json store
-      users[token] = { username, role, apiKey, expiry };
+      const payload = {
+        username: username,
+        role: role,
+        apiKey: apiKey,
+      }
+      const token = jwt.sign(payload, SECRET, {
+        expiresIn: 60 * 60 * 24 // expires in 24 hours
+      });
+
+      // Add user to key:value json store
+      users[token] = {username,role};
 
       res.send(JSON.stringify(
         {
-          role,
-          apiKey,
-          token,
-          expiry
+          token
         }
       ));
-    } else {
-      // Return 401 NOT AUTHORIZED if incorrect username/password
-      res.sendStatus(401);
-    }
-  } else if (ENV === 'deployed') {
+     } else {
+       // Return 401 NOT AUTHORIZED if incorrect username/password
+       res.sendStatus(401);
+     }
+  } else if (ENV === "deployed"){
     /*
      * For the deployed environment, the username/password is sent off to the
      * gateway, which will return 200 OK for a correct username/password or
@@ -110,21 +119,22 @@ app.post('/login', (req, res) => {
 
 app.post('/checkToken', (req, res) => {
   const token = req.body.token;
-  if (users[token] !== undefined) {
-    const role = users[token].role;
-    const username = users[token].username;
-    const expiry = users[token].expiry;
-    const apiKey = users[token].apiKey;
-    res.send(JSON.stringify(
-      {
-        role,
-        apiKey,
-        token,
-        expiry,
-        username
+  if (users[token] !== undefined){
+    jwt.verify(token, SECRET, function(err, user) {
+      if (err) {
+        delete users[token];
+        res.sendStatus(401);
       }
-    ));
+      else {
+        res.send(JSON.stringify(
+          {
+            token
+          }
+        ));
+      }
+    });
   } else {
+    delete users[g];
     res.sendStatus(401);
   }
 });

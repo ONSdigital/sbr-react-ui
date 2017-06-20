@@ -7,7 +7,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
-const myParser = require("body-parser");
+const myParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const jwtDecode = require('jwt-decode');
 
@@ -81,23 +81,23 @@ app.post('/login', (req, res) => {
       }
 
       const payload = {
-        username: username,
-        role: role,
-        apiKey: apiKey,
-      }
+        username,
+        role,
+        apiKey
+      };
       const jToken = jwt.sign(payload, SECRET, {
         expiresIn: 60 * 60 * 24 // expires in 24 hours
       });
 
       // Add user to key:value json store
-      users[jToken] = {username,role};
+      users[jToken] = { username, role };
 
       res.send(JSON.stringify({ jToken }));
-     } else {
-       // Return 401 NOT AUTHORIZED if incorrect username/password
-       res.sendStatus(401);
-     }
-  } else if (ENV === "deployed"){
+    } else {
+      // Return 401 NOT AUTHORIZED if incorrect username/password
+      res.sendStatus(401);
+    }
+  } else if (ENV === 'deployed') {
     /*
      * For the deployed environment, the username/password is sent off to the
      * gateway, which will return 200 OK for a correct username/password or
@@ -111,13 +111,12 @@ app.post('/login', (req, res) => {
 
 app.post('/checkToken', (req, res) => {
   const token = req.body.token;
-  if (users[token] !== undefined){
-    jwt.verify(token, SECRET, function(err, user) {
+  if (users[token] !== undefined) {
+    jwt.verify(token, SECRET, (err) => {
       if (err) {
         delete users[token];
         res.sendStatus(401);
-      }
-      else {
+      } else {
         res.send(JSON.stringify({ token }));
       }
     });

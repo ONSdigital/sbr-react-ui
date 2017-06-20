@@ -10,13 +10,14 @@ https://github.com/mxstbr/login-flow
 
 1. Install NPM, it is included with Node.js ([Download](https://nodejs.org/en/))
 
-2. For testing locally, set the following environment variables:
+2. For testing locally, set the following environment variables (use `vim ~/.profile`):
 
 ```shell
 export ONS_BI_UI_TEST_ADMIN_USERNAME=admin
 export ONS_BI_UI_TEST_ADMIN_PASSWORD=admin
 export ONS_BI_UI_TEST_USER_USERNAME=test
 export ONS_BI_UI_TEST_USER_PASSWORD=test
+export JWT_SECRET=SECRET
 ```
 
 ## Running the Demo UI:

@@ -119,12 +119,10 @@ app.post('/checkToken', function (req, res) {
   if (users[token] !== undefined){
     jwt.verify(token, SECRET, function(err, user) {
       if (err) {
-        console.log("ERROR");
         delete users[token];
         res.sendStatus(401);
       }
       else {
-        console.log("NO ERROR");
         res.send(JSON.stringify(
           {
             token

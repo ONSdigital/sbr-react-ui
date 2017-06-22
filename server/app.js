@@ -80,6 +80,7 @@ app.post('/login', function (req, res, next) {
        // Add user to key:value json store
        users[token] = {username,role,apiKey,expiry};
 
+       res.setHeader('Content-Type', 'application/json');
        res.send(JSON.stringify(
          {
            role,
@@ -111,6 +112,7 @@ app.post('/checkToken', function (req, res) {
     const username = users[token].username;
     const expiry = users[token].expiry;
     const apiKey = users[token].apiKey;
+    res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(
       {
         role,

@@ -10,13 +10,14 @@ https://github.com/mxstbr/login-flow
 
 1. Install NPM, it is included with Node.js ([Download](https://nodejs.org/en/))
 
-2. For testing locally, set the following environment variables:
+2. For testing locally, set the following environment variables (use `vim ~/.profile`):
 
 ```shell
-export ONS_BI_UI_TEST_ADMIN_USERNAME=admin
-export ONS_BI_UI_TEST_ADMIN_PASSWORD=admin
-export ONS_BI_UI_TEST_USER_USERNAME=test
-export ONS_BI_UI_TEST_USER_PASSWORD=test
+export SBR_UI_TEST_ADMIN_USERNAME=admin
+export SBR_UI_TEST_ADMIN_PASSWORD=admin
+export SBR_UI_TEST_USER_USERNAME=test
+export SBR_UI_TEST_USER_PASSWORD=test
+export JWT_SECRET=SECRET
 ```
 
 ## Running the Demo UI:
@@ -56,6 +57,14 @@ For the Jasmine test to work, chromedriver is required, install this with the fo
 ```shell
 brew install chromedriver
 ```
+
+## Useful Extensions
+
+* [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo) - for testing Node routes
+
+* [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi/related) - for viewing props & state of React components
+
+* [Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd) - for seeing what is happening in your Redux store
 
 ## Logging into the Demo UI:
 

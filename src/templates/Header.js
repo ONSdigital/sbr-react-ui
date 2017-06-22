@@ -4,16 +4,16 @@ import ONSLogo from '../resources/img/orglogo.svg';
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.state =  {
-      username: "",
-      password: ""
+    this.state = {
+      username: '',
+      password: '',
     };
   }
   setHeader() {
     // Default header is Example UI, unless on "/" or login page
-    var header = "Local";
-    if (location.pathname === '/' || location.pathname === 'Login'){
-      header = "Statistical Business Register";
+    let header = 'Local';
+    if (location.pathname === '/' || location.pathname === 'Login') {
+      header = 'Statistical Business Register';
     }
     return header;
   }
@@ -25,7 +25,13 @@ class Header extends Component {
             <div className="header-global">
               <div className="header-logo">
                 <a href="https://www.ons.gov.uk/" title="Go to the homepage" id="logo" className="content">
-                <img src={ONSLogo} width="240" height="135" alt="Office for National Statistics"></img></a>
+                  <img
+                    src={ONSLogo}
+                    width="240"
+                    height="135"
+                    alt="Office for National Statistics"
+                  />
+                </a>
               </div>
               <div className="banner-text">
                 <h1>{this.setHeader()}</h1>

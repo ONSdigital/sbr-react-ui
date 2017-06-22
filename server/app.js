@@ -17,10 +17,10 @@ const ENV = process.env.ENV;
 const SERVE_HTML = (process.env.SERVE_HTML === 'true');
 
 // Get the admin/user credentials from environment variables
-const ADMIN_USERNAME = process.env.ONS_BI_UI_TEST_ADMIN_USERNAME;
-const ADMIN_PASSWORD = process.env.ONS_BI_UI_TEST_ADMIN_PASSWORD;
-const USER_USERNAME = process.env.ONS_BI_UI_TEST_USER_USERNAME;
-const USER_PASSWORD = process.env.ONS_BI_UI_TEST_USER_PASSWORD;
+const ADMIN_USERNAME = process.env.SBR_UI_TEST_ADMIN_USERNAME;
+const ADMIN_PASSWORD = process.env.SBR_UI_TEST_ADMIN_PASSWORD;
+const USER_USERNAME = process.env.SBR_UI_TEST_USER_USERNAME;
+const USER_PASSWORD = process.env.SBR_UI_TEST_USER_PASSWORD;
 const SECRET = process.env.JWT_SECRET;
 
 // Store the user sessions

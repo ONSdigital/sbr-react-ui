@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Button from 'react-bootstrap-button-loader';
+import { Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { login } from '../actions/AppActions';
 import ErrorMessage from '../components/LoginErrorMessage';
@@ -73,6 +74,10 @@ class Login extends Component {
             <br />
             <ErrorMessage />
             <br /><br />
+            <Alert bsStyle="danger">
+              <strong>Warning: </strong>
+               Do not login using your ONS credentials, use admin/admin or test/test.
+            </Alert>
           </div>
         </div>
       </div>

@@ -15,6 +15,9 @@ describe('builds application', function () {
 });
 
 describe('express serving', function () {
+  var adminToken;
+  var userToken;
+
   it('responds to / with the index.html', function () {
     return request(app)
       .get('/')
@@ -36,5 +39,103 @@ describe('express serving', function () {
       .expect('Content-Type', /html/)
       .expect(200)
       .then(res => expect(res.text).to.contain('<div id="root"></div>'));
+  });
+
+  it('logs a local user in (admin)', function () {
+    return request(app)
+      .post('/login')
+      .type('application/json')
+      .send({
+        'username': 'admin',
+        'password': 'admin'
+      })
+      .then(function (res) {
+        expect('Content-Type', 'application/json; charset=utf-8')
+        var resp = JSON.parse(res.text);
+        adminToken = resp.token;
+        expect(res.text).to.contain('"role":"admin"')
+        expect(res.text).to.contain('"apiKey":"API Key"')
+        expect(200);
+      });
+  });
+
+  it('checks the users token (admin)', function () {
+    return request(app)
+      .post('/checkToken')
+      .type('application/json')
+      .send({
+        'token': adminToken
+      })
+      .expect(200);
+  });
+
+  it('logs a local user out (admin)', function () {
+    return request(app)
+      .post('/logout')
+      .type('application/json')
+      .send({
+        'token': adminToken
+      })
+      .expect(200);
+  });
+
+  it('logs a local user in (test)', function () {
+    return request(app)
+      .post('/login')
+      .type('application/json')
+      .send({
+        'username': 'test',
+        'password': 'test'
+      })
+      .then(function (res) {
+        expect('Content-Type', 'application/json; charset=utf-8')
+        var resp = JSON.parse(res.text);
+        userToken = resp.token;
+        expect(res.text).to.contain('"role":"user"')
+        expect(res.text).to.contain('"apiKey":"API Key"')
+        expect(200);
+      })
+      done();
+  });
+
+  it('checks the users token (test)', function () {
+    return request(app)
+      .post('/checkToken')
+      .type('application/json')
+      .send({
+        'token': userToken
+      })
+      .expect(200);
+  });
+
+  it('logs a local user out (test)', function () {
+    return request(app)
+      .post('/logout')
+      .type('application/json')
+      .send({
+        'token': userToken
+      })
+      .expect(200);
+  });
+
+  it('will not log a user in with incorrect credentials', function () {
+    return request(app)
+      .post('/login')
+      .type('application/json')
+      .send({
+        'username': 'jonDoe',
+        'password': 'qwerty'
+      })
+      .expect(401);
+  });
+
+  it('will return 401 for an invalid token', function () {
+    return request(app)
+      .post('/checkToken')
+      .type('application/json')
+      .send({
+        'token': 'abc'
+      })
+      .expect(401);
   });
 });

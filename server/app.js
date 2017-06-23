@@ -91,7 +91,8 @@ app.post('/login', (req, res) => {
 
       // Add user to key:value json store
       users[jToken] = { username, role };
-
+      
+      res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify({ jToken }));
     } else {
       // Return 401 NOT AUTHORIZED if incorrect username/password
@@ -117,12 +118,10 @@ app.post('/checkToken', (req, res) => {
         delete users[token];
         res.sendStatus(401);
       } else {
+        res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify({ token }));
       }
     });
-  } else {
-    delete users[token];
-    res.sendStatus(401);
   }
 });
 

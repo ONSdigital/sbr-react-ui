@@ -29,6 +29,7 @@
     "supertest-as-promised": "^4.0.0"
   },
   "dependencies": {
+    "prop-types": "^15.5.10",
     "base-64": "^0.1.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",

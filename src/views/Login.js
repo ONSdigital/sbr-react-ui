@@ -1,11 +1,12 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Button from 'react-bootstrap-button-loader';
 import { Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { login } from '../actions/AppActions';
 import ErrorMessage from '../components/LoginErrorMessage';
 
-class Login extends Component {
+class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

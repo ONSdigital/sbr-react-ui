@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import Button from 'react-bootstrap-button-loader';
 import { IndexLinkContainer } from 'react-router-bootstrap';
@@ -7,7 +8,7 @@ import { Link } from 'react-router';
 import { logout } from '../actions/AppActions';
 import '../resources/css/mycss.css';
 
-class NavBar extends Component {
+class NavBar extends React.Component {
   constructor() {
     super();
     this.onLogout = this.onLogout.bind(this);

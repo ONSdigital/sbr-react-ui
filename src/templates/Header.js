@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ONSLogo from '../resources/img/orglogo.svg';
 
-class Header extends Component {
+class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

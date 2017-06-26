@@ -46,17 +46,31 @@ will start React on port 3000. To start the server, use `ENV=local node server/i
 
 ## Testing
 
-You can run `npm test` to run the two test files, make sure you have done `npm restart` to start the UI prior to the test, or the integration tests will fail.
+Running `npm test` will run all the tests described below.
 
-`server.test.js` is run using Mocha and `integration-test.js` is run using Jasmine.
+### Unit
 
-To run the tests individually, use `mocha test/server.test.js` and `jasmine test/integration-test.js`.
+All code in /utils will have associated unit tests in [/test/utils-spec](https://github.com/ONSdigital/sbr-ui/tree/feature/component-testing/test/utils-spec). Jasmine uses a [config file](https://github.com/ONSdigital/sbr-ui/blob/feature/component-testing/test/utils-unit-tests.js) which is necessary to get the tests working with ES6.
+
+### Component
+
+Jasmine, Enzyme and redux-mock-store are used for the component tests, which can be found in [/test/component-tests](https://github.com/ONSdigital/sbr-ui/tree/feature/component-testing/test/component-tests).
+
+### Integration
+
+The Selenium integration tests can be found in [/test/integration-test.js](https://github.com/ONSdigital/sbr-ui/blob/feature/component-testing/test/integration-test.js).
+
+This test will only work if the UI is already running. You can point Selenium at the UI by providing a `UI_URL` environment variable, this is set to `http://localhost:3000` in the `npm test` command.
 
 For the Jasmine test to work, chromedriver is required, install this with the following command:
 
 ```shell
 brew install chromedriver
 ```
+
+### Server
+
+The [server tests](https://github.com/ONSdigital/sbr-ui/blob/feature/component-testing/test/server.test.js) test all the routes of the node server. The environment variable `SERVE_HTML=true` needs to be passed into the server to tell it to serve the bundled React code.
 
 ## Useful Extensions
 
@@ -68,13 +82,7 @@ brew install chromedriver
 
 ## Logging into the Demo UI:
 
-### Locally
-
 Username and password are `test` or `admin`.
-
-### Deployed
-
-Use your ONS credentials.
 
 ## Troubleshooting
 

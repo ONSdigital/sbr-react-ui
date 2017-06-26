@@ -25,11 +25,11 @@ describe('Selenium testing of routes and login page', function() {
       });
     });
 
-    // Not logged in yet so if we go to /About, we should be taken back to
+    // Not logged in yet so if we go to /Support, we should be taken back to
     // the login page. Can check this by looking at the banner text, is "local"
     // for logged in page and 'Statistical Business Register' for the login page.
-    it("About url will return user to login page if not logged in", function(done) {
-      this.driver.get(URL + '/About');
+    it("Support url will return user to login page if not logged in", function(done) {
+      this.driver.get(URL + '/Support');
       var element = this.driver.findElement(selenium.By.className('banner-text'));
       element.getText().then(function(text) {
         expect(text).toBe('Statistical Business Register');

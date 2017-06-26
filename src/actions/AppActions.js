@@ -86,7 +86,6 @@ export function checkAuth(token) {
           role: data.role,
           apiKey: data.apiKey,
         }));
-        forwardTo('/Home');
       } else {
         sessionStorage.clear();
         forwardTo('/');
@@ -162,7 +161,7 @@ function setErrorMessage(message) {
  * Forwards the user
  * @param {string} location The route the user should be forwarded to
  */
-function forwardTo(location) {
+export function forwardTo(location) {
   browserHistory.push(location);
 }
 

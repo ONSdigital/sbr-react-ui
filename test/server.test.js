@@ -14,10 +14,7 @@ describe('builds application', function () {
   });
 });
 
-describe('express serving', function () {
-  var adminToken;
-  var userToken;
-
+describe('routes and authentication work', function () {
   it('responds to / with the index.html', function () {
     return request(app)
       .get('/')
@@ -49,12 +46,10 @@ describe('express serving', function () {
         'username': 'admin',
         'password': 'admin'
       })
-      .then(function (res) {
+      .then(res => {
         expect('Content-Type', 'application/json; charset=utf-8')
-        var resp = JSON.parse(res.text);
-        adminToken = resp.token;
-        expect(res.text).to.contain('"role":"admin"')
-        expect(res.text).to.contain('"apiKey":"API Key"')
+        const resp = JSON.parse(res.text);
+        adminToken = resp.jToken;
         expect(200);
       });
   });
@@ -87,15 +82,12 @@ describe('express serving', function () {
         'username': 'test',
         'password': 'test'
       })
-      .then(function (res) {
+      .then(res => {
         expect('Content-Type', 'application/json; charset=utf-8')
-        var resp = JSON.parse(res.text);
-        userToken = resp.token;
-        expect(res.text).to.contain('"role":"user"')
-        expect(res.text).to.contain('"apiKey":"API Key"')
+        const resp = JSON.parse(res.text);
+        userToken = resp.jToken;
         expect(200);
-      })
-      done();
+      });
   });
 
   it('checks the users token (test)', function () {

@@ -91,7 +91,7 @@ app.post('/login', (req, res) => {
 
       // Add user to key:value json store
       users[jToken] = { username, role };
-      
+
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify({ jToken }));
     } else {
@@ -122,6 +122,8 @@ app.post('/checkToken', (req, res) => {
         res.send(JSON.stringify({ token }));
       }
     });
+  } else {
+    res.sendStatus(401);
   }
 });
 

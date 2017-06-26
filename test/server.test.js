@@ -5,9 +5,6 @@ const expect = require('chai').expect;
 const app = require('../server/app');
 
 describe('builds application', function () {
-  let adminToken;
-  let userToken;
-  
   it('builds to "build" directory', function () {
     // Disable mocha time-out because this takes a lot of time
     this.timeout(0);
@@ -18,6 +15,9 @@ describe('builds application', function () {
 });
 
 describe('routes and authentication work', function () {
+  let adminToken;
+  let userToken;
+
   it('responds to / with the index.html', function () {
     return request(app)
       .get('/')

@@ -22,11 +22,8 @@ const store = createStoreWithMiddleware(
 );
 
 // Redirect() is called on the Login page
-// If the token exists in sessionStorage, checkAuth() is called
 // which will authenticate the token with Node, which returns the
 // username/role etc. The user is then redirected to /Home.
-//      if (nextState.location.state && nextState.location.pathname) {
-
 function redirect() {
   store.dispatch(checkAuth(sessionStorage.token));
 }

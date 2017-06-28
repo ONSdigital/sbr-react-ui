@@ -25,28 +25,19 @@ const store = createStoreWithMiddleware(
 // If the token exists in sessionStorage, checkAuth() is called
 // which will authenticate the token with Node, which returns the
 // username/role etc. The user is then redirected to /Home.
+//      if (nextState.location.state && nextState.location.pathname) {
+
 function redirect() {
   store.dispatch(checkAuth(sessionStorage.token));
 }
 
-// function checkAuthentication(nextState, replaceState) {
-//   redirect();
-  // const { loggedIn } = store.getState();
-  // check if the path isn't dashboard
-  // that way we can apply specific logic
-  // to display/render the path we want to
-  // if (nextState.location.pathname !== '/Home') {
-  //   if (loggedIn) {
-  //     if (nextState.location.state && nextState.location.pathname) {
-  //       redirect();
-  //     } else {
-  //       replaceState(null, '/');
-  //     }
-  //   } else {
-  //     replaceState(null, '/');
-  //   }
-  // }
-// }
+function checkAuthentication(nextState, replaceState) {
+  if (sessionStorage.token) {
+    store.dispatch(checkAuth(sessionStorage.token));
+  } else {
+    replaceState(null, '/');
+  }
+}
 
 /* eslint arrow-body-style: "off" */
 
@@ -55,7 +46,7 @@ const Routes = () => (
     <Router history={browserHistory}>
       <Route path="/" component={Template}>
         <IndexRoute component={Login} onEnter={redirect} />
-        <Route onEnter={redirect} >
+        <Route onEnter={checkAuthentication} >
           <Route path={'Home'} component={Home} />
           <Route path={'Help'} component={Help} />
           <Route path={'Support'} component={Support} />

@@ -3,7 +3,6 @@ import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-
 import Home from './views/Home';
 import NotFound from './views/NotFound';
 import Template from './templates/Template';
@@ -23,38 +22,17 @@ const store = createStoreWithMiddleware(
 );
 
 // Redirect() is called on the Login page
-// If the token exists in sessionStorage, checkAuth() is called
 // which will authenticate the token with Node, which returns the
 // username/role etc. The user is then redirected to /Home.
 function redirect() {
-  if (sessionStorage.token) {
-    store.dispatch(checkAuth(sessionStorage.token));
-  }
+  store.dispatch(checkAuth(sessionStorage.token));
 }
 
 function checkAuthentication(nextState, replaceState) {
-  const { loggedIn } = store.getState();
-
-  // check if the path isn't dashboard
-  // that way we can apply specific logic
-  // to display/render the path we want to
-  if (nextState.location.pathname !== '/Home') {
-    if (loggedIn) {
-      if (nextState.location.state && nextState.location.pathname) {
-        replaceState(null, nextState.location.pathname);
-      } else {
-        replaceState(null, '/');
-      }
-    } else {
-      replaceState(null, '/');
-    }
-  } else if (!loggedIn) {
-    // If the user is already logged in, forward them to the homepage
-    if (nextState.location.state && nextState.location.pathname) {
-      replaceState(null, nextState.location.pathname);
-    } else {
-      replaceState(null, '/');
-    }
+  if (sessionStorage.token) {
+    store.dispatch(checkAuth(sessionStorage.token));
+  } else {
+    replaceState(null, '/');
   }
 }
 

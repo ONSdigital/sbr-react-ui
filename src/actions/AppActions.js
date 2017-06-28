@@ -86,7 +86,6 @@ export function checkAuth(token) {
           role: data.role,
           apiKey: data.apiKey,
         }));
-        forwardTo('/Home');
       } else {
         sessionStorage.clear();
         forwardTo('/');

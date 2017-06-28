@@ -161,7 +161,7 @@ function setErrorMessage(message) {
  * Forwards the user
  * @param {string} location The route the user should be forwarded to
  */
-export function forwardTo(location) {
+function forwardTo(location) {
   browserHistory.push(location);
 }
 

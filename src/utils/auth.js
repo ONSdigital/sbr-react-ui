@@ -21,14 +21,14 @@ const auth = {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({username, password})
-    }).then( (response) => {
-      if (response.status === 200){
-        return response.json().then(function(json) {
+      body: JSON.stringify({ username, password }),
+    }).then((response) => {
+      if (response.status === 200) {
+        return response.json().then((json) => {
           const token = json.jToken;
           sessionStorage.setItem('token', token);
-          //send auth request to save token username pair
-          callback(true,{token});
+          // Send auth request to save token username pair
+          callback(true, { token });
         });
       }
       return callback(false, { data: 'Unable to login.' });
@@ -40,13 +40,13 @@ const auth = {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({token: token})
-    }).then( (response) => {
-      if (response.status === 200){
-        return response.json().then(function(json) {
-          const token = json.token;
-          //send auth request to save token username pair
-          callback(true,{token});
+      body: JSON.stringify({ token }),
+    }).then((response) => {
+      if (response.status === 200) {
+        return response.json().then((json) => {
+          const newToken = json.token;
+          // Send auth request to save token username pair
+          callback(true, { newToken });
         });
       }
       return callback(false);

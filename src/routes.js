@@ -21,13 +21,9 @@ const store = createStoreWithMiddleware(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 
-// Redirect() is called on the Login page
-// which will authenticate the token with Node, which returns the
-// username/role etc. The user is then redirected to /Home.
-function redirect() {
-  store.dispatch(checkAuth(sessionStorage.token));
-}
-
+// checkAuthentication checks if there is a sessionStorage token in browser
+// if there the token gets checked with the node server for authentication
+// if no token is present, the user gets redirected back to the login.
 function checkAuthentication(nextState, replaceState) {
   if (sessionStorage.token) {
     store.dispatch(checkAuth(sessionStorage.token));
@@ -42,7 +38,7 @@ const Routes = () => (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={Template}>
-        <IndexRoute component={Login} onEnter={redirect} />
+        <IndexRoute component={Login} />
         <Route onEnter={checkAuthentication} >
           <Route path={'Home'} component={Home} />
           <Route path={'Help'} component={Help} />

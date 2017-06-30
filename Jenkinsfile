@@ -21,9 +21,6 @@ pipeline {
   options {
     skipDefaultCheckout()
   }
-  triggers {
-    pollSCM('*/5 * * * *') // pollSCM every 5 minutes
-  }
   stages {
     stage('Checkout') {
       agent any

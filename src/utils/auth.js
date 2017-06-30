@@ -47,11 +47,7 @@ const auth = {
       body: JSON.stringify({ token }),
     }).then((response) => {
       if (response.status === 200) {
-        return response.json().then((json) => {
-          const newToken = json.token;
-          // Send auth request to save token username pair
-          callback(true, { newToken });
-        });
+        return response.json();
       }
       return callback(false);
     });

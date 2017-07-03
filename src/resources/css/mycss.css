@@ -42,5 +42,10 @@ body {
     left: -44px;
     margin-bottom: 10px;
   }
+  .userDetails {
+    position: absolute;
+    left: -4px;
+    margin-top: -10px;
+  }
   /* CSS that should be displayed if width is equal to or less than 800px goes here */
 }

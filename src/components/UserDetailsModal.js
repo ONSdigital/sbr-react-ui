@@ -20,7 +20,7 @@ class UserDetailsModal extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="userDetails">
         <div role="button" tabIndex={0} onClick={this.open}>
           <Glyphicon glyph="user" />&nbsp;&nbsp;{this.props.username}
         </div>

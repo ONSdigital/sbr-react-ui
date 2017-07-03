@@ -95,7 +95,7 @@ app.post('/login', (req, res) => {
       users[jToken] = { username, role };
 
       res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify({ jToken }));
+      res.send(JSON.stringify({ jToken, username, role }));
     } else {
       // Return 401 NOT AUTHORIZED if incorrect username/password
       res.sendStatus(401);

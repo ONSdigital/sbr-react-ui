@@ -30,9 +30,11 @@ const auth = {
       if (response.status === 200) {
         return response.json().then((json) => {
           const token = json.jToken;
+          const loginName = json.username;
+          const role = json.role;
           sessionStorage.setItem('token', token);
           // Send auth request to save token username pair
-          callback(true, { token });
+          callback(true, { token, loginName, role });
         });
       }
       return callback(false, { data: 'Unable to login.' });

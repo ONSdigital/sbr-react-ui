@@ -41,7 +41,10 @@ class NavBar extends React.Component {
             </Nav>
             <Nav pullRight>
               <NavItem style={{ paddingRight: '0px', paddingLeft: '20px' }}>
-                <UserDetailsModal />
+                <UserDetailsModal
+                  username={this.props.data.userDetails.username}
+                  userRole="admin"
+                />
               </NavItem>
               <NavItem style={{ paddingRight: '20px', paddingLeft: '60px' }}>
                 <p className="navbar-btn">

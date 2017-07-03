@@ -9,7 +9,7 @@
  *       stateVariable: action.var
  *   });
  */
-import { SET_UI_INFO, SET_API_INFO, SET_DATA_INFO, SENDING_UI_REQUEST, SENDING_API_REQUEST, SENDING_DATA_REQUEST, SET_INFO_ERROR_MESSAGE } from '../constants/InfoConstants';
+import { SET_UI_INFO, SET_API_INFO, SET_DATA_INFO, SENDING_UI_REQUEST, SENDING_API_REQUEST, SENDING_DATA_REQUEST, SET_UI_ERROR_MESSAGE, SET_API_ERROR_MESSAGE, SET_DATA_ERROR_MESSAGE } from '../constants/InfoConstants';
 
 // Object.assign is not yet fully supported in all browsers, so we fallback to
 // a polyfill
@@ -19,16 +19,20 @@ const assign = Object.assign || require('object.assign');
 const initialState = {
   data: {
     lastUpdate: '',
+    currentlySending: false,
+    errorMessage: 'another error',
   },
   ui: {
     version: '',
     lastUpdate: '',
     currentlySending: false,
+    errorMessage: '',
   },
   api: {
     version: '',
     lastUpdate: '',
     currentlySending: false,
+    errorMessage: 'test error',
   },
 };
 
@@ -39,34 +43,33 @@ function infoReducer(state = initialState, action) {
       return assign({}, state, {
         ...state,
         ui: {
+          ...state.ui,
           version: action.newState.version,
           lastUpdate: action.newState.lastUpdate,
-          currentlySending: state.currentlySending,
         },
       });
     case SET_API_INFO:
       return assign({}, state, {
         ...state,
         api: {
+          ...state.api,
           version: action.newState.version,
           lastUpdate: action.newState.lastUpdate,
-          currentlySending: state.currentlySending,
         },
       });
     case SET_DATA_INFO:
       return assign({}, state, {
         ...state,
         data: {
+          ...state.data,
           lastUpdate: action.newState.lastUpdate,
-          currentlySending: state.currentlySending,
         },
       });
     case SENDING_UI_REQUEST:
       return assign({}, state, {
         ...state,
         ui: {
-          lastUpdate: state.lastUpdate,
-          version: state.version,
+          ...state.ui,
           currentlySending: action.sending,
         },
       });
@@ -74,8 +77,7 @@ function infoReducer(state = initialState, action) {
       return assign({}, state, {
         ...state,
         api: {
-          lastUpdate: state.lastUpdate,
-          version: state.version,
+          ...state.api,
           currentlySending: action.sending,
         },
       });
@@ -83,8 +85,32 @@ function infoReducer(state = initialState, action) {
       return assign({}, state, {
         ...state,
         data: {
-          lastUpdate: state.lastUpdate,
+          ...state.data,
           currentlySending: action.sending,
+        },
+      });
+    case SET_UI_ERROR_MESSAGE:
+      return assign({}, state, {
+        ...state,
+        ui: {
+          ...state.ui,
+          errorMessage: action.message,
+        },
+      });
+    case SET_API_ERROR_MESSAGE:
+      return assign({}, state, {
+        ...state,
+        api: {
+          ...state.api,
+          errorMessage: action.message,
+        },
+      });
+    case SET_DATA_ERROR_MESSAGE:
+      return assign({}, state, {
+        ...state,
+        data: {
+          ...state.data,
+          errorMessage: action.message,
         },
       });
     default:

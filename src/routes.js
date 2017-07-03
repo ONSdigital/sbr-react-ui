@@ -38,7 +38,7 @@ const Routes = () => (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={Template}>
-        <IndexRoute component={Login} />
+        <IndexRoute component={Login} onEnter={checkAuthentication} />
         <Route onEnter={checkAuthentication} >
           <Route path={'Home'} component={Home} />
           <Route path={'Help'} component={Help} />

@@ -84,6 +84,9 @@ export function checkAuth(token) {
         sessionStorage.clear();
         forwardTo('/');
       } else if (success) {
+        if (window.location.pathname === '/') {
+          forwardTo('/Home');
+        }
         dispatch(setUserState({
           username: data.username,
           role: data.role,

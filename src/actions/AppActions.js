@@ -80,13 +80,7 @@ export function checkAuth(token) {
   return (dispatch) => {
     auth.checkToken(token, (success, data) => {
       dispatch(setAuthState(success));
-      if (success) {
-        dispatch(setUserState({
-          username: data.username,
-          role: data.role,
-          apiKey: data.apiKey,
-        }));
-      } else {
+      if (!success) {
         sessionStorage.clear();
         forwardTo('/');
       }

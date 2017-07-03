@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Glyphicon, OverlayTrigger } from 'react-bootstrap';
 import Button from 'react-bootstrap-button-loader';
 import { IndexLinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { logout } from '../actions/AppActions';
+import UserDetailsModal from '../components/UserDetailsModal';
 import '../resources/css/mycss.css';
 
 class NavBar extends React.Component {
@@ -31,14 +32,17 @@ class NavBar extends React.Component {
               <IndexLinkContainer to="Home">
                 <NavItem>Home</NavItem>
               </IndexLinkContainer>
-            </Nav>
-            <Nav pullRight>
               <IndexLinkContainer to="Support">
                 <NavItem>Support</NavItem>
               </IndexLinkContainer>
               <IndexLinkContainer to="Help">
                 <NavItem>Help</NavItem>
               </IndexLinkContainer>
+            </Nav>
+            <Nav pullRight>
+              <NavItem style={{ paddingRight: '0px', paddingLeft: '20px' }}>
+                <UserDetailsModal />
+              </NavItem>
               <NavItem style={{ paddingRight: '20px', paddingLeft: '60px' }}>
                 <p className="navbar-btn">
                   <Button

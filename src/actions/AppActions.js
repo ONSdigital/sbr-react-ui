@@ -103,6 +103,11 @@ export function logout() {
       if (success === true) {
         dispatch(sendingRequest(false));
         dispatch(setAuthState(false));
+        dispatch(setUserState({
+          username: '',
+          role: '',
+          apiKey: '',
+        }));
         browserHistory.push('/');
       } else {
         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));

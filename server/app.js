@@ -9,7 +9,7 @@ const morgan = require('morgan');
 const path = require('path');
 const myParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-// const jwtDecode = require('jwt-decode');
+const jwtDecode = require('jwt-decode');
 
 // To allow hot-reloading, the node server only serves the React.js index.html
 // in the /build file if SERVE_HTML is true
@@ -112,6 +112,9 @@ app.post('/login', (req, res) => {
 
 app.post('/checkToken', (req, res) => {
   const token = req.body.token;
+  const decode = jwtDecode(token);
+  const username = decode.username;
+  const role = decode.role;
   if (users[token] !== undefined) {
     jwt.verify(token, SECRET, (err) => {
       if (err) {
@@ -119,7 +122,7 @@ app.post('/checkToken', (req, res) => {
         res.sendStatus(401);
       } else {
         res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({ token }));
+        res.send(JSON.stringify({ token, username, role }));
       }
     });
   } else {

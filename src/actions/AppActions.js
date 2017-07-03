@@ -83,6 +83,11 @@ export function checkAuth(token) {
       if (!success) {
         sessionStorage.clear();
         forwardTo('/');
+      } else if (success) {
+        dispatch(setUserState({
+          username: data.username,
+          role: data.role,
+        }));
       }
     });
   };

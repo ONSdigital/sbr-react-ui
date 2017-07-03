@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Navbar, Nav, NavItem, Glyphicon, OverlayTrigger } from 'react-bootstrap';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import Button from 'react-bootstrap-button-loader';
 import { IndexLinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
@@ -43,7 +43,7 @@ class NavBar extends React.Component {
               <NavItem style={{ paddingRight: '0px', paddingLeft: '20px' }}>
                 <UserDetailsModal
                   username={this.props.data.userDetails.username}
-                  userRole="admin"
+                  userRole={this.props.data.userDetails.role}
                 />
               </NavItem>
               <NavItem style={{ paddingRight: '20px', paddingLeft: '60px' }}>
@@ -73,6 +73,10 @@ NavBar.propTypes = {
   dispatch: PropTypes.func.isRequired,
   data: React.PropTypes.shape({
     currentlySending: PropTypes.bool.isRequired,
+    userDetails: React.PropTypes.shape({
+      username: PropTypes.string.isRequired,
+      role: PropTypes.string.isRequired,
+    }),
   }).isRequired,
 };
 

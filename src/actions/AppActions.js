@@ -81,6 +81,9 @@ export function checkAuth(token) {
     auth.checkToken(token, (success, data) => {
       dispatch(setAuthState(success));
       if (success) {
+        if (window.location.pathname === '/') {
+          forwardTo('/Home');
+        }
         dispatch(setUserState({
           username: data.username,
           role: data.role,

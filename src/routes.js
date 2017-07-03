@@ -9,14 +9,14 @@ import Template from './templates/Template';
 import Login from './views/Login';
 import Help from './views/Help';
 import Support from './views/Support';
-import homeReducer from './reducers/reducers';
-import { checkAuth } from './actions/AppActions';
+import reducer from './reducers/index';
+import { checkAuth } from './actions/LoginActions';
 
 // Creates the Redux reducer with the redux-thunk middleware, which allows us
 // to do asynchronous things in the actions
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(
-  homeReducer,
+  reducer,
   /* eslint no-underscore-dangle: "off"*/
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );

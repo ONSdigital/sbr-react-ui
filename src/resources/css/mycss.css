@@ -42,9 +42,12 @@ body {
     left: -44px;
     margin-bottom: 10px;
   }
+  .infoModal {
+    margin-top: -15px;
+  }
   .userDetails {
     position: absolute;
-    left: -4px;
+    left: 15px;
     margin-top: -10px;
   }
   /* CSS that should be displayed if width is equal to or less than 800px goes here */

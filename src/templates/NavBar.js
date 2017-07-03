@@ -5,8 +5,9 @@ import Button from 'react-bootstrap-button-loader';
 import { IndexLinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { logout } from '../actions/AppActions';
+import { logout } from '../actions/LoginActions';
 import UserDetailsModal from '../components/UserDetailsModal';
+import InfoModal from '../components/InfoModal';
 import '../resources/css/mycss.css';
 
 class NavBar extends React.Component {
@@ -40,10 +41,13 @@ class NavBar extends React.Component {
               </IndexLinkContainer>
             </Nav>
             <Nav pullRight>
-              <NavItem style={{ paddingRight: '0px', paddingLeft: '20px' }}>
+              <NavItem style={{ paddingRight: '-40px', paddingLeft: '0' }}>
+                <InfoModal />
+              </NavItem>
+              <NavItem style={{ paddingRight: '0px', paddingLeft: '0px' }}>
                 <UserDetailsModal
-                  username={this.props.data.userDetails.username}
-                  userRole={this.props.data.userDetails.role}
+                  username={this.props.data.username}
+                  userRole={this.props.data.role}
                 />
               </NavItem>
               <NavItem style={{ paddingRight: '20px', paddingLeft: '60px' }}>
@@ -73,17 +77,15 @@ NavBar.propTypes = {
   dispatch: PropTypes.func.isRequired,
   data: React.PropTypes.shape({
     currentlySending: PropTypes.bool.isRequired,
-    userDetails: React.PropTypes.shape({
-      username: PropTypes.string.isRequired,
-      role: PropTypes.string.isRequired,
-    }),
+    username: PropTypes.string.isRequired,
+    role: PropTypes.string.isRequired,
   }).isRequired,
 };
 
 // Which props do we want to inject, given the global state?
 function select(state) {
   return {
-    data: state,
+    data: state.login,
   };
 }
 

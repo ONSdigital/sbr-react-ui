@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap-button-loader';
 import { Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { login } from '../actions/AppActions';
+import { login } from '../actions/LoginActions';
 import ErrorMessage from '../components/LoginErrorMessage';
 
 class Login extends React.Component {
@@ -96,7 +96,7 @@ Login.propTypes = {
 // Which props do we want to inject, given the global state?
 function select(state) {
   return {
-    data: state,
+    data: state.login,
   };
 }
 

@@ -32,13 +32,19 @@ function checkAuthentication(nextState, replaceState) {
   }
 }
 
+function checkLogin() {
+  if (sessionStorage.token) {
+    store.dispatch(checkAuth(sessionStorage.token));
+  }
+}
+
 /* eslint arrow-body-style: "off" */
 
 const Routes = () => (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={Template}>
-        <IndexRoute component={Login} onEnter={checkAuthentication} />
+        <IndexRoute component={Login} onEnter={checkLogin} />
         <Route onEnter={checkAuthentication} >
           <Route path={'Home'} component={Home} />
           <Route path={'Help'} component={Help} />

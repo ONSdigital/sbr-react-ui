@@ -80,18 +80,17 @@ export function checkAuth(token) {
   return (dispatch) => {
     auth.checkToken(token, (success, data) => {
       dispatch(setAuthState(success));
-      if (success) {
+      if (!success) {
+        sessionStorage.clear();
+        forwardTo('/');
+      } else if (success) {
         if (window.location.pathname === '/') {
           forwardTo('/Home');
         }
         dispatch(setUserState({
           username: data.username,
           role: data.role,
-          apiKey: data.apiKey,
         }));
-      } else {
-        sessionStorage.clear();
-        forwardTo('/');
       }
     });
   };
@@ -107,6 +106,11 @@ export function logout() {
       if (success === true) {
         dispatch(sendingRequest(false));
         dispatch(setAuthState(false));
+        dispatch(setUserState({
+          username: '',
+          role: '',
+          apiKey: '',
+        }));
         browserHistory.push('/');
       } else {
         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));

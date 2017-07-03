@@ -22,19 +22,19 @@ class Header extends React.Component {
       <div>
         <header role="banner" id="global-header">
           <div className="header-wrapper">
-            <div className="header-global">
+            <div className="header-global" style={{ marginBottom: '20px' }}>
               <div className="header-logo">
                 <a href="https://www.ons.gov.uk/" title="Go to the homepage" id="logo" className="content">
                   <img
                     src={ONSLogo}
+                    style={{ marginTop: '30px' }}
                     width="240"
-                    height="135"
                     alt="Office for National Statistics"
                   />
                 </a>
               </div>
               <div className="banner-text">
-                <h1>{this.setHeader()}</h1>
+                <h1 style={{ marginTop: '25px' }}>{this.setHeader()}</h1>
               </div>
             </div>
           </div>

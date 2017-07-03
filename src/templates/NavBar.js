@@ -6,6 +6,7 @@ import { IndexLinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { logout } from '../actions/AppActions';
+import UserDetailsModal from '../components/UserDetailsModal';
 import '../resources/css/mycss.css';
 
 class NavBar extends React.Component {
@@ -31,14 +32,20 @@ class NavBar extends React.Component {
               <IndexLinkContainer to="Home">
                 <NavItem>Home</NavItem>
               </IndexLinkContainer>
-            </Nav>
-            <Nav pullRight>
               <IndexLinkContainer to="Support">
                 <NavItem>Support</NavItem>
               </IndexLinkContainer>
               <IndexLinkContainer to="Help">
                 <NavItem>Help</NavItem>
               </IndexLinkContainer>
+            </Nav>
+            <Nav pullRight>
+              <NavItem style={{ paddingRight: '0px', paddingLeft: '20px' }}>
+                <UserDetailsModal
+                  username={this.props.data.userDetails.username}
+                  userRole={this.props.data.userDetails.role}
+                />
+              </NavItem>
               <NavItem style={{ paddingRight: '20px', paddingLeft: '60px' }}>
                 <p className="navbar-btn">
                   <Button
@@ -66,6 +73,10 @@ NavBar.propTypes = {
   dispatch: PropTypes.func.isRequired,
   data: React.PropTypes.shape({
     currentlySending: PropTypes.bool.isRequired,
+    userDetails: React.PropTypes.shape({
+      username: PropTypes.string.isRequired,
+      role: PropTypes.string.isRequired,
+    }),
   }).isRequired,
 };
 

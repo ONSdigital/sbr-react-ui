@@ -49,8 +49,10 @@ const auth = {
       if (response.status === 200) {
         return response.json().then((json) => {
           const newToken = json.token;
+          const username = json.username;
+          const role = json.role;
           // Send auth request to save token username pair
-          callback(true, { newToken });
+          callback(true, { newToken, username, role });
         });
       }
       return callback(false);

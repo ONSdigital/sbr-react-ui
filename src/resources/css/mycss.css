@@ -21,8 +21,8 @@ body {
 
 /* For the login page */
 .centered {
-  position: fixed;
-  top: 50%;
+  position: absolute;
+  top: 40%;
   left: 50%;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
@@ -41,6 +41,11 @@ body {
     position: absolute;
     left: -44px;
     margin-bottom: 10px;
+  }
+  .userDetails {
+    position: absolute;
+    left: -4px;
+    margin-top: -10px;
   }
   /* CSS that should be displayed if width is equal to or less than 800px goes here */
 }

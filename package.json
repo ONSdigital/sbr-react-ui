@@ -41,7 +41,6 @@
     "supertest-as-promised": "^4.0.0"
   },
   "dependencies": {
-    "prop-types": "^15.5.10",
     "base-64": "^0.1.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
@@ -56,6 +55,7 @@
     "morgan": "^1.7.0",
     "npm-run-script": "0.0.4",
     "object.assign": "^4.0.4",
+    "prop-types": "^15.5.10",
     "rc-pagination": "^1.7.3",
     "react": "^15.5.4",
     "react-bootstrap": "^0.30.7",

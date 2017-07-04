@@ -10,6 +10,8 @@ const path = require('path');
 const myParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const jwtDecode = require('jwt-decode');
+const version = require('./package.json').version;
+
 
 // To allow hot-reloading, the node server only serves the React.js index.html
 // in the /build file if SERVE_HTML is true
@@ -93,7 +95,7 @@ app.post('/login', (req, res) => {
       users[jToken] = { username, role };
 
       res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify({ jToken }));
+      res.send(JSON.stringify({ jToken, username, role }));
     } else {
       // Return 401 NOT AUTHORIZED if incorrect username/password
       res.sendStatus(401);
@@ -135,6 +137,13 @@ app.post('/logout', (req, res) => {
   // Remove user from storage
   delete users[token];
   res.sendStatus(200);
+});
+
+app.get('/info', (req, res) => {
+  res.send(JSON.stringify({
+    version,
+    lastUpdate: 'placeholder'
+  }));
 });
 
 module.exports = app;

@@ -19,7 +19,7 @@ ErrorMessage.propTypes = {
 // Which props do we want to inject, given the global state?
 function select(state) {
   return {
-    errorMessage: state.errorMessage,
+    errorMessage: state.login.errorMessage,
   };
 }
 

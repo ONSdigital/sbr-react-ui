@@ -19,6 +19,33 @@ body {
   padding-top: 2%;
 }
 
+.glyphicon-spin {
+  -webkit-animation: spin 1000ms infinite linear;
+  animation: spin 1000ms infinite linear;
+}
+
+@-webkit-keyframes spin {
+  0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+  }
+  100% {
+      -webkit-transform: rotate(359deg);
+      transform: rotate(359deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+  }
+  100% {
+      -webkit-transform: rotate(359deg);
+      transform: rotate(359deg);
+  }
+}
+
 /* For the login page */
 .centered {
   position: absolute;
@@ -42,9 +69,12 @@ body {
     left: -44px;
     margin-bottom: 10px;
   }
+  .infoModal {
+    margin-top: -15px;
+  }
   .userDetails {
     position: absolute;
-    left: -4px;
+    left: 15px;
     margin-top: -10px;
   }
   /* CSS that should be displayed if width is equal to or less than 800px goes here */

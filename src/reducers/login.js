@@ -10,7 +10,7 @@
  *   });
  */
 
-import { CHECK_AUTH, SET_AUTH, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/AppConstants';
+import { CHECK_AUTH, SET_AUTH, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/LoginConstants';
 
 // Object.assign is not yet fully supported in all browsers, so we fallback to
 // a polyfill
@@ -18,37 +18,41 @@ const assign = Object.assign || require('object.assign');
 
 // The initial application state
 const initialState = {
-  userDetails: {
-    username: '',
-    role: '',
-    apiKey: '',
-  },
+  username: '',
+  role: '',
+  apiKey: '',
   currentlySending: false,
   loggedIn: false,
   errorMessage: '',
 };
 
 // Takes care of changing the application state
-function homeReducer(state = initialState, action) {
+function loginReducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER_DETAILS:
       return assign({}, state, {
-        userDetails: action.newState,
+        ...state,
+        username: action.newState.username,
+        role: action.newState.role,
       });
     case SET_AUTH:
       return assign({}, state, {
+        ...state,
         loggedIn: action.newState,
       });
     case CHECK_AUTH:
       return assign({}, state, {
+        ...state,
         loggedIn: action.newState,
       });
     case SENDING_REQUEST:
       return assign({}, state, {
+        ...state,
         currentlySending: action.sending,
       });
     case SET_ERROR_MESSAGE:
       return assign({}, state, {
+        ...state,
         errorMessage: action.message,
       });
     default:
@@ -56,4 +60,4 @@ function homeReducer(state = initialState, action) {
   }
 }
 
-export default homeReducer;
+export default loginReducer;

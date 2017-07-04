@@ -1,9 +1,8 @@
-import { SET_UI_INFO, SET_API_INFO, SET_DATA_INFO, SENDING_UI_REQUEST, SENDING_API_REQUEST, SENDING_DATA_REQUEST, SET_UI_ERROR_MESSAGE, SET_API_ERROR_MESSAGE, SET_DATA_ERROR_MESSAGE } from '../constants/InfoConstants';
-import * as errorMessages from '../constants/MessageConstants';
+import { SET_UI_INFO, SET_API_INFO, SENDING_UI_REQUEST, SENDING_API_REQUEST, SET_UI_ERROR_MESSAGE, SET_API_ERROR_MESSAGE } from '../constants/InfoConstants';
 import apiInfo from '../utils/apiInfo';
 
 /**
- * Check the users token
+ * Get info (version/last updated) from the Node server
  */
 export function getUiInfo() {
   return (dispatch) => {
@@ -16,7 +15,28 @@ export function getUiInfo() {
           lastUpdate: data.lastUpdate,
         }));
       } else {
-        dispatch(setErrorMessage(SET_UI_ERROR_MESSAGE, errorMessages.GENERAL_ERROR));
+        dispatch(setErrorMessage(SET_UI_ERROR_MESSAGE, data.message));
+      }
+    });
+  };
+}
+
+/**
+ * Get info (version/last updated/last data update) from the API
+ */
+export function getApiInfo() {
+  return (dispatch) => {
+    dispatch(sendingRequest(SENDING_API_REQUEST, true));
+    apiInfo.getApiInfo((success, data) => {
+      dispatch(sendingRequest(SENDING_API_REQUEST, false));
+      if (success) {
+        dispatch(setInfo(SET_API_INFO, {
+          version: data.version,
+          lastApiUpdate: data.lastApiUpdate,
+          lastDataUpdate: data.lastDataUpdate,
+        }));
+      } else {
+        dispatch(setErrorMessage(SET_API_ERROR_MESSAGE, data.message));
       }
     });
   };

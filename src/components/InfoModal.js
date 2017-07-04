@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { Modal, Glyphicon, Table } from 'react-bootstrap';
 import Button from 'react-bootstrap-button-loader';
 import { connect } from 'react-redux';
-import { getUiInfo } from '../actions/InfoActions';
-import ErrorMessage from '../components/InfoErrorMessage';
+import { getUiInfo, getApiInfo } from '../actions/InfoActions';
 
 class InfoModal extends React.Component {
   constructor() {
@@ -17,6 +16,16 @@ class InfoModal extends React.Component {
   }
   componentDidMount() {
     this.props.dispatch(getUiInfo());
+    this.props.dispatch(getApiInfo());
+  }
+  getData(data, type) {
+    if (data.currentlySending) {
+      return (<span className="glyphicon glyphicon-refresh glyphicon-spin" />);
+    }
+    if (data[type] !== '') {
+      return (data[type]);
+    }
+    return (data.errorMessage);
   }
   close() {
     this.setState({ showModal: false });
@@ -25,10 +34,11 @@ class InfoModal extends React.Component {
     this.setState({ showModal: true });
   }
   render() {
-    const data = this.props.data;
-    const spinner = <span className="glyphicon glyphicon-refresh glyphicon-spin" />;
-    const uiVersion = (data.ui.currentlySending) ? spinner : data.ui.version;
-    const uiLastUpdate = (data.ui.currentlySending) ? spinner : data.ui.lastUpdate;
+    const uiVersion = this.getData(this.props.data.ui, 'version');
+    const uiLastUpdate = this.getData(this.props.data.ui, 'lastUpdate');
+    const apiVersion = this.getData(this.props.data.api, 'version');
+    const apiLastUpdate = this.getData(this.props.data.api, 'lastApiUpdate');
+    const dataLastUpdate = this.getData(this.props.data.api, 'lastDataUpdate');
     return (
       <div className="infoModal">
         <div role="button" tabIndex={0} onClick={this.open}>
@@ -50,8 +60,8 @@ class InfoModal extends React.Component {
               <tbody>
                 <tr>
                   <td>Data</td>
-                  <td><span className="glyphicon glyphicon-refresh glyphicon-spin" /></td>
-                  <td><span className="glyphicon glyphicon-refresh glyphicon-spin" /></td>
+                  <td>N/A</td>
+                  <td>{dataLastUpdate}</td>
                 </tr>
                 <tr>
                   <td>UI</td>
@@ -60,14 +70,11 @@ class InfoModal extends React.Component {
                 </tr>
                 <tr>
                   <td>API</td>
-                  <td><span className="glyphicon glyphicon-refresh glyphicon-spin" /></td>
-                  <td><span className="glyphicon glyphicon-refresh glyphicon-spin" /></td>
+                  <td>{apiVersion}</td>
+                  <td>{apiLastUpdate}</td>
                 </tr>
               </tbody>
             </Table>
-            <ErrorMessage errorType="apiError" />
-            <ErrorMessage errorType="uiError" />
-            <ErrorMessage errorType="dataError" />
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.close}>Close</Button>
@@ -86,10 +93,10 @@ InfoModal.propTypes = {
       version: PropTypes.string.isRequired,
       currentlySending: PropTypes.bool.isRequired,
     }).isRequired,
-    data: React.PropTypes.shape({
-      currentlySending: PropTypes.bool.isRequired,
-    }).isRequired,
     api: React.PropTypes.shape({
+      lastApiUpdate: PropTypes.string.isRequired,
+      lastDataUpdate: PropTypes.string.isRequired,
+      version: PropTypes.string.isRequired,
       currentlySending: PropTypes.bool.isRequired,
     }).isRequired,
   }).isRequired,

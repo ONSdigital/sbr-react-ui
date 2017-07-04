@@ -33,6 +33,9 @@ class NavBar extends React.Component {
               <IndexLinkContainer to="Home">
                 <NavItem>Home</NavItem>
               </IndexLinkContainer>
+              <IndexLinkContainer to="Search">
+                <NavItem>Search</NavItem>
+              </IndexLinkContainer>
               <IndexLinkContainer to="Support">
                 <NavItem>Support</NavItem>
               </IndexLinkContainer>

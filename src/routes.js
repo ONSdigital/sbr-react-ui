@@ -7,6 +7,7 @@ import Home from './views/Home';
 import NotFound from './views/NotFound';
 import Template from './templates/Template';
 import Login from './views/Login';
+import Search from './views/Search';
 import Help from './views/Help';
 import Support from './views/Support';
 import reducer from './reducers/index';
@@ -47,6 +48,7 @@ const Routes = () => (
         <IndexRoute component={Login} onEnter={checkLogin} />
         <Route onEnter={checkAuthentication} >
           <Route path={'Home'} component={Home} />
+          <Route path={'Search'} component={Search} />
           <Route path={'Help'} component={Help} />
           <Route path={'Support'} component={Support} />
           <Route path={'*'} component={NotFound} />

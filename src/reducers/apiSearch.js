@@ -47,7 +47,7 @@ function refReducer(state = initialState, action) {
         ...state,
         refSearch: {
           ...state.refSearch,
-          query: action.sending,
+          query: action.query,
         },
       });
     case SET_REF_ERROR_MESSAGE:

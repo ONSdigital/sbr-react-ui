@@ -1,11 +1,10 @@
 import React from 'react';
+import { PageHeader } from 'react-bootstrap';
 
 const NotFound = function () {
   return (
     <div>
-      <h1>
-        404 <small>Not Found</small>
-      </h1>
+      <PageHeader>404 <small>Not Found</small></PageHeader>
     </div>
   );
 };

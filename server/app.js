@@ -146,4 +146,32 @@ app.get('/info', (req, res) => {
   }));
 });
 
+app.get('/search/:id', (req, res) => {
+  setTimeout(() => {
+    // console.log(`Getting id: ${req.params.tagId}`);
+    res.send(JSON.stringify({
+      name: 'Test Business',
+      idbrEntRef: 213821383,
+      sbrEntRef: 892371982731,
+      address: {
+        line1: '153 High Street',
+        line2: '',
+        line3: '',
+        townCity: 'Newport',
+        county: 'Gwent',
+        postCode: 'NP20 8XG'
+      },
+      legalStatus: 2,
+      SIC07: 313213,
+      liveLegalUnit: 1,
+      liveVat: 2,
+      livePaye: 0,
+      employees: 202,
+      workingProps: 2,
+      employment: 204,
+      turnover: 23123323
+    }));
+  }, 1000);
+});
+
 module.exports = app;

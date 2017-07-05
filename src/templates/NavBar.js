@@ -30,16 +30,16 @@ class NavBar extends React.Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav>
-              <IndexLinkContainer to="Home">
+              <IndexLinkContainer to="/Home">
                 <NavItem>Home</NavItem>
               </IndexLinkContainer>
-              <IndexLinkContainer to="Search">
+              <IndexLinkContainer to="/Search">
                 <NavItem>Search</NavItem>
               </IndexLinkContainer>
-              <IndexLinkContainer to="Support">
+              <IndexLinkContainer to="/Support">
                 <NavItem>Support</NavItem>
               </IndexLinkContainer>
-              <IndexLinkContainer to="Help">
+              <IndexLinkContainer to="/Help">
                 <NavItem>Help</NavItem>
               </IndexLinkContainer>
             </Nav>

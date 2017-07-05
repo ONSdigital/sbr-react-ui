@@ -14,7 +14,7 @@ const apiSearch = {
    * @param  {Function} callback Called with returned data.
    */
   getRef(id: string, callback: (success: boolean, data: {}) => void) {
-    fetch(`${API_URL}/v1/business/${id}`, {
+    fetch(`${API_URL}/search/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ const apiSearch = {
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {
-          callback(true, { results: json });
+          callback(true, { results: json, response: response.headers });
         });
       }
       return callback(false, { message: 'Server error: unable to load data.' });

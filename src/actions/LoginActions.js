@@ -24,7 +24,7 @@
  */
 
 import { browserHistory } from 'react-router';
-import { SET_AUTH, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/LoginConstants';
+import { SET_AUTH, USER_LOGOUT, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/LoginConstants';
 import * as errorMessages from '../constants/MessageConstants';
 import auth from '../utils/auth';
 
@@ -106,17 +106,17 @@ export function logout() {
       if (success === true) {
         dispatch(sendingRequest(false));
         dispatch(setAuthState(false));
-        dispatch(setUserState({
-          username: '',
-          role: '',
-          apiKey: '',
-        }));
+        dispatch(resetState(undefined));
         browserHistory.push('/');
       } else {
         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
       }
     });
   };
+}
+
+export function resetState() {
+  return { type: USER_LOGOUT };
 }
 
 /**

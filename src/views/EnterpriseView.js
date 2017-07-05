@@ -14,7 +14,6 @@ class EnterpriseView extends React.Component {
   render() {
     const data = this.props.data;
     const title = <h1 style={{ fontSize: '30px' }}>{data.name}</h1>;
-    const addressTitle = <h3>Address</h3>;
     return (
       <div>
         <PageHeader>Enterprise View</PageHeader>
@@ -37,36 +36,34 @@ class EnterpriseView extends React.Component {
               </Table>
             </ListGroupItem>
             <ListGroupItem>
-              {/*}<Panel collapsible bsStyle="warning" header={addressTitle}>*/}
-                <Table striped bordered condensed hover>
-                  <tbody>
-                    <tr>
-                      <td>Line 1</td>
-                      <td>{data.address.line1}</td>
-                    </tr>
-                    <tr>
-                      <td>Line 2</td>
-                      <td>{data.address.line2}</td>
-                    </tr>
-                    <tr>
-                      <td>Line 3</td>
-                      <td>{data.address.line3}</td>
-                    </tr>
-                    <tr>
-                      <td>Town/City</td>
-                      <td>{data.address.townCity}</td>
-                    </tr>
-                    <tr>
-                      <td>County</td>
-                      <td>{data.address.county}</td>
-                    </tr>
-                    <tr>
-                      <td>Post Code</td>
-                      <td>{data.address.postCode}</td>
-                    </tr>
-                  </tbody>
-                </Table>
-              {/*}</Panel>*/}
+              <Table striped bordered condensed hover>
+                <tbody>
+                  <tr>
+                    <td>Line 1</td>
+                    <td>{data.address.line1}</td>
+                  </tr>
+                  <tr>
+                    <td>Line 2</td>
+                    <td>{data.address.line2}</td>
+                  </tr>
+                  <tr>
+                    <td>Line 3</td>
+                    <td>{data.address.line3}</td>
+                  </tr>
+                  <tr>
+                    <td>Town/City</td>
+                    <td>{data.address.townCity}</td>
+                  </tr>
+                  <tr>
+                    <td>County</td>
+                    <td>{data.address.county}</td>
+                  </tr>
+                  <tr>
+                    <td>Post Code</td>
+                    <td>{data.address.postCode}</td>
+                  </tr>
+                </tbody>
+              </Table>
               <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
                 <Tab eventKey={1} title="Details">Tab 1 content</Tab>
                 <Tab eventKey={2} title="Tab 2">Tab 2 content</Tab>

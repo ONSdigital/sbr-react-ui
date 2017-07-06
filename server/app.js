@@ -153,7 +153,7 @@ app.get('/search/:id', (req, res) => {
   if (timeStamp.toString().charAt(rand) % 2 === 0) {
     setTimeout(() => {
       res.sendStatus(404);
-    }, randMs);
+    }, 100);
   } else {
     setTimeout(() => {
       res.send(JSON.stringify({
@@ -178,7 +178,7 @@ app.get('/search/:id', (req, res) => {
         employment: 204,
         turnover: 23123323
       }));
-    }, randMs);
+    }, 100);
   }
 });
 

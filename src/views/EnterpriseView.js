@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, PageHeader, ListGroup, ListGroupItem, Button, Table, Tabs, Tab } from 'react-bootstrap';
+import { Panel, PageHeader, ListGroup, ListGroupItem, Button, Table, Tabs, Tab, Glyphicon } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
@@ -13,7 +13,10 @@ class EnterpriseView extends React.Component {
   }
   render() {
     const data = this.props.data;
-    const title = <h1 style={{ fontSize: '30px' }}>{data.name}</h1>;
+    const title = (<h1 style={{ fontSize: '30px' }}>
+      <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
+      &nbsp;&nbsp;{data.name}
+    </h1>);
     return (
       <div>
         <PageHeader>Enterprise View</PageHeader>
@@ -65,9 +68,9 @@ class EnterpriseView extends React.Component {
                 </tbody>
               </Table>
               <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
-                <Tab eventKey={1} title="Details">Tab 1 content</Tab>
-                <Tab eventKey={2} title="Tab 2">Tab 2 content</Tab>
-                <Tab eventKey={3} title="Tab 3">Tab 3 content</Tab>
+                <Tab eventKey={1} title="Details"><br />Tab 1 content</Tab>
+                <Tab eventKey={2} title="Tab 2"><br />Tab 2 content</Tab>
+                <Tab eventKey={3} title="Tab 3"><br />Tab 3 content</Tab>
               </Tabs>
             </ListGroupItem>
           </ListGroup>

@@ -24,10 +24,12 @@ const apiSearch = {
         return response.json().then((json) => {
           callback(true, { results: json, response: response.headers });
         });
+      } else if (response.status >= 500 && response.status < 600) {
+        return callback(false, { message: 'Server error: unable to load data.' });
       }
-      return callback(false, { message: 'Server error: unable to load data.' });
+      return callback(false, { message: 'Error: record not found.' });
     }).catch(() => {
-      return callback(false, { message: 'Timeout: unable to load data' });
+      return callback(false, { message: 'Timeout: unable to load data.' });
     });
   },
 };

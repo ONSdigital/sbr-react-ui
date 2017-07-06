@@ -19,6 +19,18 @@ class Search extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.getValidationState = this.getValidationState.bind(this);
   }
+  componentWillReceiveProps(nextProps) {
+    // The Redux action for the api request will set the errorMessage in the
+    // store if the response is 4xx/5xx etc. Show this errorMessage in a modal,
+    // props update on keypress so only show error if it has just appeared.
+    if (nextProps.data.errorMessage !== '' &&
+        nextProps.data.errorMessage !== this.props.data.errorMessage) {
+      this.setState({
+        show: true,
+        errorMessage: nextProps.data.errorMessage,
+      });
+    }
+  }
   onSubmit(e) {
     e.preventDefault();
     const query = this.props.data.query;
@@ -39,9 +51,11 @@ class Search extends React.Component {
     return 'error';
   }
   closeModal() {
-    this.setState({ show: false });
+    this.setState({ show: false, errorMessage: '' });
   }
   changeQuery(evt) {
+    // Store the query in Redux store, so we can access it again if a user
+    // presses 'back to search' on the Enterprise View page.
     this.props.dispatch(setQuery(SET_REF_QUERY, evt.target.value));
   }
   render() {
@@ -73,6 +87,7 @@ Search.propTypes = {
   data: React.PropTypes.shape({
     query: PropTypes.string.isRequired,
     currentlySending: PropTypes.bool.isRequired,
+    errorMessage: PropTypes.string.isRequired,
   }).isRequired,
 };
 

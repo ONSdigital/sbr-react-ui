@@ -7,6 +7,8 @@ import apiSearch from '../utils/apiSearch';
  */
 export function refSearch(query) {
   return (dispatch) => {
+    dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, ''));
+
     dispatch(sendingRequest(SENDING_REF_REQUEST, true));
     dispatch(setQuery(SET_REF_QUERY, query));
     apiSearch.getRef(query, (success, data) => {

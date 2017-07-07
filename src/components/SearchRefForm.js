@@ -17,6 +17,7 @@ const SearchRefForm = function ({
           <FormControl
             type="text"
             value={value}
+            autoFocus
             placeholder="Enter ref to search..."
             maxLength="12"
             onChange={onChange}

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel, PageHeader, ListGroup, ListGroupItem, Button, Table, Tabs, Tab, Glyphicon } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 
 class EnterpriseView extends React.Component {
   constructor(props) {
@@ -10,6 +10,10 @@ class EnterpriseView extends React.Component {
     this.state = {
       query: '',
     };
+    this.goToSearch = this.goToSearch.bind(this);
+  }
+  goToSearch() {
+    browserHistory.push('/Search');
   }
   render() {
     const data = this.props.data;
@@ -74,10 +78,8 @@ class EnterpriseView extends React.Component {
               </Tabs>
             </ListGroupItem>
           </ListGroup>
-          <Button bsStyle="info">
-            <Link to="/Search" style={{ textDecoration: 'none', color: 'white' }}>
+          <Button autoFocus onClick={this.goToSearch} bsStyle="info">
             Return to search
-            </Link>
           </Button>
         </Panel>
       </div>

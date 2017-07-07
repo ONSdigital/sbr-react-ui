@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Panel, PageHeader, ListGroup, ListGroupItem, Button, Table, Tabs, Tab, Glyphicon } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
+import DeveloperView from '../components/DeveloperView';
 
 class EnterpriseView extends React.Component {
   constructor(props) {
@@ -74,7 +75,9 @@ class EnterpriseView extends React.Component {
               <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
                 <Tab eventKey={1} title="Details"><br />Tab 1 content</Tab>
                 <Tab eventKey={2} title="Tab 2"><br />Tab 2 content</Tab>
-                <Tab eventKey={3} title="Tab 3"><br />Tab 3 content</Tab>
+                <Tab eventKey={3} title="Developer View">
+                  <DeveloperView enterprise={data} />
+                </Tab>
               </Tabs>
             </ListGroupItem>
           </ListGroup>

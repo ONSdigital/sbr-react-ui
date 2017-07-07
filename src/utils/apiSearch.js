@@ -14,7 +14,7 @@ const apiSearch = {
    * @param  {Function} callback Called with returned data.
    */
   getRef(id: string, callback: (success: boolean, data: {}) => void) {
-    fetch(`${API_URL}/search/${id}`, {
+    fetch(`${API_URL}/search?id=${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

@@ -6,6 +6,7 @@ import { refSearch, setQuery } from '../actions/ApiActions';
 import { SET_REF_QUERY } from '../constants/ApiConstants';
 import ErrorModal from '../components/ErrorModal';
 import SearchRefForm from '../components/SearchRefForm';
+import EnterprisePanel from '../components/EnterprisePanel';
 
 class Search extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class Search extends React.Component {
     this.state = {
       show: false,
       errorMessage: '',
+      results: [],
     };
     this.changeQuery = this.changeQuery.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -28,7 +30,10 @@ class Search extends React.Component {
       this.setState({
         show: true,
         errorMessage: nextProps.data.errorMessage,
+        results: [],
       });
+    } else {
+      this.setState({ results: nextProps.data.results });
     }
   }
   onSubmit(e) {
@@ -38,6 +43,7 @@ class Search extends React.Component {
       this.props.dispatch(refSearch(query));
     } else {
       this.setState({
+        results: [],
         show: true,
         errorMessage: 'Please enter a valid VAT/PAYE/UBRN reference.',
       });
@@ -59,6 +65,16 @@ class Search extends React.Component {
     this.props.dispatch(setQuery(SET_REF_QUERY, evt.target.value));
   }
   render() {
+    const results = this.state.results.map((enterprise) => {
+      return (
+        <EnterprisePanel
+          key={enterprise.idbr}
+          defaultExpand={false}
+          enterprise={enterprise}
+        />
+      );
+    });
+    const enterprises = (this.props.data.results.length > 0) ? results : <div></div>;
     return (
       <div>
         <PageHeader>
@@ -77,6 +93,8 @@ class Search extends React.Component {
           message={this.state.errorMessage}
           close={this.closeModal}
         />
+        <br />
+        {enterprises}
       </div>
     );
   }
@@ -88,6 +106,7 @@ Search.propTypes = {
     query: PropTypes.string.isRequired,
     currentlySending: PropTypes.bool.isRequired,
     errorMessage: PropTypes.string.isRequired,
+    results: PropTypes.object.isRequired,
   }).isRequired,
 };
 

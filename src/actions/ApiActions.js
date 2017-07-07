@@ -10,6 +10,7 @@ export function refSearch(query) {
     dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, ''));
 
     dispatch(sendingRequest(SENDING_REF_REQUEST, true));
+    dispatch(setResults(SET_REF_RESULTS, { results: [] }));
     dispatch(setQuery(SET_REF_QUERY, query));
     apiSearch.getRef(query, (success, data) => {
       dispatch(sendingRequest(SENDING_REF_REQUEST, false));
@@ -20,7 +21,7 @@ export function refSearch(query) {
         dispatch(setHeaders(SET_REF_HEADERS, {
           headers: data.response,
         }));
-        browserHistory.push(`/Search/${query}`);
+        // browserHistory.push(`/Search/${query}`);
       } else {
         dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message));
       }

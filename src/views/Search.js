@@ -69,8 +69,8 @@ class Search extends React.Component {
       return (
         <tr>
           <td>{enterprise.enterprise}</td>
-          <td>{enterprise.name}</td>
           <td>{enterprise.source}</td>
+          <td>{enterprise.name}</td>
           <td>
             <Button
               onClick={() => browserHistory.push(`/Search/${enterprise.enterprise}`)}
@@ -87,8 +87,8 @@ class Search extends React.Component {
         <thead>
           <tr>
             <th style={{ width: '120px' }}>ID</th>
-            <th >Name</th>
             <th style={{ width: '80px' }}>Source</th>
+            <th >Name</th>
             <th style={{ width: '120px' }}></th>
           </tr>
         </thead>

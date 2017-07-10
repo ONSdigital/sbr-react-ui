@@ -2,7 +2,7 @@
 
 import config from '../config/api-urls';
 
-const { API_URL } = config;
+const { API_URL, API_VERSION } = config;
 
 /**
  * API lib for getting info (version/last updated etc.)
@@ -14,11 +14,8 @@ const apiSearch = {
    * @param  {Function} callback Called with returned data.
    */
   getRef(id: string, callback: (success: boolean, data: {}) => void) {
-    fetch(`${API_URL}/search?id=${id}`, {
+    fetch(`${API_URL}/${API_VERSION}/search?id=${id}`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {

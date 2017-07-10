@@ -37,11 +37,8 @@ const apiInfo = {
    * @param  {Function} callback Called with returned data.
    */
   getApiInfo(callback: (success: boolean, data: {}) => void) {
-    fetch(`${API_URL}/info`, {
+    fetch(`${API_URL}/version`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {

@@ -21,7 +21,9 @@ export function refSearch(query) {
         dispatch(setHeaders(SET_REF_HEADERS, {
           headers: data.response,
         }));
-        // browserHistory.push(`/Search/${query}`);
+        if (data.results.length === 1) {
+          browserHistory.push(`/Search/${query}`);
+        }
       } else {
         dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message));
       }

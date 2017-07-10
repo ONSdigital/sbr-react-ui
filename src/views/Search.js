@@ -74,7 +74,7 @@ class Search extends React.Component {
         />
       );
     });
-    const enterprises = (this.props.data.results.length > 0) ? results : <div></div>;
+    const enterprises = (this.props.data.results.length > 1) ? results : <div></div>;
     return (
       <div>
         <PageHeader>

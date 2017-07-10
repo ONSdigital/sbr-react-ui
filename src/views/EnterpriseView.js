@@ -9,16 +9,21 @@ class EnterpriseView extends React.Component {
     return (
       <div>
         <PageHeader>Enterprise View</PageHeader>
+        <EnterprisePanel
+          key={this.props.data[0].idbr}
+          defaultExpand={true}
+          enterprise={this.props.data[0]}
+        />
       </div>
     );
   }
 }
 
-EnterpriseView.propTypes = {
-  data: React.PropTypes.shape({
-    name: PropTypes.string.isRequired,
-  }).isRequired,
-};
+// EnterpriseView.propTypes = {
+//   data: React.PropTypes.shape({
+//     name: PropTypes.string.isRequired,
+//   }).isRequired,
+// };
 
 function select(state) {
   return {

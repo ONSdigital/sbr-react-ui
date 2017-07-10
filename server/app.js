@@ -114,15 +114,15 @@ app.post('/login', (req, res) => {
 
 app.post('/checkToken', (req, res) => {
   const token = req.body.token;
-  const decode = jwtDecode(token);
-  const username = decode.username;
-  const role = decode.role;
   if (users[token] !== undefined) {
     jwt.verify(token, SECRET, (err) => {
       if (err) {
         delete users[token];
         res.sendStatus(401);
       } else {
+        const decode = jwtDecode(token);
+        const username = decode.username;
+        const role = decode.role;
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify({ token, username, role }));
       }

@@ -1,9 +1,10 @@
 import React from 'react';
+import { PageHeader } from 'react-bootstrap';
 
 const Help = function () {
   return (
     <div>
-      <h1 className="page-header">Help</h1>
+      <PageHeader>Help</PageHeader>
       <p>
         You can read this page for help regarding the functionality of the
         Statistical Business Register User Interface.

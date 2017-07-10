@@ -7,6 +7,8 @@ import Home from './views/Home';
 import NotFound from './views/NotFound';
 import Template from './templates/Template';
 import Login from './views/Login';
+import Search from './views/Search';
+import EnterpriseView from './views/EnterpriseView';
 import Help from './views/Help';
 import Support from './views/Support';
 import reducer from './reducers/index';
@@ -39,17 +41,18 @@ function checkLogin() {
 }
 
 /* eslint arrow-body-style: "off" */
-
 const Routes = () => (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={Template}>
         <IndexRoute component={Login} onEnter={checkLogin} />
         <Route onEnter={checkAuthentication} >
-          <Route path={'Home'} component={Home} />
-          <Route path={'Help'} component={Help} />
-          <Route path={'Support'} component={Support} />
-          <Route path={'*'} component={NotFound} />
+          <Route path={'/Home'} component={Home} />
+          <Route path={'/Search'} component={Search} />
+          <Route path={'/Search/:id'} component={EnterpriseView} />
+          <Route path={'/Help'} component={Help} />
+          <Route path={'/Support'} component={Support} />
+          <Route path={'/*'} component={NotFound} />
         </Route>
       </Route>
     </Router>

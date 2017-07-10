@@ -1,5 +1,7 @@
 # Statistical Business Register User Interface using React.js
 
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ONSdigital/sbr-ui/blob/feature/skeleton/LICENSE)
+
 The following tutorials were used to get the deployment with Node.js and the login with redux sorted:
 
 https://medium.com/@patriciolpezjuri/using-create-react-app-with-react-router-express-js-8fa658bf892d#.mt6bbdd8m

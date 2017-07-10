@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Glyphicon } from 'react-bootstrap';
-import Button from 'react-bootstrap-button-loader';
+import { Modal, Glyphicon, Button } from 'react-bootstrap';
 
 class UserDetailsModal extends React.Component {
   constructor() {

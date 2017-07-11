@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Header from './Header';
 import NavBar from './NavBar';
 import Banner from './Banner';
+import Footer from './Footer';
 import config from '../config/constants';
 
 const { ENV } = config;
@@ -29,6 +30,7 @@ const Template = function (props) {
         <NavBar />
         {props.children}
       </div>
+      <Footer />
     </div>
   );
 };

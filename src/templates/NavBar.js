@@ -36,12 +36,6 @@ class NavBar extends React.Component {
               <IndexLinkContainer to="/Search">
                 <NavItem>Search</NavItem>
               </IndexLinkContainer>
-              <IndexLinkContainer to="/Support">
-                <NavItem>Support</NavItem>
-              </IndexLinkContainer>
-              <IndexLinkContainer to="/Help">
-                <NavItem>Help</NavItem>
-              </IndexLinkContainer>
             </Nav>
             <Nav pullRight>
               <NavItem style={{ paddingRight: '-40px', paddingLeft: '0' }}>

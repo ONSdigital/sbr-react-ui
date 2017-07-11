@@ -11,6 +11,7 @@ const myParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const jwtDecode = require('jwt-decode');
 const version = require('./package.json').version;
+const formatDate = require('./formatDate.js');
 
 
 // To allow hot-reloading, the node server only serves the React.js index.html
@@ -29,6 +30,8 @@ const SECRET = process.env.JWT_SECRET;
 const users = {};
 
 const app = express();
+
+const startTime = formatDate(new Date());
 
 // Setup logger
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
@@ -142,7 +145,7 @@ app.post('/logout', (req, res) => {
 app.get('/info', (req, res) => {
   res.send(JSON.stringify({
     version,
-    lastUpdate: 'placeholder'
+    lastUpdate: startTime
   }));
 });
 

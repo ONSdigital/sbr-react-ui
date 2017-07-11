@@ -4,7 +4,7 @@ import { Panel, ListGroup, ListGroupItem, Button, Table, Tabs, Tab, Glyphicon } 
 import { browserHistory } from 'react-router';
 import DeveloperView from './DeveloperView';
 
-const EnterprisePanel = function ({ enterprise, defaultExpand }) {
+const EnterprisePanel = function ({ enterprise }) {
   const title = (<h1 style={{ fontSize: '30px' }}>
     <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
     &nbsp;&nbsp;{enterprise.name}, Source: {enterprise.source}
@@ -81,7 +81,6 @@ const EnterprisePanel = function ({ enterprise, defaultExpand }) {
 
 EnterprisePanel.propTypes = {
   enterprise: PropTypes.object.isRequired,
-  defaultExpand: PropTypes.object.isRequired,
 };
 
 export default EnterprisePanel;

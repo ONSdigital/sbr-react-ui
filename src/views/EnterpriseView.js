@@ -1,26 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { PageHeader } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import EnterprisePanel from '../components/EnterprisePanel';
 
-const EnterpriseView = function ({ data }) {
+const EnterpriseView = function ({ routeParams, data }) {
   return (
     <div>
       <PageHeader>Enterprise View</PageHeader>
       <EnterprisePanel
-        key={data[0].ubrn}
-        defaultExpand
-        enterprise={data[0]}
+        key={data[routeParams.index].ubrn}
+        enterprise={data[routeParams.index]}
       />
     </div>
   );
 };
 
 EnterpriseView.propTypes = {
-  data: React.PropTypes.shape({
-    name: PropTypes.string.isRequired,
-  }).isRequired,
+  data: React.PropTypes.object.isRequired,
+  routeParams: React.PropTypes.object.isRequired,
 };
 
 function select(state) {

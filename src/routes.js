@@ -49,7 +49,7 @@ const Routes = () => (
         <Route onEnter={checkAuthentication} >
           <Route path={'/Home'} component={Home} />
           <Route path={'/Search'} component={Search} />
-          <Route path={'/Search/:id'} component={EnterpriseView} />
+          <Route path={'/Search/:enterprise/:index'} component={EnterpriseView} />
           <Route path={'/Help'} component={Help} />
           <Route path={'/Support'} component={Support} />
           <Route path={'/*'} component={NotFound} />

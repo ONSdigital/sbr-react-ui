@@ -10,7 +10,7 @@ const EnterprisePanel = function ({ enterprise, defaultExpand }) {
     &nbsp;&nbsp;{enterprise.name}, Source: {enterprise.source}
   </h1>);
   return (
-    <Panel bsStyle="primary" collapsible defaultExpanded={defaultExpand} header={title}>
+    <Panel bsStyle="primary" collapsible={false} defaultExpanded header={title}>
       <ListGroup fill>
         <ListGroupItem>
           <Table striped bordered condensed hover>

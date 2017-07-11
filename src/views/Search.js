@@ -65,7 +65,7 @@ class Search extends React.Component {
     this.props.dispatch(setQuery(SET_REF_QUERY, evt.target.value));
   }
   displayEnterprises() {
-    const tableRows = this.props.data.results.map((enterprise) => {
+    const tableRows = this.props.data.results.map((enterprise, index) => {
       return (
         <tr>
           <td>{enterprise.enterprise}</td>
@@ -73,7 +73,7 @@ class Search extends React.Component {
           <td>{enterprise.name}</td>
           <td>
             <Button
-              onClick={() => browserHistory.push(`/Search/${enterprise.enterprise}`)}
+              onClick={() => browserHistory.push(`/Search/${enterprise.enterprise}/${index}`)}
               bsStyle="info"
             >
                 Go to record

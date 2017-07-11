@@ -7,10 +7,10 @@ import DeveloperView from './DeveloperView';
 const EnterprisePanel = function ({ enterprise, defaultExpand }) {
   const title = (<h1 style={{ fontSize: '30px' }}>
     <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
-    &nbsp;&nbsp;{enterprise.enterprise}
+    &nbsp;&nbsp;{enterprise.name}, Source: {enterprise.source}
   </h1>);
   return (
-    <Panel collapsible defaultExpanded={defaultExpand} header={title}>
+    <Panel bsStyle="primary" collapsible={false} defaultExpanded header={title}>
       <ListGroup fill>
         <ListGroupItem>
           <Table striped bordered condensed hover>
@@ -22,7 +22,7 @@ const EnterprisePanel = function ({ enterprise, defaultExpand }) {
             </thead>
             <tbody>
               <tr>
-                <td>{enterprise.idbr}</td>
+                <td>{enterprise.enterprise}</td>
                 <td>{enterprise.sbrEntRef}</td>
               </tr>
             </tbody>

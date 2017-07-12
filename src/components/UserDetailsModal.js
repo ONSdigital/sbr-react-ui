@@ -33,15 +33,16 @@ class UserDetailsModal extends React.Component {
             <br /><br />
             <Glyphicon glyph="lock" />&nbsp;&nbsp;Role: <strong>{this.props.userRole}</strong>
             <br /><br />
-            <Glyphicon glyph="text-size" />&nbsp;&nbsp;Text Size:
-            <Button faIcon="minus" onClick={fontChange.decreaseText}>-</Button>
-            <Button faIcon="plus" onClick={fontChange.increaseText}>+</Button>
-            <Button faIcon="plus" onClick={fontChange.textDefault}>Set to Default</Button>
-            <br /><br />
-            <Button faIcon="plus" onClick={fontChange.darkMode}>Dark Mode</Button>
-            <Button faIcon="plus" onClick={fontChange.normalMode}>Default Mode</Button>
+            <Glyphicon glyph="text-size" />&nbsp;&nbsp;Text Size:&nbsp;
+            <Button bsSize="small" onClick={fontChange.decreaseText}>-</Button>&nbsp;
+            <Button bsSize="small" onClick={fontChange.increaseText}>+</Button>
           </Modal.Body>
           <Modal.Footer>
+            <div className="pull-left">
+              <strong>Dark Mode:</strong>&nbsp;
+              <input type="checkbox" data-toggle="toggle" onClick={fontChange.darkMode} />
+            </div>
+            <Button bsSize="small" onClick={fontChange.textDefault}>Set to Default</Button>
             <Button onClick={this.close}>Close</Button>
           </Modal.Footer>
         </Modal>

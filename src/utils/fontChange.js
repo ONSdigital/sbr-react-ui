@@ -27,30 +27,22 @@ const fontChange = {
     location.reload();
   },
   darkMode() {
-    document.body.style.backgroundColor = 'black';
-    const css = 'html {-webkit-filter: invert(100%);' +
-    '-moz-filter: invert(100%);' +
-    '-o-filter: invert(100%);' +
-    '-ms-filter: invert(100%); }';
     const head = document.getElementsByTagName('head')[0];
     const style = document.createElement('style');
-    style.type = 'text/css';
-    if (style.styleSheet) {
-      style.styleSheet.cssText = css;
+    let css = '';
+    if (document.body.style.backgroundColor === 'white' || document.body.style.backgroundColor === '') {
+      document.body.style.backgroundColor = 'black';
+      css = 'html {-webkit-filter: invert(100%);' +
+      '-moz-filter: invert(100%);' +
+      '-o-filter: invert(100%);' +
+      '-ms-filter: invert(100%); }';
     } else {
-      style.appendChild(document.createTextNode(css));
+      document.body.style.backgroundColor = 'white';
+      css = 'html {-webkit-filter: invert(0%);' +
+      '-moz-filter: invert(0%);' +
+      '-o-filter: invert(0%);' +
+      '-ms-filter: invert(0%); }';
     }
-    // injecting the css to the head
-    head.appendChild(style);
-  },
-  normalMode() {
-    document.body.style.backgroundColor = 'white';
-    const css = 'html {-webkit-filter: invert(0%);' +
-    '-moz-filter: invert(0%);' +
-    '-o-filter: invert(0%);' +
-    '-ms-filter: invert(0%); }';
-    const head = document.getElementsByTagName('head')[0];
-    const style = document.createElement('style');
     style.type = 'text/css';
     if (style.styleSheet) {
       style.styleSheet.cssText = css;

@@ -1,3 +1,8 @@
+'use strict';
+
+// Rule exceptions:
+/* eslint strict: "off" */
+
 function formatDate(date) {
   let dd = date.getDate();
   let mm = date.getMonth() + 1;

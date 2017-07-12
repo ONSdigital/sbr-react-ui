@@ -14,7 +14,7 @@ const apiSearch = {
    * @param  {Function} callback Called with returned data.
    */
   getRef(id: string, callback: (success: boolean, data: {}) => void) {
-    fetch(`${API_URL}/${API_VERSION}/search?id=${id}`, {
+    fetch(`${API_URL}/${API_VERSION}/suggest?id=${id}`, {
       method: 'GET',
     }).then((response) => {
       if (response.status === 200) {

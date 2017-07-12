@@ -45,7 +45,7 @@ const EnterpriseResultsTable = function ({ results }) {
 };
 
 EnterpriseResultsTable.propTypes = {
-  results: PropTypes.object.isRequired,
+  results: PropTypes.array.isRequired,
 };
 
 export default EnterpriseResultsTable;

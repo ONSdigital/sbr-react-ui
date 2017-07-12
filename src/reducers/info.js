@@ -39,7 +39,8 @@ function infoReducer(state = initialState, action) {
         api: {
           ...state.api,
           version: action.newState.version,
-          lastUpdate: action.newState.lastUpdate,
+          lastApiUpdate: action.newState.lastApiUpdate,
+          lastDataUpdate: action.newState.lastDataUpdate,
         },
       });
     case SENDING_UI_REQUEST:

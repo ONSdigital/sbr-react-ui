@@ -43,7 +43,7 @@ const apiInfo = {
       if (response.status === 200) {
         return response.json().then((json) => {
           const version: string = json.version;
-          const lastApiUpdate: string = json.lastApiUpdate;
+          const lastApiUpdate: string = json.builtAtString;
           const lastDataUpdate: string = json.lastDataUpdate;
           callback(true, { version, lastApiUpdate, lastDataUpdate });
         });

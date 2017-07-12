@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Glyphicon, Button } from 'react-bootstrap';
+import fontChange from '../utils/fontChange';
 
 class UserDetailsModal extends React.Component {
   constructor() {
@@ -31,6 +32,14 @@ class UserDetailsModal extends React.Component {
             <Glyphicon glyph="user" />&nbsp;&nbsp;Username: <strong>{this.props.username}</strong>
             <br /><br />
             <Glyphicon glyph="lock" />&nbsp;&nbsp;Role: <strong>{this.props.userRole}</strong>
+            <br /><br />
+            <Glyphicon glyph="text-size" />&nbsp;&nbsp;Text Size:
+            <Button faIcon="minus" onClick={fontChange.decreaseText}>-</Button>
+            <Button faIcon="plus" onClick={fontChange.increaseText}>+</Button>
+            <Button faIcon="plus" onClick={fontChange.textDefault}>Set to Default</Button>
+            <br /><br />
+            <Button faIcon="plus" onClick={fontChange.darkMode}>Dark Mode</Button>
+            <Button faIcon="plus" onClick={fontChange.normalMode}>Default Mode</Button>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.close}>Close</Button>

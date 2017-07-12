@@ -6,14 +6,14 @@ import NavBar from './NavBar';
 const Template = function (props) {
   if (props.location.pathname === '/' || props.location.pathname === 'Login') {
     return (
-      <div className="container">
+      <div className="container" id="wholePage">
         <Header />
         {props.children}
       </div>
     );
   }
   return (
-    <div className="container">
+    <div className="container" id="wholePage">
       <Header />
       <NavBar />
       {props.children}

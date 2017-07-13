@@ -22,6 +22,7 @@ if (cluster.isMaster) {
     console.log(`worker ${worker.process.pid} died`);
   });
 } else {
+  app.maxSockets = 500;
   app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}!`);
   });

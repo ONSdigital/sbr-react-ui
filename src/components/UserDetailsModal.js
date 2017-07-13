@@ -24,7 +24,7 @@ class UserDetailsModal extends React.Component {
         <div id="iconDiv" role="button" tabIndex={0} onClick={this.open}>
           <Glyphicon glyph="user" />&nbsp;&nbsp;{this.props.username}
         </div>
-        <Modal id="t12" show={this.state.showModal} onHide={this.close}>
+        <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
             <Modal.Title>User Details</Modal.Title>
           </Modal.Header>
@@ -33,7 +33,7 @@ class UserDetailsModal extends React.Component {
             <br /><br />
             <Glyphicon glyph="lock" />&nbsp;&nbsp;Role: <strong>{this.props.userRole}</strong>
           </Modal.Body>
-          <Modal.Footer id="t13">
+          <Modal.Footer>
             <Button id="closeModal" type="submit" onClick={this.close}>Close</Button>
           </Modal.Footer>
         </Modal>

@@ -13,7 +13,6 @@ const jwtDecode = require('jwt-decode');
 const version = require('./package.json').version;
 const formatDate = require('./formatDate.js');
 
-
 // To allow hot-reloading, the node server only serves the React.js index.html
 // in the /build file if SERVE_HTML is true
 const ENV = process.env.ENV;

@@ -2,11 +2,9 @@ const loadtest = require('loadtest');
 
 const HOST = (process.env.HOST || 'http://localhost:3001');
 const REQUESTS = (process.env.REQUESTS || 1000);
+const REQ_PER_SECOND = (process.env.REQ_PER_SECOND || 500);
 const DURATION = 10;
 const BUFFER = 5; // Incase the loadtest over runs duration
-
-// The tests will fail if the requests per second is below this
-const REQ_PER_SECOND = 500;
 
 describe("loadtest suite of stress tests", function() {
 

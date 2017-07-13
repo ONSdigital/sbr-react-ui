@@ -52,15 +52,15 @@ Running `npm test` will run all the tests described below.
 
 ### Unit
 
-All code in /utils will have associated unit tests in [/test/utils-spec](https://github.com/ONSdigital/sbr-ui/tree/feature/component-testing/test/utils-spec). Jasmine uses a [config file](https://github.com/ONSdigital/sbr-ui/blob/feature/component-testing/test/utils-unit-tests.js) which is necessary to get the tests working with ES6.
+All code in /utils will have associated unit tests in [/test/utils-spec](https://github.com/ONSdigital/sbr-ui/test/utils-spec). Jasmine uses a [config file](https://github.com/ONSdigital/sbr-ui/test/utils-unit-tests.js) which is necessary to get the tests working with ES6.
 
 ### Component
 
-Jasmine, Enzyme and redux-mock-store are used for the component tests, which can be found in [/test/component-tests](https://github.com/ONSdigital/sbr-ui/tree/feature/component-testing/test/component-tests).
+Jasmine, Enzyme and redux-mock-store are used for the component tests, which can be found in [/test/component-tests](https://github.com/ONSdigital/sbr-ui/test/component-tests).
 
 ### Integration
 
-The Selenium integration tests can be found in [/test/integration-test.js](https://github.com/ONSdigital/sbr-ui/blob/feature/component-testing/test/integration-test.js).
+The Selenium integration tests can be found in [/test/integration-test.js](https://github.com/ONSdigital/sbr-ui/test/integration-test.js).
 
 This test will only work if the UI is already running. You can point Selenium at the UI by providing a `UI_URL` environment variable, this is set to `http://localhost:3000` in the `npm test` command.
 
@@ -72,11 +72,11 @@ brew install chromedriver
 
 ### Server
 
-The [server tests](https://github.com/ONSdigital/sbr-ui/blob/feature/component-testing/test/server.test.js) test all the routes of the node server. The environment variable `SERVE_HTML=true` needs to be passed into the server to tell it to serve the bundled React code.
+The [server tests](https://github.com/ONSdigital/sbr-ui/test/server.test.js) test all the routes of the node server. The environment variable `SERVE_HTML=true` needs to be passed into the server to tell it to serve the bundled React code.
 
 ### Stress
 
-The [stress tests](https://github.com/ONSdigital/sbr-ui/blob/fix/optimise-node-server/test/loadtest-spec/loadtest-test.js) use [loadtest](https://github.com/alexfernandez/loadtest) alongside Jasmine. If you have the node server running, you can run the following command to run the stress tests:
+The [stress tests](https://github.com/ONSdigital/sbr-ui/test/loadtest-spec/loadtest-test.js) use [loadtest](https://github.com/alexfernandez/loadtest) alongside Jasmine. If you have the node server running, you can run the following command to run the stress tests:
 
 `HOST=http://localhost:3001 REQUESTS=5000 npm run-script test-load`
 

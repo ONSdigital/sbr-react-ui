@@ -35,7 +35,7 @@ const startTime = formatDate(new Date());
 // Setup logger
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
 
-// Serve static assets
+// Serve static assets (static js files for React from 'npm run build')
 if (SERVE_HTML) {
   app.use(express.static(path.resolve(__dirname, '..', 'build')));
 }
@@ -146,42 +146,6 @@ app.get('/info', (req, res) => {
     version,
     lastUpdate: startTime
   }));
-});
-
-app.get('/search/:id', (req, res) => {
-  const timeStamp = Date.now();
-  const rand = Math.floor(Math.random() * 10) + 1;
-  const randMs = Math.floor(Math.random() * 3000) + 250;
-  if (timeStamp.toString().charAt(rand) % 2 === 0) {
-    setTimeout(() => {
-      res.sendStatus(404);
-    }, 100);
-  } else {
-    setTimeout(() => {
-      res.send(JSON.stringify({
-        name: 'Test Business',
-        idbrEntRef: 213821383,
-        sbrEntRef: 892371982731,
-        address: {
-          line1: '153 High Street',
-          line2: '',
-          line3: '',
-          townCity: 'Newport',
-          county: 'Gwent',
-          postCode: 'NP20 8XG'
-        },
-        legalStatus: 2,
-        SIC07: 313213,
-        liveLegalUnit: 1,
-        liveVat: 2,
-        livePaye: 0,
-        employees: 202,
-        workingProps: 2,
-        employment: 204,
-        turnover: 23123323
-      }));
-    }, 100);
-  }
 });
 
 module.exports = app;

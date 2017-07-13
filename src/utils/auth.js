@@ -37,7 +37,10 @@ const auth = {
           callback(true, { token, loginName, role });
         });
       }
-      return callback(false, { data: 'Unable to login.' });
+      return callback(false, { message: 'Unable to login.' });
+    })
+    .catch(() => {
+      return callback(false, { message: 'Server error: request timed out.' });
     });
   },
   checkToken(token: String, callback: (success: boolean, data: ?{}) => void) {
@@ -58,6 +61,9 @@ const auth = {
         });
       }
       return callback(false);
+    })
+    .catch(() => {
+      return callback(false, { message: 'Server error: request timed out.' });
     });
   },
   /**

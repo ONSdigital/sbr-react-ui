@@ -74,6 +74,18 @@ brew install chromedriver
 
 The [server tests](https://github.com/ONSdigital/sbr-ui/blob/feature/component-testing/test/server.test.js) test all the routes of the node server. The environment variable `SERVE_HTML=true` needs to be passed into the server to tell it to serve the bundled React code.
 
+### Stress
+
+The [stress tests](https://github.com/ONSdigital/sbr-ui/blob/fix/optimise-node-server/test/loadtest-spec/loadtest-test.js) use [loadtest](https://github.com/alexfernandez/loadtest) alongside Jasmine. If you have the node server running, you can run the following command to run the stress tests:
+
+`HOST=http://localhost:3001 REQUESTS=5000 npm run-script test-load`
+
+To run the stress tests and the node server together, use the following:
+
+`node server/ & HOST=http://localhost:3001 REQUESTS=5000 npm run-script test-load`
+
+The node server will carry on running afterwards, you can shut it down with `killall node`.
+
 ## Useful Extensions
 
 * [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo) - for testing Node routes

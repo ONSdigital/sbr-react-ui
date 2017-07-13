@@ -12,6 +12,7 @@ const jwt = require('jsonwebtoken');
 const jwtDecode = require('jwt-decode');
 const version = require('./package.json').version;
 const formatDate = require('./formatDate.js');
+const compression = require('compression');
 
 // To allow hot-reloading, the node server only serves the React.js index.html
 // in the /build file if SERVE_HTML is true
@@ -31,6 +32,9 @@ const users = {};
 const app = express();
 
 const startTime = formatDate(new Date());
+
+// GZIP all assets
+app.use(compression());
 
 // Setup logger
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));

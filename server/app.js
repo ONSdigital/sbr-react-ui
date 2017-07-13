@@ -13,6 +13,7 @@ const jwtDecode = require('jwt-decode');
 const version = require('./package.json').version;
 const formatDate = require('./formatDate.js');
 const compression = require('compression');
+const mcache = require('memory-cache');
 
 // To allow hot-reloading, the node server only serves the React.js index.html
 // in the /build file if SERVE_HTML is true
@@ -26,30 +27,50 @@ const USER_USERNAME = process.env.SBR_UI_TEST_USER_USERNAME;
 const USER_PASSWORD = process.env.SBR_UI_TEST_USER_PASSWORD;
 const SECRET = process.env.JWT_SECRET;
 
-// Store the user sessions
-const users = {};
+const users = {}; // For the user sessions
+const startTime = formatDate(new Date());
+const TOKEN_EXPIRE = 60 * 60 * 24;
+
+/*
+ * Call cache(duration) to cache a response for a certain
+ * duration, or an unlimited duration if no duration is passed in.
+*/
+const cache = (duration) => {
+  return (req, res, next) => {
+    const url = (req.originalUrl || req.url);
+    const key = `__express__${url}`;
+    const cachedBody = mcache.get(key);
+    if (cachedBody) {
+      res.send(cachedBody);
+      return;
+    }
+    res.sendResponse = res.send;
+    res.send = (body) => {
+      if (duration === undefined) {
+        mcache.put(key, body);
+      } else {
+        mcache.put(key, body, duration);
+      }
+      res.sendResponse(body);
+    };
+    next();
+  };
+};
 
 const app = express();
 
-const startTime = formatDate(new Date());
-
-// GZIP all assets
-app.use(compression());
-
-// Setup logger
+app.use(compression()); // gzip all responses
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
+app.use(myParser.json()); // For parsing body of POSTs
 
 // Serve static assets (static js files for React from 'npm run build')
 if (SERVE_HTML) {
   app.use(express.static(path.resolve(__dirname, '..', 'build')));
 }
 
-// For parsing the body of POST requests
-app.use(myParser.json());
-
 // Always return the main index.html, so react-router renders the route in the client
 if (SERVE_HTML) {
-  app.get('*', (req, res) => {
+  app.get('*', cache(), (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
   });
 }
@@ -88,13 +109,9 @@ app.post('/login', (req, res) => {
         role = 'admin';
       }
 
-      const payload = {
-        username,
-        role,
-        apiKey
-      };
+      const payload = { username, role, apiKey };
       const jToken = jwt.sign(payload, SECRET, {
-        expiresIn: 60 * 60 * 24 // expires in 24 hours
+        expiresIn: TOKEN_EXPIRE
       });
 
       // Add user to key:value json store
@@ -145,7 +162,7 @@ app.post('/logout', (req, res) => {
   res.sendStatus(200);
 });
 
-app.get('/info', (req, res) => {
+app.get('/info', cache(), (req, res) => {
   res.send(JSON.stringify({
     version,
     lastUpdate: startTime

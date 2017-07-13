@@ -54,6 +54,7 @@
     "jasmine-node": "^1.14.5",
     "jsonwebtoken": "^7.1.9",
     "jwt-decode": "^2.2.0",
+    "memory-cache": "^0.2.0",
     "morgan": "^1.7.0",
     "npm-run-script": "0.0.4",
     "object.assign": "^4.0.4",

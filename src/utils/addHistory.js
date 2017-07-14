@@ -5,13 +5,15 @@ const searchHistory = {
    */
   addToHistory(data) {
     let historyArr = [];
+    const formatDate = require('../../server/formatDate.js');
+    const startTime = formatDate(new Date());
     if (localStorage.length !== 0) {
       historyArr = JSON.parse(localStorage.getItem('searchHistory'));
     }
     historyArr.push({
       query: data.url,
       HTTPCode: data.status,
-      timestamp: 'timestamp',
+      timestamp: startTime,
     });
     localStorage.setItem('searchHistory', JSON.stringify(historyArr));
   },

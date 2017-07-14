@@ -2,7 +2,8 @@ import React from 'react';
 import { PageHeader, Label } from 'react-bootstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import '../resources/css/react-bootstrap-table-all.min.css';
-import searchHistory from '../utils/addHistory';
+import searchHistory from '../utils/searchHistory';
+import { countStatusBetween, countStatus } from '../utils/helperMethods';
 
 function columnClassNameFormat(fieldValue) {
   const condition = (fieldValue >= 200 && fieldValue < 400);
@@ -11,10 +12,6 @@ function columnClassNameFormat(fieldValue) {
     (<Label style={style} bsStyle="success">{fieldValue}</Label>) :
     (<Label style={style} bsStyle="danger">{fieldValue}</Label>);
   return colour;
-}
-
-function countStatus(history, status) {
-  return history.filter(h => h.HTTPCode === status).length;
 }
 
 const SearchHistory = function () {
@@ -33,10 +30,11 @@ const SearchHistory = function () {
       <div style={{ clear: 'both' }}>
         <h3 style={style.h1}><Label bsSize="large" bsStyle="success">200</Label>&nbsp;<Label style={style.labels}>{countStatus(history, 200)}</Label></h3>
         <h3 style={style.h1}><Label bsStyle="danger">404</Label>&nbsp;<Label style={style.labels}>{countStatus(history, 404)}</Label></h3>
-        <h3 style={style.h1}><Label bsStyle="warning">500</Label>&nbsp;<Label style={style.labels}>{countStatus(history, 500)}</Label></h3>
+        <h3 style={style.h1}><Label bsStyle="warning">5xx</Label>&nbsp;<Label style={style.labels}>{countStatusBetween(history, { min: 500, max: 599 })}</Label></h3>
         <br /><br /><br /><br />
       </div>
       <BootstrapTable
+        keyBoardNav
         striped
         data={history}
         pagination

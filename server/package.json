@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "base-64": "^0.1.0",
-    "cluster": "^0.7.7",
     "compression": "^1.7.0",
     "memory-cache": "^0.2.0",
     "body-parser": "^1.17.2",

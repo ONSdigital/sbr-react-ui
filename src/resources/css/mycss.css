@@ -10,14 +10,6 @@ html {
   min-height: 100%;
 }
 
-.valid-code {
-  background-color: #4AB32D;
-}
-
-.invalid-code {
-  background-color: red;
-}
-
 .navbar {
   width: 100%;
   margin-bottom: 20px;

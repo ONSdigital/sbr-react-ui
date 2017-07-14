@@ -1,3 +1,5 @@
+const formatDate = require('../../server/formatDate.js');
+
 const searchHistory = {
   /**
    * Gets version/lastUpdate info from the UI.
@@ -5,7 +7,6 @@ const searchHistory = {
    */
   addToHistory(data) {
     let historyArr = [];
-    const formatDate = require('../../server/formatDate.js');
     const startTime = formatDate(new Date());
     if (localStorage.length !== 0) {
       historyArr = JSON.parse(localStorage.getItem('searchHistory'));

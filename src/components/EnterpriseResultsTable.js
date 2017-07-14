@@ -1,46 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
-import { Table, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+import '../resources/css/react-bootstrap-table-all.min.css';
 
 const EnterpriseResultsTable = function ({ results }) {
-  function getTableRows() {
-    const tableRows = results.map((enterprise, index) => {
-      // Focus on the first result
-      const focus = (index === 0);
-      return (
-        <tr>
-          <td>{enterprise.enterprise}</td>
-          <td>{enterprise.source}</td>
-          <td>{enterprise.name}</td>
-          <td>
-            <Button
-              autoFocus={focus}
-              onClick={() => browserHistory.push(`/Search/${enterprise.enterprise}/${index}`)}
-              bsStyle="info"
-            >
-              Go to record
-            </Button>
-          </td>
-        </tr>
-      );
-    });
-    return tableRows;
+  function buttonFormatter(cell, row, enumObject, index) {
+    const focus = (index === 0);
+    return (<Button
+      autoFocus={focus}
+      onClick={() => {
+        browserHistory.push(`/Search/${row.enterprise}/${index}`);
+      }}
+      bsStyle="info"
+    >
+      Go to record
+    </Button>);
   }
   return (
-    <Table style={{ width: '75%' }} striped bordered condensed hover>
-      <thead>
-        <tr>
-          <th style={{ width: '120px' }}>ID</th>
-          <th style={{ width: '80px' }}>Source</th>
-          <th >Name</th>
-          <th style={{ width: '120px' }}></th>
-        </tr>
-      </thead>
-      <tbody>
-        {getTableRows()}
-      </tbody>
-    </Table>
+    <BootstrapTable
+      striped
+      pagination
+      hover
+      data={results}
+    >
+      <TableHeaderColumn dataField="enterprise" width="60" isKey>ID</TableHeaderColumn>
+      <TableHeaderColumn dataField="source" width="50">Source</TableHeaderColumn>
+      <TableHeaderColumn dataField="name" width="100">Name</TableHeaderColumn>
+      <TableHeaderColumn dataField="button" dataFormat={buttonFormatter} width="60">Go to Enterprise View</TableHeaderColumn>
+    </BootstrapTable>
   );
 };
 

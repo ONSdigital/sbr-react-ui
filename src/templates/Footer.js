@@ -11,7 +11,7 @@ const Footer = function () {
     <footer className="footer">
       <div className="container">
         <p style={{ margin: '20px' }} className="text-muted">
-          <Link to="/SearchHistory" style={style}>SearchHistory</Link>
+          <Link to="/SearchHistory" style={style}>Search History</Link>
           |
           <Link to="/Support" style={style}>Support</Link>
           |

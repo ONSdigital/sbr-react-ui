@@ -4,6 +4,12 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import '../resources/css/react-bootstrap-table-all.min.css';
 import searchHistory from '../utils/addHistory';
 
+function columnClassNameFormat(fieldValue) {
+  const condition = (fieldValue >= 200 && fieldValue < 400);
+  const colour = (condition) ? 'valid-code' : 'invalid-code';
+  return colour;
+}
+
 const SearchHistory = function () {
   const h = searchHistory.getSearchHistory();
   return (
@@ -15,10 +21,11 @@ const SearchHistory = function () {
         pagination
         hover
         exportCSV
+        search
       >
-        <TableHeaderColumn dataField="timestamp" width="200">Time Stamp</TableHeaderColumn>
+        <TableHeaderColumn dataField="timestamp" width="200" dataSort>Time Stamp</TableHeaderColumn>
         <TableHeaderColumn dataField="query" isKey>Query</TableHeaderColumn>
-        <TableHeaderColumn dataField="HTTPCode" width="100">HTTP Code</TableHeaderColumn>
+        <TableHeaderColumn dataField="HTTPCode" width="100" columnClassName={columnClassNameFormat}>HTTP Code</TableHeaderColumn>
       </BootstrapTable>
       <br />
     </div>

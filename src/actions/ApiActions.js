@@ -28,8 +28,7 @@ export function refSearch(query) {
       } else {
         dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message));
       }
-      searchHistory.addHistory(data.resp);
-      //searchHistory(data.resp);
+      searchHistory.addToHistory(data.resp);
     });
   };
 }

@@ -3,7 +3,6 @@ import { PageHeader } from 'react-bootstrap';
 import searchHistory from '../utils/addHistory';
 
 const SearchHistory = function () {
-  const searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
   const h = searchHistory.getSearchHistory();
   return (
     <div>

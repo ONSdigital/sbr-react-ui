@@ -1,7 +1,7 @@
 import { browserHistory } from 'react-router';
 import { SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE } from '../constants/ApiConstants';
 import apiSearch from '../utils/apiSearch';
-import { addToHistory } from '../utils/addHistory';
+import searchHistory from '../utils/addHistory';
 
 /**
  * Get info (version/last updated) from the Node server
@@ -28,7 +28,8 @@ export function refSearch(query) {
       } else {
         dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message));
       }
-      addToHistory(data.resp);
+      searchHistory.addHistory(data.resp);
+      //searchHistory(data.resp);
     });
   };
 }

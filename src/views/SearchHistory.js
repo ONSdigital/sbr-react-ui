@@ -1,14 +1,15 @@
 import React from 'react';
 import { PageHeader } from 'react-bootstrap';
+import searchHistory from '../utils/addHistory';
 
 const SearchHistory = function () {
   const searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
+  const h = searchHistory.getSearchHistory();
   return (
     <div>
       <PageHeader>Search History</PageHeader>
-      <p>
+      <h1>{h}</h1>
 
-      </p>
       <br />
     </div>
   );

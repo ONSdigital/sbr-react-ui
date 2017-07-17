@@ -68,13 +68,6 @@ if (SERVE_HTML) {
   app.use(express.static(path.resolve(__dirname, '..', 'build')));
 }
 
-// Always return the main index.html, so react-router renders the route in the client
-if (SERVE_HTML) {
-  app.get('*', cache(), (req, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
-  });
-}
-
 // Below is for CORS, CORS is only needed when React/Node are on different ports
 // e.g. when testing locally and React is on 3000 and Node is on 3001
 if (ENV === 'local') {
@@ -82,6 +75,22 @@ if (ENV === 'local') {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
+  });
+}
+
+// This method needs to be above the serve React code
+// If it's below, the get('*') will point all GETs to the React
+app.get('/info', cache(), (req, res) => {
+  res.send(JSON.stringify({
+    version,
+    lastUpdate: startTime
+  }));
+});
+
+// Always return the main index.html, so react-router renders the route in the client
+if (SERVE_HTML) {
+  app.get('*', cache(), (req, res) => {
+    res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
   });
 }
 
@@ -160,13 +169,6 @@ app.post('/logout', (req, res) => {
   // Remove user from storage
   delete users[token];
   res.sendStatus(200);
-});
-
-app.get('/info', cache(), (req, res) => {
-  res.send(JSON.stringify({
-    version,
-    lastUpdate: startTime
-  }));
 });
 
 module.exports = app;

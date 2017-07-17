@@ -20,7 +20,8 @@
         "global-require": "off",
         "class-methods-use-this": "off",
         "func-names": "off",
-        "react/forbid-prop-types": "off"
+        "react/forbid-prop-types": "off",
+        "arrow-body-style": "off"
     },
     "env": {
       "browser": true

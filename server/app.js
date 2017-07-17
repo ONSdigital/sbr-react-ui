@@ -68,6 +68,16 @@ if (SERVE_HTML) {
   app.use(express.static(path.resolve(__dirname, '..', 'build')));
 }
 
+// Below is for CORS, CORS is only needed when React/Node are on different ports
+// e.g. when testing locally and React is on 3000 and Node is on 3001
+if (ENV === 'local') {
+  app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+  });
+}
+
 // This method needs to be above the serve React code
 // If it's below, the get('*') will point all GETs to the React
 app.get('/info', cache(), (req, res) => {
@@ -81,16 +91,6 @@ app.get('/info', cache(), (req, res) => {
 if (SERVE_HTML) {
   app.get('*', cache(), (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
-  });
-}
-
-// Below is for CORS, CORS is only needed when React/Node are on different ports
-// e.g. when testing locally and React is on 3000 and Node is on 3001
-if (ENV === 'local') {
-  app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
   });
 }
 

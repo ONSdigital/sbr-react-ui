@@ -9,6 +9,8 @@ const EnterprisePanel = function ({ enterprise }) {
     <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
     &nbsp;&nbsp;{enterprise.name}, Source: {enterprise.source}
   </h1>);
+  const url = `https://www.google.co.uk/maps/place/${enterprise.postcode}`;
+  const mapsLink = <a href={url} target="_blank">{enterprise.postcode}</a>;
   return (
     <Panel bsStyle="primary" collapsible={false} defaultExpanded header={title}>
       <ListGroup fill>
@@ -53,7 +55,7 @@ const EnterprisePanel = function ({ enterprise }) {
               </tr>
               <tr>
                 <td>Post Code</td>
-                <td>{enterprise.postcode}</td>
+                <td>{mapsLink}</td>
               </tr>
             </tbody>
           </Table>

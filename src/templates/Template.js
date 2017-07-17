@@ -15,7 +15,7 @@ const Template = function (props) {
     return (
       <div>
         {banner}
-        <div className="container">
+        <div className="container" id="wholePage">
           <Header />
           {props.children}
         </div>
@@ -25,7 +25,7 @@ const Template = function (props) {
   return (
     <div className="wrapper">
       {banner}
-      <div className="container">
+      <div className="container" id="wholePage">
         <Header />
         <NavBar />
         {props.children}

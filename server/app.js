@@ -68,6 +68,15 @@ if (SERVE_HTML) {
   app.use(express.static(path.resolve(__dirname, '..', 'build')));
 }
 
+// This method needs to be above the serve React code
+// If it's below, the get('*') will point all GETs to the React
+app.get('/info', cache(), (req, res) => {
+  res.send(JSON.stringify({
+    version,
+    lastUpdate: startTime
+  }));
+});
+
 // Always return the main index.html, so react-router renders the route in the client
 if (SERVE_HTML) {
   app.get('*', cache(), (req, res) => {
@@ -160,13 +169,6 @@ app.post('/logout', (req, res) => {
   // Remove user from storage
   delete users[token];
   res.sendStatus(200);
-});
-
-app.get('/info', cache(), (req, res) => {
-  res.send(JSON.stringify({
-    version,
-    lastUpdate: startTime
-  }));
 });
 
 module.exports = app;

@@ -13,12 +13,9 @@ const Template = function (props) {
   const banner = (onProdEnv) ? '' : (<Banner />);
   if (props.location.pathname === '/' || props.location.pathname === 'Login') {
     return (
-      <div className="container" id="wholePage">
-        <Header />
-        {props.children}
       <div>
         {banner}
-        <div className="container">
+        <div className="container" id="wholePage">
           <Header />
           {props.children}
         </div>
@@ -26,13 +23,9 @@ const Template = function (props) {
     );
   }
   return (
-    <div className="container" id="wholePage">
-      <Header />
-      <NavBar />
-      {props.children}
     <div className="wrapper">
       {banner}
-      <div className="container">
+      <div className="container" id="wholePage">
         <Header />
         <NavBar />
         {props.children}

@@ -19,8 +19,17 @@ const searchHistory = {
     localStorage.setItem('searchHistory', JSON.stringify(historyArr));
   },
   getSearchHistory() {
-    const history = JSON.parse(localStorage.getItem('searchHistory'));
-    return history;
+    if (localStorage.getItem('searchHistory')) {
+      try {
+        const history = JSON.parse(localStorage.getItem('searchHistory'));
+        return history;
+      } catch (e) {
+        console.log('Unable to retrieve search history.');
+        return [];
+      }
+    } else {
+      return [];
+    }
   },
   clearSearchHistory() {
     localStorage.clear();

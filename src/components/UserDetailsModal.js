@@ -21,7 +21,7 @@ class UserDetailsModal extends React.Component {
   render() {
     return (
       <div className="userDetails">
-        <div role="button" tabIndex={0} onClick={this.open}>
+        <div id="iconDiv" role="button" tabIndex={0} onClick={this.open}>
           <Glyphicon glyph="user" />&nbsp;&nbsp;{this.props.username}
         </div>
         <Modal show={this.state.showModal} onHide={this.close}>
@@ -44,6 +44,7 @@ class UserDetailsModal extends React.Component {
             </div>
             <Button bsSize="small" onClick={fontChange.textDefault}>Set to Default</Button>
             <Button onClick={this.close}>Close</Button>
+            <Button id="closeModal" type="submit" onClick={this.close}>Close</Button>
           </Modal.Footer>
         </Modal>
       </div>

@@ -4,13 +4,15 @@ import { Panel, ListGroup, ListGroupItem, Button, Table, Tabs, Tab, Glyphicon } 
 import { browserHistory } from 'react-router';
 import DeveloperView from './DeveloperView';
 
-const EnterprisePanel = function ({ enterprise, defaultExpand }) {
+const EnterprisePanel = function ({ enterprise }) {
   const title = (<h1 style={{ fontSize: '30px' }}>
     <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
-    &nbsp;&nbsp;{enterprise.enterprise}
+    &nbsp;&nbsp;{enterprise.name}, Source: {enterprise.source}
   </h1>);
+  const url = `https://www.google.co.uk/maps/place/${enterprise.postcode}`;
+  const mapsLink = <a href={url} target="_blank">{enterprise.postcode}</a>;
   return (
-    <Panel collapsible defaultExpanded={defaultExpand} header={title}>
+    <Panel bsStyle="primary" collapsible={false} defaultExpanded header={title}>
       <ListGroup fill>
         <ListGroupItem>
           <Table striped bordered condensed hover>
@@ -22,7 +24,7 @@ const EnterprisePanel = function ({ enterprise, defaultExpand }) {
             </thead>
             <tbody>
               <tr>
-                <td>{enterprise.idbr}</td>
+                <td>{enterprise.enterprise}</td>
                 <td>{enterprise.sbrEntRef}</td>
               </tr>
             </tbody>
@@ -53,7 +55,7 @@ const EnterprisePanel = function ({ enterprise, defaultExpand }) {
               </tr>
               <tr>
                 <td>Post Code</td>
-                <td>{enterprise.postcode}</td>
+                <td>{mapsLink}</td>
               </tr>
             </tbody>
           </Table>
@@ -81,7 +83,6 @@ const EnterprisePanel = function ({ enterprise, defaultExpand }) {
 
 EnterprisePanel.propTypes = {
   enterprise: PropTypes.object.isRequired,
-  defaultExpand: PropTypes.object.isRequired,
 };
 
 export default EnterprisePanel;

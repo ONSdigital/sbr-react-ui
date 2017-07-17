@@ -6,7 +6,8 @@ import { refSearch, setQuery } from '../actions/ApiActions';
 import { SET_REF_QUERY } from '../constants/ApiConstants';
 import ErrorModal from '../components/ErrorModal';
 import SearchRefForm from '../components/SearchRefForm';
-import EnterprisePanel from '../components/EnterprisePanel';
+import EnterpriseResultsTable from '../components/EnterpriseResultsTable';
+import { validateRefSearch } from '../utils/validation';
 
 class Search extends React.Component {
   constructor(props) {
@@ -19,7 +20,6 @@ class Search extends React.Component {
     this.changeQuery = this.changeQuery.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.getValidationState = this.getValidationState.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     // The Redux action for the api request will set the errorMessage in the
@@ -49,13 +49,6 @@ class Search extends React.Component {
       });
     }
   }
-  getValidationState() {
-    const length = this.props.data.query.length;
-    if (length > 12) return 'error';
-    else if (length > 5) return 'success';
-    else if (length > 0) return 'error';
-    return 'error';
-  }
   closeModal() {
     this.setState({ show: false, errorMessage: '' });
   }
@@ -65,15 +58,7 @@ class Search extends React.Component {
     this.props.dispatch(setQuery(SET_REF_QUERY, evt.target.value));
   }
   render() {
-    const results = this.state.results.map((enterprise) => {
-      return (
-        <EnterprisePanel
-          key={enterprise.idbr}
-          defaultExpand={false}
-          enterprise={enterprise}
-        />
-      );
-    });
+    const results = (<EnterpriseResultsTable results={this.props.data.results} />);
     const enterprises = (this.props.data.results.length > 1) ? results : <div></div>;
     return (
       <div>
@@ -86,7 +71,7 @@ class Search extends React.Component {
           onSubmit={this.onSubmit}
           onChange={this.changeQuery}
           value={this.props.data.query}
-          valid={this.getValidationState()}
+          valid={validateRefSearch(this.props.data.query.length)}
         />
         <ErrorModal
           show={this.state.show}

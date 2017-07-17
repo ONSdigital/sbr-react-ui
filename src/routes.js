@@ -10,6 +10,7 @@ import Login from './views/Login';
 import Search from './views/Search';
 import EnterpriseView from './views/EnterpriseView';
 import Help from './views/Help';
+import SearchHistory from './views/SearchHistory';
 import Support from './views/Support';
 import reducer from './reducers/index';
 import { checkAuth } from './actions/LoginActions';
@@ -49,7 +50,8 @@ const Routes = () => (
         <Route onEnter={checkAuthentication} >
           <Route path={'/Home'} component={Home} />
           <Route path={'/Search'} component={Search} />
-          <Route path={'/Search/:id'} component={EnterpriseView} />
+          <Route path={'/Search/:enterprise/:index'} component={EnterpriseView} />
+          <Route path={'/SearchHistory'} component={SearchHistory} />
           <Route path={'/Help'} component={Help} />
           <Route path={'/Support'} component={Support} />
           <Route path={'/*'} component={NotFound} />

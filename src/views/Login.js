@@ -39,6 +39,8 @@ class Login extends React.Component {
               <input
                 type="text"
                 id="username"
+                aria-label="Username input"
+                aria-required
                 value={this.state.username}
                 onChange={this.changeUsername}
                 className="form-control"
@@ -53,6 +55,8 @@ class Login extends React.Component {
               <input
                 type="password"
                 id="password"
+                aria-label="Password input"
+                aria-required
                 value={this.state.password}
                 onChange={this.changePassword}
                 className="form-control"
@@ -65,6 +69,7 @@ class Login extends React.Component {
                 bsStyle="primary"
                 type="submit"
                 id="loginButton"
+                aria-label="Login button"
                 loading={this.props.data.currentlySending}
                 disabled={this.props.data.currentlySending}
                 onClick={!this.props.data.currentlySending ? this.onSubmit : null}

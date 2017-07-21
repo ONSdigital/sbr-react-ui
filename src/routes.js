@@ -14,12 +14,10 @@ import SearchHistory from './views/SearchHistory';
 import Support from './views/Support';
 import reducer from './reducers/index';
 import { checkAuth } from './actions/LoginActions';
-import config from './config/constants';
 
-const a11y = require('react-a11y');
-
-const { ENV } = config;
-
+// import config from './config/constants';
+// const a11y = require('react-a11y');
+// const { ENV } = config;
 // This will put react-a11y warnings in the console
 // Can use the following to cause errors:
 // a11y(React, { throw: true });

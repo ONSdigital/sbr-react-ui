@@ -1,9 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ONSLogo from '../resources/img/orglogo.svg';
 import config from '../config/constants';
+import { logout } from '../actions/LoginActions';
 const ie = require('ie-version');
 import UserDetailsModal from '../components/UserDetailsModal';
-import { connect } from 'react-redux';
 import TestModal from '../components/TestModal';
 import InfoModal from '../components/InfoModal';
 
@@ -18,6 +19,15 @@ const Header = function ( props ) {
     className1 = <img className="logo" src="https://cdn.ons.gov.uk/assets/images/ons-logo/v2/ons-logo.png" alt="Office for National Statistics" />;
   } else {
     className1 = <img className="logo" src="https://cdn.ons.gov.uk/assets/images/ons-logo/v2/ons-logo.svg" alt="Office for National Statistics" />;
+  }
+  let logoutButton = '';
+  if (props.data.loggedIn) {
+    logoutButton =
+    <li className="secondary-nav__item">
+      <button className="btn btn--primary btn--thin" onClick={() => props.dispatch(logout())}>
+        Logout
+      </button>
+    </li>;
   }
   return (
     <div className="wrapper">
@@ -36,11 +46,7 @@ const Header = function ( props ) {
             <li className="secondary-nav__item">
               <InfoModal />
             </li>
-            <li className="secondary-nav__item">
-              <a className="secondary-nav__link" href="/aboutus">
-                Logout?
-              </a>
-            </li>
+            {logoutButton}
           </ul>
         </div>
       </div>
@@ -54,4 +60,5 @@ function select(state) {
   };
 }
 
+// Wrap the component to inject dispatch and state into it
 export default connect(select)(Header);

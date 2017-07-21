@@ -8,7 +8,9 @@ const Footer = function () {
     color: 'black',
   };
   return (
-    <footer className="print--hide">
+    <footer className="print--hide" style={{
+      position: 'absolute', left: 0, right: 0, overflow: 'hidden'
+    }}>
     <h2 className="visuallyhidden">Footer links</h2>
         <div className="footer">
             <div className="wrapper">
@@ -67,14 +69,6 @@ const Footer = function () {
                         </div>
                     </div>
                 </nav>
-            </div>
-            <div className="wrapper">
-                <div className="footer-license">
-                  <img className="footer-license__img" alt="OGL" width="60" src="https://www.ons.gov.uk/img/ogl.png"/>
-                  <p className="footer-license__text margin-left-sm--0">
-                    All content is available under the <a className="icon--hide" href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a> <span className="icon icon-external--light-small"></span>, except where otherwise stated
-                  </p>
-                </div>
             </div>
         </div>
     </footer>

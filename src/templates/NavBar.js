@@ -37,20 +37,7 @@ class NavBar extends React.Component {
 		<div className="wrapper nav-main--hidden" id="nav-primary">
 			<ul className="primary-nav__list">
 				<li className="primary-nav__item js-nav hide--mobile old-ie--display-block"><a className="primary-nav__link col col--md-7 col--lg-9" href="/">Home</a></li>
-				<li className="primary-nav__item js-nav js-expandable ">
-					<a className="primary-nav__link col col--md-8 col--lg-10" href="/businessindustryandtrade" aria-haspopup="true">Business, industry and trade</a>
-					<ul className="primary-nav__child-list col col--md-16 col--lg-20 js-expandable__content js-nav-hidden jsEnhance" aria-expanded="false" aria-label="submenu">
-						<li className="primary-nav__child-item  js-expandable__child">
-							<a className="primary-nav__child-link" tabindex="-1" href="/businessindustryandtrade/business" >Business</a>
-						</li>
-						<li className="primary-nav__child-item  js-expandable__child">
-							<a className="primary-nav__child-link" tabindex="-1" href="/businessindustryandtrade/changestobusiness" >Changes to business</a>
-						</li>
-						<li className="primary-nav__child-item  js-expandable__child">
-							<a className="primary-nav__child-link" tabindex="-1" href="/businessindustryandtrade/constructionindustry" >Construction industry</a>
-						</li>
-					</ul>
-				</li>
+        <li className="primary-nav__item js-nav hide--mobile old-ie--display-block"><a className="primary-nav__link col col--md-7 col--lg-9" href="/Search">Search</a></li>
 				<li className="primary-nav__item js-nav js-expandable ">
 					<a className="primary-nav__link col col--md-8 col--lg-10" href="/economy" aria-haspopup="true">Economy</a>
 					<ul className="primary-nav__child-list col col--md-16 col--lg-20 js-expandable__content js-nav-hidden jsEnhance" aria-expanded="false" aria-label="submenu">

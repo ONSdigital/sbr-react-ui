@@ -3,6 +3,7 @@ import React from 'react';
 const Banner = function () {
   const style = {
     banner: {
+      marginTop: '-20px',
       width: '100vw',
       backgroundColor: '#3B7A9E',
       color: '#fff',
@@ -15,6 +16,7 @@ const Banner = function () {
       paddingRight: '7px',
       paddingBottom: '3px',
       paddingLeft: '7px',
+      marginLeft: '10px',
       textTransform: 'uppercase',
       color: '#FFFFFF',
       fontWeight: '700',

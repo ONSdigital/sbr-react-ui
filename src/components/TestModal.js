@@ -20,9 +20,9 @@ class TestModal extends React.Component {
     } = this;
 
     return <div>
-      <button onClick={this.handleClick} className="btn btn--primary">
-          Primary button
-      </button>
+      <a className="secondary-nav__link" onClick={this.handleClick}>
+        User Details
+      </a>
       {
         this.state.isShowingModal &&
         <ModalContainer onClose={this.handleClose}>
@@ -30,8 +30,9 @@ class TestModal extends React.Component {
             isLoading ?
             "loading" :
             <ModalDialog onClose={this.handleClose}>
-              <h1>Dialog Content</h1>
-              <p>More Content. Anything goes here</p>
+              <h1>User Details</h1>
+              <h1>Username: {this.props.username}</h1>
+              <h1>Role: {this.props.role}</h1>
             </ModalDialog>
           }
         </ModalContainer>

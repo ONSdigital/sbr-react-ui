@@ -4,15 +4,16 @@ import { Modal, Glyphicon, Table } from 'react-bootstrap';
 import Button from 'react-bootstrap-button-loader';
 import { connect } from 'react-redux';
 import { getUiInfo, getApiInfo } from '../actions/InfoActions';
+import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 
 class InfoModal extends React.Component {
   constructor() {
     super();
     this.state = {
-      showModal: false,
+      isShowingModal: false,
     };
-    this.close = this.close.bind(this);
-    this.open = this.open.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() {
     this.props.dispatch(getUiInfo());
@@ -27,11 +28,11 @@ class InfoModal extends React.Component {
     }
     return (data.errorMessage);
   }
-  close() {
-    this.setState({ showModal: false });
+  handleClose() {
+    this.setState({ isShowingModal: false });
   }
-  open() {
-    this.setState({ showModal: true });
+  handleClick() {
+    this.setState({ isShowingModal: true });
   }
   render() {
     const uiVersion = this.getData(this.props.data.ui, 'version');
@@ -40,46 +41,40 @@ class InfoModal extends React.Component {
     const apiLastUpdate = this.getData(this.props.data.api, 'lastApiUpdate');
     const dataLastUpdate = this.getData(this.props.data.api, 'lastDataUpdate');
     return (
-      <div className="infoModal">
-        <div aria-label="Open popup icon" id="iconDiv" role="button" tabIndex={0} onClick={this.open}>
-          <Glyphicon glyph="info-sign" />
-        </div>
-        <Modal show={this.state.showModal} onHide={this.close}>
-          <Modal.Header closeButton>
-            <Modal.Title>Information</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Table striped bordered condensed hover>
-              <thead>
-                <tr>
-                  <th>Type</th>
-                  <th><Glyphicon glyph="tags" />&nbsp;&nbsp;Version</th>
-                  <th><Glyphicon glyph="dashboard" />&nbsp;&nbsp;Last Update</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Data</td>
-                  <td>N/A</td>
-                  <td>{dataLastUpdate}</td>
-                </tr>
-                <tr>
-                  <td>UI</td>
-                  <td>{uiVersion}</td>
-                  <td>{uiLastUpdate}</td>
-                </tr>
-                <tr>
-                  <td>API</td>
-                  <td>{apiVersion}</td>
-                  <td>{apiLastUpdate}</td>
-                </tr>
-              </tbody>
-            </Table>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button aria-label="Close popup button" onClick={this.close}>Close</Button>
-          </Modal.Footer>
-        </Modal>
+      <div>
+        <a className="secondary-nav__link" onClick={this.handleClick}>
+          Info
+        </a>
+        {
+          this.state.isShowingModal &&
+          <ModalContainer onClose={this.handleClose}>
+              <ModalDialog onClose={this.handleClose}>
+                <h1>Information</h1>
+                <table>
+                    <tr>
+                      <th>Type</th>
+                      <th><Glyphicon glyph="tags" />&nbsp;&nbsp;Version</th>
+                      <th><Glyphicon glyph="dashboard" />&nbsp;&nbsp;Last Update</th>
+                    </tr>
+                    <tr>
+                      <td>Data</td>
+                      <td>N/A</td>
+                      <td>{dataLastUpdate}</td>
+                    </tr>
+                    <tr>
+                      <td>UI</td>
+                      <td>{uiVersion}</td>
+                      <td>{uiLastUpdate}</td>
+                    </tr>
+                    <tr>
+                      <td>API</td>
+                      <td>{apiVersion}</td>
+                      <td>{apiLastUpdate}</td>
+                    </tr>
+                </table>
+              </ModalDialog>
+          </ModalContainer>
+        }
       </div>
     );
   }

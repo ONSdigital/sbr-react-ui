@@ -23,13 +23,13 @@ const Template = function (props) {
     );
   }
   return (
-    <div className="wrapper">
+    <div>
       {banner}
-      <div className="container">
         <Header />
         <NavBar />
-        {props.children}
-      </div>
+        <div className="container">
+          {props.children}
+        </div>
       <Footer />
     </div>
   );

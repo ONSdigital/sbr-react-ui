@@ -20,53 +20,88 @@ class NavBar extends React.Component {
   }
   render() {
     return (
-      <div>
-        <Navbar>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <b><Link to="/Home" aria-label="Link to Home page" style={{ textDecoration: 'none', color: 'black' }}>Statistical Business Register</Link></b>
-            </Navbar.Brand>
-            <Navbar.Toggle />
-          </Navbar.Header>
-          <Navbar.Collapse>
-            <Nav>
-              <IndexLinkContainer to="/Home" aria-label="Link to Home page">
-                <NavItem>Home</NavItem>
-              </IndexLinkContainer>
-              <IndexLinkContainer to="/Search" aria-label="Link to Search page">
-                <NavItem>Search</NavItem>
-              </IndexLinkContainer>
-            </Nav>
-            <Nav pullRight>
-              <NavItem aria-label="Information popup" style={{ paddingRight: '-40px', paddingLeft: '0' }}>
-                <InfoModal />
-              </NavItem>
-              <NavItem aria-label="User details popup" style={{ paddingRight: '0px', paddingLeft: '0px' }}>
-                <UserDetailsModal
-                  username={this.props.data.username}
-                  userRole={this.props.data.role}
-                />
-              </NavItem>
-              <NavItem style={{ paddingRight: '20px', paddingLeft: '60px' }}>
-                <p className="navbar-btn">
-                  <Button
-                    aria-label="Logout button"
-                    type="button"
-                    className="logout"
-                    bsStyle="danger"
-                    bsSize="small"
-                    loading={this.props.data.currentlySending}
-                    disabled={this.props.data.currentlySending}
-                    onClick={this.onLogout}
-                  >
-                    {this.props.data.currentlySending ? '' : 'Logout' }
-                  </Button>
-                </p>
-              </NavItem>
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
-      </div>
+      <div className="primary-nav print--hide">
+	<nav>
+		<ul className="nav--controls">
+			<li className="nav--controls__item">
+				<a href="#nav-primary" id="menu-toggle" aria-controls="nav-primary" className="nav--controls__menu">
+					<span className="nav--controls__text">Menu</span>
+				</a>
+			</li>
+			<li className="nav--controls__item ">
+				<a href="#nav-search" id="search-toggle" aria-controls="nav-search" className="nav--controls__search">
+					<span className="nav--controls__text">Search</span>
+				</a>
+			</li>
+		</ul>
+		<div className="wrapper nav-main--hidden" id="nav-primary">
+			<ul className="primary-nav__list">
+				<li className="primary-nav__item js-nav hide--mobile old-ie--display-block"><a className="primary-nav__link col col--md-7 col--lg-9" href="/">Home</a></li>
+				<li className="primary-nav__item js-nav js-expandable ">
+					<a className="primary-nav__link col col--md-8 col--lg-10" href="/businessindustryandtrade" aria-haspopup="true">Business, industry and trade</a>
+					<ul className="primary-nav__child-list col col--md-16 col--lg-20 js-expandable__content js-nav-hidden jsEnhance" aria-expanded="false" aria-label="submenu">
+						<li className="primary-nav__child-item  js-expandable__child">
+							<a className="primary-nav__child-link" tabindex="-1" href="/businessindustryandtrade/business" >Business</a>
+						</li>
+						<li className="primary-nav__child-item  js-expandable__child">
+							<a className="primary-nav__child-link" tabindex="-1" href="/businessindustryandtrade/changestobusiness" >Changes to business</a>
+						</li>
+						<li className="primary-nav__child-item  js-expandable__child">
+							<a className="primary-nav__child-link" tabindex="-1" href="/businessindustryandtrade/constructionindustry" >Construction industry</a>
+						</li>
+					</ul>
+				</li>
+				<li className="primary-nav__item js-nav js-expandable ">
+					<a className="primary-nav__link col col--md-8 col--lg-10" href="/economy" aria-haspopup="true">Economy</a>
+					<ul className="primary-nav__child-list col col--md-16 col--lg-20 js-expandable__content js-nav-hidden jsEnhance" aria-expanded="false" aria-label="submenu">
+						<li className="primary-nav__child-item  js-expandable__child">
+							<a className="primary-nav__child-link" tabindex="-1" href="/economy/economicoutputandproductivity" >Economic output and productivity</a>
+						</li>
+						<li className="primary-nav__child-item  js-expandable__child">
+							<a className="primary-nav__child-link" tabindex="-1" href="/economy/environmentalaccounts" >Environmental accounts</a>
+						</li>
+						<li className="primary-nav__child-item  js-expandable__child">
+							<a className="primary-nav__child-link" tabindex="-1" href="/economy/governmentpublicsectorandtaxes" >Government, public sector and taxes</a>
+						</li>
+					</ul>
+				</li>
+				<li className="primary-nav__item js-nav js-expandable ">
+					<a className="primary-nav__link col col--md-8 col--lg-10" href="/employmentandlabourmarket" aria-haspopup="true">Employment and labour market</a>
+					<ul className="primary-nav__child-list col col--md-16 col--lg-20 js-expandable__content js-nav-hidden jsEnhance" aria-expanded="false" aria-label="submenu">
+						<li className="primary-nav__child-item  js-expandable__child">
+							<a className="primary-nav__child-link" tabindex="-1" href="/employmentandlabourmarket/peopleinwork" >People in work</a>
+						</li>
+						<li className="primary-nav__child-item  js-expandable__child">
+							<a className="primary-nav__child-link" tabindex="-1" href="/employmentandlabourmarket/peoplenotinwork" >People not in work</a>
+						</li>
+					</ul>
+				</li>
+				<li className="primary-nav__item js-nav js-expandable ">
+					<a className="primary-nav__link col col--md-8 col--lg-10" href="/peoplepopulationandcommunity" aria-haspopup="true">People, population and community</a>
+					<ul className="primary-nav__child-list col col--md-16 col--lg-20 js-expandable__content js-nav-hidden jsEnhance" aria-expanded="false" aria-label="submenu">
+						<li className="primary-nav__child-item  js-expandable__child">
+							<a className="primary-nav__child-link" tabindex="-1" href="/peoplepopulationandcommunity/birthsdeathsandmarriages" >Births, deaths and marriages</a>
+						</li>
+						<li className="primary-nav__child-item  js-expandable__child">
+							<a className="primary-nav__child-link" tabindex="-1" href="/peoplepopulationandcommunity/community" >Community</a>
+						</li>
+						<li className="primary-nav__child-item  js-expandable__child">
+							<a className="primary-nav__child-link" tabindex="-1" href="/peoplepopulationandcommunity/crimeandjustice" >Crime and justice</a>
+						</li>
+						<li className="primary-nav__child-item  js-expandable__child">
+							<a className="primary-nav__child-link" tabindex="-1" href="/peoplepopulationandcommunity/culturalidentity" >Cultural identity</a>
+						</li>
+					</ul>
+				</li>
+				<li className="primary-nav__item  js-nav">
+					<a className="primary-nav__link  col col--md-8 col--lg-10" href="/surveys">
+						Taking part in a survey?
+					</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+</div>
     );
   }
 }

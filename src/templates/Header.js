@@ -4,12 +4,12 @@ import config from '../config/constants';
 const ie = require('ie-version');
 import UserDetailsModal from '../components/UserDetailsModal';
 import { connect } from 'react-redux';
+import TestModal from '../components/TestModal';
 
 const { ENV } = config;
 
 const Header = function ( props ) {
   // Once logged in, display ENV (local/dev/prod etc) in the header
-  console.log(props)
   const onLoginPage = (location.pathname === '/' || location.pathname === 'Login');
   const header = (onLoginPage) ? 'Statistical Business Register' : ENV;
   let className1 = '';
@@ -33,9 +33,7 @@ const Header = function ( props ) {
                 Username: {props.data.username} Role: {props.data.role} |
             </li>
             <li className="secondary-nav__item">
-              <a className="secondary-nav__link" href="/aboutus">
-                InfoModal
-              </a>
+              <TestModal />
             </li>
             <li className="secondary-nav__item">
               <a className="secondary-nav__link" href="/aboutus">

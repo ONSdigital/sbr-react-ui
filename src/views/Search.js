@@ -61,11 +61,14 @@ class Search extends React.Component {
     const results = (<EnterpriseResultsTable results={this.props.data.results} />);
     const enterprises = (this.props.data.results.length > 1) ? results : <div></div>;
     return (
-      <div>
-        <PageHeader>
-          Reference Search
-          <small> by VAT/PAYE/UBRN reference</small>
-        </PageHeader>
+      <div className="wrapper">
+        <h1 className="margin-bottom-md--0">Reference Search</h1>
+        <h4> by VAT/PAYE/UBRN reference</h4>
+        <p>
+          You can read this page for help regarding the functionality of the
+          Statistical Business Register User Interface.
+        </p>
+        <br />
         <SearchRefForm
           currentlySending={this.props.data.currentlySending}
           onSubmit={this.onSubmit}

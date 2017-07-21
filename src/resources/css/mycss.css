@@ -1,4 +1,4 @@
-body {
+/*body {
   padding-top: 20px;
   padding-bottom: 20px;
   height: 100%;
@@ -8,7 +8,7 @@ body {
 html {
   position: relative;
   min-height: 100%;
-}
+}*/
 
 /*.navbar {
   width: 100%;
@@ -47,7 +47,7 @@ html {
   animation: spin 1000ms infinite linear;
 }
 
-@-webkit-keyframes spin {
+/*@-webkit-keyframes spin {
   0% {
       -webkit-transform: rotate(0deg);
       transform: rotate(0deg);
@@ -67,25 +67,25 @@ html {
       -webkit-transform: rotate(359deg);
       transform: rotate(359deg);
   }
-}
+}*/
 
 /* For the login page */
-.centered {
+/*.centered {
   position: absolute;
   top: 40%;
   left: 50%;
   /* bring your own prefixes */
-  transform: translate(-50%, -50%);
-}
+  /*transform: translate(-50%, -50%);
+}*/
 
-.logout {
+/*.logout {
   margin-top: 10px;
   position: absolute;
   top: 0;
   right: 0;
   margin-right: 10px;
-}
-
+}*/
+/*
 @media (max-width: 767px) {
   .logout {
     position: absolute;
@@ -101,4 +101,4 @@ html {
     margin-top: -10px;
   }
   /* CSS that should be displayed if width is equal to or less than 800px goes here */
-}
+/*}*/

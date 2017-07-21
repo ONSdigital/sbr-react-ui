@@ -4,10 +4,13 @@ import ONSLogo from '../resources/img/orglogo.svg';
 import config from '../config/constants';
 import { logout } from '../actions/LoginActions';
 const ie = require('ie-version');
+import UserDetailsModal from '../components/UserDetailsModal';
+import { connect } from 'react-redux';
+import TestModal from '../components/TestModal';
 
 const { ENV } = config;
 
-const Header = function (props) {
+const Header = function ( props ) {
   // Once logged in, display ENV (local/dev/prod etc) in the header
   const onLoginPage = (location.pathname === '/' || location.pathname === 'Login');
   const header = (onLoginPage) ? 'Statistical Business Register' : ENV;
@@ -38,11 +41,14 @@ const Header = function (props) {
         <div className="secondary-nav col col--lg-two-thirds col--md-two-thirds print--hide">
           <ul className="secondary-nav__list">
             <li className="secondary-nav__item">
-              <a className="secondary-nav__link" href="/methodology">UserDetailsModal</a>
+                Username: {props.data.username} Role: {props.data.role} |
+            </li>
+            <li className="secondary-nav__item">
+              <TestModal />
             </li>
             <li className="secondary-nav__item">
               <a className="secondary-nav__link" href="/aboutus">
-                InfoModal
+                Logout?
               </a>
             </li>
             {logoutButton}

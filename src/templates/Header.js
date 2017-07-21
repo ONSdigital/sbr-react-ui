@@ -5,7 +5,6 @@ import config from '../config/constants';
 import { logout } from '../actions/LoginActions';
 const ie = require('ie-version');
 import UserDetailsModal from '../components/UserDetailsModal';
-import { connect } from 'react-redux';
 import TestModal from '../components/TestModal';
 
 const { ENV } = config;
@@ -45,11 +44,6 @@ const Header = function ( props ) {
             </li>
             <li className="secondary-nav__item">
               <TestModal />
-            </li>
-            <li className="secondary-nav__item">
-              <a className="secondary-nav__link" href="/aboutus">
-                Logout?
-              </a>
             </li>
             {logoutButton}
           </ul>

@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
-import ReactSpinner from 'react-spinjs';
 
 class TestModal extends React.Component {
   static propTypes = {

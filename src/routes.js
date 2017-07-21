@@ -23,7 +23,7 @@ const { ENV } = config;
 // This will put react-a11y warnings in the console
 // Can use the following to cause errors:
 // a11y(React, { throw: true });
-if (ENV === 'Local') a11y(React);
+// if (ENV === 'Local') a11y(React);
 
 // Creates the Redux reducer with the redux-thunk middleware, which allows us
 // to do asynchronous things in the actions

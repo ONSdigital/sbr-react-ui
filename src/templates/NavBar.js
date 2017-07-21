@@ -24,24 +24,24 @@ class NavBar extends React.Component {
         <Navbar>
           <Navbar.Header>
             <Navbar.Brand>
-              <b><Link to="/Home" style={{ textDecoration: 'none', color: 'black' }}>Statistical Business Register</Link></b>
+              <b><Link to="/Home" aria-label="Link to Home page" style={{ textDecoration: 'none', color: 'black' }}>Statistical Business Register</Link></b>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav>
-              <IndexLinkContainer to="/Home">
+              <IndexLinkContainer to="/Home" aria-label="Link to Home page">
                 <NavItem>Home</NavItem>
               </IndexLinkContainer>
-              <IndexLinkContainer to="/Search">
+              <IndexLinkContainer to="/Search" aria-label="Link to Search page">
                 <NavItem>Search</NavItem>
               </IndexLinkContainer>
             </Nav>
             <Nav pullRight>
-              <NavItem style={{ paddingRight: '-40px', paddingLeft: '0' }}>
+              <NavItem aria-label="Information popup" style={{ paddingRight: '-40px', paddingLeft: '0' }}>
                 <InfoModal />
               </NavItem>
-              <NavItem style={{ paddingRight: '0px', paddingLeft: '0px' }}>
+              <NavItem aria-label="User details popup" style={{ paddingRight: '0px', paddingLeft: '0px' }}>
                 <UserDetailsModal
                   username={this.props.data.username}
                   userRole={this.props.data.role}
@@ -50,6 +50,7 @@ class NavBar extends React.Component {
               <NavItem style={{ paddingRight: '20px', paddingLeft: '60px' }}>
                 <p className="navbar-btn">
                   <Button
+                    aria-label="Logout button"
                     type="button"
                     className="logout"
                     bsStyle="danger"

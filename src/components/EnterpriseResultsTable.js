@@ -9,6 +9,7 @@ const EnterpriseResultsTable = function ({ results }) {
   function buttonFormatter(cell, row, enumObject, index) {
     const focus = (index === 0);
     return (<Button
+      aria-label="Go to record button"
       autoFocus={focus}
       onClick={() => {
         browserHistory.push(`/Search/${row.enterprise}/${index}`);

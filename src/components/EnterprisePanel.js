@@ -60,21 +60,21 @@ const EnterprisePanel = function ({ enterprise }) {
             </tbody>
           </Table>
           <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
-            <Tab eventKey={1} title="Details">
+            <Tab aria-label="Details tab" eventKey={1} title="Details">
               <br />
               Tab 1 content
             </Tab>
-            <Tab eventKey={2} title="Tab 2">
+            <Tab aria-label="Tab 2" eventKey={2} title="Tab 2">
               <br />
               Tab 2 content
             </Tab>
-            <Tab eventKey={3} title="Developer View">
+            <Tab aria-label="Developer view" eventKey={3} title="Developer View">
               <DeveloperView enterprise={enterprise} />
             </Tab>
           </Tabs>
         </ListGroupItem>
       </ListGroup>
-      <Button autoFocus onClick={() => browserHistory.push('/Search')} bsStyle="info">
+      <Button aria-label="Link back to Search page" autoFocus onClick={() => browserHistory.push('/Search')} bsStyle="info">
         Return to search
       </Button>
     </Panel>

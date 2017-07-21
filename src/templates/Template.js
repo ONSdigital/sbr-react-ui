@@ -23,7 +23,7 @@ const Template = function (props) {
     );
   }
   return (
-    <div>
+    <div className="wrapper">
       {banner}
         <Header />
         <NavBar />

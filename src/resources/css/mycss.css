@@ -10,29 +10,29 @@ html {
   min-height: 100%;
 }
 
-.navbar {
+/*.navbar {
   width: 100%;
   margin-bottom: 20px;
   clear: left;
-}
+}*/
 
-.wrapper {
+/* .wrapper {
   min-height: 100%;
   /* equal to footer height */
-  margin-bottom: 60px;
-}
+  /*margin-bottom: 60px;
+}*/
 
-#logo {
+/*#logo {
   float: left;
-}
+}*/
 
 /* Changes the banner text (to the right of the logo) so it is inline with the logo */
-.banner-text {
+/*.banner-text {
   text-align: right;
   padding-top: 2%;
-}
+}*/
 
-.footer {
+/*.footer {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -40,7 +40,7 @@ html {
   height: 60px;
   background-color: #f5f5f5;
   overflow:hidden;
-}
+}*/
 
 .glyphicon-spin {
   -webkit-animation: spin 1000ms infinite linear;

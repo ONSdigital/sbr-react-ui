@@ -5,9 +5,9 @@
     ],
     "plugins": [
         "react",
-        "jsx-a11y",
         "import",
-        "flowtype"
+        "flowtype",
+        "jsx-a11y"
     ],
     "rules": {
         "no-use-before-define": "off",

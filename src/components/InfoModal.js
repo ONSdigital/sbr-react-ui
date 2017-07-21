@@ -41,7 +41,7 @@ class InfoModal extends React.Component {
     const dataLastUpdate = this.getData(this.props.data.api, 'lastDataUpdate');
     return (
       <div className="infoModal">
-        <div id="iconDiv" role="button" tabIndex={0} onClick={this.open}>
+        <div aria-label="Open popup icon" id="iconDiv" role="button" tabIndex={0} onClick={this.open}>
           <Glyphicon glyph="info-sign" />
         </div>
         <Modal show={this.state.showModal} onHide={this.close}>
@@ -77,7 +77,7 @@ class InfoModal extends React.Component {
             </Table>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.close}>Close</Button>
+            <Button aria-label="Close popup button" onClick={this.close}>Close</Button>
           </Modal.Footer>
         </Modal>
       </div>

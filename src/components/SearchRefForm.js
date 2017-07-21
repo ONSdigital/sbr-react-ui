@@ -17,6 +17,8 @@ const SearchRefForm = function ({
           <FormControl
             type="text"
             value={value}
+            aria-label="Reference input"
+            aria-required
             autoFocus
             placeholder="Enter ref to search..."
             maxLength="12"
@@ -30,6 +32,7 @@ const SearchRefForm = function ({
         bsStyle="primary"
         type="submit"
         id="searchButton"
+        aria-label="Search reference button"
         loading={currentlySending}
         disabled={currentlySending}
         onClick={!currentlySending ? onSubmit : null}

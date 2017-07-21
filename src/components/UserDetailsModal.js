@@ -20,7 +20,7 @@ class UserDetailsModal extends React.Component {
   render() {
     return (
       <div className="userDetails">
-        <div id="iconDiv" role="button" tabIndex={0} onClick={this.open}>
+        <div aria-label="Open user details popup icon" id="iconDiv" role="button" tabIndex={0} onClick={this.open}>
           <Glyphicon glyph="user" />&nbsp;&nbsp;{this.props.username}
         </div>
         <Modal show={this.state.showModal} onHide={this.close}>
@@ -33,7 +33,7 @@ class UserDetailsModal extends React.Component {
             <Glyphicon glyph="lock" />&nbsp;&nbsp;Role: <strong>{this.props.userRole}</strong>
           </Modal.Body>
           <Modal.Footer>
-            <Button id="closeModal" type="submit" onClick={this.close}>Close</Button>
+            <Button aria-label="Close popup button" id="closeModal" type="submit" onClick={this.close}>Close</Button>
           </Modal.Footer>
         </Modal>
       </div>

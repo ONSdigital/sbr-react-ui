@@ -14,9 +14,10 @@ const Header = function () {
         <div className="header-wrapper">
           <div className="header-global" style={{ marginBottom: '20px' }}>
             <div className="header-logo">
-              <a href="https://www.ons.gov.uk/" title="Go to the homepage" id="logo" className="content">
+              <a href="https://www.ons.gov.uk/" aria-label="Link to ONS website" title="Go to the homepage" id="logo" className="content">
                 <img
                   src={ONSLogo}
+                  aria-label="ONS logo"
                   style={{ marginTop: '30px' }}
                   width="240"
                   alt="Office for National Statistics"

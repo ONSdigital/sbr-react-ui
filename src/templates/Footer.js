@@ -11,11 +11,11 @@ const Footer = function () {
     <footer className="footer">
       <div className="container">
         <p style={{ margin: '20px' }} className="text-muted">
-          <Link to="/SearchHistory" style={style}>Search History</Link>
+          <Link to="/SearchHistory" aria-label="Link to Search History page" style={style}>Search History</Link>
           |
-          <Link to="/Support" style={style}>Support</Link>
+          <Link to="/Support" aria-label="Link to Support page" style={style}>Support</Link>
           |
-          <Link to="/Help" style={style}>Help</Link>
+          <Link to="/Help" aria-label="Link to Help page" style={style}>Help</Link>
         </p>
       </div>
     </footer>

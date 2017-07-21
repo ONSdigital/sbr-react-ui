@@ -14,6 +14,7 @@ const ErrorModal = function ({ show, message, close }) {
       </Modal.Header>
       <Modal.Footer>
         <Button
+          aria-label="Close popup button"
           autoFocus
           onClick={close}
         >

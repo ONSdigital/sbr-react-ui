@@ -20,15 +20,22 @@ const Header = function ( props ) {
   } else {
     className1 = <img className="logo" src="https://cdn.ons.gov.uk/assets/images/ons-logo/v2/ons-logo.svg" alt="Office for National Statistics" />;
   }
-  let logoutButton = '';
-  if (props.data.loggedIn) {
-    logoutButton =
-    <li className="secondary-nav__item">
-      <button className="btn btn--primary btn--thin" onClick={() => props.dispatch(logout())}>
-        Logout
-      </button>
-    </li>;
-  }
+  function getHeaderItems() {
+    return (<div className="secondary-nav col col--lg-two-thirds col--md-two-thirds print--hide">
+      <ul className="secondary-nav__list">
+        <li className="secondary-nav__item">
+          <TestModal username={props.data.username} role={props.data.role} />
+        </li>
+        <li className="secondary-nav__item">
+          <InfoModal />
+        </li>
+        <button className="btn btn--primary btn--thin" onClick={() => props.dispatch(logout())}>
+          Logout
+        </button>
+      </ul>
+    </div>);
+  };
+  const div = (props.data.loggedIn) ? getHeaderItems() : '';
   return (
     <div className="wrapper">
       <div className="header col-wrap">
@@ -38,17 +45,7 @@ const Header = function ( props ) {
           </a>
         </div>
         <div className="col col--lg-two-thirds col--md-two-thirds print--hide">&nbsp;</div>
-        <div className="secondary-nav col col--lg-two-thirds col--md-two-thirds print--hide">
-          <ul className="secondary-nav__list">
-            <li className="secondary-nav__item">
-              <TestModal username={props.data.username} role={props.data.role} />
-            </li>
-            <li className="secondary-nav__item">
-              <InfoModal />
-            </li>
-            {logoutButton}
-          </ul>
-        </div>
+        {div}
       </div>
     </div>
   );

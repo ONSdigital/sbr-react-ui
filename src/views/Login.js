@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap-button-loader';
-import { Alert } from 'react-bootstrap';
+import { Alert, Label } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { login } from '../actions/LoginActions';
 import ErrorMessage from '../components/LoginErrorMessage';
+
 
 class Login extends React.Component {
   constructor(props) {
@@ -29,58 +30,71 @@ class Login extends React.Component {
     this.setState({ password: evt.target.value });
   }
   render() {
+    const divStyle = {
+      textAlign: 'center',
+      margin: 'auto',
+    };
+    const textAlign = {
+      textAlign: 'center',
+    };
     return (
       <div>
-        <div className="loginPage">
-          <div className="centered">
+        <br />
+        <div className="wrapper">
+          <div className="col-wrap">
             <form className="form-signin" method="POST">
-              <h2 className="form-signin-heading">Login</h2>
-              <br />
-              <input
-                type="text"
-                id="username"
-                aria-label="Username input"
-                aria-required
-                value={this.state.username}
-                onChange={this.changeUsername}
-                className="form-control"
-                name="username"
-                placeholder="Username"
-                required=""
-                autoCorrect="off"
-                autoCapitalize="off"
-                spellCheck="false"
-              />
-              <br />
-              <input
-                type="password"
-                id="password"
-                aria-label="Password input"
-                aria-required
-                value={this.state.password}
-                onChange={this.changePassword}
-                className="form-control"
-                name="password"
-                placeholder="Password"
-                required=""
-              />
-              <br />
-              <Button
-                bsStyle="primary"
-                type="submit"
-                id="loginButton"
-                aria-label="Login button"
-                loading={this.props.data.currentlySending}
-                disabled={this.props.data.currentlySending}
-                onClick={!this.props.data.currentlySending ? this.onSubmit : null}
-              >
-                {this.props.data.currentlySending ? '' : 'Login' }
-              </Button>
+              <div className="background--astral width--38" style={divStyle}>
+                <h2 className="form-signin-heading">Login</h2>
+                <br />
+                <Label bsSize="large">Username</Label>
+                <br />
+                <input
+                  type="text"
+                  id="username"
+                  aria-label="Username input"
+                  aria-required
+                  value={this.state.username}
+                  onChange={this.changeUsername}
+                  className="form-control"
+                  name="username"
+                  required=""
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck="false"
+                />
+              <br /><br />
+                <Label bsSize="large">Password</Label>
+                <br />
+                <input
+                  type="password"
+                  id="password"
+                  aria-label="Password input"
+                  aria-required
+                  value={this.state.password}
+                  onChange={this.changePassword}
+                  className="form-control"
+                  name="password"
+                  required=""
+                />
+                <br /><br />
+                <Button
+                  className="btn btn--primary btn--thin"
+                  bsStyle="primary"
+                  type="submit"
+                  id="loginButton"
+                  aria-label="Login button"
+                  loading={this.props.data.currentlySending}
+                  disabled={this.props.data.currentlySending}
+                  onClick={!this.props.data.currentlySending ? this.onSubmit : null}
+                >
+                  {this.props.data.currentlySending ? '' : 'Login' }
+                </Button>
+              </div>
             </form>
             <br />
             <ErrorMessage />
             <br /><br />
-            <Alert bsStyle="danger">
+            <Alert bsStyle="danger" style={textAlign}>
               <strong>Warning: </strong>
                Do not login using your ONS credentials, use admin/admin or test/test.
             </Alert>

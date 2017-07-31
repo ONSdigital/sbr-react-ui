@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { refSearch, setQuery } from '../actions/ApiActions';
 import { SET_REF_QUERY } from '../constants/ApiConstants';
 import ErrorModal from '../components/ErrorModal';
-import SearchRefForm from '../components/SearchRefForm';
 import SearchRefFormNew from '../components/SearchRefFormNew';
 import EnterpriseResultsTable from '../components/EnterpriseResultsTable';
 import { validateRefSearch } from '../utils/validation';

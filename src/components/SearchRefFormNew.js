@@ -4,12 +4,11 @@ import PropTypes from 'prop-types';
 const SearchRefFormNew = function ({
   currentlySending, onSubmit, onChange, valid, value,
 }) {
-  const validRef = valid !== 'success';
   return (
     <form className="col-wrap search__form" action="/search" method="get">
-      <label className="search__label col col--md-23 col--lg-24" htmlFor="nav-search">Search for a reference (VAT/CH/UBRN)</label>
+      <label className="search__label col col--md-5 col--lg-6" htmlFor="nav-search">Search</label>
       <input placeholder="Enter ref to search..." autoFocus value={value} onChange={onChange} type="search" autoComplete="on" className="search__input col col--md-21 col--lg-32" id="nav-search" name="q" value={value} />
-      <button onClick={!currentlySending ? onSubmit : null} aria-label="Search reference button" disabled={validRef} loading={currentlySending} type="submit" className="search__button col--md-3 col--lg-3" id="nav-search-submit">
+      <button onClick={!currentlySending ? onSubmit : null} aria-label="Search reference button" loading={currentlySending} type="submit" className={`search__button col--md-3 col--lg-3 ${valid}`} id="nav-search-submit">
         <span className="visuallyhidden">{currentlySending ? '' : 'Search' }</span>
         <span className="icon icon-search--light"></span>
       </button>

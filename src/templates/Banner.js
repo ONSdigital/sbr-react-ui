@@ -33,7 +33,7 @@ const Banner = function () {
         <div className="container">
           <p style={style.p}>
             <strong style={style.bannerTag}>
-              Experimental
+              Alpha
             </strong>&nbsp;
             this release is still in development.
           </p>

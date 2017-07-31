@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {ModalContainer, ModalDialog} from 'react-modal-dialog';
+import { ModalContainer, ModalDialog } from 'react-modal-dialog';
 
 class TestModal extends React.Component {
   static propTypes = {
@@ -28,7 +28,7 @@ class TestModal extends React.Component {
           {
             isLoading ?
             "loading" :
-            <ModalDialog onClose={this.handleClose}>
+            <ModalDialog style={{ width: '80%' }} onClose={this.handleClose}>
               <h1>User Details</h1>
               <h1>Username: {this.props.username}</h1>
               <h1>Role: {this.props.role}</h1>

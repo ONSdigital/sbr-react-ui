@@ -11,7 +11,7 @@ class ErrorModal extends React.Component {
   }
   render() {
     const modal = (this.props.show) ? (<ModalContainer onClose={this.props.close}>
-      <ModalDialog onClose={this.props.close}>
+      <ModalDialog style={{ width: '80%' }} onClose={this.props.close}>
         <h1 style={{ margin: '10px' }}>{this.props.message}</h1>
       </ModalDialog>
     </ModalContainer>) : <div></div>;

@@ -110,12 +110,7 @@ class Search extends React.Component {
 
 Search.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  data: React.PropTypes.shape({
-    query: PropTypes.string.isRequired,
-    currentlySending: PropTypes.bool.isRequired,
-    errorMessage: PropTypes.string.isRequired,
-    results: PropTypes.object.isRequired,
-  }).isRequired,
+  data: React.PropTypes.shape.isRequired,
 };
 
 function select(state) {

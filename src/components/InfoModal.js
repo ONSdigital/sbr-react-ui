@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Glyphicon, Table } from 'react-bootstrap';
-import Button from 'react-bootstrap-button-loader';
+import { Glyphicon } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { ModalContainer, ModalDialog } from 'react-modal-dialog';
 import { getUiInfo, getApiInfo } from '../actions/InfoActions';
-import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 
 class InfoModal extends React.Component {
   constructor() {
@@ -48,31 +47,31 @@ class InfoModal extends React.Component {
         {
           this.state.isShowingModal &&
           <ModalContainer onClose={this.handleClose}>
-              <ModalDialog onClose={this.handleClose}>
-                <h1>Information</h1>
-                <table>
-                    <tr>
-                      <th>Type</th>
-                      <th><Glyphicon glyph="tags" />&nbsp;&nbsp;Version</th>
-                      <th><Glyphicon glyph="dashboard" />&nbsp;&nbsp;Last Update</th>
-                    </tr>
-                    <tr>
-                      <td>Data</td>
-                      <td>N/A</td>
-                      <td>{dataLastUpdate}</td>
-                    </tr>
-                    <tr>
-                      <td>UI</td>
-                      <td>{uiVersion}</td>
-                      <td>{uiLastUpdate}</td>
-                    </tr>
-                    <tr>
-                      <td>API</td>
-                      <td>{apiVersion}</td>
-                      <td>{apiLastUpdate}</td>
-                    </tr>
-                </table>
-              </ModalDialog>
+            <ModalDialog onClose={this.handleClose}>
+              <h1>Information</h1>
+              <table>
+                <tr>
+                  <th>Type</th>
+                  <th><Glyphicon glyph="tags" />&nbsp;&nbsp;Version</th>
+                  <th><Glyphicon glyph="dashboard" />&nbsp;&nbsp;Last Update</th>
+                </tr>
+                <tr>
+                  <td>Data</td>
+                  <td>N/A</td>
+                  <td>{dataLastUpdate}</td>
+                </tr>
+                <tr>
+                  <td>UI</td>
+                  <td>{uiVersion}</td>
+                  <td>{uiLastUpdate}</td>
+                </tr>
+                <tr>
+                  <td>API</td>
+                  <td>{apiVersion}</td>
+                  <td>{apiLastUpdate}</td>
+                </tr>
+              </table>
+            </ModalDialog>
           </ModalContainer>
         }
       </div>

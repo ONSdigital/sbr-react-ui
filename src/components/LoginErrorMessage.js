@@ -4,9 +4,14 @@ import { connect } from 'react-redux';
 import { ListGroup } from 'react-bootstrap';
 
 const ErrorMessage = (props) => {
+  const textAlign = {
+    textAlign: 'center',
+    margin: 'auto',
+    width: '65%',
+  };
   return (props.errorMessage ?
-  (<ListGroup>
-    <p className="background--abbey">{props.errorMessage}</p>
+  (<ListGroup style={textAlign}>
+    <p className="background--prim">{props.errorMessage}</p>
   </ListGroup>) : (<div></div>)
   );
 };

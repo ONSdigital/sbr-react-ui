@@ -34,14 +34,12 @@ class Login extends React.Component {
       paddingTop: '1px',
       textAlign: 'center',
       margin: 'auto',
-      border: '2px',
       borderRadius: '25px',
       width: '65%',
     };
     const textAlign = {
       textAlign: 'center',
       marginTop: '20px',
-      border: '2px',
       borderRadius: '25px',
     };
     return (

@@ -48,6 +48,7 @@
     "coveralls": "^2.13.1",
     "eslint-html-reporter": "^0.5.2",
     "express": "^4.14.0",
+    "halogen": "^0.2.0",
     "ie-version": "^0.1.0",
     "istanbul": "^0.4.5",
     "jasmine": "^2.5.3",

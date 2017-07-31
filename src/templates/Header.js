@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
+import Loader from 'halogen/PulseLoader';
 import config from '../config/constants';
 import { logout } from '../actions/LoginActions';
 import TestModal from '../components/TestModal';
@@ -20,6 +21,8 @@ const Header = function (props) {
   } else {
     className1 = <img className="logo" src="https://cdn.ons.gov.uk/assets/images/ons-logo/v2/ons-logo.svg" alt="Office for National Statistics" />;
   }
+  const spinner = (<Loader color="#FFFFFF" size="8px" margin="0px" />);
+  const buttonContent = (props.data.currentlySending) ? spinner : 'Logout';
   function getHeaderItems() {
     return (<div className="secondary-nav col col--lg-two-thirds col--md-two-thirds print--hide">
       <ul className="secondary-nav__list">
@@ -29,8 +32,8 @@ const Header = function (props) {
         <li className="secondary-nav__item">
           <InfoModal />
         </li>
-        <button className="btn btn--primary btn--thin" onClick={() => props.dispatch(logout())}>
-          Logout
+        <button onClick={!props.currentlySending ? () => props.dispatch(logout()) : null} aria-label="Logout button" loading={props.currentlySending} type="submit" className="btn btn--primary btn--thin">
+          {buttonContent}
         </button>
       </ul>
     </div>);

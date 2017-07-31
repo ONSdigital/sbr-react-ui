@@ -7,6 +7,9 @@ import Home from './views/Home';
 import NotFound from './views/NotFound';
 import Template from './templates/Template';
 import Login from './views/Login';
+import ContactUs from './views/ContactUs';
+import WhatIsSbr from './views/WhatIsSbr';
+import Accessibility from './views/Accessibility';
 import Search from './views/Search';
 import EnterpriseView from './views/EnterpriseView';
 import Help from './views/Help';
@@ -61,6 +64,9 @@ const Routes = () => (
           <Route path={'/Search/:enterprise/:index'} component={EnterpriseView} />
           <Route path={'/SearchHistory'} component={SearchHistory} />
           <Route path={'/Help'} component={Help} />
+          <Route path={'/WhatIsSbr'} component={WhatIsSbr} />
+          <Route path={'/Accessibility'} component={Accessibility} />
+          <Route path={'/ContactUs'} component={ContactUs} />
           <Route path={'/Support'} component={Support} />
           <Route path={'/*'} component={NotFound} />
         </Route>

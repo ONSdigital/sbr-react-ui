@@ -1,16 +1,12 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 
 const Footer = function () {
+  const cursorStyle = {
+    cursor: 'pointer',
+  };
   return (
-    <footer
-      className="print--hide"
-      style={{
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        overflow: 'hidden',
-      }}
-    >
+    <footer className="print--hide" style={{ position: 'absolute', left: 0, right: 0, overflow: 'hidden' }}>
       <h2 className="visuallyhidden">Footer links</h2>
       <div className="footer">
         <div className="wrapper">
@@ -20,7 +16,7 @@ const Footer = function () {
                 <h3 className="footer-nav__heading">Help</h3>
                 <ul className="footer-nav__list">
                   <li className="footer-nav__item">
-                    <a href="/help">Accessibility</a>
+                    <a style={cursorStyle} onClick={() => browserHistory.push('/Accessibility')}>Accessibility</a>
                   </li>
                 </ul>
               </div>
@@ -28,10 +24,10 @@ const Footer = function () {
                 <h3 className="footer-nav__heading">About SBR</h3>
                 <ul className="footer-nav__list">
                   <li className="footer-nav__item">
-                    <a href="/aboutus/whatwedo">What is SBR</a>
+                    <a style={cursorStyle} onClick={() => browserHistory.push('/WhatIsSbr')}>What is SBR</a>
                   </li>
                   <li className="footer-nav__item">
-                    <a href="/aboutus/contactus">Contact us</a>
+                    <a style={cursorStyle} onClick={() => browserHistory.push('/ContactUs')}>Contact us</a>
                   </li>
                 </ul>
               </div>

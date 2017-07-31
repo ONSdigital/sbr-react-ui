@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 
 const ErrorMessage = (props) => {
   return (props.errorMessage ?
   (<ListGroup>
-    <ListGroupItem bsStyle="warning">{props.errorMessage}</ListGroupItem>
+    <p className="background--abbey">{props.errorMessage}</p>
   </ListGroup>) : (<div></div>)
   );
 };

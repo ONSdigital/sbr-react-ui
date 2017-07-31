@@ -31,11 +31,18 @@ class Login extends React.Component {
   }
   render() {
     const divStyle = {
+      paddingTop: '1px',
       textAlign: 'center',
       margin: 'auto',
+      border: '2px',
+      borderRadius: '25px',
+      width: '65%',
     };
     const textAlign = {
       textAlign: 'center',
+      marginTop: '20px',
+      border: '2px',
+      borderRadius: '25px',
     };
     return (
       <div>
@@ -43,7 +50,7 @@ class Login extends React.Component {
         <div className="wrapper">
           <div className="col-wrap">
             <form className="form-signin" method="POST">
-              <div className="background--astral width--38" style={divStyle}>
+              <div className="background--astral" style={divStyle}>
                 <h2 className="form-signin-heading">Login</h2>
                 <br />
                 <Label bsSize="large">Username</Label>
@@ -62,7 +69,7 @@ class Login extends React.Component {
                   autoCapitalize="off"
                   spellCheck="false"
                 />
-              <br /><br />
+                <br /><br />
                 <Label bsSize="large">Password</Label>
                 <br />
                 <input
@@ -89,15 +96,13 @@ class Login extends React.Component {
                 >
                   {this.props.data.currentlySending ? '' : 'Login' }
                 </Button>
+                <ErrorMessage />
+                <Alert style={textAlign}>
+                  <strong>Warning: </strong>
+                   Do not login using your ONS credentials, use admin/admin or test/test.
+                </Alert>
               </div>
             </form>
-            <br />
-            <ErrorMessage />
-            <br /><br />
-            <Alert bsStyle="danger" style={textAlign}>
-              <strong>Warning: </strong>
-               Do not login using your ONS credentials, use admin/admin or test/test.
-            </Alert>
           </div>
         </div>
       </div>

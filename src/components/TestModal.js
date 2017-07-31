@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { ModalContainer, ModalDialog } from 'react-modal-dialog';
 
 class TestModal extends React.Component {
@@ -9,9 +9,13 @@ class TestModal extends React.Component {
   state = {
     isShowingModal: false,
   }
-  handleClick = () => this.setState({isShowingModal: true})
-  handleClose = () => this.setState({isShowingModal: false})
+  handleClick = () => this.setState({ isShowingModal: true })
+  handleClose = () => this.setState({ isShowingModal: false })
   render() {
+    const dialogStyle = {
+      marginTop: '0px',
+      marginBottom: '0px',
+    };
     const {
       props: {
         isLoading,
@@ -27,11 +31,12 @@ class TestModal extends React.Component {
         <ModalContainer onClose={this.handleClose}>
           {
             isLoading ?
-            "loading" :
-            <ModalDialog style={{ width: '80%' }} onClose={this.handleClose}>
-              <h1>User Details</h1>
-              <h1>Username: {this.props.username}</h1>
-              <h1>Role: {this.props.role}</h1>
+            'loading' :
+            <ModalDialog style={{ width: '50%' }} onClose={this.handleClose}>
+              <h1 style={dialogStyle}>User Details</h1>
+              <hr />
+              <h3>Username: {this.props.username}</h3>
+              <h3>Role: {this.props.role}</h3>
             </ModalDialog>
           }
         </ModalContainer>

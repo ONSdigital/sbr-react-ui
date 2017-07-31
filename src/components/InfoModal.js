@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Glyphicon } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { ModalContainer, ModalDialog } from 'react-modal-dialog';
 import { getUiInfo, getApiInfo } from '../actions/InfoActions';
@@ -34,6 +33,17 @@ class InfoModal extends React.Component {
     this.setState({ isShowingModal: true });
   }
   render() {
+    const dialogStyle = {
+      marginTop: '0px',
+      marginBottom: '0px',
+    };
+    const nonBold = {
+      fontWeight: 'normal',
+      border: '1px solid #ddd',
+    };
+    const headerBorder = {
+      border: '1px solid #ddd',
+    };
     const uiVersion = this.getData(this.props.data.ui, 'version');
     const uiLastUpdate = this.getData(this.props.data.ui, 'lastUpdate');
     const apiVersion = this.getData(this.props.data.api, 'version');
@@ -47,29 +57,34 @@ class InfoModal extends React.Component {
         {
           this.state.isShowingModal &&
           <ModalContainer onClose={this.handleClose}>
-            <ModalDialog onClose={this.handleClose}>
-              <h1>Information</h1>
+            <ModalDialog style={{ width: '50%' }} onClose={this.handleClose}>
+              <h1 style={dialogStyle}>Information</h1>
+              <hr />
               <table>
-                <tr>
-                  <th>Type</th>
-                  <th><Glyphicon glyph="tags" />&nbsp;&nbsp;Version</th>
-                  <th><Glyphicon glyph="dashboard" />&nbsp;&nbsp;Last Update</th>
-                </tr>
-                <tr>
-                  <td>Data</td>
-                  <td>N/A</td>
-                  <td>{dataLastUpdate}</td>
-                </tr>
-                <tr>
-                  <td>UI</td>
-                  <td>{uiVersion}</td>
-                  <td>{uiLastUpdate}</td>
-                </tr>
-                <tr>
-                  <td>API</td>
-                  <td>{apiVersion}</td>
-                  <td>{apiLastUpdate}</td>
-                </tr>
+                <thead>
+                  <tr>
+                    <th style={headerBorder}>Type</th>
+                    <th style={headerBorder}>Version</th>
+                    <th style={headerBorder}>Last Update</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th style={nonBold}>Data</th>
+                    <th style={nonBold}>N/A</th>
+                    <th style={nonBold}>{dataLastUpdate}</th>
+                  </tr>
+                  <tr>
+                    <th style={nonBold}>UI</th>
+                    <th style={nonBold}>{uiVersion}</th>
+                    <th style={nonBold}>{uiLastUpdate}</th>
+                  </tr>
+                  <tr>
+                    <th style={nonBold}>API</th>
+                    <th style={nonBold}>{apiVersion}</th>
+                    <th style={nonBold}>{apiLastUpdate}</th>
+                  </tr>
+                </tbody>
               </table>
             </ModalDialog>
           </ModalContainer>

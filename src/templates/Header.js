@@ -1,17 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import ONSLogo from '../resources/img/orglogo.svg';
 import config from '../config/constants';
 import { logout } from '../actions/LoginActions';
-const ie = require('ie-version');
-import UserDetailsModal from '../components/UserDetailsModal';
 import TestModal from '../components/TestModal';
 import InfoModal from '../components/InfoModal';
 
+const ie = require('ie-version');
+
 const { ENV } = config;
 
-const Header = function ( props ) {
+const Header = function (props) {
   // Once logged in, display ENV (local/dev/prod etc) in the header
   const onLoginPage = (location.pathname === '/' || location.pathname === 'Login');
   const header = (onLoginPage) ? 'Statistical Business Register' : ENV;

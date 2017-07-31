@@ -5,6 +5,7 @@ import { refSearch, setQuery } from '../actions/ApiActions';
 import { SET_REF_QUERY } from '../constants/ApiConstants';
 import ErrorModal from '../components/ErrorModal';
 import SearchRefForm from '../components/SearchRefForm';
+import SearchRefFormNew from '../components/SearchRefFormNew';
 import EnterpriseResultsTable from '../components/EnterpriseResultsTable';
 import { validateRefSearch } from '../utils/validation';
 
@@ -60,34 +61,48 @@ class Search extends React.Component {
     const results = (<EnterpriseResultsTable results={this.props.data.results} />);
     const enterprises = (this.props.data.results.length > 1) ? results : <div></div>;
     return (
-      <div className="page-intro background--iron-light">
+      <div className="page-intro background--gallery">
         <div className="wrapper">
-          <h1 className="margin-bottom-md--0">Reference Search</h1>
-          <h4>by VAT/PAYE/UBRN reference</h4>
-          <SearchRefForm
-            currentlySending={this.props.data.currentlySending}
-            onSubmit={this.onSubmit}
-            onChange={this.changeQuery}
-            value={this.props.data.query}
-            valid={validateRefSearch(this.props.data.query.length)}
-          />
-          <ErrorModal
-            show={this.state.show}
-            message={this.state.errorMessage}
-            close={this.closeModal}
-          />
-          <div className="wrapper" role="search">
-            <form className="col-wrap search__form" action="/search">
-              <label className="search__label col col--md-23 col--lg-24" htmlFor="nav-search">Search for a keyword(s) or time series ID</label>
-              <input type="search" autoComplete="off" className="search__input col col--md-21 col--lg-32" id="nav-search" name="q" value="" />
-              <button type="submit" className="search__button col--md-3 col--lg-3" id="nav-search-submit">
-                <span className="visuallyhidden">Search</span>
-                <span className="icon icon-search--light"></span>
-              </button>
-            </form>
+          <div className="col-wrap">
+            <div className="col">
+              <nav>
+                <div className="breadcrumb print--hide">
+                  <ol className="breadcrumb__list">
+                    <li className="breadcrumb__item">
+                      <a className="breadcrumb__link" href="/">
+                        Home
+                      </a>
+                    </li>
+                    <li className="breadcrumb__item">
+                      Reference Search
+                    </li>
+                  </ol>
+                </div>
+              </nav>
+              <div className="col col--md-47 col--lg-48">
+                <h1 className="page-intro__title ">
+                  Reference Search
+                </h1>
+                <p className="page-intro__content" style={{ marginBottom: '0px' }}>
+                  Search the Statistical Business Register on a reference (VAT/CH/UBRN)
+                </p>
+                <SearchRefFormNew
+                  currentlySending={this.props.data.currentlySending}
+                  onSubmit={this.onSubmit}
+                  onChange={this.changeQuery}
+                  value={this.props.data.query}
+                  valid={validateRefSearch(this.props.data.query.length)}
+                />
+                <ErrorModal
+                  show={this.state.show}
+                  message={this.state.errorMessage}
+                  close={this.closeModal}
+                />
+                <br />
+                {enterprises}
+              </div>
+            </div>
           </div>
-          <br />
-          {enterprises}
         </div>
       </div>
     );

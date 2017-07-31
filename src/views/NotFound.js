@@ -1,10 +1,13 @@
 import React from 'react';
-import { PageHeader } from 'react-bootstrap';
 
 const NotFound = function () {
   return (
-    <div>
-      <PageHeader>404 <small>Not Found</small></PageHeader>
+    <div className="page-intro background--gallery">
+      <div className="wrapper">
+        <h1 className="page-intro__title ">
+          404 <small>Not found</small>
+        </h1>
+      </div>
     </div>
   );
 };

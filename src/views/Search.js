@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PageHeader } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { refSearch, setQuery } from '../actions/ApiActions';
 import { SET_REF_QUERY } from '../constants/ApiConstants';
@@ -61,28 +60,35 @@ class Search extends React.Component {
     const results = (<EnterpriseResultsTable results={this.props.data.results} />);
     const enterprises = (this.props.data.results.length > 1) ? results : <div></div>;
     return (
-      <div className="wrapper">
-        <h1 className="margin-bottom-md--0">Reference Search</h1>
-        <h4> by VAT/PAYE/UBRN reference</h4>
-        <p>
-          You can read this page for help regarding the functionality of the
-          Statistical Business Register User Interface.
-        </p>
-        <br />
-        <SearchRefForm
-          currentlySending={this.props.data.currentlySending}
-          onSubmit={this.onSubmit}
-          onChange={this.changeQuery}
-          value={this.props.data.query}
-          valid={validateRefSearch(this.props.data.query.length)}
-        />
-        <ErrorModal
-          show={this.state.show}
-          message={this.state.errorMessage}
-          close={this.closeModal}
-        />
-        <br />
-        {enterprises}
+      <div className="page-intro background--iron-light">
+        <div className="wrapper">
+          <h1 className="margin-bottom-md--0">Reference Search</h1>
+          <h4>by VAT/PAYE/UBRN reference</h4>
+          <SearchRefForm
+            currentlySending={this.props.data.currentlySending}
+            onSubmit={this.onSubmit}
+            onChange={this.changeQuery}
+            value={this.props.data.query}
+            valid={validateRefSearch(this.props.data.query.length)}
+          />
+          <ErrorModal
+            show={this.state.show}
+            message={this.state.errorMessage}
+            close={this.closeModal}
+          />
+          <div className="wrapper" role="search">
+            <form className="col-wrap search__form" action="/search">
+              <label className="search__label col col--md-23 col--lg-24" htmlFor="nav-search">Search for a keyword(s) or time series ID</label>
+              <input type="search" autoComplete="off" className="search__input col col--md-21 col--lg-32" id="nav-search" name="q" value="" />
+              <button type="submit" className="search__button col--md-3 col--lg-3" id="nav-search-submit">
+                <span className="visuallyhidden">Search</span>
+                <span className="icon icon-search--light"></span>
+              </button>
+            </form>
+          </div>
+          <br />
+          {enterprises}
+        </div>
       </div>
     );
   }

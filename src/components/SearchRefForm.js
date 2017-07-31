@@ -13,7 +13,7 @@ const SearchRefForm = function ({
           controlId="formBasicText"
           validationState={valid}
         >
-          <ControlLabel>Enter reference number:</ControlLabel>
+          <ControlLabel className="page-intro__content">Enter reference number: </ControlLabel>
           <FormControl
             type="text"
             value={value}
@@ -25,10 +25,12 @@ const SearchRefForm = function ({
             onChange={onChange}
           />
           <FormControl.Feedback />
+          <br />
           <HelpBlock>Validation is based on string length.</HelpBlock>
         </FormGroup>
       </div>
       <Button
+        className="btn btn--primary"
         bsStyle="primary"
         type="submit"
         id="searchButton"

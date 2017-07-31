@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { login } from '../actions/LoginActions';
 import ErrorMessage from '../components/LoginErrorMessage';
 
-
 class Login extends React.Component {
   constructor(props) {
     super(props);

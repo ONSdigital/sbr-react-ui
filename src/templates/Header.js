@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import ONSLogo from '../resources/img/orglogo.svg';
 import config from '../config/constants';
 import { logout } from '../actions/LoginActions';
@@ -34,13 +35,13 @@ const Header = function ( props ) {
         </button>
       </ul>
     </div>);
-  };
+  }
   const div = (props.data.loggedIn) ? getHeaderItems() : '';
   return (
     <div className="wrapper">
       <div className="header col-wrap">
         <div className="col col--lg-one-third col--md-one-third">
-          <a href="/">
+          <a onClick={() => browserHistory.push('/Home')} style={{ cursor: 'pointer' }}>
             {className1}
           </a>
         </div>

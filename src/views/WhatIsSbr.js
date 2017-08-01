@@ -1,6 +1,6 @@
 import React from 'react';
 
-const WhatIsSbr = function () {
+const WhatIsSbr = () => {
   return (
     <div className="page-intro background--gallery">
       <div className="wrapper">

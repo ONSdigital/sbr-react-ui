@@ -16,7 +16,7 @@ function columnClassNameFormat(fieldValue) {
   return colour;
 }
 
-const SearchHistory = function () {
+const SearchHistory = () => {
   const history = searchHistory.getSearchHistory();
   const style = {
     labels: {

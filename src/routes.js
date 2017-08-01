@@ -12,9 +12,7 @@ import WhatIsSbr from './views/WhatIsSbr';
 import Accessibility from './views/Accessibility';
 import Search from './views/Search';
 import EnterpriseView from './views/EnterpriseView';
-import Help from './views/Help';
 import SearchHistory from './views/SearchHistory';
-import Support from './views/Support';
 import reducer from './reducers/index';
 import { checkAuth } from './actions/LoginActions';
 
@@ -63,11 +61,9 @@ const Routes = () => (
           <Route path={'/Search'} component={Search} />
           <Route path={'/Search/:enterprise/:index'} component={EnterpriseView} />
           <Route path={'/SearchHistory'} component={SearchHistory} />
-          <Route path={'/Help'} component={Help} />
           <Route path={'/WhatIsSbr'} component={WhatIsSbr} />
           <Route path={'/Accessibility'} component={Accessibility} />
           <Route path={'/ContactUs'} component={ContactUs} />
-          <Route path={'/Support'} component={Support} />
           <Route path={'/*'} component={NotFound} />
         </Route>
       </Route>

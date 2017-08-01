@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import EnterprisePanel from '../components/EnterprisePanel';
 
-const EnterpriseView = function ({ routeParams, data }) {
+const EnterpriseView = ({ routeParams, data }) => {
   return (
     <div className="page-intro background--gallery">
       <div className="wrapper">

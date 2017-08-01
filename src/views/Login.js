@@ -47,6 +47,7 @@ class Login extends React.Component {
         <div className="wrapper">
           <div className="col-wrap">
             <form className="form-signin" method="POST">
+              <h2 style={textAlign} className="form-signin-heading">Statistical Business Register</h2>
               <div className="background--astral" style={divStyle}>
                 <h2 className="form-signin-heading">Login</h2>
                 <br />

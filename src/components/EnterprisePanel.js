@@ -9,8 +9,8 @@ const EnterprisePanel = function ({ enterprise }) {
     <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
     &nbsp;&nbsp;{enterprise.name}
   </h1>);
-  const url = `https://www.google.co.uk/maps/place/${enterprise.postcode}`;
-  const mapsLink = <a href={url} target="_blank">{enterprise.postcode}</a>;
+  const url = `https://www.google.co.uk/maps/place/${enterprise.address.postcode}`;
+  const mapsLink = <a href={url} target="_blank">{enterprise.address.postcode}</a>;
   return (
     <div className="bootstrap-iso">
       <Panel bsStyle="primary" collapsible={false} defaultExpanded header={title}>

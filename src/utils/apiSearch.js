@@ -19,7 +19,7 @@ const apiSearch = {
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {
-          callback(true, { results: [json], response: response.headers, resp: response });
+          callback(true, { results: json, response: response.headers, resp: response });
         });
       } else if (response.status >= 500 && response.status < 600) {
         return callback(false, { message: 'Server error: unable to load data.', resp: response });

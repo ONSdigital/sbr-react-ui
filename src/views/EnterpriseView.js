@@ -34,12 +34,11 @@ const EnterpriseView = function ({ routeParams, data }) {
             </div>
           </div>
         </div>
-        <div className="col-wrap">
-          <EnterprisePanel
-            key={data[routeParams.index].ubrn}
-            enterprise={data[routeParams.index]}
-          />
-        </div>
+        <br />
+        <EnterprisePanel
+          key={data[routeParams.index].ubrn}
+          enterprise={data[routeParams.index]}
+        />
       </div>
     </div>
   );

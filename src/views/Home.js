@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import RefSearchImage from '../resources/img/t1-local.png';
 
 const Home = () => {
@@ -53,15 +54,15 @@ const Home = () => {
         </div>
       </div>
       <div className="page-content border-top--iron-sm border-top--iron-md">
-        <div className="background--gallery" style={{ paddingBottom: '50px' }}>
+        <div className="background--gallery" style={{ paddingBottom: '20px' }}>
           <div className="wrapper">
             <div className="tiles">
-              <h1>Statistical Business Register Features</h1>
+              <h2>Statistical Business Register Features</h2>
             </div>
-            <div className="col height-sm--13 col--md-23 col--lg-14 height-md--13 height-lg--38 background--white margin-left-md--1 margin-bottom--2 js-hover-click">
+            <div className="margin-top--2 col height-sm--13 col--md-23 col--lg-14 height-md--13 height-lg--38 background--white margin-left-md--1 margin-bottom--2 js-hover-click">
               <div className="padding-left--1 padding-right--1 padding-top--2 padding-bottom--1">
                 <div className="box__content box__content--homepage height-sm--19 height-md--19 height-md--44 padding-top-lg--17">
-                  <h2 className="tiles__title tiles__title-h2--home"><a href="http://visual.ons.gov.uk/dashboard">Reference Search</a></h2>
+                  <h2 className="tiles__title tiles__title-h2--home"><Link to="/Search"><a>Reference Search</a></Link></h2>
                   <span className="image-holder hide--sm hide--md-only width-lg--12"><img src={RefSearchImage} alt="" className="no-border" /></span>
                   <p className="margin-top-lg--1">Search for a reference (VAT, Company House, UBRN) and explore the data</p>
                 </div>

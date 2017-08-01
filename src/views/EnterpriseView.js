@@ -22,7 +22,7 @@ const EnterpriseView = ({ routeParams, data }) => {
                     </a>
                   </li>
                   <li className="breadcrumb__item">
-                    {routeParams.enterprise} [{data[routeParams.index].name}]
+                    {data[routeParams.index].id} [{data[routeParams.index].name}]
                   </li>
                 </ol>
               </div>

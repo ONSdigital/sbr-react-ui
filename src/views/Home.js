@@ -1,7 +1,6 @@
 import React from 'react';
-import Jumbotron from 'react-bootstrap/lib/Jumbotron';
 
-const Home = function () {
+const Home = () => {
   return (
     <div className="page-intro background--astral">
       <div className="wrapper">
@@ -12,7 +11,8 @@ const Home = function () {
             Welcome to the</span> Statistical Business Register
             </h1>
               <p className="page-intro__content page-intro__content--home-big">
-                The UK&#x27;s largest independent producer of official statistics and the recognised national statistical institute of the UK.
+                The UK&#x27;s largest independent producer of official statistics and
+                the recognised national statistical institute of the UK.
               </p>
             </div>
             <div className="a-z col col--md-47 col--lg-23 col--lg-offset-2 margin-top-lg--3 margin-left-sm--0">

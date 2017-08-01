@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ContactUs = function () {
+const ContactUs = () => {
   return (
     <div className="page-intro background--gallery">
       <div className="wrapper">

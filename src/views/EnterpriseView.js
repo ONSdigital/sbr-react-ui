@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import EnterprisePanel from '../components/EnterprisePanel';
 
-const EnterpriseView = function ({ routeParams, data }) {
+const EnterpriseView = ({ routeParams, data }) => {
   return (
     <div className="page-intro background--gallery">
       <div className="wrapper">
@@ -34,12 +34,11 @@ const EnterpriseView = function ({ routeParams, data }) {
             </div>
           </div>
         </div>
-        <div className="col-wrap">
-          <EnterprisePanel
-            key={data[routeParams.index].ubrn}
-            enterprise={data[routeParams.index]}
-          />
-        </div>
+        <br />
+        <EnterprisePanel
+          key={data[routeParams.index].ubrn}
+          enterprise={data[routeParams.index]}
+        />
       </div>
     </div>
   );

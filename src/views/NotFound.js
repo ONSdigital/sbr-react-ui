@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NotFound = function () {
+const NotFound = () => {
   return (
     <div className="page-intro background--gallery">
       <div className="wrapper">

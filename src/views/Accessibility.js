@@ -1,7 +1,6 @@
 import React from 'react';
-import TestTable from '../components/TestTable';
 
-const Accessibility = function () {
+const Accessibility = () => {
   return (
     <div className="page-intro background--gallery">
       <div className="wrapper">
@@ -28,7 +27,6 @@ const Accessibility = function () {
               <p className="page-intro__content" style={{ marginBottom: '50px' }}>
                 Accessibility details.
               </p>
-              <TestTable />
             </div>
           </div>
         </div>

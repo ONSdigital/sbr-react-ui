@@ -5,7 +5,7 @@ import { Button, Panel } from 'react-bootstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import '../resources/css/react-bootstrap-table-all.min.css';
 
-const EnterpriseResultsTable = function ({ results }) {
+const SearchRefResultsTable = function ({ results }) {
   function buttonFormatter(cell, row, enumObject, index) {
     const focus = (index === 0);
     return (<Button
@@ -38,8 +38,8 @@ const EnterpriseResultsTable = function ({ results }) {
   );
 };
 
-EnterpriseResultsTable.propTypes = {
+SearchRefResultsTable.propTypes = {
   results: PropTypes.array.isRequired,
 };
 
-export default EnterpriseResultsTable;
+export default SearchRefResultsTable;

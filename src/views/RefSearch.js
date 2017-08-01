@@ -5,7 +5,7 @@ import { refSearch, setQuery } from '../actions/ApiActions';
 import { SET_REF_QUERY } from '../constants/ApiConstants';
 import ErrorModal from '../components/ErrorModal';
 import SearchRefForm from '../components/SearchRefForm';
-import EnterpriseResultsTable from '../components/EnterpriseResultsTable';
+import SearchRefResultsTable from '../components/SearchRefResultsTable';
 import { validateRefSearch } from '../utils/validation';
 import BreadCrumb from '../components/BreadCrumb';
 
@@ -61,7 +61,7 @@ class Search extends React.Component {
     const items = [
       { name: 'Reference Search', link: '' },
     ];
-    const results = (<EnterpriseResultsTable results={this.props.data.results} />);
+    const results = (<SearchRefResultsTable results={this.props.data.results} />);
     const enterprises = (this.props.data.results.length > 1) ? results : <div></div>;
     return (
       <div>

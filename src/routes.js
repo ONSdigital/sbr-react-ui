@@ -10,7 +10,7 @@ import Login from './views/Login';
 import ContactUs from './views/ContactUs';
 import WhatIsSbr from './views/WhatIsSbr';
 import Accessibility from './views/Accessibility';
-import Search from './views/Search';
+import RefSearch from './views/RefSearch';
 import EnterpriseView from './views/EnterpriseView';
 import SearchHistory from './views/SearchHistory';
 import reducer from './reducers/index';
@@ -58,8 +58,8 @@ const Routes = () => (
         <IndexRoute component={Login} onEnter={checkLogin} />
         <Route onEnter={checkAuthentication} >
           <Route path={'/Home'} component={Home} />
-          <Route path={'/Search'} component={Search} />
-          <Route path={'/Search/:enterprise/:index'} component={EnterpriseView} />
+          <Route path={'/RefSearch'} component={RefSearch} />
+          <Route path={'/RefSearch/:enterprise/:index'} component={EnterpriseView} />
           <Route path={'/SearchHistory'} component={SearchHistory} />
           <Route path={'/WhatIsSbr'} component={WhatIsSbr} />
           <Route path={'/Accessibility'} component={Accessibility} />

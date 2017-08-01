@@ -12,7 +12,7 @@ const EnterpriseResultsTable = function ({ results }) {
       aria-label="Go to record button"
       autoFocus={focus}
       onClick={() => {
-        browserHistory.push(`/Search/${row.id}/${index}`);
+        browserHistory.push(`/RefSearch/${row.id}/${index}`);
       }}
       bsStyle="info"
     >

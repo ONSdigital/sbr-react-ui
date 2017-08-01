@@ -23,7 +23,7 @@ export function refSearch(query) {
           headers: data.response,
         }));
         if (data.results.length === 1) {
-          browserHistory.push(`/Search/${query}/0`);
+          browserHistory.push(`/RefSearch/${query}/0`);
         }
       } else {
         dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message));

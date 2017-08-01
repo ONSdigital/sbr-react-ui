@@ -25,14 +25,14 @@ class NavBar extends React.Component {
             </li>
             <li className="nav--controls__item ">
               <a href="#nav-search" id="search-toggle" aria-controls="nav-search" className="nav--controls__search">
-                <span className="nav--controls__text">Search</span>
+                <span className="nav--controls__text">Reference Search</span>
               </a>
             </li>
           </ul>
           <div className="wrapper nav-main--hidden" id="nav-primary">
             <ul className="primary-nav__list">
               <li className="primary-nav__item js-nav hide--mobile old-ie--display-block"><a className="primary-nav__link col col--md-7 col--lg-9" onClick={() => browserHistory.push('/Home')}>Home</a></li>
-              <li className="primary-nav__item js-nav hide--mobile old-ie--display-block"><a className="primary-nav__link col col--md-7 col--lg-9" onClick={() => browserHistory.push('/Search')}>Search</a></li>
+              <li className="primary-nav__item js-nav hide--mobile old-ie--display-block"><a className="primary-nav__link col col--md-7 col--lg-9" onClick={() => browserHistory.push('/RefSearch')}>Ref Search</a></li>
               <li className="primary-nav__item js-nav js-expandable ">
                 <a className="primary-nav__link col col--md-8 col--lg-10" onClick={() => browserHistory.push('/placeholder')} aria-haspopup="true">placeholder</a>
                 <ul className="primary-nav__child-list col col--md-16 col--lg-20 js-expandable__content js-nav-hidden jsEnhance" aria-expanded="false" aria-label="submenu">

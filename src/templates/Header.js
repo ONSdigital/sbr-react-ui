@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import Loader from 'halogen/PulseLoader';
 import config from '../config/constants';
 import { logout } from '../actions/LoginActions';
-import TestModal from '../components/TestModal';
+import UserDetailsModal from '../components/UserDetailsModal';
 import InfoModal from '../components/InfoModal';
 
 const ie = require('ie-version');
@@ -27,7 +27,7 @@ const Header = function (props) {
     return (<div className="secondary-nav col col--lg-two-thirds col--md-two-thirds print--hide">
       <ul className="secondary-nav__list">
         <li className="secondary-nav__item">
-          <TestModal username={props.data.username} role={props.data.role} />
+          <UserDetailsModal username={props.data.username} role={props.data.role} />
         </li>
         <li className="secondary-nav__item">
           <InfoModal />

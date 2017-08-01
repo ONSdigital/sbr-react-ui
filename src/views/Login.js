@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap-button-loader';
-import { Alert, Label } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { login } from '../actions/LoginActions';
 import ErrorMessage from '../components/LoginErrorMessage';
@@ -37,8 +37,8 @@ class Login extends React.Component {
       width: '65%',
     };
     const textAlign = {
+      marginTop: '10px',
       textAlign: 'center',
-      marginTop: '20px',
       borderRadius: '25px',
     };
     return (
@@ -52,8 +52,6 @@ class Login extends React.Component {
               <div className="background--astral" style={divStyle}>
                 <h2 className="form-signin-heading">Login</h2>
                 <br />
-                <Label bsSize="large">Username</Label>
-                <br />
                 <input
                   type="text"
                   id="username"
@@ -61,16 +59,14 @@ class Login extends React.Component {
                   aria-required
                   value={this.state.username}
                   onChange={this.changeUsername}
-                  className="form-control"
+                  className="search__input search__input--results-page"
                   name="username"
-                  required=""
+                  placeholder="Username"
                   autoCorrect="off"
                   autoCapitalize="off"
                   spellCheck="false"
                 />
                 <br /><br />
-                <Label bsSize="large">Password</Label>
-                <br />
                 <input
                   type="password"
                   id="password"
@@ -78,13 +74,13 @@ class Login extends React.Component {
                   aria-required
                   value={this.state.password}
                   onChange={this.changePassword}
-                  className="form-control"
+                  className="search__input search__input--results-page"
                   name="password"
-                  required=""
+                  placeholder="Password"
                 />
                 <br /><br />
                 <Button
-                  className="btn btn--primary btn--thin"
+                  className="btn btn--primary btn--wide"
                   bsStyle="primary"
                   type="submit"
                   id="loginButton"

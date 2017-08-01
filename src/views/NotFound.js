@@ -1,13 +1,17 @@
 import React from 'react';
+import BreadCrumb from '../components/BreadCrumb';
 
 const NotFound = () => {
+  const items = [
+    { name: 'Not Found', link: '' },
+  ];
   return (
-    <div className="page-intro background--gallery">
-      <div className="wrapper">
-        <h1 className="page-intro__title ">
-          404 <small>Not found</small>
-        </h1>
-      </div>
+    <div>
+      <BreadCrumb
+        title="404 Not Found"
+        description="Please navigate to a valid URL."
+        breadCrumbItems={items}
+      />
     </div>
   );
 };

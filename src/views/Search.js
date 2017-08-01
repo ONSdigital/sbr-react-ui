@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import { refSearch, setQuery } from '../actions/ApiActions';
 import { SET_REF_QUERY } from '../constants/ApiConstants';
 import ErrorModal from '../components/ErrorModal';
-import SearchRefFormNew from '../components/SearchRefFormNew';
+import SearchRefForm from '../components/SearchRefForm';
 import EnterpriseResultsTable from '../components/EnterpriseResultsTable';
 import { validateRefSearch } from '../utils/validation';
+import BreadCrumb from '../components/BreadCrumb';
 
 class Search extends React.Component {
   constructor(props) {
@@ -57,50 +58,34 @@ class Search extends React.Component {
     this.props.dispatch(setQuery(SET_REF_QUERY, evt.target.value));
   }
   render() {
+    const items = [
+      { name: 'Reference Search', link: '' },
+    ];
     const results = (<EnterpriseResultsTable results={this.props.data.results} />);
     const enterprises = (this.props.data.results.length > 1) ? results : <div></div>;
     return (
-      <div className="page-intro background--gallery">
-        <div className="wrapper">
-          <div className="col-wrap">
-            <div className="col">
-              <nav>
-                <div className="breadcrumb print--hide">
-                  <ol className="breadcrumb__list">
-                    <li className="breadcrumb__item">
-                      <a className="breadcrumb__link" href="/">
-                        Home
-                      </a>
-                    </li>
-                    <li className="breadcrumb__item">
-                      Reference Search
-                    </li>
-                  </ol>
-                </div>
-              </nav>
-              <div className="col col--md-47 col--lg-48">
-                <h1 className="page-intro__title ">
-                  Reference Search
-                </h1>
-                <p className="page-intro__content" style={{ marginBottom: '0px' }}>
-                  Search the Statistical Business Register on a reference (VAT/CH/UBRN)
-                </p>
-                <SearchRefFormNew
-                  currentlySending={this.props.data.currentlySending}
-                  onSubmit={this.onSubmit}
-                  onChange={this.changeQuery}
-                  value={this.props.data.query}
-                  valid={validateRefSearch(this.props.data.query.length)}
-                />
-                <ErrorModal
-                  show={this.state.show}
-                  message={this.state.errorMessage}
-                  close={this.closeModal}
-                />
-                <br />
-                {enterprises}
-              </div>
-            </div>
+      <div>
+        <BreadCrumb
+          title="Reference Search"
+          description="Search the Statistical Business Register on a reference (VAT/CH/UBRN)"
+          breadCrumbItems={items}
+        />
+        <div className="page-intro background--gallery">
+          <div className="wrapper">
+            <SearchRefForm
+              currentlySending={this.props.data.currentlySending}
+              onSubmit={this.onSubmit}
+              onChange={this.changeQuery}
+              value={this.props.data.query}
+              valid={validateRefSearch(this.props.data.query.length)}
+            />
+            <ErrorModal
+              show={this.state.show}
+              message={this.state.errorMessage}
+              close={this.closeModal}
+            />
+            <br />
+            {enterprises}
           </div>
         </div>
       </div>

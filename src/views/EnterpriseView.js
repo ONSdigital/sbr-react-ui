@@ -1,44 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import EnterprisePanel from '../components/EnterprisePanel';
+import BreadCrumb from '../components/BreadCrumb';
 
 const EnterpriseView = ({ routeParams, data }) => {
+  const items = [
+    { name: 'Reference Search', link: '/Search' },
+    { name: `${data[routeParams.index].id} [${data[routeParams.index].name}]`, link: '' },
+  ];
   return (
-    <div className="page-intro background--gallery">
-      <div className="wrapper">
-        <div className="col-wrap">
-          <div className="col">
-            <nav>
-              <div className="breadcrumb print--hide">
-                <ol className="breadcrumb__list">
-                  <li className="breadcrumb__item">
-                    <a className="breadcrumb__link" href="/">
-                      Home
-                    </a>
-                  </li>
-                  <li className="breadcrumb__item">
-                    <a className="breadcrumb__link" href="/Search">
-                      Ref Search
-                    </a>
-                  </li>
-                  <li className="breadcrumb__item">
-                    {data[routeParams.index].id} [{data[routeParams.index].name}]
-                  </li>
-                </ol>
-              </div>
-            </nav>
-            <div className="col col--md-47 col--lg-48">
-              <h1 className="page-intro__title ">
-                Enterprise View
-              </h1>
-            </div>
-          </div>
+    <div>
+      <BreadCrumb
+        title="Enterprise View"
+        description=""
+        breadCrumbItems={items}
+      />
+      <div className="page-intro background--gallery">
+        <div className="wrapper">
+          <EnterprisePanel
+            key={data[routeParams.index].ubrn}
+            enterprise={data[routeParams.index]}
+          />
         </div>
-        <br />
-        <EnterprisePanel
-          key={data[routeParams.index].ubrn}
-          enterprise={data[routeParams.index]}
-        />
       </div>
     </div>
   );

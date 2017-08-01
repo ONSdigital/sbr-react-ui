@@ -16,7 +16,7 @@ class UserDetailsModal extends React.Component {
       marginBottom: '0px',
     };
     return (<div>
-      <a className="secondary-nav__link" onClick={this.handleClick}>
+      <a className="secondary-nav__link" id="userDetailsModal"  onClick={this.handleClick}>
         User Details
       </a>
       {

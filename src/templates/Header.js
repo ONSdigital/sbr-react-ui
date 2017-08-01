@@ -23,13 +23,16 @@ const Header = function (props) {
   }
   const spinner = (<Loader color="#FFFFFF" size="8px" margin="0px" />);
   const buttonContent = (props.data.currentlySending) ? spinner : 'Logout';
+  const cursorStyle = {
+    cursor: 'pointer',
+  };
   function getHeaderItems() {
     return (<div className="secondary-nav col col--lg-two-thirds col--md-two-thirds print--hide">
       <ul className="secondary-nav__list">
-        <li className="secondary-nav__item">
+        <li style={cursorStyle} className="secondary-nav__item">
           <UserDetailsModal username={props.data.username} role={props.data.role} />
         </li>
-        <li className="secondary-nav__item">
+        <li style={cursorStyle} className="secondary-nav__item">
           <InfoModal />
         </li>
         <button onClick={!props.currentlySending ? () => props.dispatch(logout()) : null} aria-label="Logout button" loading={props.currentlySending} type="submit" className="btn btn--primary btn--thin">
@@ -60,5 +63,4 @@ function select(state) {
   };
 }
 
-// Wrap the component to inject dispatch and state into it
 export default connect(select)(Header);

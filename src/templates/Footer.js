@@ -32,7 +32,7 @@ const Footer = function () {
                 <h3 className="footer-nav__heading">Connect with us</h3>
                 <ul className="footer-nav__list">
                   <li className="footer-nav__item">
-                    <a style={cursorStyle} onClick={() => browserHistory.push('/ContactUs')}>Contact us</a>
+                    <a style={cursorStyle} onClick={() => window.location.href = "mailto:statistical.business.register@ons.gov.uk?subject=SBR&body=message%20goes%20here"}>statistical.business.register@ons.gov.uk</a>
                   </li>
                 </ul>
               </div>

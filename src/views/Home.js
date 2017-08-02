@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import RefSearchImage from '../resources/img/t1-local.png';
+import RefSearchImage from '../resources/img/search.png';
 
 const Home = () => {
   return (
@@ -18,35 +18,13 @@ const Home = () => {
                   list of UK businesses used by government for statistical purposes.
                 </p>
               </div>
-              <div className="a-z col col--md-47 col--lg-23 col--lg-offset-2 margin-top-lg--3 margin-left-sm--0">
-                <h2 className="margin-top-md--2 margin-top-sm--2 "><a href="/atoz">A to Z of statistical bulletins</a></h2>
-                <ul className="a-z-list padding-top-md--1 padding-top-sm--1 padding-left--0">
-                  <li className="a-z-list-item"><a href="/atoz?az=a">A</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=b">B</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=c">C</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=d">D</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=e">E</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=f">F</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=g">G</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=h">H</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=i">I</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=j">J</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=k">K</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=l">L</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=m">M</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=n">N</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=o">O</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=p">P</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=q">Q</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=r">R</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=s">S</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=t">T</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=u">U</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=v">V</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=w">W</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=x">X</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=y">Y</a></li>
-                  <li className="a-z-list-item"><a href="/atoz?az=z">Z</a></li>
+              <div className="a-z col col--md-47 col--lg-23 col--lg-offset-2 margin-top-lg--3 margin-left-sm--0" style={{ textAlign: 'center' }}>
+                <h2 className="margin-top-md--2 margin-top-sm--2 "><a>Useful Information</a></h2>
+                <ul className="a-z-list padding-top-md--1 padding-top-sm--1 padding-left-lg--3">
+                  <li className="a-z-list-item" style={{ width: '260px' }}><a>Username | admin</a></li>
+                  <li className="a-z-list-item" style={{ width: '260px' }}><a>Role | admin</a></li>
+                  <li className="a-z-list-item" style={{ width: '260px' }}><a>API Version | 0.1</a></li>
+                  <li className="a-z-list-item" style={{ width: '260px' }}><a>UI Version | 0.1</a></li>
                 </ul>
               </div>
             </div>
@@ -59,12 +37,13 @@ const Home = () => {
             <div className="tiles">
               <h2>Statistical Business Register Features</h2>
             </div>
-            <div className="margin-top--2 col height-sm--13 col--md-23 col--lg-14 height-md--13 height-lg--38 background--white margin-left-md--1 margin-bottom--2 js-hover-click">
+            <div className="margin-top--2 col height-sm--48 col--md-14 col--lg-14 height-md--48 height-lg--48 background--white margin-bottom--2 js-hover-click">
               <div className="padding-left--1 padding-right--1 padding-top--2 padding-bottom--1">
-                <div className="box__content box__content--homepage height-sm--19 height-md--19 height-md--44 padding-top-lg--17">
+                <div className="box__content box__content--homepage height-sm--19 height-md--19 height-md--44 padding-top-lg--17 padding-top-md--17">
+                  <br /><br /><br />
                   <h2 className="tiles__title tiles__title-h2--home"><Link to="/RefSearch"><a>Reference Search</a></Link></h2>
-                  <span className="image-holder hide--sm hide--md-only width-lg--12"><img src={RefSearchImage} alt="" className="no-border" /></span>
-                  <p className="margin-top-lg--1">Search for a reference (VAT, Company House, UBRN) and explore the data</p>
+                  <span className="image-holder hide--sm width-lg--12 width-md--12"><img src={RefSearchImage} style={{ width: '200px' }} alt="" className="no-border" /></span>
+                  <p className="margin-top-lg--1 margin-top-md--1">Search for a reference (VAT, Company House, UBRN) and explore the data</p>
                 </div>
               </div>
             </div>

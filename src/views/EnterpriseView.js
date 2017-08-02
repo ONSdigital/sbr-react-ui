@@ -5,7 +5,7 @@ import BreadCrumb from '../components/BreadCrumb';
 
 const EnterpriseView = ({ routeParams, data }) => {
   const items = [
-    { name: 'Reference Search', link: '/Search' },
+    { name: 'Reference Search', link: '/RefSearch' },
     { name: `${data[routeParams.index].id} [${data[routeParams.index].name}]`, link: '' },
   ];
   return (

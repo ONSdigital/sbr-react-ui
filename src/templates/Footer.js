@@ -26,16 +26,13 @@ const Footer = function () {
                   <li className="footer-nav__item">
                     <a style={cursorStyle} onClick={() => browserHistory.push('/WhatIsSbr')}>What is SBR</a>
                   </li>
-                  <li className="footer-nav__item">
-                    <a style={cursorStyle} onClick={() => browserHistory.push('/ContactUs')}>Contact us</a>
-                  </li>
                 </ul>
               </div>
               <div className="col col--lg-one-third col--md-one-third">
                 <h3 className="footer-nav__heading">Connect with us</h3>
                 <ul className="footer-nav__list">
                   <li className="footer-nav__item">
-                    <a href="https://public.govdelivery.com/accounts/UKONS/subscribers/new" className="icon--hide">Email</a>
+                    <a style={cursorStyle} onClick={() => browserHistory.push('/ContactUs')}>Contact us</a>
                   </li>
                 </ul>
               </div>

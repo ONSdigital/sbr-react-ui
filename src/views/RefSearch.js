@@ -36,6 +36,11 @@ class Search extends React.Component {
       this.setState({ results: nextProps.data.results });
     }
   }
+  componentWillUpdate() {
+    if (!this.state.show) {
+      this.child.myInput.focus();
+    }
+  }
   onSubmit(e) {
     e.preventDefault();
     const query = this.props.data.query;
@@ -73,6 +78,7 @@ class Search extends React.Component {
         <div className="page-intro background--gallery">
           <div className="wrapper">
             <SearchRefForm
+              ref={(ch) => this.child = ch}
               currentlySending={this.props.data.currentlySending}
               onSubmit={this.onSubmit}
               onChange={this.changeQuery}

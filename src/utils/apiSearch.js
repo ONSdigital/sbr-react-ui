@@ -17,8 +17,6 @@ const apiSearch = {
     fetch(`${API_URL}/${API_VERSION}/search?id=${id}`, {
       method: 'GET',
     }).then((response) => {
-      console.log("response: ");
-      console.log(response);
       if (response.status === 200) {
         return response.json().then((json) => {
           callback(true, { results: json, response: response.headers, resp: response });

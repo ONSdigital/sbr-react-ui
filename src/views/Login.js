@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap-button-loader';
+import Loader from 'halogen/PulseLoader';
 import { Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { login } from '../actions/LoginActions';
@@ -41,6 +42,7 @@ class Login extends React.Component {
       textAlign: 'center',
       borderRadius: '25px',
     };
+    const spinner = (<Loader color="#FFFFFF" size="8px" margin="0px" />);
     return (
       <div>
         <br />
@@ -85,11 +87,9 @@ class Login extends React.Component {
                   type="submit"
                   id="loginButton"
                   aria-label="Login button"
-                  loading={this.props.data.currentlySending}
-                  disabled={this.props.data.currentlySending}
                   onClick={!this.props.data.currentlySending ? this.onSubmit : null}
                 >
-                  {this.props.data.currentlySending ? '' : 'Login' }
+                  {this.props.data.currentlySending ? spinner : 'Login'}
                 </Button>
                 <ErrorMessage />
                 <Alert style={textAlign}>

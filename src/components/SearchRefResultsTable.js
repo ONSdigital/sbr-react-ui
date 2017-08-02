@@ -8,11 +8,25 @@ import '../resources/css/react-bootstrap-table-all.min.css';
 const SearchRefResultsTable = function ({ results }) {
   function buttonFormatter(cell, row, enumObject, index) {
     const focus = (index === 0);
+    let destination;
+    switch (row.source) {
+      case 'UBRN':
+        destination = 'LegalUnit';
+        break;
+      case 'PAYE':
+        destination = 'PAYE';
+        break;
+      case 'VAT':
+        destination = 'VAT';
+        break;
+      default:
+        destination = 'Enterprise';
+    }
     return (<Button
       aria-label="Go to record button"
       autoFocus={focus}
       onClick={() => {
-        browserHistory.push(`/RefSearch/${row.id}/${index}`);
+        browserHistory.push(`/RefSearch/${destination}/${row.id}/${index}`);
       }}
       bsStyle="info"
     >
@@ -31,7 +45,7 @@ const SearchRefResultsTable = function ({ results }) {
           <TableHeaderColumn dataField="id" width="60" isKey>ID</TableHeaderColumn>
           <TableHeaderColumn dataField="source" width="50">Source</TableHeaderColumn>
           <TableHeaderColumn dataField="name" width="100">Name</TableHeaderColumn>
-          <TableHeaderColumn dataField="button" dataFormat={buttonFormatter} width="80">Go to Enterprise View</TableHeaderColumn>
+          <TableHeaderColumn dataField="button" dataFormat={buttonFormatter} width="80">View Record</TableHeaderColumn>
         </BootstrapTable>
       </Panel>
     </div>

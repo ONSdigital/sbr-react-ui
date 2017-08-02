@@ -23,7 +23,19 @@ export function refSearch(query) {
           headers: data.response,
         }));
         if (data.results.length === 1) {
-          browserHistory.push(`/RefSearch/${query}/0`);
+          const source = data.results[0].source;
+          let destination;
+          switch (source) {
+            case 'UBRN':
+              destination = 'LegalUnit';
+              break;
+            case 'VAT':
+              destination = 'VAT';
+              break;
+            default:
+              destination = 'Enterprise';
+          }
+          browserHistory.push(`/RefSearch/${destination}/${query}/0`);
         }
       } else {
         dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message));

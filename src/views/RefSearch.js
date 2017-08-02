@@ -47,6 +47,9 @@ class Search extends React.Component {
     if (query.length > 5 && query.length < 13) {
       this.props.dispatch(refSearch(query));
     } else {
+      // TODO:
+      // Need to reset results here, so on ErrorModal showing, results table
+      // will be removed
       this.setState({
         results: [],
         show: true,

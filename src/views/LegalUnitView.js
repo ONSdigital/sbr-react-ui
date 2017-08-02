@@ -13,6 +13,7 @@ const LegalUnitView = ({ routeParams, data }) => {
       <BreadCrumb
         title="Legal Unit View"
         description=""
+        marginBottom={1}
         breadCrumbItems={items}
       />
       <div className="page-intro background--gallery">

@@ -13,6 +13,7 @@ const PAYEView = ({ routeParams, data }) => {
       <BreadCrumb
         title="PAYE View"
         description=""
+        marginBottom={1}
         breadCrumbItems={items}
       />
       <div className="page-intro background--gallery">

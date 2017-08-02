@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
-const BreadCrumb = ({ breadCrumbItems, title, description }) => {
+const BreadCrumb = ({ breadCrumbItems, title, description, marginBottom }) => {
   function getBreadCrumbItems() {
     return breadCrumbItems.map((obj) => {
       if (obj.link === '') {
@@ -42,7 +42,7 @@ const BreadCrumb = ({ breadCrumbItems, title, description }) => {
               <h1 className="page-intro__title ">
                 {title}
               </h1>
-              <p className="page-intro__content margin-bottom--4">
+              <p className={`page-intro__content margin-bottom--${marginBottom}`}>
                 {description}
               </p>
             </div>
@@ -56,6 +56,7 @@ const BreadCrumb = ({ breadCrumbItems, title, description }) => {
 BreadCrumb.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  marginBottom: PropTypes.string.isRequired,
   breadCrumbItems: PropTypes.shape({
     name: PropTypes.string.isRequired,
     link: PropTypes.string.isRequired,

@@ -76,6 +76,7 @@ class Search extends React.Component {
         <BreadCrumb
           title="Reference Search"
           description="Search the Statistical Business Register on a reference (VAT/CH/UBRN)"
+          marginBottom={1}
           breadCrumbItems={items}
         />
         <div className="page-intro background--gallery">

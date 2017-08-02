@@ -13,6 +13,7 @@ const VATView = ({ routeParams, data }) => {
       <BreadCrumb
         title="VAT View"
         description=""
+        marginBottom={1}
         breadCrumbItems={items}
       />
       <div className="page-intro background--gallery">

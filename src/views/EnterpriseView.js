@@ -13,6 +13,7 @@ const EnterpriseView = ({ routeParams, data }) => {
       <BreadCrumb
         title="Enterprise View"
         description=""
+        marginBottom={1}
         breadCrumbItems={items}
       />
       <div className="page-intro background--gallery">

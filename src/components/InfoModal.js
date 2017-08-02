@@ -60,6 +60,7 @@ class InfoModal extends React.Component {
             <ModalDialog style={{ width: '50%' }} onClose={this.handleClose}>
               <h1 style={dialogStyle}>Information</h1>
               <hr />
+              <br />
               <table>
                 <thead>
                   <tr>

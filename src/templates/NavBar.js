@@ -33,17 +33,6 @@ class NavBar extends React.Component {
             <ul className="primary-nav__list">
               <li className="primary-nav__item js-nav hide--mobile old-ie--display-block"><a className="primary-nav__link col col--md-7 col--lg-9" onClick={() => browserHistory.push('/Home')}>Home</a></li>
               <li className="primary-nav__item js-nav hide--mobile old-ie--display-block"><a className="primary-nav__link col col--md-7 col--lg-9" onClick={() => browserHistory.push('/RefSearch')}>Ref Search</a></li>
-              <li className="primary-nav__item js-nav js-expandable ">
-                <a className="primary-nav__link col col--md-8 col--lg-10" onClick={() => browserHistory.push('/placeholder')} aria-haspopup="true">placeholder</a>
-                <ul className="primary-nav__child-list col col--md-16 col--lg-20 js-expandable__content js-nav-hidden jsEnhance" aria-expanded="false" aria-label="submenu">
-                  <li className="primary-nav__child-item  js-expandable__child">
-                    <a className="primary-nav__child-link" tabIndex="-1" onClick={() => browserHistory.push('/placeholder')} >collapsed placeholder</a>
-                  </li>
-                  <li className="primary-nav__child-item  js-expandable__child">
-                    <a className="primary-nav__child-link" tabIndex="-1" onClick={() => browserHistory.push('/placeholder')} >collapsed placeholder</a>
-                  </li>
-                </ul>
-              </li>
             </ul>
           </div>
         </nav>

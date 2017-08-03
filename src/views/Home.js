@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 import RefSearchImage from '../resources/img/search.png';
 
-const Home = () => {
+const Home = ({ username, role, uiVersion, apiVersion }) => {
   return (
     <div>
       <div className="page-intro background--astral">
@@ -21,10 +22,10 @@ const Home = () => {
               <div className="a-z col col--md-47 col--lg-23 col--lg-offset-2 margin-top-lg--3 margin-left-sm--0" style={{ textAlign: 'center' }}>
                 <h2 className="margin-top-md--2 margin-top-sm--2 "><a>Useful Information</a></h2>
                 <ul className="a-z-list padding-top-md--1 padding-top-sm--1 padding-left-lg--3">
-                  <li className="a-z-list-item" style={{ width: '260px' }}><a>Username | admin</a></li>
-                  <li className="a-z-list-item" style={{ width: '260px' }}><a>Role | admin</a></li>
-                  <li className="a-z-list-item" style={{ width: '260px' }}><a>API Version | 0.1</a></li>
-                  <li className="a-z-list-item" style={{ width: '260px' }}><a>UI Version | 0.1</a></li>
+                  <li className="a-z-list-item" style={{ width: '260px' }}><a>Username | {username}</a></li>
+                  <li className="a-z-list-item" style={{ width: '260px' }}><a>Role | {role}</a></li>
+                  <li className="a-z-list-item" style={{ width: '260px' }}><a>API Version | {apiVersion}</a></li>
+                  <li className="a-z-list-item" style={{ width: '260px' }}><a>UI Version | {uiVersion}</a></li>
                 </ul>
               </div>
             </div>
@@ -54,4 +55,20 @@ const Home = () => {
   );
 };
 
-export default Home;
+Home.propTypes = {
+  username: React.PropTypes.string.isRequired,
+  role: React.PropTypes.string.isRequired,
+  uiVersion: React.PropTypes.string.isRequired,
+  apiVersion: React.PropTypes.string.isRequired,
+};
+
+function select(state) {
+  return {
+    username: state.login.username,
+    role: state.login.role,
+    uiVersion: state.info.ui.version,
+    apiVersion: state.info.api.version,
+  };
+}
+
+export default connect(select)(Home);

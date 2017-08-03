@@ -18,7 +18,7 @@ const LegalUnitPanel = function ({ legalUnit }) {
             <Table striped bordered condensed hover>
               <tbody>
                 <tr>
-                  <td><strong>VAT Reference</strong></td>
+                  <td><strong>Legal Unit Reference (UBRN)</strong></td>
                   <td>{legalUnit.id}</td>
                 </tr>
                 <tr>

@@ -26,7 +26,7 @@ export function refSearch(query) {
           const source = data.results[0].source;
           let destination;
           switch (source) {
-            case 'UBRN':
+            case 'Legal Unit':
               destination = 'LegalUnit';
               break;
             case 'VAT':

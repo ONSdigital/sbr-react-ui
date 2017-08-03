@@ -10,7 +10,7 @@ const SearchRefResultsTable = function ({ results }) {
     const focus = (index === 0);
     let destination;
     switch (row.source) {
-      case 'UBRN':
+      case 'Legal Unit':
         destination = 'LegalUnit';
         break;
       case 'PAYE':
@@ -34,13 +34,21 @@ const SearchRefResultsTable = function ({ results }) {
     </Button>);
   }
   const title = (<h1 style={{ fontSize: '20px' }}>Results</h1>);
+  let formattedResults = [];
+  results.forEach((i) => {
+    const record = i
+    if (record.source === 'VAT' || record.source === 'Legal Unit') {
+      record.name = record.businessName;
+    }
+    formattedResults.push(record);
+  });
   return (
     <div className="bootstrap-iso">
       <Panel bsStyle="primary" collapsible={false} defaultExpanded header={title}>
         <BootstrapTable
           striped
           hover
-          data={results}
+          data={formattedResults}
         >
           <TableHeaderColumn dataField="id" width="60" isKey>ID</TableHeaderColumn>
           <TableHeaderColumn dataField="source" width="50">Source</TableHeaderColumn>

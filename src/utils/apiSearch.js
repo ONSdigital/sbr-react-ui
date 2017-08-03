@@ -13,7 +13,7 @@ const apiSearch = {
    * Gets version/lastUpdate info from the UI.
    * @param  {Function} callback Called with returned data.
    */
-  getRef(id: string, callback: (success: boolean, data: {}, response: response) => void) {
+  getRef(id: string, callback: (success: boolean, data: {}, response?: {}) => void) {
     fetch(`${API_URL}/${API_VERSION}/search?id=${id}`, {
       method: 'GET',
     }).then((response) => {

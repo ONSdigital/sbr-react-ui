@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import { Button, Panel } from 'react-bootstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+import { formatResultsTable } from '../utils/helperMethods';
 import '../resources/css/react-bootstrap-table-all.min.css';
 
 const SearchRefResultsTable = function ({ results }) {
@@ -34,14 +35,7 @@ const SearchRefResultsTable = function ({ results }) {
     </Button>);
   }
   const title = (<h1 style={{ fontSize: '20px' }}>Results</h1>);
-  let formattedResults = [];
-  results.forEach((i) => {
-    const record = i
-    if (record.source === 'VAT' || record.source === 'Legal Unit') {
-      record.name = record.businessName;
-    }
-    formattedResults.push(record);
-  });
+  const formattedResults = formatResultsTable(results);
   return (
     <div className="bootstrap-iso">
       <Panel bsStyle="primary" collapsible={false} defaultExpanded header={title}>

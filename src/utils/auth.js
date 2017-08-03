@@ -15,7 +15,7 @@ const auth = {
    * @param  {string}   password The password of the user
    * @param  {Function} callback Called after a user was logged in on the remote server
    */
-  login(username: String, password: String, callback: (success: boolean, data: {}) => void) {
+  login(username: string, password: string, callback: (success: boolean, data: {}) => void) {
     // Do not need to check if user is already logged in, this is done in
     // routes.js before this method is called
 
@@ -29,9 +29,9 @@ const auth = {
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {
-          const token = json.jToken;
-          const loginName = json.username;
-          const role = json.role;
+          const token: string = json.jToken;
+          const loginName: string = json.username;
+          const role: string = json.role;
           sessionStorage.setItem('token', token);
           // Send auth request to save token username pair
           callback(true, { token, loginName, role });
@@ -43,7 +43,7 @@ const auth = {
       return callback(false, { message: 'Server error: request timed out.' });
     });
   },
-  checkToken(token: String, callback: (success: boolean, data: ?{}) => void) {
+  checkToken(token: string, callback: (success: boolean, data: ?{}) => void) {
     fetch(`${AUTH_URL}/checkToken`, {
       method: 'POST',
       headers: {
@@ -53,9 +53,9 @@ const auth = {
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {
-          const newToken = json.token;
-          const username = json.username;
-          const role = json.role;
+          const newToken: string = json.token;
+          const username: string = json.username;
+          const role: string = json.role;
           // Send auth request to save token username pair
           callback(true, { newToken, username, role });
         });
@@ -70,7 +70,7 @@ const auth = {
    * Logs the current user out
    */
   logout(callback: (success: boolean) => void) {
-    const token: String = sessionStorage.token;
+    const token: string = sessionStorage.token;
     fetch(`${AUTH_URL}/logout`, {
       method: 'POST',
       headers: {

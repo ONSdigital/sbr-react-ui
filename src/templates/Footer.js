@@ -5,6 +5,15 @@ const Footer = function () {
   const cursorStyle = {
     cursor: 'pointer',
   };
+  const footerItemStyle = {
+    textDecoration: 'underline',
+    color: 'white',
+  };
+  const footerMailToStyle = {
+    textDecoration: 'underline',
+    color: 'white',
+    cursor: 'pointer',
+  };
   return (
     <footer className="print--hide" style={{ position: 'absolute', left: 0, right: 0, overflow: 'hidden' }}>
       <h2 className="visuallyhidden">Footer links</h2>
@@ -15,27 +24,25 @@ const Footer = function () {
               <div className="col col--lg-one-third col--md-one-third">
                 <h3 className="footer-nav__heading">Help</h3>
                 <ul className="footer-nav__list">
-                  <li className="footer-nav__item">
-                    <Link to="/Accessibility">
+                  <Link to="/Accessibility">
+                    <li className="footer-nav__item" style={footerItemStyle}>
                       Accessibility
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-              <div className="col col--lg-one-third col--md-one-third">
-                <h3 className="footer-nav__heading">About SBR</h3>
-                <ul className="footer-nav__list">
-                  <Link to="/WhatIsSbr">
-                    What is SBR
+                    </li>
                   </Link>
                 </ul>
               </div>
               <div className="col col--lg-one-third col--md-one-third">
+                <h3 className="footer-nav__heading">About SBR</h3>
+                <Link to="/WhatIsSbr">
+                  <ul className="footer-nav__list" style={footerItemStyle}>
+                    What is SBR
+                  </ul>
+                </Link>
+              </div>
+              <div className="col col--lg-one-third col--md-one-third">
                 <h3 className="footer-nav__heading">Connect with us</h3>
-                <ul className="footer-nav__list">
-                  <li className="footer-nav__item">
-                    <a style={cursorStyle} onClick={() => window.location.href = 'mailto:statistical.business.register@ons.gov.uk?subject=SBR&body=message%20goes%20here'}>statistical.business.register@ons.gov.uk</a>
-                  </li>
+                <ul className="footer-nav__list" style={footerMailToStyle} onClick={() => window.location.href = 'mailto:statistical.business.register@ons.gov.uk?subject=SBR&body=message%20goes%20here'}>
+                  statistical.business.register@ons.gov.uk
                 </ul>
               </div>
             </div>

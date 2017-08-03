@@ -2,6 +2,7 @@ import { browserHistory } from 'react-router';
 import { SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE } from '../constants/ApiConstants';
 import apiSearch from '../utils/apiSearch';
 import searchHistory from '../utils/searchHistory';
+import { getDestination } from '../utils/helperMethods';
 
 /**
  * Get info (version/last updated) from the Node server
@@ -24,17 +25,7 @@ export function refSearch(query) {
         }));
         if (data.results.length === 1) {
           const source = data.results[0].source;
-          let destination;
-          switch (source) {
-            case 'Legal Unit':
-              destination = 'LegalUnit';
-              break;
-            case 'VAT':
-              destination = 'VAT';
-              break;
-            default:
-              destination = 'Enterprise';
-          }
+          const destination = getDestination(source);
           browserHistory.push(`/RefSearch/${destination}/${query}/0`);
         }
       } else {

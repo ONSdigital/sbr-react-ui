@@ -5,24 +5,12 @@ import { Button, Panel } from 'react-bootstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { formatResultsTable } from '../utils/helperMethods';
 import '../resources/css/react-bootstrap-table-all.min.css';
+import { getDestination } from '../utils/helperMethods';
 
 const SearchRefResultsTable = function ({ results }) {
   function buttonFormatter(cell, row, enumObject, index) {
     const focus = (index === 0);
-    let destination;
-    switch (row.source) {
-      case 'Legal Unit':
-        destination = 'LegalUnit';
-        break;
-      case 'PAYE':
-        destination = 'PAYE';
-        break;
-      case 'VAT':
-        destination = 'VAT';
-        break;
-      default:
-        destination = 'Enterprise';
-    }
+    const destination = getDestination(row.source);
     return (<Button
       aria-label="Go to record button"
       autoFocus={focus}

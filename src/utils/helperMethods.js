@@ -14,6 +14,20 @@ export function countStatusBetween(history: Array<{}>, status: object) {
   return history.filter(h => h.HTTPCode >= status.min && h.HTTPCode <= status.max).length;
 }
 
+export function getDestination(source) {
+  let destination;
+  switch (source) {
+    case 'Legal Unit':
+      destination = 'LegalUnit';
+      break;
+    case 'VAT':
+      destination = 'VAT';
+      break;
+    default:
+      destination = 'Enterprise';
+  }
+  return destination;
+}
 export function formatResultsTable(results: Array<{}>) {
   const formattedResults: Array<{}> = [];
   results.forEach((i) => {

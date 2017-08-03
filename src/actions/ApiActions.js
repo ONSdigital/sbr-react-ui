@@ -40,7 +40,7 @@ export function refSearch(query) {
       } else {
         dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message));
       }
-      searchHistory.addToHistory(data.resp);
+      // searchHistory.addToHistory(data.resp);
     });
   };
 }

@@ -14,8 +14,8 @@ export function countStatusBetween(history: Array<{}>, status: object) {
   return history.filter(h => h.HTTPCode >= status.min && h.HTTPCode <= status.max).length;
 }
 
-export function getDestination(source) {
-  let destination;
+export function getDestination(source: string) {
+  let destination: string;
   switch (source) {
     case 'Legal Unit':
       destination = 'LegalUnit';

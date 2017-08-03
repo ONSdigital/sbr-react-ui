@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import { logout } from '../actions/LoginActions';
 import '../resources/css/mycss.css';
 
@@ -31,8 +31,16 @@ class NavBar extends React.Component {
           </ul>
           <div className="wrapper nav-main--hidden" id="nav-primary">
             <ul className="primary-nav__list">
-              <li className="primary-nav__item js-nav hide--mobile old-ie--display-block"><a className="primary-nav__link col col--md-7 col--lg-9" onClick={() => browserHistory.push('/Home')}>Home</a></li>
-              <li className="primary-nav__item js-nav hide--mobile old-ie--display-block"><a className="primary-nav__link col col--md-7 col--lg-9" onClick={() => browserHistory.push('/RefSearch')}>Ref Search</a></li>
+              <li className="primary-nav__item js-nav hide--mobile old-ie--display-block">
+                <Link className="primary-nav__link col col--md-7 col--lg-9" to="/Home">
+                    Home
+                </Link>
+              </li>
+              <li className="primary-nav__item js-nav hide--mobile old-ie--display-block">
+                <Link className="primary-nav__link col col--md-7 col--lg-9" to="/RefSearch">
+                    Ref Search
+                </Link>
+              </li>
             </ul>
           </div>
         </nav>

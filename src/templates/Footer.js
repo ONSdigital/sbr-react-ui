@@ -1,5 +1,5 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
+import { Link } from 'react-router';
 
 const Footer = function () {
   const cursorStyle = {
@@ -16,23 +16,25 @@ const Footer = function () {
                 <h3 className="footer-nav__heading">Help</h3>
                 <ul className="footer-nav__list">
                   <li className="footer-nav__item">
-                    <a style={cursorStyle} onClick={() => browserHistory.push('/Accessibility')}>Accessibility</a>
+                    <Link to="/Accessibility">
+                      Accessibility
+                    </Link>
                   </li>
                 </ul>
               </div>
               <div className="col col--lg-one-third col--md-one-third">
                 <h3 className="footer-nav__heading">About SBR</h3>
                 <ul className="footer-nav__list">
-                  <li className="footer-nav__item">
-                    <a style={cursorStyle} onClick={() => browserHistory.push('/WhatIsSbr')}>What is SBR</a>
-                  </li>
+                  <Link to="/WhatIsSbr">
+                    What is SBR
+                  </Link>
                 </ul>
               </div>
               <div className="col col--lg-one-third col--md-one-third">
                 <h3 className="footer-nav__heading">Connect with us</h3>
                 <ul className="footer-nav__list">
                   <li className="footer-nav__item">
-                    <a style={cursorStyle} onClick={() => window.location.href = "mailto:statistical.business.register@ons.gov.uk?subject=SBR&body=message%20goes%20here"}>statistical.business.register@ons.gov.uk</a>
+                    <a style={cursorStyle} onClick={() => window.location.href = 'mailto:statistical.business.register@ons.gov.uk?subject=SBR&body=message%20goes%20here'}>statistical.business.register@ons.gov.uk</a>
                   </li>
                 </ul>
               </div>

@@ -102,6 +102,18 @@ Username and password are `test` or `admin`.
 
 ## Troubleshooting
 
+### Using Bootstrap
+
+If you wish to use any React component that requires Bootstrap CSS/JS, do the following:
+
+```html
+<div className="bootstrap-iso">
+  <your code here>
+</div>
+```
+
+More details on this can be found [here](https://github.com/ONSdigital/sbr-ui/pull/50).
+
 ## Contributing
 
 See [CONTRIBUTING](CONTRIBUTING.md) for details.

@@ -1,49 +1,44 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Modal, Glyphicon, Button } from 'react-bootstrap';
+import React, { PropTypes } from 'react';
+import { ModalContainer, ModalDialog } from 'react-modal-dialog';
 
 class UserDetailsModal extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      showModal: false,
+      isShowingModal: false,
     };
-    this.close = this.close.bind(this);
-    this.open = this.open.bind(this);
   }
-  close() {
-    this.setState({ showModal: false });
-  }
-  open() {
-    this.setState({ showModal: true });
-  }
+  handleClick = () => this.setState({ isShowingModal: true })
+  handleClose = () => this.setState({ isShowingModal: false })
   render() {
-    return (
-      <div className="userDetails">
-        <div aria-label="Open user details popup icon" id="iconDiv" role="button" tabIndex={0} onClick={this.open}>
-          <Glyphicon glyph="user" />&nbsp;&nbsp;{this.props.username}
-        </div>
-        <Modal show={this.state.showModal} onHide={this.close}>
-          <Modal.Header closeButton>
-            <Modal.Title>User Details</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Glyphicon glyph="user" />&nbsp;&nbsp;Username: <strong>{this.props.username}</strong>
-            <br /><br />
-            <Glyphicon glyph="lock" />&nbsp;&nbsp;Role: <strong>{this.props.userRole}</strong>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button aria-label="Close popup button" id="closeModal" type="submit" onClick={this.close}>Close</Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-    );
+    const dialogStyle = {
+      marginTop: '0px',
+      marginBottom: '0px',
+    };
+    return (<div>
+      <a className="secondary-nav__link" id="userDetailsModal"  onClick={this.handleClick}>
+        User Details
+      </a>
+      {
+        this.state.isShowingModal &&
+        <ModalContainer onClose={this.handleClose}>
+          {
+            <ModalDialog style={{ width: '50%' }} onClose={this.handleClose}>
+              <h1 style={dialogStyle}>User Details</h1>
+              <hr />
+              <h3>Username: {this.props.username}</h3>
+              <h3>Role: {this.props.role}</h3>
+            </ModalDialog>
+          }
+        </ModalContainer>
+      }
+    </div>);
   }
 }
 
 UserDetailsModal.propTypes = {
   username: PropTypes.string.isRequired,
-  userRole: PropTypes.string.isRequired,
+  role: PropTypes.string.isRequired,
 };
 
 export default UserDetailsModal;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import EnterprisePanel from '../components/EnterprisePanel';
+import PAYEPanel from '../components/PAYEPanel';
 import BreadCrumb from '../components/BreadCrumb';
 
-const EnterpriseView = ({ routeParams, data }) => {
+const PAYEView = ({ routeParams, data }) => {
   const items = [
     { name: 'Reference Search', link: '/RefSearch' },
     { name: `${data[routeParams.index].id} [${data[routeParams.index].name}]`, link: '' },
@@ -11,16 +11,16 @@ const EnterpriseView = ({ routeParams, data }) => {
   return (
     <div>
       <BreadCrumb
-        title="Enterprise View"
+        title="PAYE View"
         description=""
         marginBottom={1}
         breadCrumbItems={items}
       />
       <div className="page-intro background--gallery">
         <div className="wrapper">
-          <EnterprisePanel
+          <PAYEPanel
             key={data[routeParams.index].ubrn}
-            enterprise={data[routeParams.index]}
+            paye={data[routeParams.index]}
           />
         </div>
       </div>
@@ -28,7 +28,7 @@ const EnterpriseView = ({ routeParams, data }) => {
   );
 };
 
-EnterpriseView.propTypes = {
+PAYEView.propTypes = {
   data: React.PropTypes.object.isRequired,
   routeParams: React.PropTypes.object.isRequired,
 };
@@ -39,4 +39,4 @@ function select(state) {
   };
 }
 
-export default connect(select)(EnterpriseView);
+export default connect(select)(PAYEView);

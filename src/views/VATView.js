@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import EnterprisePanel from '../components/EnterprisePanel';
+import VATPanel from '../components/VATPanel';
 import BreadCrumb from '../components/BreadCrumb';
 
-const EnterpriseView = ({ routeParams, data }) => {
+const VATView = ({ routeParams, data }) => {
   const items = [
     { name: 'Reference Search', link: '/RefSearch' },
     { name: `${data[routeParams.index].id} [${data[routeParams.index].name}]`, link: '' },
@@ -11,16 +11,16 @@ const EnterpriseView = ({ routeParams, data }) => {
   return (
     <div>
       <BreadCrumb
-        title="Enterprise View"
+        title="VAT View"
         description=""
         marginBottom={1}
         breadCrumbItems={items}
       />
       <div className="page-intro background--gallery">
         <div className="wrapper">
-          <EnterprisePanel
+          <VATPanel
             key={data[routeParams.index].ubrn}
-            enterprise={data[routeParams.index]}
+            vat={data[routeParams.index]}
           />
         </div>
       </div>
@@ -28,7 +28,7 @@ const EnterpriseView = ({ routeParams, data }) => {
   );
 };
 
-EnterpriseView.propTypes = {
+VATView.propTypes = {
   data: React.PropTypes.object.isRequired,
   routeParams: React.PropTypes.object.isRequired,
 };
@@ -39,4 +39,4 @@ function select(state) {
   };
 }
 
-export default connect(select)(EnterpriseView);
+export default connect(select)(VATView);

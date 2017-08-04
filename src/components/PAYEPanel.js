@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { Panel, ListGroup, ListGroupItem, Button, Table, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 
-const EnterprisePanel = function ({ enterprise }) {
+const PAYEPanel = function ({ paye }) {
   const title = (<h1 style={{ fontSize: '30px' }}>
     <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
-    &nbsp;&nbsp;{enterprise.name}
+    &nbsp;&nbsp;{paye.name}
   </h1>);
-  const url = `https://www.google.co.uk/maps/place/${enterprise.address.postcode}`;
-  const mapsLink = <a href={url} target="_blank">{enterprise.address.postcode}</a>;
+  const url = `https://www.google.co.uk/maps/place/${paye.address.postcode}`;
+  const mapsLink = <a href={url} target="_blank">{paye.address.postcode}</a>;
   return (
     <div className="bootstrap-iso">
       <Panel bsStyle="primary" collapsible={false} defaultExpanded header={title}>
@@ -19,35 +19,35 @@ const EnterprisePanel = function ({ enterprise }) {
               <tbody>
                 <tr>
                   <td><strong>SBR Enterprise Reference</strong></td>
-                  <td>{enterprise.id}</td>
+                  <td>{paye.id}</td>
                 </tr>
                 <tr>
                   <td><strong>Legal Status</strong></td>
-                  <td>{enterprise.legalStatus}</td>
+                  <td>{paye.legalStatus}</td>
                 </tr>
                 <tr>
                   <td><strong>SIC</strong></td>
-                  <td>{enterprise.sic}</td>
+                  <td>{paye.sic}</td>
                 </tr>
                 <tr>
                   <td><strong>Employees</strong></td>
-                  <td>{enterprise.employees}</td>
+                  <td>{paye.employees}</td>
                 </tr>
                 <tr>
                   <td><strong>Working Group</strong></td>
-                  <td>{enterprise.workingGroup}</td>
+                  <td>{paye.workingGroup}</td>
                 </tr>
                 <tr>
                   <td><strong>Employment</strong></td>
-                  <td>{enterprise.employment}</td>
+                  <td>{paye.employment}</td>
                 </tr>
                 <tr>
                   <td><strong>Turnover</strong></td>
-                  <td>{enterprise.turnover}</td>
+                  <td>{paye.turnover}</td>
                 </tr>
                 <tr>
                   <td><strong>Source</strong></td>
-                  <td>{enterprise.source}</td>
+                  <td>{paye.source}</td>
                 </tr>
               </tbody>
             </Table>
@@ -56,23 +56,23 @@ const EnterprisePanel = function ({ enterprise }) {
               <tbody>
                 <tr>
                   <td><strong>Line 1</strong></td>
-                  <td>{enterprise.address.line1}</td>
+                  <td>{paye.address.line1}</td>
                 </tr>
                 <tr>
                   <td><strong>Line 2</strong></td>
-                  <td>{enterprise.address.line2}</td>
+                  <td>{paye.address.line2}</td>
                 </tr>
                 <tr>
                   <td><strong>Line 3</strong></td>
-                  <td>{enterprise.address.line3}</td>
+                  <td>{paye.address.line3}</td>
                 </tr>
                 <tr>
                   <td><strong>Town/City</strong></td>
-                  <td>{enterprise.address.line4}</td>
+                  <td>{paye.address.line4}</td>
                 </tr>
                 <tr>
                   <td><strong>County</strong></td>
-                  <td>{enterprise.address.line5}</td>
+                  <td>{paye.address.line5}</td>
                 </tr>
                 <tr>
                   <td><strong>Post Code</strong></td>
@@ -90,8 +90,8 @@ const EnterprisePanel = function ({ enterprise }) {
   );
 };
 
-EnterprisePanel.propTypes = {
-  enterprise: PropTypes.object.isRequired,
+PAYEPanel.propTypes = {
+  paye: PropTypes.object.isRequired,
 };
 
-export default EnterprisePanel;
+export default PAYEPanel;

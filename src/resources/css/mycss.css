@@ -1,4 +1,13 @@
-body {
+.success {
+
+}
+
+/* Search ref error */
+.error {
+  background-color: #a94442;
+}
+
+/*body {
   padding-top: 20px;
   padding-bottom: 20px;
   height: 100%;
@@ -8,31 +17,31 @@ body {
 html {
   position: relative;
   min-height: 100%;
-}
+}*/
 
-.navbar {
+/*.navbar {
   width: 100%;
   margin-bottom: 20px;
   clear: left;
-}
+}*/
 
-.wrapper {
+/* .wrapper {
   min-height: 100%;
   /* equal to footer height */
-  margin-bottom: 60px;
-}
+  /*margin-bottom: 60px;
+}*/
 
-#logo {
+/*#logo {
   float: left;
-}
+}*/
 
 /* Changes the banner text (to the right of the logo) so it is inline with the logo */
-.banner-text {
+/*.banner-text {
   text-align: right;
   padding-top: 2%;
-}
+}*/
 
-.footer {
+/*.footer {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -40,14 +49,14 @@ html {
   height: 60px;
   background-color: #f5f5f5;
   overflow:hidden;
-}
+}*/
 
 .glyphicon-spin {
   -webkit-animation: spin 1000ms infinite linear;
   animation: spin 1000ms infinite linear;
 }
 
-@-webkit-keyframes spin {
+/*@-webkit-keyframes spin {
   0% {
       -webkit-transform: rotate(0deg);
       transform: rotate(0deg);
@@ -67,25 +76,25 @@ html {
       -webkit-transform: rotate(359deg);
       transform: rotate(359deg);
   }
-}
+}*/
 
 /* For the login page */
-.centered {
+/*.centered {
   position: absolute;
   top: 40%;
   left: 50%;
   /* bring your own prefixes */
-  transform: translate(-50%, -50%);
-}
+  /*transform: translate(-50%, -50%);
+}*/
 
-.logout {
+/*.logout {
   margin-top: 10px;
   position: absolute;
   top: 0;
   right: 0;
   margin-right: 10px;
-}
-
+}*/
+/*
 @media (max-width: 767px) {
   .logout {
     position: absolute;
@@ -101,4 +110,4 @@ html {
     margin-top: -10px;
   }
   /* CSS that should be displayed if width is equal to or less than 800px goes here */
-}
+/*}*/

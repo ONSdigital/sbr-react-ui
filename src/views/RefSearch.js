@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PageHeader } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { refSearch, setQuery } from '../actions/ApiActions';
 import { SET_REF_QUERY } from '../constants/ApiConstants';
 import ErrorModal from '../components/ErrorModal';
 import SearchRefForm from '../components/SearchRefForm';
-import EnterpriseResultsTable from '../components/EnterpriseResultsTable';
+import SearchRefResultsTable from '../components/SearchRefResultsTable';
 import { validateRefSearch } from '../utils/validation';
+import BreadCrumb from '../components/BreadCrumb';
 
 class Search extends React.Component {
   constructor(props) {
@@ -36,12 +36,19 @@ class Search extends React.Component {
       this.setState({ results: nextProps.data.results });
     }
   }
+  componentWillUpdate() {
+    if (!this.state.show) {
+      this.child.myInput.focus();
+    }
+  }
   onSubmit(e) {
     e.preventDefault();
     const query = this.props.data.query;
     if (query.length > 5 && query.length < 13) {
       this.props.dispatch(refSearch(query));
     } else {
+      // Possibly swap this action with a redux way of doing it?
+      this.props.data.results = 0;
       this.setState({
         results: [],
         show: true,
@@ -58,28 +65,38 @@ class Search extends React.Component {
     this.props.dispatch(setQuery(SET_REF_QUERY, evt.target.value));
   }
   render() {
-    const results = (<EnterpriseResultsTable results={this.props.data.results} />);
+    const items = [
+      { name: 'Reference Search', link: '' },
+    ];
+    const results = (<SearchRefResultsTable results={this.props.data.results} />);
     const enterprises = (this.props.data.results.length > 1) ? results : <div></div>;
     return (
       <div>
-        <PageHeader>
-          Reference Search
-          <small> by VAT/PAYE/UBRN reference</small>
-        </PageHeader>
-        <SearchRefForm
-          currentlySending={this.props.data.currentlySending}
-          onSubmit={this.onSubmit}
-          onChange={this.changeQuery}
-          value={this.props.data.query}
-          valid={validateRefSearch(this.props.data.query.length)}
+        <BreadCrumb
+          title="Reference Search"
+          description="Search the Statistical Business Register on a reference (VAT/CH/UBRN)"
+          marginBottom={1}
+          breadCrumbItems={items}
         />
-        <ErrorModal
-          show={this.state.show}
-          message={this.state.errorMessage}
-          close={this.closeModal}
-        />
-        <br />
-        {enterprises}
+        <div className="page-intro background--gallery">
+          <div className="wrapper">
+            <SearchRefForm
+              ref={(ch) => this.child = ch}
+              currentlySending={this.props.data.currentlySending}
+              onSubmit={this.onSubmit}
+              onChange={this.changeQuery}
+              value={this.props.data.query}
+              valid={validateRefSearch(this.props.data.query.length)}
+            />
+            <ErrorModal
+              show={this.state.show}
+              message={this.state.errorMessage}
+              close={this.closeModal}
+            />
+            <br />
+            {enterprises}
+          </div>
+        </div>
       </div>
     );
   }
@@ -87,12 +104,7 @@ class Search extends React.Component {
 
 Search.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  data: React.PropTypes.shape({
-    query: PropTypes.string.isRequired,
-    currentlySending: PropTypes.bool.isRequired,
-    errorMessage: PropTypes.string.isRequired,
-    results: PropTypes.object.isRequired,
-  }).isRequired,
+  data: React.PropTypes.shape.isRequired,
 };
 
 function select(state) {

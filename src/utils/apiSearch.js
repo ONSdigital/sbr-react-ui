@@ -13,8 +13,8 @@ const apiSearch = {
    * Gets version/lastUpdate info from the UI.
    * @param  {Function} callback Called with returned data.
    */
-  getRef(id: string, callback: (success: boolean, data: {}, response: response) => void) {
-    fetch(`${API_URL}/${API_VERSION}/suggest?id=${id}`, {
+  getRef(id: string, callback: (success: boolean, data: {}, response?: {}) => void) {
+    fetch(`${API_URL}/${API_VERSION}/search?id=${id}`, {
       method: 'GET',
     }).then((response) => {
       if (response.status === 200) {
@@ -26,7 +26,7 @@ const apiSearch = {
       }
       return callback(false, { message: 'Error: record not found.', resp: response });
     }).catch(() => {
-      return callback(false, { message: 'Timeout: unable to load data.', resp: response });
+      return callback(false, { message: 'Timeout: unable to load data.' });
     });
   },
 };

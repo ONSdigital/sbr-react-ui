@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 
 const ErrorMessage = (props) => {
+  const textAlign = {
+    textAlign: 'center',
+    margin: 'auto',
+    width: '65%',
+  };
   return (props.errorMessage ?
-  (<ListGroup>
-    <ListGroupItem bsStyle="warning">{props.errorMessage}</ListGroupItem>
+  (<ListGroup style={textAlign}>
+    <p className="background--prim">{props.errorMessage}</p>
   </ListGroup>) : (<div></div>)
   );
 };

@@ -2,11 +2,13 @@
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ONSdigital/sbr-ui/blob/feature/skeleton/LICENSE)
 
-The following tutorials were used to get the deployment with Node.js and the login with redux sorted:
+The following tutorials were used to help with the deployment using Node.js, the login with redux and the isolation of bootstrap styles:
 
 https://medium.com/@patriciolpezjuri/using-create-react-app-with-react-router-express-js-8fa658bf892d#.mt6bbdd8m
 
 https://github.com/mxstbr/login-flow
+
+https://formden.com/blog/isolate-bootstrap
 
 ## Environment Setup for the UI
 

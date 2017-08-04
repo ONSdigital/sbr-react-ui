@@ -1,22 +1,74 @@
 import React from 'react';
-import Jumbotron from 'react-bootstrap/lib/Jumbotron';
+import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import RefSearchImage from '../resources/img/search.png';
 
-const Home = function () {
+const Home = ({ username, role, uiVersion, apiVersion }) => {
   return (
     <div>
-      <Jumbotron>
-        <h1>Statistical Business Register User Interface</h1>
-        <h3>Welcome to your portal - Here you can access the SBR API.</h3>
-        <br />
-        <p>Below is a list of the UI features;</p>
-        <ul>
-          <li><b>Feature 1</b>: Description...</li>
-          <li><b>Feature 2</b>: Description...</li>
-          <li><b>Feature 3</b>: Description...</li>
-        </ul>
-      </Jumbotron>
+      <div className="page-intro background--astral">
+        <div className="wrapper">
+          <div className="col-wrap">
+            <div className="col">
+              <div className="col col--md-47 col--lg-34">
+                <h1 className="page-intro__title page-intro__title--home"><span className="page-intro__title page-intro__title--home-big">
+              Welcome to the</span> Statistical Business Register
+              </h1>
+                <p className="page-intro__content page-intro__content--home-big">
+                  The Statistical Business Register (SBR) is a comprehensive
+                  list of UK businesses used by government for statistical purposes.
+                </p>
+              </div>
+              <div className="a-z col col--md-47 col--lg-23 col--lg-offset-2 margin-top-lg--3 margin-left-sm--0" style={{ textAlign: 'center' }}>
+                <h2 className="margin-top-md--2 margin-top-sm--2 "><a>Useful Information</a></h2>
+                <ul className="a-z-list padding-top-md--1 padding-top-sm--1 padding-left-lg--3">
+                  <li className="a-z-list-item" style={{ width: '260px' }}><a>Username | {username}</a></li>
+                  <li className="a-z-list-item" style={{ width: '260px' }}><a>Role | {role}</a></li>
+                  <li className="a-z-list-item" style={{ width: '260px' }}><a>API Version | {apiVersion}</a></li>
+                  <li className="a-z-list-item" style={{ width: '260px' }}><a>UI Version | {uiVersion}</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="page-content border-top--iron-sm border-top--iron-md">
+        <div className="background--gallery" style={{ paddingBottom: '20px' }}>
+          <div className="wrapper">
+            <div className="tiles">
+              <h2>Statistical Business Register Features</h2>
+            </div>
+            <div className="margin-top--2 col height-sm--48 col--md-14 col--lg-14 height-md--48 height-lg--48 background--white margin-bottom--2 js-hover-click">
+              <div className="padding-left--1 padding-right--1 padding-top--2 padding-bottom--1">
+                <div className="box__content box__content--homepage height-sm--19 height-md--19 height-md--44 padding-top-lg--17 padding-top-md--17">
+                  <br /><br /><br />
+                  <h2 className="tiles__title tiles__title-h2--home"><Link to="/RefSearch"><a>Reference Search</a></Link></h2>
+                  <span className="image-holder hide--sm width-lg--12 width-md--12"><img src={RefSearchImage} style={{ width: '200px' }} alt="" className="no-border" /></span>
+                  <p className="margin-top-lg--1 margin-top-md--1">Search for a reference (VAT, Company House, UBRN) and explore the data</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default Home;
+Home.propTypes = {
+  username: React.PropTypes.string.isRequired,
+  role: React.PropTypes.string.isRequired,
+  uiVersion: React.PropTypes.string.isRequired,
+  apiVersion: React.PropTypes.string.isRequired,
+};
+
+function select(state) {
+  return {
+    username: state.login.username,
+    role: state.login.role,
+    uiVersion: state.info.ui.version,
+    apiVersion: state.info.api.version,
+  };
+}
+
+export default connect(select)(Home);

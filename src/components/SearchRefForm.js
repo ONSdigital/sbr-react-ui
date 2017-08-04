@@ -1,47 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ControlLabel, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
-import Button from 'react-bootstrap-button-loader';
+import Loader from 'halogen/PulseLoader';
 
-const SearchRefForm = function ({
-  currentlySending, onSubmit, onChange, value, valid,
-}) {
-  return (
-    <form method="get">
-      <div style={{ width: '50%' }}>
-        <FormGroup
-          controlId="formBasicText"
-          validationState={valid}
-        >
-          <ControlLabel>Enter reference number:</ControlLabel>
-          <FormControl
-            type="text"
-            value={value}
-            aria-label="Reference input"
-            aria-required
-            autoFocus
-            placeholder="Enter ref to search..."
-            maxLength="12"
-            onChange={onChange}
-          />
-          <FormControl.Feedback />
-          <HelpBlock>Validation is based on string length.</HelpBlock>
-        </FormGroup>
-      </div>
-      <Button
-        bsStyle="primary"
-        type="submit"
-        id="searchButton"
-        aria-label="Search reference button"
-        loading={currentlySending}
-        disabled={currentlySending}
-        onClick={!currentlySending ? onSubmit : null}
-      >
-        {currentlySending ? '' : 'Search' }
-      </Button>
-    </form>
-  );
-};
+class SearchRefForm extends React.Component {
+  render() {
+    const spinner = (<Loader color="#FFFFFF" size="10px" margin="0px" />);
+    const icon = (<span className="icon icon-search--light"></span>);
+    const buttonContent = (this.props.currentlySending) ? spinner : icon;
+    return (
+      <form className="col-wrap search__form" action="/search" method="get">
+        <label className="search__label col col--md-5 col--lg-6" htmlFor="nav-search">Search</label>
+        <input ref={(ip) => this.myInput = ip} placeholder="Enter ref to search..." autoFocus value={this.props.value} onChange={this.props.onChange} type="search" autoComplete="on" className="search__input col col--md-21 col--lg-32" id="nav-search" name="q" value={this.props.value} />
+        <button onClick={!this.props.currentlySending ? this.props.onSubmit : null} aria-label="Search reference button" loading={this.props.currentlySending} type="submit" className={`search__button col--md-3 col--lg-3 ${this.props.valid}`} id="nav-search-submit">
+          {buttonContent}
+        </button>
+      </form>
+    )
+  }
+}
 
 SearchRefForm.propTypes = {
   currentlySending: PropTypes.bool.isRequired,

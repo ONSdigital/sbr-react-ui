@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap-button-loader';
+import Loader from 'halogen/PulseLoader';
 import { Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { login } from '../actions/LoginActions';
@@ -29,61 +30,74 @@ class Login extends React.Component {
     this.setState({ password: evt.target.value });
   }
   render() {
+    const divStyle = {
+      paddingTop: '1px',
+      textAlign: 'center',
+      margin: 'auto',
+      borderRadius: '25px',
+      width: '65%',
+    };
+    const textAlign = {
+      marginTop: '10px',
+      textAlign: 'center',
+      borderRadius: '25px',
+    };
+    const spinner = (<Loader color="#FFFFFF" size="8px" margin="0px" />);
     return (
       <div>
-        <div className="loginPage">
-          <div className="centered">
+        <br />
+        <div className="wrapper">
+          <div className="col-wrap">
             <form className="form-signin" method="POST">
-              <h2 className="form-signin-heading">Login</h2>
+              <h2 style={textAlign} className="form-signin-heading">Statistical Business Register</h2>
               <br />
-              <input
-                type="text"
-                id="username"
-                aria-label="Username input"
-                aria-required
-                value={this.state.username}
-                onChange={this.changeUsername}
-                className="form-control"
-                name="username"
-                placeholder="Username"
-                required=""
-                autoCorrect="off"
-                autoCapitalize="off"
-                spellCheck="false"
-              />
-              <br />
-              <input
-                type="password"
-                id="password"
-                aria-label="Password input"
-                aria-required
-                value={this.state.password}
-                onChange={this.changePassword}
-                className="form-control"
-                name="password"
-                placeholder="Password"
-                required=""
-              />
-              <br />
-              <Button
-                bsStyle="primary"
-                type="submit"
-                id="loginButton"
-                aria-label="Login button"
-                loading={this.props.data.currentlySending}
-                disabled={this.props.data.currentlySending}
-                onClick={!this.props.data.currentlySending ? this.onSubmit : null}
-              >
-                {this.props.data.currentlySending ? '' : 'Login' }
-              </Button>
+              <div className="background--astral" style={divStyle}>
+                <h2 className="form-signin-heading">Login</h2>
+                <br />
+                <input
+                  type="text"
+                  id="username"
+                  aria-label="Username input"
+                  aria-required
+                  value={this.state.username}
+                  onChange={this.changeUsername}
+                  className="search__input search__input--results-page"
+                  name="username"
+                  placeholder="Username"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck="false"
+                />
+                <br /><br />
+                <input
+                  type="password"
+                  id="password"
+                  aria-label="Password input"
+                  aria-required
+                  value={this.state.password}
+                  onChange={this.changePassword}
+                  className="search__input search__input--results-page"
+                  name="password"
+                  placeholder="Password"
+                />
+                <br /><br />
+                <Button
+                  className="btn btn--primary btn--wide"
+                  bsStyle="primary"
+                  type="submit"
+                  id="loginButton"
+                  aria-label="Login button"
+                  onClick={!this.props.data.currentlySending ? this.onSubmit : null}
+                >
+                  {this.props.data.currentlySending ? spinner : 'Login'}
+                </Button>
+                <ErrorMessage />
+                <Alert style={textAlign}>
+                  <strong>Warning: </strong>
+                   Do not login using your ONS credentials, use admin/admin or test/test.
+                </Alert>
+              </div>
             </form>
-            <br />
-            <ErrorMessage />
-            <br /><br />
-            <Alert bsStyle="danger">
-              <strong>Warning: </strong>
-               Do not login using your ONS credentials, use admin/admin or test/test.
-            </Alert>
           </div>
         </div>
       </div>

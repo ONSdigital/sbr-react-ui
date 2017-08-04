@@ -1,13 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
-import Button from 'react-bootstrap-button-loader';
-import { IndexLinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import { logout } from '../actions/LoginActions';
-import UserDetailsModal from '../components/UserDetailsModal';
-import InfoModal from '../components/InfoModal';
 import '../resources/css/mycss.css';
 
 class NavBar extends React.Component {
@@ -20,52 +15,35 @@ class NavBar extends React.Component {
   }
   render() {
     return (
-      <div>
-        <Navbar>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <b><Link to="/Home" aria-label="Link to Home page" style={{ textDecoration: 'none', color: 'black' }}>Statistical Business Register</Link></b>
-            </Navbar.Brand>
-            <Navbar.Toggle />
-          </Navbar.Header>
-          <Navbar.Collapse>
-            <Nav>
-              <IndexLinkContainer to="/Home" aria-label="Link to Home page">
-                <NavItem>Home</NavItem>
-              </IndexLinkContainer>
-              <IndexLinkContainer to="/Search" aria-label="Link to Search page">
-                <NavItem>Search</NavItem>
-              </IndexLinkContainer>
-            </Nav>
-            <Nav pullRight>
-              <NavItem aria-label="Information popup" style={{ paddingRight: '-40px', paddingLeft: '0' }}>
-                <InfoModal />
-              </NavItem>
-              <NavItem aria-label="User details popup" style={{ paddingRight: '0px', paddingLeft: '0px' }}>
-                <UserDetailsModal
-                  username={this.props.data.username}
-                  userRole={this.props.data.role}
-                />
-              </NavItem>
-              <NavItem style={{ paddingRight: '20px', paddingLeft: '60px' }}>
-                <p className="navbar-btn">
-                  <Button
-                    aria-label="Logout button"
-                    type="button"
-                    className="logout"
-                    bsStyle="danger"
-                    bsSize="small"
-                    loading={this.props.data.currentlySending}
-                    disabled={this.props.data.currentlySending}
-                    onClick={this.onLogout}
-                  >
-                    {this.props.data.currentlySending ? '' : 'Logout' }
-                  </Button>
-                </p>
-              </NavItem>
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
+      <div className="primary-nav print--hide">
+        <nav>
+          <ul className="nav--controls">
+            <li className="nav--controls__item">
+              <a href="#nav-primary" id="menu-toggle" aria-controls="nav-primary" className="nav--controls__menu">
+                <span className="nav--controls__text">Menu</span>
+              </a>
+            </li>
+            <li className="nav--controls__item ">
+              <a href="#nav-search" id="search-toggle" aria-controls="nav-search" className="nav--controls__search">
+                <span className="nav--controls__text">Reference Search</span>
+              </a>
+            </li>
+          </ul>
+          <div className="wrapper nav-main--hidden" id="nav-primary">
+            <ul className="primary-nav__list">
+              <li className="primary-nav__item js-nav hide--mobile old-ie--display-block">
+                <Link className="primary-nav__link col col--md-7 col--lg-9" to="/Home">
+                    Home
+                </Link>
+              </li>
+              <li className="primary-nav__item js-nav hide--mobile old-ie--display-block">
+                <Link className="primary-nav__link col col--md-7 col--lg-9" to="/RefSearch">
+                    Ref Search
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </nav>
       </div>
     );
   }

@@ -1,18 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Glyphicon, Table } from 'react-bootstrap';
-import Button from 'react-bootstrap-button-loader';
 import { connect } from 'react-redux';
+import { ModalContainer, ModalDialog } from 'react-modal-dialog';
 import { getUiInfo, getApiInfo } from '../actions/InfoActions';
 
 class InfoModal extends React.Component {
   constructor() {
     super();
     this.state = {
-      showModal: false,
+      isShowingModal: false,
     };
-    this.close = this.close.bind(this);
-    this.open = this.open.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() {
     this.props.dispatch(getUiInfo());
@@ -27,59 +26,70 @@ class InfoModal extends React.Component {
     }
     return (data.errorMessage);
   }
-  close() {
-    this.setState({ showModal: false });
+  handleClose() {
+    this.setState({ isShowingModal: false });
   }
-  open() {
-    this.setState({ showModal: true });
+  handleClick() {
+    this.setState({ isShowingModal: true });
   }
   render() {
+    const dialogStyle = {
+      marginTop: '0px',
+      marginBottom: '0px',
+    };
+    const nonBold = {
+      fontWeight: 'normal',
+      border: '1px solid #ddd',
+    };
+    const headerBorder = {
+      border: '1px solid #ddd',
+    };
     const uiVersion = this.getData(this.props.data.ui, 'version');
     const uiLastUpdate = this.getData(this.props.data.ui, 'lastUpdate');
     const apiVersion = this.getData(this.props.data.api, 'version');
     const apiLastUpdate = this.getData(this.props.data.api, 'lastApiUpdate');
     const dataLastUpdate = this.getData(this.props.data.api, 'lastDataUpdate');
     return (
-      <div className="infoModal">
-        <div aria-label="Open popup icon" id="iconDiv" role="button" tabIndex={0} onClick={this.open}>
-          <Glyphicon glyph="info-sign" />
-        </div>
-        <Modal show={this.state.showModal} onHide={this.close}>
-          <Modal.Header closeButton>
-            <Modal.Title>Information</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Table striped bordered condensed hover>
-              <thead>
-                <tr>
-                  <th>Type</th>
-                  <th><Glyphicon glyph="tags" />&nbsp;&nbsp;Version</th>
-                  <th><Glyphicon glyph="dashboard" />&nbsp;&nbsp;Last Update</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Data</td>
-                  <td>N/A</td>
-                  <td>{dataLastUpdate}</td>
-                </tr>
-                <tr>
-                  <td>UI</td>
-                  <td>{uiVersion}</td>
-                  <td>{uiLastUpdate}</td>
-                </tr>
-                <tr>
-                  <td>API</td>
-                  <td>{apiVersion}</td>
-                  <td>{apiLastUpdate}</td>
-                </tr>
-              </tbody>
-            </Table>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button aria-label="Close popup button" onClick={this.close}>Close</Button>
-          </Modal.Footer>
-        </Modal>
+      <div>
+        <a className="secondary-nav__link" onClick={this.handleClick}>
+          Info
+        </a>
+        {
+          this.state.isShowingModal &&
+          <ModalContainer onClose={this.handleClose}>
+            <ModalDialog style={{ width: '50%' }} onClose={this.handleClose}>
+              <h1 style={dialogStyle}>Information</h1>
+              <hr />
+              <br />
+              <table>
+                <thead>
+                  <tr>
+                    <th style={headerBorder}>Type</th>
+                    <th style={headerBorder}>Version</th>
+                    <th style={headerBorder}>Last Update</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th style={nonBold}>Data</th>
+                    <th style={nonBold}>N/A</th>
+                    <th style={nonBold}>{dataLastUpdate}</th>
+                  </tr>
+                  <tr>
+                    <th style={nonBold}>UI</th>
+                    <th style={nonBold}>{uiVersion}</th>
+                    <th style={nonBold}>{uiLastUpdate}</th>
+                  </tr>
+                  <tr>
+                    <th style={nonBold}>API</th>
+                    <th style={nonBold}>{apiVersion}</th>
+                    <th style={nonBold}>{apiLastUpdate}</th>
+                  </tr>
+                </tbody>
+              </table>
+            </ModalDialog>
+          </ModalContainer>
+        }
       </div>
     );
   }

@@ -1,29 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button } from 'react-bootstrap';
+import { ModalContainer, ModalDialog } from 'react-modal-dialog';
 
-const ErrorModal = function ({ show, message, close }) {
-  return (
-    <Modal
-      show={show}
-      onHide={close}
-      aria-labelledby="contained-modal-title"
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title">{message}</Modal.Title>
-      </Modal.Header>
-      <Modal.Footer>
-        <Button
-          aria-label="Close popup button"
-          autoFocus
-          onClick={close}
-        >
-          Close
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  );
-};
+class ErrorModal extends React.Component {
+  componentWillMount() {
+    window.addEventListener('keydown', this.props.close);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.props.close);
+  }
+  render() {
+    const modal = (this.props.show) ? (<ModalContainer onClose={this.props.close}>
+      <ModalDialog style={{ width: '80%' }} onClose={this.props.close}>
+        <h1 style={{ margin: '10px' }}>{this.props.message}</h1>
+        <br />
+        <button className="btn btn--primary" autoFocus onClick={() => this.props.close()}>Close</button>
+      </ModalDialog>
+    </ModalContainer>) : <div></div>;
+    return (
+      <div>
+        {modal}
+      </div>
+    );
+  }
+}
 
 ErrorModal.propTypes = {
   show: PropTypes.bool.isRequired,

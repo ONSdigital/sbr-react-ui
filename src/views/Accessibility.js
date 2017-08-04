@@ -1,19 +1,19 @@
 import React from 'react';
 import BreadCrumb from '../components/BreadCrumb';
 
-const NotFound = () => {
+const Accessibility = () => {
   const items = [
-    { name: 'Not Found', link: '' },
+    { name: 'Accessibility', link: '' },
   ];
   return (
     <div>
       <BreadCrumb
-        title="404 Not Found"
-        description="Please navigate to a valid URL."
+        title="Accessibility"
+        description="Accessibility details etc."
         breadCrumbItems={items}
       />
     </div>
   );
 };
 
-export default NotFound;
+export default Accessibility;

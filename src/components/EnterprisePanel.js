@@ -11,8 +11,9 @@ const EnterprisePanel = function ({ enterprise }) {
   const url = `https://www.google.co.uk/maps/place/${enterprise.address.postcode}`;
   const mapsLink = <a href={url} target="_blank">{enterprise.address.postcode}</a>;
   return (
+    <div>
     <div className="bootstrap-iso">
-      <Panel bsStyle="primary" collapsible={false} defaultExpanded header={title}>
+      <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
         <ListGroup fill>
           <ListGroupItem>
             <Table striped bordered condensed hover>
@@ -82,10 +83,11 @@ const EnterprisePanel = function ({ enterprise }) {
             </Table>
           </ListGroupItem>
         </ListGroup>
-        <Button aria-label="Link back to Search page" autoFocus onClick={() => browserHistory.push('/RefSearch')} bsStyle="info">
-          Return to search
-        </Button>
       </Panel>
+    </div>
+      <button className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" autoFocus onClick={() => browserHistory.push('/RefSearch')}>
+        Return to search
+      </button>
     </div>
   );
 };

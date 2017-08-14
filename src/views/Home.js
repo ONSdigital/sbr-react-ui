@@ -29,16 +29,16 @@ const Home = ({ username, role, uiVersion, apiVersion }) => {
                 <ul className="a-z-list padding-top-md--1 padding-top-sm--1 padding-left-lg--3">
                   <li className="a-z-list-item" style={style}>
                     <Link className="primary-nav__link col col--md-7 col--lg-9" to="/UserDetails">
-                        User | {username}
+                        User - {username}
                       <br /><br />
-                        Role | {role}
+                        Role - {role}
                     </Link>
                   </li>
                   <li className="a-z-list-item" style={style}>
-                    <Link className="primary-nav__link col col--md-7 col--lg-9" to="/TechnicalInformation">
-                        Api Version | {apiVersion}
+                    <Link className="primary-nav__link col col--md-7 col--lg-9 margin-top-md--1" to="/TechnicalInformation">
+                        Api Version - {apiVersion}
                       <br /><br />
-                        UI Version | {uiVersion}
+                        UI Version - {uiVersion}
                     </Link>
                   </li>
                 </ul>

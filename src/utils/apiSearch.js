@@ -23,6 +23,7 @@ const apiSearch = {
         });
       } else if (response.status >= 500 && response.status < 600) {
         return callback(false, { message: 'Server error: unable to load data.', resp: response });
+        //callback(true, { results: json, response: response.headers, resp: response });
       }
       return callback(false, { message: 'Error: record not found.', resp: response });
     }).catch(() => {

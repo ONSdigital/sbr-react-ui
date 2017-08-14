@@ -17,7 +17,7 @@ const SearchRefResultsTable = function ({ results }) {
       onClick={() => {
         browserHistory.push(`/RefSearch/${destination}/${row.id}/${index}`);
       }}
-      bsStyle="info"
+      bsStyle="success"
     >
       Go to record
     </Button>);
@@ -26,7 +26,7 @@ const SearchRefResultsTable = function ({ results }) {
   const formattedResults = formatResultsTable(results);
   return (
     <div className="bootstrap-iso">
-      <Panel bsStyle="primary" collapsible={false} defaultExpanded header={title}>
+      <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
         <BootstrapTable
           striped
           hover

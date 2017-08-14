@@ -4,8 +4,6 @@ import { browserHistory } from 'react-router';
 import Loader from 'halogen/PulseLoader';
 import config from '../config/constants';
 import { logout } from '../actions/LoginActions';
-import UserDetailsModal from '../components/UserDetailsModal';
-import InfoModal from '../components/InfoModal';
 
 const ie = require('ie-version');
 
@@ -27,19 +25,21 @@ const Header = function (props) {
     cursor: 'pointer',
   };
   function getHeaderItems() {
-    return (<div className="secondary-nav col col--lg-two-thirds col--md-two-thirds print--hide">
-      <ul className="secondary-nav__list">
-        <li style={cursorStyle} className="secondary-nav__item">
-          <UserDetailsModal username={props.data.username} role={props.data.role} />
-        </li>
-        <li style={cursorStyle} className="secondary-nav__item">
-          <InfoModal />
-        </li>
-        <button onClick={!props.currentlySending ? () => props.dispatch(logout()) : null} aria-label="Logout button" loading={props.currentlySending} type="submit" className="btn btn--primary btn--thin">
-          {buttonContent}
-        </button>
-      </ul>
-    </div>);
+    return (
+      <div className="secondary-nav col col--lg-two-thirds col--md-two-thirds print--hide">
+        <ul className="secondary-nav__list">
+          <li style={cursorStyle} className="secondary-nav__item">
+            <a href="/UserDetails">User Details</a>
+          </li>
+          <li style={cursorStyle} className="secondary-nav__item">|</li>
+          <li style={cursorStyle} className="secondary-nav__item">
+            <a href="/TechnicalInformation">Information</a>
+          </li>
+          <button onClick={!props.currentlySending ? () => props.dispatch(logout()) : null} aria-label="Logout button" loading={props.currentlySending} type="submit" className="btn btn--primary btn--thin">
+            {buttonContent}
+          </button>
+        </ul>
+      </div>);
   }
   const div = (props.data.loggedIn) ? getHeaderItems() : '';
   return (

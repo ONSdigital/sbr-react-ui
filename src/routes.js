@@ -16,6 +16,8 @@ import LegalUnitView from './views/LegalUnitView';
 import VATView from './views/VATView';
 import PAYEView from './views/PAYEView';
 import SearchHistory from './views/SearchHistory';
+import UserDetails from './views/UserDetails';
+import TechnicalInformation from './views/TechnicalInformation';
 import reducer from './reducers/index';
 import { checkAuth } from './actions/LoginActions';
 
@@ -70,6 +72,8 @@ const Routes = () => (
           <Route path={'/WhatIsSbr'} component={WhatIsSbr} />
           <Route path={'/Accessibility'} component={Accessibility} />
           <Route path={'/ContactUs'} component={ContactUs} />
+          <Route path={'/UserDetails'} component={UserDetails} />
+          <Route path={'/TechnicalInformation'} component={TechnicalInformation} />
           <Route path={'/*'} component={NotFound} />
         </Route>
       </Route>

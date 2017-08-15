@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import Loader from 'halogen/PulseLoader';
 import config from '../config/constants';
 import { logout } from '../actions/LoginActions';
@@ -21,19 +21,15 @@ const Header = function (props) {
   }
   const spinner = (<Loader color="#FFFFFF" size="8px" margin="0px" />);
   const buttonContent = (props.data.currentlySending) ? spinner : 'Logout';
-  const cursorStyle = {
-    cursor: 'pointer',
-  };
   function getHeaderItems() {
     return (
       <div className="secondary-nav col col--lg-two-thirds col--md-two-thirds print--hide">
-        <ul className="secondary-nav__list">
-          <li style={cursorStyle} className="secondary-nav__item">
-            <a href="/UserDetails">User Details</a>
+        <ul className="secondary-nav__list js-nav-clone__list">
+          <li className="secondary-nav__item">
+            <Link className="secondary-nav__link  js-nav-clone__link" to="/UserDetails">User Details</Link>
           </li>
-          <li style={cursorStyle} className="secondary-nav__item">|</li>
-          <li style={cursorStyle} className="secondary-nav__item">
-            <a href="/TechnicalInformation">Information</a>
+          <li className="secondary-nav__item">
+            <Link className="secondary-nav__link  js-nav-clone__link" to="/TechnicalInformation">Information</Link>
           </li>
           <button onClick={!props.currentlySending ? () => props.dispatch(logout()) : null} aria-label="Logout button" loading={props.currentlySending} type="submit" className="btn btn--primary btn--thin">
             {buttonContent}

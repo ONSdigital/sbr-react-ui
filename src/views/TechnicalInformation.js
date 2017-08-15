@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import BreadCrumb from '../components/BreadCrumb';
 
 const style = {
-  width: '260px',
+  width: '270px',
 };
 
-const TechnicalInformation = ({ uiVersion, apiVersion }) => {
+const TechnicalInformation = ({ uiVersion, apiVersion, uiLastUpdate, apiLastUpdate }) => {
   const items = [
     { name: 'Technical Information', link: '' },
   ];
@@ -14,19 +14,22 @@ const TechnicalInformation = ({ uiVersion, apiVersion }) => {
     <div>
       <BreadCrumb
         title="Technical Information"
-        description=""
+        description="Information regarding what versions are being used"
+        marginBottom={1}
         breadCrumbItems={items}
       />
       <div className="page-intro background--gallery">
         <div className="wrapper">
-          <ul className="a-z-list padding-top-md--1 padding-top-sm--1 padding-left-lg--3">
-            <li style={style}>
-              UI Version: {uiVersion}
-            </li>
-            <li style={style}>
-              API Version: {apiVersion}
-            </li>
-          </ul>
+          <p className="page-intro__content col col--md-47 col--lg-30">
+          UI Version - {uiVersion}
+            <br /><br />
+          UI Last Upate - {uiLastUpdate}
+          </p>
+          <p className="page-intro__content col col--md-47 col--lg-29">
+          API Version - {apiVersion}
+            <br /><br />
+          API Last Update - {apiLastUpdate}
+          </p>
         </div>
       </div>
     </div>
@@ -36,12 +39,16 @@ const TechnicalInformation = ({ uiVersion, apiVersion }) => {
 TechnicalInformation.propTypes = {
   uiVersion: React.PropTypes.string.isRequired,
   apiVersion: React.PropTypes.string.isRequired,
+  uiLastUpdate: React.PropTypes.string.isRequired,
+  apiLastUpdate: React.PropTypes.string.isRequired,
 };
 
 function select(state) {
   return {
     uiVersion: state.info.ui.version,
     apiVersion: state.info.api.version,
+    uiLastUpdate: state.info.ui.lastUpdate,
+    apiLastUpdate: state.info.ui.lastUpdate,
   };
 }
 

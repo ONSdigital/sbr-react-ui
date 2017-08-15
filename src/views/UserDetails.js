@@ -14,19 +14,17 @@ const UserDetails = ({ username, role }) => {
     <div>
       <BreadCrumb
         title="User Details"
-        description=""
+        description="Information about the user logged in"
+        marginBottom={1}
         breadCrumbItems={items}
       />
       <div className="page-intro background--gallery">
         <div className="wrapper">
-          <ul className="a-z-list padding-top-md--1 padding-top-sm--1 padding-left-lg--3">
-            <li style={style}>
-              User: {username}
-            </li>
-            <li style={style}>
-              Role: {role}
-            </li>
-          </ul>
+          <p className="page-intro__content">
+            User - {username}
+            <br /><br />
+            Role - {role}
+          </p>
         </div>
       </div>
     </div>

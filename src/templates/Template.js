@@ -25,11 +25,11 @@ const Template = function (props) {
   return (
     <div>
       {banner}
-        <Header />
-        <NavBar />
-        <div className="container">
-          {props.children}
-        </div>
+      <Header />
+      <NavBar />
+      <div className="container">
+        {props.children}
+      </div>
       <Footer />
     </div>
   );

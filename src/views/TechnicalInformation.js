@@ -32,7 +32,7 @@ const TechnicalInformation = ({ username, role, uiVersion, apiVersion, uiLastUpd
               <div className="box__content padding-top--1 padding-right--1 padding-bottom--1 padding-left--1 border-top--iron-sm border-top--iron-md">
                 UI Version - {uiVersion}
                 <br /><br />
-                UI Last Upate - {uiLastUpdate}
+                UI Last Update - {uiLastUpdate}
               </div>
             </li>
             <li className="col col--md-half col--lg-one-third background--mercury height--25-indented-ellipsis margin-top--0 margin-left-md--1 margin-bottom--2 padding-top--0 padding-right--0 padding-bottom--0 padding-left--0">

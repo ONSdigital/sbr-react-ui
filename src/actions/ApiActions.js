@@ -10,7 +10,6 @@ import { getDestination } from '../utils/helperMethods';
 export function refSearch(query) {
   return (dispatch) => {
     dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, ''));
-
     dispatch(sendingRequest(SENDING_REF_REQUEST, true));
     dispatch(setResults(SET_REF_RESULTS, { results: [] }));
     dispatch(setQuery(SET_REF_QUERY, query));
@@ -31,7 +30,7 @@ export function refSearch(query) {
       } else {
         dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message));
       }
-      // searchHistory.addToHistory(data.resp);
+      searchHistory.addToHistory(data.resp);
     });
   };
 }

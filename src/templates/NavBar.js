@@ -46,11 +46,6 @@ class NavBar extends React.Component {
 NavBar.propTypes = {
   dispatch: PropTypes.func.isRequired,
   primary: PropTypes.func.isRequired,
-  data: React.PropTypes.shape({
-    currentlySending: PropTypes.bool.isRequired,
-    username: PropTypes.string.isRequired,
-    role: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
 // Which props do we want to inject, given the global state?

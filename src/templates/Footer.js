@@ -2,9 +2,6 @@ import React from 'react';
 import { Link } from 'react-router';
 
 const Footer = function () {
-  const cursorStyle = {
-    cursor: 'pointer',
-  };
   const footerItemStyle = {
     textDecoration: 'underline',
     color: 'white',

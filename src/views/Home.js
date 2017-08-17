@@ -3,6 +3,11 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import RefSearchImage from '../resources/img/search.png';
 
+const style = {
+  width: '260px',
+  height: '100px',
+};
+
 const Home = ({ username, role, uiVersion, apiVersion }) => {
   return (
     <div>
@@ -19,13 +24,23 @@ const Home = ({ username, role, uiVersion, apiVersion }) => {
                   list of UK businesses used by government for statistical purposes.
                 </p>
               </div>
-              <div className="a-z col col--md-47 col--lg-23 col--lg-offset-2 margin-top-lg--3 margin-left-sm--0" style={{ textAlign: 'center' }}>
-                <h2 className="margin-top-md--2 margin-top-sm--2 "><a>Useful Information</a></h2>
-                <ul className="a-z-list padding-top-md--1 padding-top-sm--1 padding-left-lg--3">
-                  <li className="a-z-list-item" style={{ width: '260px' }}><a>Username | {username}</a></li>
-                  <li className="a-z-list-item" style={{ width: '260px' }}><a>Role | {role}</a></li>
-                  <li className="a-z-list-item" style={{ width: '260px' }}><a>API Version | {apiVersion}</a></li>
-                  <li className="a-z-list-item" style={{ width: '260px' }}><a>UI Version | {uiVersion}</a></li>
+              <div className="a-z col col--md-47 col--lg-23 col--lg-offset-2 margin-top-lg--3" style={{ textAlign: 'center' }}>
+                <h2 className="margin-top-md--2">Useful Information</h2>
+                <ul className="padding-left-lg--3">
+                  <li className="a-z-list-item" style={style}>
+                    <Link className="col col--md-7 col--lg-9 pad" to="/UserDetails">
+                      User - {username}
+                      <br /><br />
+                      Role - {role}
+                    </Link>
+                  </li>
+                  <li className="a-z-list-item" style={style}>
+                    <Link className="col col--md-7 col--lg-9" to="/TechnicalInformation">
+                      Api Version - {apiVersion}
+                      <br /><br />
+                      UI Version - {uiVersion}
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </div>

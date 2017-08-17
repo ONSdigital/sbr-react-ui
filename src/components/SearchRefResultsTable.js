@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import { Button, Panel } from 'react-bootstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { formatResultsTable } from '../utils/helperMethods';
+import { formatResultsTable, getDestination } from '../utils/helperMethods';
 import '../resources/css/react-bootstrap-table-all.min.css';
-import { getDestination } from '../utils/helperMethods';
 
 const SearchRefResultsTable = function ({ results }) {
   function buttonFormatter(cell, row, enumObject, index) {
@@ -17,7 +16,7 @@ const SearchRefResultsTable = function ({ results }) {
       onClick={() => {
         browserHistory.push(`/RefSearch/${destination}/${row.id}/${index}`);
       }}
-      bsStyle="info"
+      bsStyle="success"
     >
       Go to record
     </Button>);
@@ -26,7 +25,7 @@ const SearchRefResultsTable = function ({ results }) {
   const formattedResults = formatResultsTable(results);
   return (
     <div className="bootstrap-iso">
-      <Panel bsStyle="primary" collapsible={false} defaultExpanded header={title}>
+      <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
         <BootstrapTable
           striped
           hover

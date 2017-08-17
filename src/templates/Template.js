@@ -26,7 +26,7 @@ const Template = function (props) {
     <div>
       {banner}
       <Header />
-      <NavBar />
+      <NavBar primary={props.location.pathname} />
       <div className="container">
         {props.children}
       </div>

@@ -13,30 +13,24 @@ class NavBar extends React.Component {
   onLogout() {
     this.props.dispatch(logout());
   }
+  getPrimary(id) {
+    const navbarPrimary = (this.props.primary === id) ?
+    ('primary-nav__item js-nav hide--mobile old-ie--display-block primary-nav__item--active') :
+    ('primary-nav__item js-nav hide--mobile old-ie--display-block');
+    return navbarPrimary;
+  }
   render() {
     return (
       <div className="primary-nav print--hide">
         <nav>
-          <ul className="nav--controls">
-            <li className="nav--controls__item">
-              <a href="#nav-primary" id="menu-toggle" aria-controls="nav-primary" className="nav--controls__menu">
-                <span className="nav--controls__text">Menu</span>
-              </a>
-            </li>
-            <li className="nav--controls__item ">
-              <a href="#nav-search" id="search-toggle" aria-controls="nav-search" className="nav--controls__search">
-                <span className="nav--controls__text">Reference Search</span>
-              </a>
-            </li>
-          </ul>
-          <div className="wrapper nav-main--hidden" id="nav-primary">
+          <div className="wrapper">
             <ul className="primary-nav__list">
-              <li className="primary-nav__item js-nav hide--mobile old-ie--display-block">
+              <li className={this.getPrimary('/Home')}>
                 <Link className="primary-nav__link col col--md-7 col--lg-9" to="/Home">
                     Home
                 </Link>
               </li>
-              <li className="primary-nav__item js-nav hide--mobile old-ie--display-block">
+              <li className={this.getPrimary('/RefSearch')}>
                 <Link className="primary-nav__link col col--md-7 col--lg-9" to="/RefSearch">
                     Ref Search
                 </Link>
@@ -51,6 +45,7 @@ class NavBar extends React.Component {
 
 NavBar.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  primary: PropTypes.func.isRequired,
   data: React.PropTypes.shape({
     currentlySending: PropTypes.bool.isRequired,
     username: PropTypes.string.isRequired,

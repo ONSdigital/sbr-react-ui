@@ -36,7 +36,7 @@ const Home = ({ username, role, uiVersion, apiVersion }) => {
                   </li>
                   <li className="a-z-list-item" style={style}>
                     <Link className="col col--md-7 col--lg-9" to="/TechnicalInformation">
-                      Api Version - {apiVersion}
+                      API Version - {apiVersion}
                       <br /><br />
                       UI Version - {uiVersion}
                     </Link>

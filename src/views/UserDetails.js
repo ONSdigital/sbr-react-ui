@@ -2,10 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import BreadCrumb from '../components/BreadCrumb';
 
-const style = {
-  width: '260px',
-};
-
 const UserDetails = ({ username, role }) => {
   const items = [
     { name: 'User Details', link: '' },

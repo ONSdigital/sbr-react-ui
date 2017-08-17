@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import { Button, Panel } from 'react-bootstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { formatResultsTable } from '../utils/helperMethods';
+import { formatResultsTable, getDestination } from '../utils/helperMethods';
 import '../resources/css/react-bootstrap-table-all.min.css';
-import { getDestination } from '../utils/helperMethods';
 
 const SearchRefResultsTable = function ({ results }) {
   function buttonFormatter(cell, row, enumObject, index) {

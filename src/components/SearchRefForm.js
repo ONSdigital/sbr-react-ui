@@ -15,7 +15,7 @@ class SearchRefForm extends React.Component {
           {buttonContent}
         </button>
       </form>
-    )
+    );
   }
 }
 

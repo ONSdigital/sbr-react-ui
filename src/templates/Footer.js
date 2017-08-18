@@ -26,6 +26,11 @@ const Footer = function () {
                       Accessibility
                     </li>
                   </Link>
+                  <Link to="/SearchHistory">
+                    <li className="footer-nav__item" style={footerItemStyle}>
+                      Search History
+                    </li>
+                  </Link>
                 </ul>
               </div>
               <div className="col col--lg-one-third col--md-one-third">

@@ -112,6 +112,7 @@ export function logout() {
         dispatch(sendingRequest(false));
         dispatch(setAuthState(false));
         dispatch(resetState(undefined));
+        localStorage.clear();
         browserHistory.push('/');
       } else {
         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));

@@ -14,7 +14,7 @@ function formatDate(date) {
   if (mm < 10) {
     mm = `0${mm}`;
   }
-  const today = `${dd}/${mm}/${yyyy}`;
+  const today = `${yyyy}/${mm}/${dd}`;
   const time = new Date().toLocaleTimeString('gb');
   return `${today} ${time}`;
 }

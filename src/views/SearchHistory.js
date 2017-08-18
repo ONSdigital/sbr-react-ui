@@ -33,6 +33,7 @@ const SearchHistory = () => {
         <div style={{ clear: 'both' }}>
           <h3 style={style.h1}><Label bsSize="large" bsStyle="success">200</Label>&nbsp;<Label style={style.labels}>{countStatus(history, 200)}</Label></h3>
           <h3 style={style.h1}><Label bsStyle="danger">404</Label>&nbsp;<Label style={style.labels}>{countStatus(history, 404)}</Label></h3>
+          <h3 style={style.h1}><Label bsStyle="danger">400</Label>&nbsp;<Label style={style.labels}>{countStatus(history, 400)}</Label></h3>      
           <h3 style={style.h1}><Label bsStyle="warning">5xx</Label>&nbsp;<Label style={style.labels}>{countStatusBetween(history, { min: 500, max: 599 })}</Label></h3>
           <br /><br /><br /><br />
         </div>

@@ -28,6 +28,7 @@ export function refSearch(query) {
         if (data.results.length === 1) {
           const source = data.results[0].UnitLink.unitType;
           const destination = getDestination(source);
+          console.log(source);
           console.log("dest: ",destination)
           browserHistory.push(`/RefSearch/${destination}/${query}/0`);
         }

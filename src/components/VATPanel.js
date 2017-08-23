@@ -4,6 +4,8 @@ import { Panel, ListGroup, ListGroupItem, Button, Table, Glyphicon } from 'react
 import { browserHistory } from 'react-router';
 
 const VATPanel = function ({ vat }) {
+  const unitRecord = vat.UnitRecord;
+  const unitRecordValues = unitRecord.vars;
   const title = (<h1 style={{ fontSize: '30px' }}>
     <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
     &nbsp;&nbsp;{vat.businessName}
@@ -20,15 +22,15 @@ const VATPanel = function ({ vat }) {
                 <tbody>
                   <tr>
                     <td><strong>VAT Reference</strong></td>
-                    <td>{vat.id}</td>
+                    <td>{unitRecordValues.vatref}</td>
                   </tr>
                   <tr>
                     <td><strong>Legal Status</strong></td>
-                    <td>{vat.legalStatus}</td>
+                    <td>{unitRecordValues.legalstatus}</td>
                   </tr>
                   <tr>
                     <td><strong>Company Number</strong></td>
-                    <td>{vat.companyNo}</td>
+                    <td>{unitRecordValues.crn}</td>
                   </tr>
                   <tr>
                     <td><strong>Employment Bands</strong></td>
@@ -36,11 +38,11 @@ const VATPanel = function ({ vat }) {
                   </tr>
                   <tr>
                     <td><strong>Industry Code</strong></td>
-                    <td>{vat.industryCode}</td>
+                    <td>{unitRecordValues.sic}</td>
                   </tr>
                   <tr>
                     <td><strong>Turnover</strong></td>
-                    <td>{vat.turnover}</td>
+                    <td>{unitRecordValues.turnover}</td>
                   </tr>
                   <tr>
                     <td><strong>Trading Status</strong></td>
@@ -48,7 +50,7 @@ const VATPanel = function ({ vat }) {
                   </tr>
                   <tr>
                     <td><strong>Source</strong></td>
-                    <td>{vat.source}</td>
+                    <td>{unitRecord.unitType}</td>
                   </tr>
                 </tbody>
               </Table>

@@ -3,10 +3,21 @@ import { connect } from 'react-redux';
 import VATPanel from '../components/VATPanel';
 import BreadCrumb from '../components/BreadCrumb';
 
+function ifEmptyNull(data, toGet) {
+  let d = '';
+  try {
+    d = data[toGet];
+  } catch (e) {
+    d = '';
+  }
+  return d;
+}
+
 const VATView = ({ routeParams, data }) => {
+  const name = ifEmptyNull(data[routeParams.index].UnitRecord.vars, 'nameline1');
   const items = [
     { name: 'Reference Search', link: '/RefSearch' },
-    { name: `${data[routeParams.index].id} [${data[routeParams.index].name}]`, link: '' },
+    { name: `${data[routeParams.index].UnitRecord.key} [${name}]`, link: '' },
   ];
   return (
     <div>

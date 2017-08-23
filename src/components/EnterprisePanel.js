@@ -3,13 +3,43 @@ import PropTypes from 'prop-types';
 import { Panel, ListGroup, ListGroupItem, Button, Table, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 
+function ifEmptyNull(data, toGet) {
+  let d = '';
+  try {
+    d = data[toGet];
+  } catch (e) {
+    d = '';
+  }
+  return d;
+}
+
 const EnterprisePanel = function ({ enterprise }) {
+  const unitRecord = enterprise.UnitRecord;
+  const unitRecordValues = unitRecord.values;
+  const json = {
+    legalstatus: ifEmptyNull(unitRecordValues, 'legalstatus'),
+    standard_vat_turnover: ifEmptyNull(unitRecordValues, 'standard_vat_turnover'),
+    ent_address3: ifEmptyNull(unitRecordValues, 'ent_address3'),
+    PAYE_jobs: ifEmptyNull(unitRecordValues, 'PAYE_jobs'),
+    employees: ifEmptyNull(unitRecordValues, 'employees'),
+    ent_address2: ifEmptyNull(unitRecordValues, 'ent_address2'),
+    ent_postcode: ifEmptyNull(unitRecordValues, 'ent_postcode'),
+    entref: ifEmptyNull(unitRecordValues, 'entref'),
+    ent_address5: ifEmptyNull(unitRecordValues, 'ent_address5'),
+    Num_Unique_VatRefs: ifEmptyNull(unitRecordValues, 'Num_Unique_VatRefs'),
+    ent_address1: ifEmptyNull(unitRecordValues, 'ent_address1'),
+    ent_name: ifEmptyNull(unitRecordValues, 'ent_name'),
+    Num_Unique_PayeRefs: ifEmptyNull(unitRecordValues, 'Num_Unique_PayeRefs'),
+    ent_address4: ifEmptyNull(unitRecordValues, 'ent_address4'),
+  };
+  console.log("unit record",unitRecord)
+  console.log("unit record values",unitRecordValues)
   const title = (<h1 style={{ fontSize: '30px' }}>
     <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
-    &nbsp;&nbsp;{enterprise.name}
+    &nbsp;&nbsp;{json.ent_name}
   </h1>);
-  const url = `https://www.google.co.uk/maps/place/${enterprise.address.postcode}`;
-  const mapsLink = <a href={url} target="_blank">{enterprise.address.postcode}</a>;
+  const url = `https://www.google.co.uk/maps/place/${unitRecordValues.ent_postcode}`;
+  const mapsLink = <a href={url} target="_blank">{json.ent_postcode}</a>;
   return (
     <div>
       <div className="bootstrap-iso">
@@ -20,35 +50,35 @@ const EnterprisePanel = function ({ enterprise }) {
                 <tbody>
                   <tr>
                     <td><strong>SBR Enterprise Reference</strong></td>
-                    <td>{enterprise.id}</td>
+                    <td>{unitRecord.id}</td>
                   </tr>
                   <tr>
                     <td><strong>Legal Status</strong></td>
-                    <td>{enterprise.legalStatus}</td>
+                    <td>{json.legalstatus}</td>
                   </tr>
                   <tr>
                     <td><strong>SIC</strong></td>
-                    <td>{enterprise.sic}</td>
+                    <td>NA</td>
                   </tr>
                   <tr>
                     <td><strong>Employees</strong></td>
-                    <td>{enterprise.employees}</td>
+                    <td>{json.employees}</td>
                   </tr>
                   <tr>
                     <td><strong>Working Group</strong></td>
-                    <td>{enterprise.workingGroup}</td>
+                    <td></td>
                   </tr>
                   <tr>
                     <td><strong>Employment</strong></td>
-                    <td>{enterprise.employment}</td>
+                    <td></td>
                   </tr>
                   <tr>
                     <td><strong>Turnover</strong></td>
-                    <td>{enterprise.turnover}</td>
+                    <td></td>
                   </tr>
                   <tr>
                     <td><strong>Source</strong></td>
-                    <td>{enterprise.source}</td>
+                    <td>{json.unitType}</td>
                   </tr>
                 </tbody>
               </Table>
@@ -57,23 +87,23 @@ const EnterprisePanel = function ({ enterprise }) {
                 <tbody>
                   <tr>
                     <td><strong>Line 1</strong></td>
-                    <td>{enterprise.address.line1}</td>
+                    <td>{json.ent_address1}</td>
                   </tr>
                   <tr>
                     <td><strong>Line 2</strong></td>
-                    <td>{enterprise.address.line2}</td>
+                    <td>{json.ent_address2}</td>
                   </tr>
                   <tr>
                     <td><strong>Line 3</strong></td>
-                    <td>{enterprise.address.line3}</td>
+                    <td>{json.ent_address3}</td>
                   </tr>
                   <tr>
                     <td><strong>Town/City</strong></td>
-                    <td>{enterprise.address.line4}</td>
+                    <td>{json.ent_address4}</td>
                   </tr>
                   <tr>
                     <td><strong>County</strong></td>
-                    <td>{enterprise.address.line5}</td>
+                    <td>{json.ent_address5}</td>
                   </tr>
                   <tr>
                     <td><strong>Post Code</strong></td>
@@ -92,8 +122,8 @@ const EnterprisePanel = function ({ enterprise }) {
   );
 };
 
-EnterprisePanel.propTypes = {
-  enterprise: PropTypes.object.isRequired,
-};
+// EnterprisePanel.propTypes = {
+//   enterprise: PropTypes.object.isRequired,
+// };
 
 export default EnterprisePanel;

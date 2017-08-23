@@ -1,7 +1,7 @@
 import { browserHistory } from 'react-router';
 import { SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE } from '../constants/ApiConstants';
 import apiSearch from '../utils/apiSearch';
-import searchHistory from '../utils/searchHistory';
+// import searchHistory from '../utils/searchHistory';
 import { getDestination } from '../utils/helperMethods';
 
 /**
@@ -22,15 +22,19 @@ export function refSearch(query) {
         dispatch(setHeaders(SET_REF_HEADERS, {
           headers: data.response,
         }));
+        console.log("data is")
+        console.log("results: ",data.results[0])
+        console.log(data.results.length)
         if (data.results.length === 1) {
-          const source = data.results[0].source;
+          const source = data.results[0].UnitLink.unitType;
           const destination = getDestination(source);
+          console.log("dest: ",destination)
           browserHistory.push(`/RefSearch/${destination}/${query}/0`);
         }
       } else {
         dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message));
       }
-      searchHistory.addToHistory(data.resp);
+      //searchHistory.addToHistory(data.resp);
     });
   };
 }

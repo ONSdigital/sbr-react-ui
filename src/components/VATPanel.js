@@ -31,7 +31,7 @@ const VATPanel = function ({ vat }) {
     inqcode: ifEmptyNull(unitRecord, 'inqcode'),
     legalstatus: ifEmptyNull(unitRecord, 'legalstatus'),
     marker: ifEmptyNull(unitRecord, 'marker'),
-    jsonname1: ifEmptyNull(unitRecord, 'name1'),
+    name1: ifEmptyNull(unitRecord, 'name1'),
     name2: ifEmptyNull(unitRecord, 'name2'),
     name3: ifEmptyNull(unitRecord, 'name3'),
     postcode: ifEmptyNull(unitRecord, 'postcode'),

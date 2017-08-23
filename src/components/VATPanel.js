@@ -22,7 +22,7 @@ const VATPanel = function ({ vat }) {
     inqcode: getValueByKey(unitRecord, 'inqcode'),
     legalstatus: getValueByKey(unitRecord, 'legalstatus'),
     marker: getValueByKey(unitRecord, 'marker'),
-    jsonname1: getValueByKey(unitRecord, 'name1'),
+    name1: getValueByKey(unitRecord, 'name1'),
     name2: getValueByKey(unitRecord, 'name2'),
     name3: getValueByKey(unitRecord, 'name3'),
     postcode: getValueByKey(unitRecord, 'postcode'),

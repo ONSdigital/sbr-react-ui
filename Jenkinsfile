@@ -1,5 +1,5 @@
 #!groovy
-@Library('jenkins-pipeline-shared@feature/cloud-foundry-deploy') _
+@Library('jenkins-pipeline-shared@develop') _
 
 /*
 * sbr-ui Jenkins Pipeline
@@ -20,14 +20,27 @@ pipeline {
   agent none
   options {
     skipDefaultCheckout()
+    buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '30'))
+    timeout(time: 60, unit: 'MINUTES')
+  }
+  environment {
+    SBR_UI_TEST_ADMIN_USERNAME="admin"
+    SBR_UI_TEST_ADMIN_PASSWORD="admin"
+    SBR_UI_TEST_USER_USERNAME="test"
+    SBR_UI_TEST_USER_PASSWORD="test"
+    JWT_SECRET="SECRET"
   }
   stages {
     stage('Checkout') {
       agent any
       steps {
         colourText("info","Running build ${env.BUILD_ID} on ${env.JENKINS_URL}...")
+        colourText("info","Checking out Github & Gitlab repos")
         deleteDir()
         checkout scm
+        dir('conf') {
+          git(url: "$GITLAB_URL/StatBusReg/sbr-ui.git", credentialsId: 'sbr-gitlab-id', branch: 'develop')
+        }
         stash name: 'app'
       }
     }
@@ -40,116 +53,173 @@ pipeline {
         sh 'npm --version'
         unstash 'app'
         sh 'npm install'
-        sh 'npm run build'
+
+        // Install the node_modules for just the server
+        dir('server') {
+          sh 'npm install'
+        }
       }
     }
-    stage('Test - Unit') {
+    stage('Test - Unit, Component, Server, Coverage + Stress') {
       agent { label 'adrianharristesting' }
       steps {
-        colourText("info","Running unit tests...")
-        echo 'STUB: this will be completed once feature/utils-testing is merged into test/deploy'
+        parallel (
+          "Unit" :  {
+            colourText("info","Running unit tests...")
+            sh 'npm run-script test-unit'
+          },
+          "Stress" :  {
+            colourText("info","Running stress tests...")
+            sh 'ENV=local node server/ & HOST=http://localhost:3001 REQUEST=5000 REQ_PER_SECOND=50 npm run-script test-load'
+            // sh 'killall node'
+            // The above command will leave node running, will this be closed along with the workspace?
+          },
+          "Component" : {
+            colourText("info","Running component tests...")
+            sh 'npm run-script test-components'
+          },
+          "Server" : {
+            colourText("info","Running server tests...")
+            sh "npm run-script test-server"
+          },
+          "Coverage Report" : {
+            colourText("info","Generating coverage report...")
+            sh "npm run-script cover"
+            step([$class: 'CoberturaPublisher', coberturaReportFile: '**/coverage/cobertura-coverage.xml'])
+          },
+          "Style Report" : {
+            colourText("info","Generating style report...")
+            sh 'npm run-script lint-report-xml'
+            step([$class: 'CheckStylePublisher', pattern: 'coverage/eslint-report-checkstyle.xml'])
+            //checkstyle canComputeNew: false, canRunOnFailed: true, defaultEncoding: '', healthy: '', pattern: 'coverage/eslint-report-checkstyle.xml', unHealthy: ''
+          }
+        )
       }
     }
-    stage('Test - Server') {
+    stage('Zip Project') {
       agent { label 'adrianharristesting' }
+      when {
+        anyOf {
+          branch "develop"
+          branch "release"
+          branch "master"
+        }
+      }
       steps {
-        colourText("info","Running server tests...")
-        //sh 'SERVE_HTML=true node_modules/mocha/bin/mocha test/server.test.js'
+        script {
+          colourText("info","Zipping project...")
+          colourText("info","Host is: ${env.CLOUD_FOUNDRY_ROUTE_SUFFIX}")
+          sh "sed -i -e 's|Local|dev|g' src/config/constants.js"
+          sh "sed -i -e 's|http://localhost:9002|https://dev-sbr-api.${env.CLOUD_FOUNDRY_ROUTE_SUFFIX}|g' src/config/api-urls.js"
+          sh "sed -i -e 's|http://localhost:3001|https://dev-sbr-ui.${env.CLOUD_FOUNDRY_ROUTE_SUFFIX}|g' src/config/api-urls.js"
+          sh 'npm run build'
+          // For deployment, only need the node_modules/package.json for the server
+          sh 'rm -rf node_modules'
+          sh 'cp -r server/node_modules .'
+          sh 'rm -rf package.json'
+          sh 'cp server/package.json .'
+          sh 'rm -rf manifest.yml'
+          // Get the proper manifest from Gitlab
+          sh 'cp conf/dev/manifest.yml .'
+          sh 'zip -r sbr-ui.zip build node_modules favicon.ico package.json server manifest.yml'
+          stash name: 'zip'
+        }
       }
     }
-    stage('Build') {
-      agent { label 'adrianharristesting' }
-      steps {
-        colourText("info","Zipping project...")
-        //sh "sed -i 's/3001/3000/g' server/index.js"
-        sh 'zip -r sbr-ui.zip build package.json server node_modules manifest.yml'
-        stash name: 'zip'
-      }
-    }
-    stage('Deploy - Dev') {
+    stage('Deploy - DEV') {
       agent any
+      when {
+        anyOf {
+          branch "develop"
+        }
+      }
       steps {
-        colourText("info","Deploying to DEV...")
-        unstash 'zip'
-        //sh 'cf buildpacks'
-        deployToCloudFoundry('cloud-foundry-sbr-dev-user','sbr','dev','dev-sbr-ui','sbr-ui.zip','manifest.yml')
+        script {
+          colourText("info","Deploying to DEV...")
+          unstash 'zip'
+          deployToCloudFoundry('cloud-foundry-sbr-dev-user','sbr','dev','dev-sbr-ui','sbr-ui.zip','manifest.yml')
+        }
       }
     }
-    stage('Test - Integration') {
-      agent { label 'adrianharristesting' }
-      steps {
-        colourText("info","Running Selenium Integration tests against deployed DEV app...")
-      }
-    }
-    stage('Deploy - Test') {
+    stage('Integration Tests') {
       agent any
+      when {
+        anyOf {
+          branch "release"
+          branch "master"
+        }
+      }
       steps {
-        colourText("info","Deploying to TEST...")
+        script {
+          colourText("info","Running integration tests...")
+        }
       }
     }
-    stage('Promote to Beta') {
+    stage('Deploy - TEST') {
       agent any
+      when {
+        anyOf {
+          branch "release"
+        }
+      }
       steps {
-        colourText("info","Deploying to BETA...")
-        //timeout(time: 1, unit: 'MINUTES') {
-        //  input 'Deploy to Beta?'
-        //}
+        script {
+          colourText("info","Deploying to TEST...")
+          unstash 'zip'
+          deployToCloudFoundry('cloud-foundry-sbr-test-user','sbr','test','test-sbr-ui','sbr-ui.zip','manifest.yml')
+        }
       }
     }
-    stage('Deploy - Beta') {
+    stage('Promote to BETA?') {
       agent any
+      when {
+        anyOf {
+          branch "master"
+        }
+      }
       steps {
-        colourText("info","Deploying to BETA...")
+        script {
+          colourText("info","Deploy to BETA?")
+          timeout(time: 10, unit: 'MINUTES') {
+            input 'Deploy to Beta?'
+          }
+        }
+      }
+    }
+    stage('Deploy - BETA') {
+      agent any
+      when {
+        anyOf {
+          branch "master"
+        }
+      }
+      steps {
+        script {
+          colourText("info","Deploying to BETA...")
+          unstash 'zip'
+          deployToCloudFoundry('cloud-foundry-sbr-prod-user','sbr','beta','prod-sbr-ui','sbr-ui.zip','manifest.yml')
+        }
       }
     }
   }
-}
-
-/*
-* @method colourText(level,text)
-*
-* @description This method will wrap any input text inside
-* ANSI colour codes.
-*
-* @param {String} level - The logging level (warn/info)
-* @param {String} text - The text to wrap inside the colour
-*
-*/
-def colourText(level,text){
-  wrap([$class: 'AnsiColorBuildWrapper']) {
-    // This method wraps input text in ANSI colour
-    // Pass in a level, e.g. info or warning
-    def code = getLevelCode(level)
-    echo "${code[0]}${text}${code[1]}"
-  }
-}
-
-/*
-* @method getLevelCode(level)
-*
-* @description This method is called with a log level and
-* will return a list with the start and end ANSI codes for
-* the log level colour.
-*
-* @param {String} level - The logging level (warn/info)
-*
-* @return {List} colourCode - [start ANSI code, end ANSI code]
-*
-*/
-def getLevelCode(level) {
-    def colourCode
-    switch (level) {
-        case "info":
-            // Blue
-            colourCode = ['\u001B[34m','\u001B[0m']
-            break
-        case "error":
-            // Red
-            colourCode = ['\u001B[31m','\u001B[0m']
-            break
-        default:
-            colourCode = ['\u001B[31m','\u001B[0m']
-            break
+  post {
+    always {
+      script {
+        colourText("info", 'Clearing workspace...')
+        deleteDir()
+      }
     }
-    colourCode
+    success {
+      colourText("success", "All stages complete. Build was successful.")
+      sendNotifications currentBuild.result, "\$SBR_EMAIL_LIST"
+    }
+    unstable {
+      colourText("warn", "Something went wrong, build finished with result ${currentResult}.")
+      sendNotifications currentResult, "\$SBR_EMAIL_LIST"
+    }
+    failure {
+      colourText("warn","Build failed")
+      sendNotifications currentResult, "\$SBR_EMAIL_LIST"
+    }
+  }
 }

@@ -23,6 +23,9 @@ export function getDestination(source: string) {
     case 'VAT':
       destination = 'VAT';
       break;
+    case 'PAYE':
+      destination = 'PAYE';
+      break;
     default:
       destination = 'Enterprise';
   }

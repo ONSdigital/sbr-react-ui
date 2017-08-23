@@ -3,10 +3,21 @@ import { connect } from 'react-redux';
 import PAYEPanel from '../components/PAYEPanel';
 import BreadCrumb from '../components/BreadCrumb';
 
+function ifEmptyNull(data, toGet) {
+  let d = '';
+  try {
+    d = data[toGet];
+  } catch (e) {
+    d = '';
+  }
+  return d;
+}
+
 const PAYEView = ({ routeParams, data }) => {
+  const name = ifEmptyNull(data[routeParams.index].UnitRecord.vars,'nameline1');
   const items = [
     { name: 'Reference Search', link: '/RefSearch' },
-    { name: `${data[routeParams.index].id} [${data[routeParams.index].name}]`, link: '' },
+    { name: `${data[routeParams.index].UnitRecord.id} [${name}]`, link: '' },
   ];
   return (
     <div>
@@ -19,7 +30,7 @@ const PAYEView = ({ routeParams, data }) => {
       <div className="page-intro background--gallery">
         <div className="wrapper">
           <PAYEPanel
-            key={data[routeParams.index].ubrn}
+            key={data[routeParams.index].UnitRecord.key}
             paye={data[routeParams.index]}
           />
         </div>

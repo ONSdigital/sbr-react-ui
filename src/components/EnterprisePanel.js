@@ -31,6 +31,7 @@ const EnterprisePanel = function ({ enterprise }) {
     ent_name: ifEmptyNull(unitRecordValues, 'ent_name'),
     Num_Unique_PayeRefs: ifEmptyNull(unitRecordValues, 'Num_Unique_PayeRefs'),
     ent_address4: ifEmptyNull(unitRecordValues, 'ent_address4'),
+    unitType: ifEmptyNull(enterprise.UnitLink, 'unitType'),
   };
   console.log("unit record",unitRecord)
   console.log("unit record values",unitRecordValues)

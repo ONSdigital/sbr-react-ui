@@ -2,27 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import EnterprisePanel from '../components/EnterprisePanel';
 import BreadCrumb from '../components/BreadCrumb';
-
-function ifEmptyNull(data, toGet) {
-  let d = '';
-  try {
-    d = data[toGet];
-  } catch (e) {
-    d = '';
-  }
-  return d;
-}
+import { getValueByKey } from '../utils/helperMethods';
 
 const EnterpriseView = ({ routeParams, data }) => {
-  const name = ifEmptyNull(data[routeParams.index].UnitRecord.values,'ent_name');
+  const name = getValueByKey(data[routeParams.index].UnitRecord.values, 'ent_name');
   const items = [
     { name: 'Reference Search', link: '/RefSearch' },
     { name: `${data[routeParams.index].UnitRecord.id} [${name}]`, link: '' },
   ];
-  console.log("data is: ",data)
-  console.log("route: ",routeParams)
-  console.log(data[routeParams.index])
-  console.log(data[routeParams.index].UnitRecord.id)
   return (
     <div>
       <BreadCrumb
@@ -43,10 +30,10 @@ const EnterpriseView = ({ routeParams, data }) => {
   );
 };
 
-// EnterpriseView.propTypes = {
-//   data: React.PropTypes.object.isRequired,
-//   routeParams: React.PropTypes.object.isRequired,
-// };
+EnterpriseView.propTypes = {
+  data: React.PropTypes.object.isRequired,
+  routeParams: React.PropTypes.object.isRequired,
+};
 
 function select(state) {
   return {

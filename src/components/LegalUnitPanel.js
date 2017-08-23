@@ -1,17 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, ListGroup, ListGroupItem, Button, Table, Glyphicon } from 'react-bootstrap';
+import { Panel, ListGroup, ListGroupItem, Table, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
-
-function ifEmptyNull(data, toGet) {
-  let d = '';
-  try {
-    d = data[toGet];
-  } catch (e) {
-    d = '';
-  }
-  return d;
-}
 
 const LegalUnitPanel = function ({ legalUnit }) {
   const unitRecord = legalUnit.UnitRecord;

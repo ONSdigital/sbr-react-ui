@@ -1,58 +1,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, ListGroup, ListGroupItem, Button, Table, Glyphicon } from 'react-bootstrap';
+import { Panel, ListGroup, ListGroupItem, Table, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
-
-function ifEmptyNull(data, toGet) {
-  let d = '';
-  try {
-    d = data[toGet];
-  } catch (e) {
-    d = '';
-  }
-  return d;
-}
+import { getValueByKey } from '../utils/helperMethods';
 
 const PAYEPanel = function ({ paye }) {
   const unitRecord = paye.UnitRecord.vars;
   const json = {
-    payeref: ifEmptyNull(unitRecord, 'payeref'),
-    name1: ifEmptyNull(unitRecord, 'name1'),
-    employer_cat: ifEmptyNull(unitRecord, 'employer_cat'),
-    msubemp: ifEmptyNull(unitRecord, 'msubemp'),
-    ffullemp: ifEmptyNull(unitRecord, 'ffullemp'),
-    legalstatus: ifEmptyNull(unitRecord, 'legalstatus'),
-    address3: ifEmptyNull(unitRecord, 'address3'),
-    mar_jobs: ifEmptyNull(unitRecord, 'mar_jobs'),
-    tradstyle3: ifEmptyNull(unitRecord, 'tradstyle3'),
-    postcode: ifEmptyNull(unitRecord, 'postcode'),
-    fsubemp: ifEmptyNull(unitRecord, 'fsubemp'),
-    addressref: ifEmptyNull(unitRecord, 'addressref'),
-    june_jobs: ifEmptyNull(unitRecord, 'june_jobs'),
-    dec_jobs: ifEmptyNull(unitRecord, 'dec_jobs'),
-    name2: ifEmptyNull(unitRecord, 'name2'),
-    address5: ifEmptyNull(unitRecord, 'address5'),
-    marker: ifEmptyNull(unitRecord, 'marker'),
-    inqcode: ifEmptyNull(unitRecord, 'inqcode'),
-    tradstyle2: ifEmptyNull(unitRecord, 'tradstyle2'),
-    address2: ifEmptyNull(unitRecord, 'address2'),
-    entref: ifEmptyNull(unitRecord, 'entref'),
-    unclsubemp: ifEmptyNull(unitRecord, 'unclsubemp'),
-    name3: ifEmptyNull(unitRecord, 'name3'),
-    birthdate: ifEmptyNull(unitRecord, 'birthdate'),
-    prevpaye: ifEmptyNull(unitRecord, 'prevpaye'),
-    address1: ifEmptyNull(unitRecord, 'address1'),
-    actiondate: ifEmptyNull(unitRecord, 'actiondate'),
-    deathdate: ifEmptyNull(unitRecord, 'deathdate'),
-    tradstyle1: ifEmptyNull(unitRecord, 'tradstyle1'),
-    crn: ifEmptyNull(unitRecord, 'crn'),
-    stc: ifEmptyNull(unitRecord, 'stc'),
-    jobs_lastupd: ifEmptyNull(unitRecord, 'jobs_lastupd'),
-    address4: ifEmptyNull(unitRecord, 'address4'),
-    unclemp: ifEmptyNull(unitRecord, 'unclemp'),
-    sept_jobs: ifEmptyNull(unitRecord, 'sept_jobs'),
-    deathcode: ifEmptyNull(unitRecord, 'deathcode'),
-  }
+    payeref: getValueByKey(unitRecord, 'payeref'),
+    name1: getValueByKey(unitRecord, 'name1'),
+    employer_cat: getValueByKey(unitRecord, 'employer_cat'),
+    msubemp: getValueByKey(unitRecord, 'msubemp'),
+    ffullemp: getValueByKey(unitRecord, 'ffullemp'),
+    legalstatus: getValueByKey(unitRecord, 'legalstatus'),
+    address3: getValueByKey(unitRecord, 'address3'),
+    mar_jobs: getValueByKey(unitRecord, 'mar_jobs'),
+    tradstyle3: getValueByKey(unitRecord, 'tradstyle3'),
+    postcode: getValueByKey(unitRecord, 'postcode'),
+    fsubemp: getValueByKey(unitRecord, 'fsubemp'),
+    addressref: getValueByKey(unitRecord, 'addressref'),
+    june_jobs: getValueByKey(unitRecord, 'june_jobs'),
+    dec_jobs: getValueByKey(unitRecord, 'dec_jobs'),
+    name2: getValueByKey(unitRecord, 'name2'),
+    address5: getValueByKey(unitRecord, 'address5'),
+    marker: getValueByKey(unitRecord, 'marker'),
+    inqcode: getValueByKey(unitRecord, 'inqcode'),
+    tradstyle2: getValueByKey(unitRecord, 'tradstyle2'),
+    address2: getValueByKey(unitRecord, 'address2'),
+    entref: getValueByKey(unitRecord, 'entref'),
+    unclsubemp: getValueByKey(unitRecord, 'unclsubemp'),
+    name3: getValueByKey(unitRecord, 'name3'),
+    birthdate: getValueByKey(unitRecord, 'birthdate'),
+    prevpaye: getValueByKey(unitRecord, 'prevpaye'),
+    address1: getValueByKey(unitRecord, 'address1'),
+    actiondate: getValueByKey(unitRecord, 'actiondate'),
+    deathdate: getValueByKey(unitRecord, 'deathdate'),
+    tradstyle1: getValueByKey(unitRecord, 'tradstyle1'),
+    crn: getValueByKey(unitRecord, 'crn'),
+    stc: getValueByKey(unitRecord, 'stc'),
+    jobs_lastupd: getValueByKey(unitRecord, 'jobs_lastupd'),
+    address4: getValueByKey(unitRecord, 'address4'),
+    unclemp: getValueByKey(unitRecord, 'unclemp'),
+    sept_jobs: getValueByKey(unitRecord, 'sept_jobs'),
+    deathcode: getValueByKey(unitRecord, 'deathcode'),
+  };
   const title = (<h1 style={{ fontSize: '30px' }}>
     <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
     &nbsp;&nbsp;{json.name1}

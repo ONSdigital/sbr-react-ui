@@ -2,19 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import LegalUnitPanel from '../components/LegalUnitPanel';
 import BreadCrumb from '../components/BreadCrumb';
-
-function ifEmptyNull(data, toGet) {
-  let d = '';
-  try {
-    d = data[toGet];
-  } catch (e) {
-    d = '';
-  }
-  return d;
-}
+import { getValueByKey } from '../utils/helperMethods';
 
 const LegalUnitView = ({ routeParams, data }) => {
-  const name = ifEmptyNull(data[routeParams.index].UnitRecord,'businessName');
+  const name = getValueByKey(data[routeParams.index].UnitRecord, 'businessName');
   const items = [
     { name: 'Reference Search', link: '/RefSearch' },
     { name: `${data[routeParams.index].UnitRecord.id} [${name}]`, link: '' },

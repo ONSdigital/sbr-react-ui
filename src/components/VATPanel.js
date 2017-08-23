@@ -1,48 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, ListGroup, ListGroupItem, Button, Table, Glyphicon } from 'react-bootstrap';
+import { Panel, ListGroup, ListGroupItem, Table, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
-
-function ifEmptyNull(data, toGet) {
-  let d = '';
-  try {
-    d = data[toGet];
-  } catch (e) {
-    d = '';
-  }
-  return d;
-}
+import { getValueByKey } from '../utils/helperMethods';
 
 const VATPanel = function ({ vat }) {
   const unitRecord = vat.UnitRecord.vars;
   const json = {
-    actiondate: ifEmptyNull(unitRecord, 'actiondate'),
-    address1: ifEmptyNull(unitRecord, 'address1'),
-    address2: ifEmptyNull(unitRecord, 'address2'),
-    address3: ifEmptyNull(unitRecord, 'address3'),
-    address4: ifEmptyNull(unitRecord, 'address4'),
-    address5: ifEmptyNull(unitRecord, 'address5'),
-    addressref: ifEmptyNull(unitRecord, 'addressref'),
-    birthdate: ifEmptyNull(unitRecord, 'birthdate'),
-    crn: ifEmptyNull(unitRecord, 'crn'),
-    deathcode: ifEmptyNull(unitRecord, 'deathcode'),
-    deathdate: ifEmptyNull(unitRecord, 'deathdate'),
-    entref: ifEmptyNull(unitRecord, 'entref'),
-    inqcode: ifEmptyNull(unitRecord, 'inqcode'),
-    legalstatus: ifEmptyNull(unitRecord, 'legalstatus'),
-    marker: ifEmptyNull(unitRecord, 'marker'),
-    jsonname1: ifEmptyNull(unitRecord, 'name1'),
-    name2: ifEmptyNull(unitRecord, 'name2'),
-    name3: ifEmptyNull(unitRecord, 'name3'),
-    postcode: ifEmptyNull(unitRecord, 'postcode'),
-    record_type: ifEmptyNull(unitRecord, 'record_type'),
-    sic92: ifEmptyNull(unitRecord, 'sic92'),
-    tradstyle1: ifEmptyNull(unitRecord, 'tradstyle1'),
-    tradstyle2: ifEmptyNull(unitRecord, 'tradstyle2'),
-    tradstyle3: ifEmptyNull(unitRecord, 'tradstyle3'),
-    turnover: ifEmptyNull(unitRecord, 'turnover'),
-    turnover_date: ifEmptyNull(unitRecord, 'turnover_date'),
-    vatref: ifEmptyNull(unitRecord, 'vatref'),
+    actiondate: getValueByKey(unitRecord, 'actiondate'),
+    address1: getValueByKey(unitRecord, 'address1'),
+    address2: getValueByKey(unitRecord, 'address2'),
+    address3: getValueByKey(unitRecord, 'address3'),
+    address4: getValueByKey(unitRecord, 'address4'),
+    address5: getValueByKey(unitRecord, 'address5'),
+    addressref: getValueByKey(unitRecord, 'addressref'),
+    birthdate: getValueByKey(unitRecord, 'birthdate'),
+    crn: getValueByKey(unitRecord, 'crn'),
+    deathcode: getValueByKey(unitRecord, 'deathcode'),
+    deathdate: getValueByKey(unitRecord, 'deathdate'),
+    entref: getValueByKey(unitRecord, 'entref'),
+    inqcode: getValueByKey(unitRecord, 'inqcode'),
+    legalstatus: getValueByKey(unitRecord, 'legalstatus'),
+    marker: getValueByKey(unitRecord, 'marker'),
+    jsonname1: getValueByKey(unitRecord, 'name1'),
+    name2: getValueByKey(unitRecord, 'name2'),
+    name3: getValueByKey(unitRecord, 'name3'),
+    postcode: getValueByKey(unitRecord, 'postcode'),
+    record_type: getValueByKey(unitRecord, 'record_type'),
+    sic92: getValueByKey(unitRecord, 'sic92'),
+    tradstyle1: getValueByKey(unitRecord, 'tradstyle1'),
+    tradstyle2: getValueByKey(unitRecord, 'tradstyle2'),
+    tradstyle3: getValueByKey(unitRecord, 'tradstyle3'),
+    turnover: getValueByKey(unitRecord, 'turnover'),
+    turnover_date: getValueByKey(unitRecord, 'turnover_date'),
+    vatref: getValueByKey(unitRecord, 'vatref'),
   };
   const title = (<h1 style={{ fontSize: '30px' }}>
     <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />

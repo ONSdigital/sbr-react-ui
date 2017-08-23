@@ -31,6 +31,7 @@ export function getDestination(source: string) {
   }
   return destination;
 }
+
 export function formatResultsTable(results: Array<{}>) {
   const formattedResults: Array<{}> = [];
   results.forEach((i) => {
@@ -41,4 +42,14 @@ export function formatResultsTable(results: Array<{}>) {
     formattedResults.push(record);
   });
   return formattedResults;
+}
+
+export function getValueByKey(data: {}, toGet: string) {
+  let d: string = '';
+  try {
+    d = data[toGet];
+  } catch (e) {
+    d = '';
+  }
+  return d;
 }

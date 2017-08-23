@@ -1,40 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, ListGroup, ListGroupItem, Button, Table, Glyphicon } from 'react-bootstrap';
+import { Panel, ListGroup, ListGroupItem, Table, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
-
-function ifEmptyNull(data, toGet) {
-  let d = '';
-  try {
-    d = data[toGet];
-  } catch (e) {
-    d = '';
-  }
-  return d;
-}
+import { getValueByKey } from '../utils/helperMethods';
 
 const EnterprisePanel = function ({ enterprise }) {
   const unitRecord = enterprise.UnitRecord;
   const unitRecordValues = unitRecord.values;
   const json = {
-    legalstatus: ifEmptyNull(unitRecordValues, 'legalstatus'),
-    standard_vat_turnover: ifEmptyNull(unitRecordValues, 'standard_vat_turnover'),
-    ent_address3: ifEmptyNull(unitRecordValues, 'ent_address3'),
-    PAYE_jobs: ifEmptyNull(unitRecordValues, 'PAYE_jobs'),
-    employees: ifEmptyNull(unitRecordValues, 'employees'),
-    ent_address2: ifEmptyNull(unitRecordValues, 'ent_address2'),
-    ent_postcode: ifEmptyNull(unitRecordValues, 'ent_postcode'),
-    entref: ifEmptyNull(unitRecordValues, 'entref'),
-    ent_address5: ifEmptyNull(unitRecordValues, 'ent_address5'),
-    Num_Unique_VatRefs: ifEmptyNull(unitRecordValues, 'Num_Unique_VatRefs'),
-    ent_address1: ifEmptyNull(unitRecordValues, 'ent_address1'),
-    ent_name: ifEmptyNull(unitRecordValues, 'ent_name'),
-    Num_Unique_PayeRefs: ifEmptyNull(unitRecordValues, 'Num_Unique_PayeRefs'),
-    ent_address4: ifEmptyNull(unitRecordValues, 'ent_address4'),
-    unitType: ifEmptyNull(enterprise.UnitLink, 'unitType'),
+    legalstatus: getValueByKey(unitRecordValues, 'legalstatus'),
+    standard_vat_turnover: getValueByKey(unitRecordValues, 'standard_vat_turnover'),
+    ent_address3: getValueByKey(unitRecordValues, 'ent_address3'),
+    PAYE_jobs: getValueByKey(unitRecordValues, 'PAYE_jobs'),
+    employees: getValueByKey(unitRecordValues, 'employees'),
+    ent_address2: getValueByKey(unitRecordValues, 'ent_address2'),
+    ent_postcode: getValueByKey(unitRecordValues, 'ent_postcode'),
+    entref: getValueByKey(unitRecordValues, 'entref'),
+    ent_address5: getValueByKey(unitRecordValues, 'ent_address5'),
+    Num_Unique_VatRefs: getValueByKey(unitRecordValues, 'Num_Unique_VatRefs'),
+    ent_address1: getValueByKey(unitRecordValues, 'ent_address1'),
+    ent_name: getValueByKey(unitRecordValues, 'ent_name'),
+    Num_Unique_PayeRefs: getValueByKey(unitRecordValues, 'Num_Unique_PayeRefs'),
+    ent_address4: getValueByKey(unitRecordValues, 'ent_address4'),
+    unitType: getValueByKey(enterprise.UnitLink, 'unitType'),
   };
-  console.log("unit record",unitRecord)
-  console.log("unit record values",unitRecordValues)
   const title = (<h1 style={{ fontSize: '30px' }}>
     <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
     &nbsp;&nbsp;{json.ent_name}
@@ -99,8 +88,8 @@ const EnterprisePanel = function ({ enterprise }) {
   );
 };
 
-// EnterprisePanel.propTypes = {
-//   enterprise: PropTypes.object.isRequired,
-// };
+EnterprisePanel.propTypes = {
+  enterprise: PropTypes.object.isRequired,
+};
 
 export default EnterprisePanel;

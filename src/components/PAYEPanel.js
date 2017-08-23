@@ -16,14 +16,13 @@ function ifEmptyNull(data, toGet) {
 const PAYEPanel = function ({ paye }) {
   const unitRecord = paye.UnitRecord.vars;
   const json = {
-    fullemp: ifEmptyNull(unitRecord, 'fullemp'),
+    payeref: ifEmptyNull(unitRecord, 'payeref'),
     nameline1: ifEmptyNull(unitRecord, 'nameline1'),
     employer_cat: ifEmptyNull(unitRecord, 'employer_cat'),
     msubemp: ifEmptyNull(unitRecord, 'msubemp'),
     ffullemp: ifEmptyNull(unitRecord, 'ffullemp'),
     legalstatus: ifEmptyNull(unitRecord, 'legalstatus'),
     address3: ifEmptyNull(unitRecord, 'address3'),
-    payeref: ifEmptyNull(unitRecord, 'payeref'),
     mar_jobs: ifEmptyNull(unitRecord, 'mar_jobs'),
     tradstyle3: ifEmptyNull(unitRecord, 'tradstyle3'),
     postcode: ifEmptyNull(unitRecord, 'postcode'),

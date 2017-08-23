@@ -49,38 +49,14 @@ const EnterprisePanel = function ({ enterprise }) {
             <ListGroupItem>
               <Table striped bordered condensed hover>
                 <tbody>
-                  <tr>
-                    <td><strong>SBR Enterprise Reference</strong></td>
-                    <td>{unitRecord.id}</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Legal Status</strong></td>
-                    <td>{json.legalstatus}</td>
-                  </tr>
-                  <tr>
-                    <td><strong>SIC</strong></td>
-                    <td>NA</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Employees</strong></td>
-                    <td>{json.employees}</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Working Group</strong></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><strong>Employment</strong></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><strong>Turnover</strong></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><strong>Source</strong></td>
-                    <td>{json.unitType}</td>
-                  </tr>
+                  <tr><td><strong>Entref</strong></td><td>{json.entref}</td></tr>
+                  <tr><td><strong>Legalstatus</strong></td><td>{json.legalstatus}</td></tr>
+                  <tr><td><strong>Standard_vat_turnover</strong></td><td>{json.standard_vat_turnover}</td></tr>
+                  <tr><td><strong>PAYE_jobs</strong></td><td>{json.PAYE_jobs}</td></tr>
+                  <tr><td><strong>Employees</strong></td><td>{json.employees}</td></tr>
+                  <tr><td><strong>Num_Unique_VatRefs</strong></td><td>{json.Num_Unique_VatRefs}</td></tr>
+                  <tr><td><strong>Num_Unique_PayeRefs</strong></td><td>{json.Num_Unique_PayeRefs}</td></tr>
+                  <tr><td><strong>UnitType</strong></td><td>{json.unitType}</td></tr>
                 </tbody>
               </Table>
               <h4>Address</h4>

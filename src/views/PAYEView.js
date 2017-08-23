@@ -17,7 +17,7 @@ const PAYEView = ({ routeParams, data }) => {
   const name = ifEmptyNull(data[routeParams.index].UnitRecord.vars,'nameline1');
   const items = [
     { name: 'Reference Search', link: '/RefSearch' },
-    { name: `${data[routeParams.index].UnitRecord.id} [${name}]`, link: '' },
+    { name: `${data[routeParams.index].UnitRecord.key} [${name}]`, link: '' },
   ];
   return (
     <div>

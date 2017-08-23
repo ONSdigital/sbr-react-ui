@@ -44,12 +44,6 @@ export function formatResultsTable(results: Array<{}>) {
   return formattedResults;
 }
 
-export function getValueByKey(data: {}, toGet: string) {
-  let d: string = '';
-  try {
-    d = data[toGet];
-  } catch (e) {
-    d = '';
-  }
-  return d;
+export function getValueByKey(object: {}, toGet: string) {
+  return (toGet in object) ? object[toGet] : '';
 }

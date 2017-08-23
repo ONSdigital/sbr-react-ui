@@ -3,12 +3,11 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import RefSearchImage from '../resources/img/search.png';
 
-const style = {
-  width: '260px',
-  height: '100px',
-};
-
 const Home = ({ username, role, uiVersion, apiVersion }) => {
+  const style = {
+    width: '260px',
+    height: '100px',
+  };
   return (
     <div>
       <div className="page-intro background--astral">

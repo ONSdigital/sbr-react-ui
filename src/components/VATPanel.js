@@ -31,9 +31,9 @@ const VATPanel = function ({ vat }) {
     inqcode: ifEmptyNull(unitRecord, 'inqcode'),
     legalstatus: ifEmptyNull(unitRecord, 'legalstatus'),
     marker: ifEmptyNull(unitRecord, 'marker'),
-    nameline1: ifEmptyNull(unitRecord, 'nameline1'),
-    nameline2: ifEmptyNull(unitRecord, 'nameline2'),
-    nameline3: ifEmptyNull(unitRecord, 'nameline3'),
+    jsonname1: ifEmptyNull(unitRecord, 'name1'),
+    name2: ifEmptyNull(unitRecord, 'name2'),
+    name3: ifEmptyNull(unitRecord, 'name3'),
     postcode: ifEmptyNull(unitRecord, 'postcode'),
     record_type: ifEmptyNull(unitRecord, 'record_type'),
     sic92: ifEmptyNull(unitRecord, 'sic92'),
@@ -46,7 +46,7 @@ const VATPanel = function ({ vat }) {
   };
   const title = (<h1 style={{ fontSize: '30px' }}>
     <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
-    &nbsp;&nbsp;{json.nameline1}
+    &nbsp;&nbsp;{json.name1}
   </h1>);
   const url = `https://www.google.co.uk/maps/place/${json.postcode}`;
   const mapsLink = <a href={url} target="_blank">{json.postcode}</a>;
@@ -68,9 +68,9 @@ const VATPanel = function ({ vat }) {
                   <tr><td><strong>Inqcode</strong></td><td>{json.inqcode}</td></tr>
                   <tr><td><strong>Legalstatus</strong></td><td>{json.legalstatus}</td></tr>
                   <tr><td><strong>Marker</strong></td><td>{json.marker}</td></tr>
-                  <tr><td><strong>Nameline1</strong></td><td>{json.nameline1}</td></tr>
-                  <tr><td><strong>Nameline2</strong></td><td>{json.nameline2}</td></tr>
-                  <tr><td><strong>Nameline3</strong></td><td>{json.nameline3}</td></tr>
+                  <tr><td><strong>name1</strong></td><td>{json.name1}</td></tr>
+                  <tr><td><strong>name2</strong></td><td>{json.name2}</td></tr>
+                  <tr><td><strong>name3</strong></td><td>{json.name3}</td></tr>
                   <tr><td><strong>Record_type</strong></td><td>{json.record_type}</td></tr>
                   <tr><td><strong>Sic92</strong></td><td>{json.sic92}</td></tr>
                   <tr><td><strong>Tradstyle1</strong></td><td>{json.tradstyle1}</td></tr>

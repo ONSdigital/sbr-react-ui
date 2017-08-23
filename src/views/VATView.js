@@ -14,7 +14,7 @@ function ifEmptyNull(data, toGet) {
 }
 
 const VATView = ({ routeParams, data }) => {
-  const name = ifEmptyNull(data[routeParams.index].UnitRecord.vars, 'nameline1');
+  const name = ifEmptyNull(data[routeParams.index].UnitRecord.vars, 'name1');
   const items = [
     { name: 'Reference Search', link: '/RefSearch' },
     { name: `${data[routeParams.index].UnitRecord.key} [${name}]`, link: '' },

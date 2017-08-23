@@ -17,7 +17,7 @@ const PAYEPanel = function ({ paye }) {
   const unitRecord = paye.UnitRecord.vars;
   const json = {
     payeref: ifEmptyNull(unitRecord, 'payeref'),
-    nameline1: ifEmptyNull(unitRecord, 'nameline1'),
+    name1: ifEmptyNull(unitRecord, 'name1'),
     employer_cat: ifEmptyNull(unitRecord, 'employer_cat'),
     msubemp: ifEmptyNull(unitRecord, 'msubemp'),
     ffullemp: ifEmptyNull(unitRecord, 'ffullemp'),
@@ -30,7 +30,7 @@ const PAYEPanel = function ({ paye }) {
     addressref: ifEmptyNull(unitRecord, 'addressref'),
     june_jobs: ifEmptyNull(unitRecord, 'june_jobs'),
     dec_jobs: ifEmptyNull(unitRecord, 'dec_jobs'),
-    nameline2: ifEmptyNull(unitRecord, 'nameline2'),
+    name2: ifEmptyNull(unitRecord, 'name2'),
     address5: ifEmptyNull(unitRecord, 'address5'),
     marker: ifEmptyNull(unitRecord, 'marker'),
     inqcode: ifEmptyNull(unitRecord, 'inqcode'),
@@ -38,7 +38,7 @@ const PAYEPanel = function ({ paye }) {
     address2: ifEmptyNull(unitRecord, 'address2'),
     entref: ifEmptyNull(unitRecord, 'entref'),
     unclsubemp: ifEmptyNull(unitRecord, 'unclsubemp'),
-    nameline3: ifEmptyNull(unitRecord, 'nameline3'),
+    name3: ifEmptyNull(unitRecord, 'name3'),
     birthdate: ifEmptyNull(unitRecord, 'birthdate'),
     prevpaye: ifEmptyNull(unitRecord, 'prevpaye'),
     address1: ifEmptyNull(unitRecord, 'address1'),
@@ -55,7 +55,7 @@ const PAYEPanel = function ({ paye }) {
   }
   const title = (<h1 style={{ fontSize: '30px' }}>
     <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
-    &nbsp;&nbsp;{json.nameline1}
+    &nbsp;&nbsp;{json.name1}
   </h1>);
   const url = `https://www.google.co.uk/maps/place/${json.postcode}`;
   const mapsLink = <a href={url} target="_blank">{json.postcode}</a>;
@@ -69,9 +69,9 @@ const PAYEPanel = function ({ paye }) {
                 <tbody>
                 <tr><td><strong>Payeref</strong></td><td>{json.payeref}</td></tr>
                 <tr><td><strong>Fullemp</strong></td><td>{json.fullemp}</td></tr>
-                <tr><td><strong>Nameline1</strong></td><td>{json.nameline1}</td></tr>
-                <tr><td><strong>Nameline2</strong></td><td>{json.nameline2}</td></tr>
-                <tr><td><strong>Nameline3</strong></td><td>{json.nameline3}</td></tr>
+                <tr><td><strong>name1</strong></td><td>{json.name1}</td></tr>
+                <tr><td><strong>name2</strong></td><td>{json.name2}</td></tr>
+                <tr><td><strong>name3</strong></td><td>{json.name3}</td></tr>
                 <tr><td><strong>Employer_cat</strong></td><td>{json.employer_cat}</td></tr>
                 <tr><td><strong>Msubemp</strong></td><td>{json.msubemp}</td></tr>
                 <tr><td><strong>Ffullemp</strong></td><td>{json.ffullemp}</td></tr>

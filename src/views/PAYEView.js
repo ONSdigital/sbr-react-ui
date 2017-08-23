@@ -2,11 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PAYEPanel from '../components/PAYEPanel';
 import BreadCrumb from '../components/BreadCrumb';
+import { getValueByKey } from '../utils/helperMethods';
 
 const PAYEView = ({ routeParams, data }) => {
+  const name = getValueByKey(data[routeParams.index].UnitRecord.vars, 'name1');
   const items = [
     { name: 'Reference Search', link: '/RefSearch' },
-    { name: `${data[routeParams.index].id} [${data[routeParams.index].name}]`, link: '' },
+    { name: `${data[routeParams.index].UnitRecord.key} [${name}]`, link: '' },
   ];
   return (
     <div>
@@ -19,7 +21,7 @@ const PAYEView = ({ routeParams, data }) => {
       <div className="page-intro background--gallery">
         <div className="wrapper">
           <PAYEPanel
-            key={data[routeParams.index].ubrn}
+            key={data[routeParams.index].UnitRecord.key}
             paye={data[routeParams.index]}
           />
         </div>

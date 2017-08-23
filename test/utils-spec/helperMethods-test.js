@@ -1,4 +1,4 @@
-import { countStatus, countStatusBetween, getDestination, formatResultsTable } from '../../src/utils/helperMethods';
+import { countStatus, countStatusBetween, getDestination, formatResultsTable, getValueByKey } from '../../src/utils/helperMethods';
 
 describe("Count Status tests", () => {
   it("counts number of 200 HTTPCode's correctly", () => {
@@ -64,5 +64,25 @@ describe("Format Results Table tests", () => {
     ];
     const formatted = formatResultsTable(results);
     expect(JSON.stringify(formatted)).toBe(JSON.stringify(correct));
+  });
+});
+
+describe("Get value by key tests", () => {
+  it("returns the value for a key that is present", () => {
+    const results = {
+      name: 'Jon Doe',
+      age: 55
+    };
+    const value = getValueByKey(results,'name');
+    expect(value).toBe(results.name);
+  });
+
+  it("returns an empty string for a non-present key", () => {
+    const results = {
+      name: 'Jon Doe',
+      age: 55
+    };
+    const value = getValueByKey(results,'lastName');
+    expect(value).toBe('');
   });
 });

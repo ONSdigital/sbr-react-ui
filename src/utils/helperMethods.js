@@ -17,17 +17,21 @@ export function countStatusBetween(history: Array<{}>, status: object) {
 export function getDestination(source: string) {
   let destination: string;
   switch (source) {
-    case 'Legal Unit':
+    case 'LEU':
       destination = 'LegalUnit';
       break;
     case 'VAT':
       destination = 'VAT';
+      break;
+    case 'PAYE':
+      destination = 'PAYE';
       break;
     default:
       destination = 'Enterprise';
   }
   return destination;
 }
+
 export function formatResultsTable(results: Array<{}>) {
   const formattedResults: Array<{}> = [];
   results.forEach((i) => {
@@ -38,4 +42,8 @@ export function formatResultsTable(results: Array<{}>) {
     formattedResults.push(record);
   });
   return formattedResults;
+}
+
+export function getValueByKey(object: {}, toGet: string) {
+  return (toGet in object) ? object[toGet] : '';
 }

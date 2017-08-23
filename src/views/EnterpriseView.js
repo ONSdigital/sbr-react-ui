@@ -2,11 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import EnterprisePanel from '../components/EnterprisePanel';
 import BreadCrumb from '../components/BreadCrumb';
+import { getValueByKey } from '../utils/helperMethods';
 
 const EnterpriseView = ({ routeParams, data }) => {
+  const name = getValueByKey(data[routeParams.index].UnitRecord.values, 'ent_name');
   const items = [
     { name: 'Reference Search', link: '/RefSearch' },
-    { name: `${data[routeParams.index].id} [${data[routeParams.index].name}]`, link: '' },
+    { name: `${data[routeParams.index].UnitRecord.id} [${name}]`, link: '' },
   ];
   return (
     <div>
@@ -19,7 +21,7 @@ const EnterpriseView = ({ routeParams, data }) => {
       <div className="page-intro background--gallery">
         <div className="wrapper">
           <EnterprisePanel
-            key={data[routeParams.index].ubrn}
+            key={data[routeParams.index].UnitRecord.id}
             enterprise={data[routeParams.index]}
           />
         </div>

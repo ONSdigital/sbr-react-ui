@@ -2,11 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import VATPanel from '../components/VATPanel';
 import BreadCrumb from '../components/BreadCrumb';
+import { getValueByKey } from '../utils/helperMethods';
 
 const VATView = ({ routeParams, data }) => {
+  const name = getValueByKey(data[routeParams.index].UnitRecord.vars, 'name1');
   const items = [
     { name: 'Reference Search', link: '/RefSearch' },
-    { name: `${data[routeParams.index].id} [${data[routeParams.index].name}]`, link: '' },
+    { name: `${data[routeParams.index].UnitRecord.key} [${name}]`, link: '' },
   ];
   return (
     <div>

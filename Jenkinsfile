@@ -199,12 +199,6 @@ pipeline {
     }
   }
   post {
-    always {
-      script {
-        colourText("info", 'Clearing workspace...')
-        // deleteDir()
-      }
-    }
     success {
       colourText("success", "All stages complete. Build was successful.")
       sendNotifications currentBuild.result, "\$SBR_EMAIL_LIST"

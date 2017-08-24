@@ -18,10 +18,10 @@ export function getDestination(source: string) {
   let destination: string;
   switch (source) {
     case 'ENT':
-      destination = 'Enterprise';
+      destination = 'ENT';
       break;
     case 'LEU':
-      destination = 'LegalUnit';
+      destination = 'LEU';
       break;
     case 'VAT':
       destination = 'VAT';
@@ -33,7 +33,7 @@ export function getDestination(source: string) {
       destination = 'CH';
       break;
     default:
-      destination = 'Enterprise';
+      destination = 'ENT';
   }
   return destination;
 }

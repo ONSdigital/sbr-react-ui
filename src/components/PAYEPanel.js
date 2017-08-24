@@ -5,44 +5,43 @@ import { browserHistory } from 'react-router';
 import { getValueByKey } from '../utils/helperMethods';
 
 const PAYEPanel = function ({ paye }) {
-  const unitRecord = paye.UnitRecord.vars;
   const json = {
-    payeref: getValueByKey(unitRecord, 'payeref'),
-    name1: getValueByKey(unitRecord, 'name1'),
-    employer_cat: getValueByKey(unitRecord, 'employer_cat'),
-    msubemp: getValueByKey(unitRecord, 'msubemp'),
-    ffullemp: getValueByKey(unitRecord, 'ffullemp'),
-    legalstatus: getValueByKey(unitRecord, 'legalstatus'),
-    address3: getValueByKey(unitRecord, 'address3'),
-    mar_jobs: getValueByKey(unitRecord, 'mar_jobs'),
-    tradstyle3: getValueByKey(unitRecord, 'tradstyle3'),
-    postcode: getValueByKey(unitRecord, 'postcode'),
-    fsubemp: getValueByKey(unitRecord, 'fsubemp'),
-    addressref: getValueByKey(unitRecord, 'addressref'),
-    june_jobs: getValueByKey(unitRecord, 'june_jobs'),
-    dec_jobs: getValueByKey(unitRecord, 'dec_jobs'),
-    name2: getValueByKey(unitRecord, 'name2'),
-    address5: getValueByKey(unitRecord, 'address5'),
-    marker: getValueByKey(unitRecord, 'marker'),
-    inqcode: getValueByKey(unitRecord, 'inqcode'),
-    tradstyle2: getValueByKey(unitRecord, 'tradstyle2'),
-    address2: getValueByKey(unitRecord, 'address2'),
-    entref: getValueByKey(unitRecord, 'entref'),
-    unclsubemp: getValueByKey(unitRecord, 'unclsubemp'),
-    name3: getValueByKey(unitRecord, 'name3'),
-    birthdate: getValueByKey(unitRecord, 'birthdate'),
-    prevpaye: getValueByKey(unitRecord, 'prevpaye'),
-    address1: getValueByKey(unitRecord, 'address1'),
-    actiondate: getValueByKey(unitRecord, 'actiondate'),
-    deathdate: getValueByKey(unitRecord, 'deathdate'),
-    tradstyle1: getValueByKey(unitRecord, 'tradstyle1'),
-    crn: getValueByKey(unitRecord, 'crn'),
-    stc: getValueByKey(unitRecord, 'stc'),
-    jobs_lastupd: getValueByKey(unitRecord, 'jobs_lastupd'),
-    address4: getValueByKey(unitRecord, 'address4'),
-    unclemp: getValueByKey(unitRecord, 'unclemp'),
-    sept_jobs: getValueByKey(unitRecord, 'sept_jobs'),
-    deathcode: getValueByKey(unitRecord, 'deathcode'),
+    payeref: getValueByKey(paye.vars, 'payeref'),
+    name1: getValueByKey(paye.vars, 'name1'),
+    employer_cat: getValueByKey(paye.vars, 'employer_cat'),
+    msubemp: getValueByKey(paye.vars, 'msubemp'),
+    ffullemp: getValueByKey(paye.vars, 'ffullemp'),
+    legalstatus: getValueByKey(paye.vars, 'legalstatus'),
+    address3: getValueByKey(paye.vars, 'address3'),
+    mar_jobs: getValueByKey(paye.vars, 'mar_jobs'),
+    tradstyle3: getValueByKey(paye.vars, 'tradstyle3'),
+    postcode: getValueByKey(paye.vars, 'postcode'),
+    fsubemp: getValueByKey(paye.vars, 'fsubemp'),
+    addressref: getValueByKey(paye.vars, 'addressref'),
+    june_jobs: getValueByKey(paye.vars, 'june_jobs'),
+    dec_jobs: getValueByKey(paye.vars, 'dec_jobs'),
+    name2: getValueByKey(paye.vars, 'name2'),
+    address5: getValueByKey(paye.vars, 'address5'),
+    marker: getValueByKey(paye.vars, 'marker'),
+    inqcode: getValueByKey(paye.vars, 'inqcode'),
+    tradstyle2: getValueByKey(paye.vars, 'tradstyle2'),
+    address2: getValueByKey(paye.vars, 'address2'),
+    entref: getValueByKey(paye.vars, 'entref'),
+    unclsubemp: getValueByKey(paye.vars, 'unclsubemp'),
+    name3: getValueByKey(paye.vars, 'name3'),
+    birthdate: getValueByKey(paye.vars, 'birthdate'),
+    prevpaye: getValueByKey(paye.vars, 'prevpaye'),
+    address1: getValueByKey(paye.vars, 'address1'),
+    actiondate: getValueByKey(paye.vars, 'actiondate'),
+    deathdate: getValueByKey(paye.vars, 'deathdate'),
+    tradstyle1: getValueByKey(paye.vars, 'tradstyle1'),
+    crn: getValueByKey(paye.vars, 'crn'),
+    stc: getValueByKey(paye.vars, 'stc'),
+    jobs_lastupd: getValueByKey(paye.vars, 'jobs_lastupd'),
+    address4: getValueByKey(paye.vars, 'address4'),
+    unclemp: getValueByKey(paye.vars, 'unclemp'),
+    sept_jobs: getValueByKey(paye.vars, 'sept_jobs'),
+    deathcode: getValueByKey(paye.vars, 'deathcode'),
   };
   const title = (<h1 style={{ fontSize: '30px' }}>
     <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
@@ -90,10 +89,6 @@ const PAYEPanel = function ({ paye }) {
                 <tr><td><strong>Jobs_lastupd</strong></td><td>{json.jobs_lastupd}</td></tr>
                 <tr><td><strong>Unclemp</strong></td><td>{json.unclemp}</td></tr>
                 <tr><td><strong>deathcode</strong></td><td>{json.deathcode}</td></tr>
-                  <tr>
-                    <td><strong>Source</strong></td>
-                    <td>{paye.UnitLink.unitType}</td>
-                  </tr>
                 </tbody>
               </Table>
               <h4>Address</h4>

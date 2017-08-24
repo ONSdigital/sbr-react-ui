@@ -143,4 +143,4 @@ See [CONTRIBUTING](https://github.com/ONSdigital/sbr-ui/tree/develop/CONTRIBUTIN
 
 Copyright ©‎ 2017, Office for National Statistics (https://www.ons.gov.uk)
 
-Released under MIT license, see [LICENSE](https://github.com/ONSdigital/sbr-ui/tree/develop/LICENSE.md) for details.
+Released under MIT license, see [LICENSE](https://github.com/ONSdigital/sbr-ui/tree/develop/LICENSE) for details.

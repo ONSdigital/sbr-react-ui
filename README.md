@@ -137,10 +137,10 @@ More details on this can be found [here](https://github.com/ONSdigital/sbr-ui/pu
 
 ## Contributing
 
-See [CONTRIBUTING](CONTRIBUTING.md) for details.
+See [CONTRIBUTING](https://github.com/ONSdigital/sbr-ui/tree/develop/CONTRIBUTING.md) for details.
 
 ## License
 
 Copyright ©‎ 2017, Office for National Statistics (https://www.ons.gov.uk)
 
-Released under MIT license, see [LICENSE](LICENSE.md) for details.
+Released under MIT license, see [LICENSE](https://github.com/ONSdigital/sbr-ui/tree/develop/LICENSE.md) for details.

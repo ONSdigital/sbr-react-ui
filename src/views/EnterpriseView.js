@@ -5,10 +5,10 @@ import BreadCrumb from '../components/BreadCrumb';
 import { getValueByKey } from '../utils/helperMethods';
 
 const EnterpriseView = ({ routeParams, data }) => {
-  const name = getValueByKey(data[routeParams.index].UnitRecord.values, 'ent_name');
+  const name = getValueByKey(data[routeParams.index].vars, 'ent_name');
   const items = [
     { name: 'Reference Search', link: '/RefSearch' },
-    { name: `${data[routeParams.index].UnitRecord.id} [${name}]`, link: '' },
+    { name: `${data[routeParams.index].id} [${name}]`, link: '' },
   ];
   return (
     <div>
@@ -21,7 +21,7 @@ const EnterpriseView = ({ routeParams, data }) => {
       <div className="page-intro background--gallery">
         <div className="wrapper">
           <EnterprisePanel
-            key={data[routeParams.index].UnitRecord.id}
+            key={data[routeParams.index].id}
             enterprise={data[routeParams.index]}
           />
         </div>

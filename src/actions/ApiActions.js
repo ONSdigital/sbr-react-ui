@@ -23,7 +23,7 @@ export function refSearch(query) {
           headers: data.response,
         }));
         if (data.results.length === 1) {
-          const source = data.results[0].UnitLink.unitType;
+          const source = data.results[0].unitType;
           const destination = getDestination(source);
           browserHistory.push(`/RefSearch/${destination}/${query}/0`);
         }

@@ -17,6 +17,9 @@ export function countStatusBetween(history: Array<{}>, status: object) {
 export function getDestination(source: string) {
   let destination: string;
   switch (source) {
+    case 'ENT':
+      destination = 'Enterprise';
+      break;
     case 'LEU':
       destination = 'LegalUnit';
       break;
@@ -25,6 +28,9 @@ export function getDestination(source: string) {
       break;
     case 'PAYE':
       destination = 'PAYE';
+      break;
+    case 'CH':
+      destination = 'CH';
       break;
     default:
       destination = 'Enterprise';

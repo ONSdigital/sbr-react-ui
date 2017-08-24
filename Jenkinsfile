@@ -198,18 +198,4 @@ pipeline {
       }
     }
   }
-  post {
-    success {
-      colourText("success", "All stages complete. Build was successful.")
-      sendNotifications currentBuild.result, "\$SBR_EMAIL_LIST"
-    }
-    unstable {
-      colourText("warn", "Something went wrong, build finished with result ${currentResult}.")
-      sendNotifications currentResult, "\$SBR_EMAIL_LIST"
-    }
-    failure {
-      colourText("warn","Build failed")
-      sendNotifications currentResult, "\$SBR_EMAIL_LIST"
-    }
-  }
 }

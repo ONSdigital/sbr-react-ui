@@ -74,10 +74,6 @@ pipeline {
             // sh 'killall node'
             // The above command will leave node running, will this be closed along with the workspace?
           },
-          "Component" : {
-            colourText("info","Running component tests...")
-            sh 'npm run-script test-components'
-          },
           "Server" : {
             colourText("info","Running server tests...")
             sh "npm run-script test-server"

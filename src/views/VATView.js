@@ -5,10 +5,10 @@ import BreadCrumb from '../components/BreadCrumb';
 import { getValueByKey } from '../utils/helperMethods';
 
 const VATView = ({ routeParams, data }) => {
-  const name = getValueByKey(data[routeParams.index].UnitRecord.vars, 'name1');
+  const name = getValueByKey(data[routeParams.index].vars, 'name1');
   const items = [
     { name: 'Reference Search', link: '/RefSearch' },
-    { name: `${data[routeParams.index].UnitRecord.key} [${name}]`, link: '' },
+    { name: `${data[routeParams.index].id} [${name}]`, link: '' },
   ];
   return (
     <div>
@@ -21,7 +21,7 @@ const VATView = ({ routeParams, data }) => {
       <div className="page-intro background--gallery">
         <div className="wrapper">
           <VATPanel
-            key={data[routeParams.index].ubrn}
+            key={data[routeParams.index].id}
             vat={data[routeParams.index]}
           />
         </div>

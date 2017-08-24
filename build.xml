@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="DemoUI" default="replace" basedir=".">
+    <description>
+        Replaces authorize url with the supplied url
+    </description>
+    <target name="replace">
+        <replace file="src/templates/Header.js" token="Local" value="${ONS_BI_UI_ENV}"/>
+        <replace file="src/utils/Sessions.js" token="http://localhost:3000/authorise" value="${ONS_BI_UI_AUTH_LINK}" />
+        <replace file="src/utils/Query.js" token="http://localhost:9000" value="${ONS_BI_UI_API_URL}" />
+        <replace file="src/components/FeedbackViewer.js" token="http://localhost:9000/v1/feedback" value="${ONS_BI_UI_API_URL}" />
+    </target>
+</project>

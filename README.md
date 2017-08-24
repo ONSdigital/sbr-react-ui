@@ -2,13 +2,8 @@
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ONSdigital/sbr-ui/blob/feature/skeleton/LICENSE)
 
-The following tutorials were used to help with the deployment using Node.js, the login with redux and the isolation of bootstrap styles:
-
-https://medium.com/@patriciolpezjuri/using-create-react-app-with-react-router-express-js-8fa658bf892d#.mt6bbdd8m
-
-https://github.com/mxstbr/login-flow
-
-https://formden.com/blog/isolate-bootstrap
+The following tutorials were used to help with the deployment using Node.js, the login with redux and the isolation of bootstrap styles: [Node](https://medium.com/@patriciolpezjuri/using-create-react-app-with-react-router-express-js-8fa658bf892d#.mt6bbdd8m
+), [Login](https://github.com/mxstbr/login-flow) and [Bootstrap Isolation](https://formden.com/blog/isolate-bootstrap).
 
 ## Environment Setup for the UI
 
@@ -47,6 +42,32 @@ This will run Node and React on localhost:3001, since Node is serving
 
 To use hot-reloading, use `npm restart` which runs `react-scripts start`, this
 will start React on port 3000. To start the server, use `ENV=local node server/index.js`.
+
+## Running the API's
+
+* [sbr-api](https://github.com/ONSdigital/sbr-api):
+
+```shell
+sbt "api/run -Dhttp.port=9002"
+```
+
+* [sbr-admin-data-api](https://github.com/ONSdigital/sbr-admin-data-api):
+
+```shell
+sbt "api/run -Dsource=hbaseInMemory -Dsbr.hbase.inmemory=true -Dhttp.port=9003"
+```
+
+* [sbr-control-api](https://github.com/ONSdigital/sbr-control-api):
+
+```shell
+sbt "api/run -Dsbr.hbase.inmemory=true -Dhttp.port=9001"
+```
+
+* [business-index-api](https://github.com/ONSdigital/business-index-api):
+
+```shell
+sbt "api/run -Denvironment=local"
+```
 
 ## Testing
 

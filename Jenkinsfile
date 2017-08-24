@@ -202,7 +202,7 @@ pipeline {
     always {
       script {
         colourText("info", 'Clearing workspace...')
-        deleteDir()
+        // deleteDir()
       }
     }
     success {

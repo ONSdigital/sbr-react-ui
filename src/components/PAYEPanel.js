@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Panel, ListGroup, ListGroupItem, Table, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { getValueByKey } from '../utils/helperMethods';
+import PanelToolbar from '../components/PanelToolbar';
 
 const PAYEPanel = function ({ paye }) {
   const json = {
@@ -53,6 +54,7 @@ const PAYEPanel = function ({ paye }) {
     <div>
       <div className="bootstrap-iso">
         <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
+          <PanelToolbar parents={paye.parents} children={paye.children} pageType="REF" />
           <ListGroup fill>
             <ListGroupItem>
               <Table striped bordered condensed hover>

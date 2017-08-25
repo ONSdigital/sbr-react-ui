@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Panel, ListGroup, ListGroupItem, Table, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { getValueByKey } from '../utils/helperMethods';
+import PanelToolbar from '../components/PanelToolbar';
 
 const CompanyPanel = function ({ company }) {
   const json = {
@@ -34,8 +35,8 @@ const CompanyPanel = function ({ company }) {
     returns_lastmadeupdate: getValueByKey(company.vars, 'returns_lastmadeupdate'),
     mortgages_nummortsatisfied: getValueByKey(company.vars, 'mortgages_nummortsatisfied'),
     companystatus: getValueByKey(company.vars, 'companystatus'),
-    mortgages_nummortpartsatisfied: getValueByKey(company.vars, 'mortgages_nummortpartsatisfied')
-  }
+    mortgages_nummortpartsatisfied: getValueByKey(company.vars, 'mortgages_nummortpartsatisfied'),
+  };
   const title = (<h1 style={{ fontSize: '30px' }}>
     <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
     &nbsp;&nbsp;{json.companyname}
@@ -46,6 +47,7 @@ const CompanyPanel = function ({ company }) {
     <div>
       <div className="bootstrap-iso">
         <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
+          <PanelToolbar parents={company.parents} children={company.children} pageType="REF" />
           <ListGroup fill>
             <ListGroupItem>
               <Table striped bordered condensed hover>

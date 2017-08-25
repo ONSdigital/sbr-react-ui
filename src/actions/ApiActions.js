@@ -1,5 +1,5 @@
 import { browserHistory } from 'react-router';
-import { SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE } from '../constants/ApiConstants';
+import { SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE, SET_LEGAL_UNIT_RESULTS, SET_LEGAL_UNIT_HEADERS, SENDING_LEGAL_UNIT_REQUEST, SET_LEGAL_UNIT_QUERY, SET_LEGAL_UNIT_ERROR_MESSAGE } from '../constants/ApiConstants';
 import apiSearch from '../utils/apiSearch';
 // import searchHistory from '../utils/searchHistory';
 import { getDestination } from '../utils/helperMethods';
@@ -29,6 +29,33 @@ export function refSearch(query) {
         }
       } else {
         dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message));
+      }
+      //searchHistory.addToHistory(data.resp);
+    });
+  };
+}
+
+/**
+ * Get legal unit by id (ubrn)
+ */
+export function getLegalUnit(id) {
+  return (dispatch) => {
+    dispatch(setErrorMessage(SET_LEGAL_UNIT_ERROR_MESSAGE, ''));
+    dispatch(sendingRequest(SENDING_LEGAL_UNIT_REQUEST, true));
+    dispatch(setResults(SET_LEGAL_UNIT_RESULTS, { results: [] }));
+    dispatch(setQuery(SET_LEGAL_UNIT_QUERY, id));
+    apiSearch.getLegalUnitById(id, (success, data) => {
+      dispatch(sendingRequest(SENDING_LEGAL_UNIT_REQUEST, false));
+      if (success) {
+        dispatch(setResults(SET_LEGAL_UNIT_RESULTS, {
+          results: [data.results],
+        }));
+        dispatch(setHeaders(SET_LEGAL_UNIT_HEADERS, {
+          headers: data.response,
+        }));
+        browserHistory.push(`/RefSearch/LEU/${id}/0`);
+      } else {
+        dispatch(setErrorMessage(SET_LEGAL_UNIT_ERROR_MESSAGE, data.message));
       }
       //searchHistory.addToHistory(data.resp);
     });

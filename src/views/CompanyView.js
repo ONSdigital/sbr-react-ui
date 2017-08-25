@@ -8,6 +8,7 @@ const CompanyView = ({ routeParams, data }) => {
   const name = getValueByKey(data[routeParams.index].vars, 'companyname');
   const items = [
     { name: 'Reference Search', link: '/RefSearch' },
+    { name: 'CH', link: '' },
     { name: `${data[routeParams.index].id} [${name}]`, link: '' },
   ];
   return (

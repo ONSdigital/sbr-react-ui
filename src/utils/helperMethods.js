@@ -17,8 +17,11 @@ export function countStatusBetween(history: Array<{}>, status: object) {
 export function getDestination(source: string) {
   let destination: string;
   switch (source) {
+    case 'ENT':
+      destination = 'ENT';
+      break;
     case 'LEU':
-      destination = 'LegalUnit';
+      destination = 'LEU';
       break;
     case 'VAT':
       destination = 'VAT';
@@ -26,8 +29,11 @@ export function getDestination(source: string) {
     case 'PAYE':
       destination = 'PAYE';
       break;
+    case 'CH':
+      destination = 'CH';
+      break;
     default:
-      destination = 'Enterprise';
+      destination = 'ENT';
   }
   return destination;
 }

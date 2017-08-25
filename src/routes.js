@@ -13,6 +13,7 @@ import Accessibility from './views/Accessibility';
 import RefSearch from './views/RefSearch';
 import EnterpriseView from './views/EnterpriseView';
 import LegalUnitView from './views/LegalUnitView';
+import CompanyView from './views/CompanyView';
 import VATView from './views/VATView';
 import PAYEView from './views/PAYEView';
 import SearchHistory from './views/SearchHistory';
@@ -64,10 +65,11 @@ const Routes = () => (
         <Route onEnter={checkAuthentication} >
           <Route path={'/Home'} component={Home} />
           <Route path={'/RefSearch'} component={RefSearch} />
-          <Route path={'/RefSearch/Enterprise/:enterprise/:index'} component={EnterpriseView} />
-          <Route path={'/RefSearch/LegalUnit/:legalUnit/:index'} component={LegalUnitView} />
+          <Route path={'/RefSearch/ENT/:enterprise/:index'} component={EnterpriseView} />
+          <Route path={'/RefSearch/LEU/:legalUnit/:index'} component={LegalUnitView} />
           <Route path={'/RefSearch/VAT/:vat/:index'} component={VATView} />
           <Route path={'/RefSearch/PAYE/:paye/:index'} component={PAYEView} />
+          <Route path={'/RefSearch/CH/:company/:index'} component={CompanyView} />
           <Route path={'/SearchHistory'} component={SearchHistory} />
           <Route path={'/WhatIsSbr'} component={WhatIsSbr} />
           <Route path={'/Accessibility'} component={Accessibility} />

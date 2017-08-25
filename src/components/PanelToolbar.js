@@ -7,7 +7,7 @@ import { getLegalUnit, refSearch, setQuery } from '../actions/ApiActions';
 import { SET_REF_QUERY } from '../constants/ApiConstants';
 
 const PanelToolbar = ({ dispatch, data, pageType, parents, children }) => {
-  function onSubmit(e) {
+  function goToParent(e) {
     e.preventDefault();
     switch (pageType) {
       case 'LEU':
@@ -22,12 +22,16 @@ const PanelToolbar = ({ dispatch, data, pageType, parents, children }) => {
   }
   const parentType = (pageType === 'REF') ? 'LEU' : 'ENT';
   const goToParentButton = (pageType !== 'ENT') ? (
-    <Button bsStyle="primary" loading={data.currentlySending} onClick={onSubmit}>Go to parent ({parentType})</Button>
+    <Button bsStyle="primary" loading={data.currentlySending} onClick={goToParent}>Go to parent ({parentType})</Button>
+  ) : (<div></div>);
+  const goToEnterprise = (pageType === 'REF') ? (
+    <Button bsStyle="primary" loading={data.currentlySending} onClick={() => dispatch(refSearch(parents.ENT))}>Go to Enterprise</Button>
   ) : (<div></div>);
   return (
     <ButtonToolbar>
       {/* Provides extra visual weight and identifies the primary action in a set of buttons */}
       {goToParentButton}
+      {goToEnterprise}
     </ButtonToolbar>
   );
 };

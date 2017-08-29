@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Panel, ListGroup, ListGroupItem, Table, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { getValueByKey } from '../utils/helperMethods';
+import PanelToolbar from '../components/PanelToolbar';
 
 const VATPanel = function ({ vat }) {
   const json = {
@@ -44,6 +45,7 @@ const VATPanel = function ({ vat }) {
     <div>
       <div className="bootstrap-iso">
         <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
+          <PanelToolbar parents={vat.parents} children={vat.children} pageType="REF" />
           <ListGroup fill>
             <ListGroupItem>
               <Table striped bordered condensed hover>

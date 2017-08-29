@@ -66,6 +66,7 @@ sbt "api/run -Dsbr.hbase.inmemory=true -Dhttp.port=9001"
 * [business-index-api](https://github.com/ONSdigital/business-index-api):
 
 ```shell
+elasticsearch
 sbt "api/run -Denvironment=local"
 ```
 

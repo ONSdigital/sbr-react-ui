@@ -8,6 +8,7 @@ const LegalUnitView = ({ routeParams, data }) => {
   const name = getValueByKey(data[routeParams.index].vars, 'businessName');
   const items = [
     { name: 'Reference Search', link: '/RefSearch' },
+    { name: 'LEU', link: '' },
     { name: `${data[routeParams.index].id} [${name}]`, link: '' },
   ];
   return (

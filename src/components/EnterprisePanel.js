@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel, ListGroup, ListGroupItem, Table, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
+import PanelToolbar from '../components/PanelToolbar';
 import { getValueByKey } from '../utils/helperMethods';
 
 const EnterprisePanel = function ({ enterprise }) {
@@ -31,6 +32,7 @@ const EnterprisePanel = function ({ enterprise }) {
     <div>
       <div className="bootstrap-iso">
         <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
+          <PanelToolbar parents={enterprise.parents} children={enterprise.children} pageType="ENT" />
           <ListGroup fill>
             <ListGroupItem>
               <Table striped bordered condensed hover>

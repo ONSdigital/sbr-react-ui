@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel, ListGroup, ListGroupItem, Table, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
+import PanelToolbar from '../components/PanelToolbar';
 
 const LegalUnitPanel = function ({ legalUnit }) {
   const title = (<h1 style={{ fontSize: '30px' }}>
@@ -14,6 +15,7 @@ const LegalUnitPanel = function ({ legalUnit }) {
     <div>
       <div className="bootstrap-iso">
         <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
+          <PanelToolbar parents={legalUnit.parents} children={legalUnit.children} pageType="LEU" />
           <ListGroup fill>
             <ListGroupItem>
               <Table striped bordered condensed hover>

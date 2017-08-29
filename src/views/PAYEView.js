@@ -8,6 +8,7 @@ const PAYEView = ({ routeParams, data }) => {
   const name = getValueByKey(data[routeParams.index].vars, 'name1');
   const items = [
     { name: 'Reference Search', link: '/RefSearch' },
+    { name: 'PAYE', link: '' },
     { name: `${data[routeParams.index].id} [${name}]`, link: '' },
   ];
   return (

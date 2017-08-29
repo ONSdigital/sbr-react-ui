@@ -8,6 +8,7 @@ const EnterpriseView = ({ routeParams, data }) => {
   const name = getValueByKey(data[routeParams.index].vars, 'ent_name');
   const items = [
     { name: 'Reference Search', link: '/RefSearch' },
+    { name: 'ENT', link: '' },
     { name: `${data[routeParams.index].id} [${name}]`, link: '' },
   ];
   return (

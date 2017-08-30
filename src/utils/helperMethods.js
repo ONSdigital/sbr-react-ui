@@ -53,3 +53,15 @@ export function formatResultsTable(results: Array<{}>) {
 export function getValueByKey(object: {}, toGet: string) {
   return (toGet in object) ? object[toGet] : '';
 }
+
+export function getChildValues(json: {}, compareString: string) {
+  const arr: Array<{}> = [];
+  Object.keys(json).forEach((k) => {
+    if (json[k] === compareString) {
+      const obj: {} = {};
+      obj[compareString] = k;
+      arr.push(obj);
+    }
+  });
+  return arr;
+}

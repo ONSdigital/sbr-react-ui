@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { refSearch } from '../actions/ApiActions';
 
 const ChildrenTable = ({ dispatch, data, unitData, name, accessor }) => {
-  console.log(unitData)
   const columns = [
     { Header: name, accessor },
     { Header: 'Go to child',
@@ -31,7 +30,7 @@ const ChildrenTable = ({ dispatch, data, unitData, name, accessor }) => {
       data={unitData}
       columns={columns}
       showPagination
-      showPaginationTop
+      showPaginationTop={false}
       showPaginationBottom
       showPageSizeOptions
       pageSizeOptions={[5, 10, 20, 25, 50, 100]}

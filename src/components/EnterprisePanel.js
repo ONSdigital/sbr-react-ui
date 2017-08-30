@@ -4,21 +4,10 @@ import { Panel, ListGroup, ListGroupItem, Table, Glyphicon } from 'react-bootstr
 import { browserHistory } from 'react-router';
 import Button from 'react-bootstrap-button-loader';
 import PanelToolbar from '../components/PanelToolbar';
-import { getValueByKey } from '../utils/helperMethods';
+import { getValueByKey, getChildValues } from '../utils/helperMethods';
 import ChildrenTable from '../components/ChildrenTable';
 
 const EnterprisePanel = function ({ enterprise }) {
-  function getValues(json, compareString) {
-    const arr = [];
-    Object.keys(json).forEach((k) => {
-      if (json[k] === compareString) {
-        const obj = {};
-        obj[compareString] = k;
-        arr.push(obj);
-      }
-    });
-    return arr;
-  }
   const json = {
     legalstatus: getValueByKey(enterprise.vars, 'legalstatus'),
     standard_vat_turnover: getValueByKey(enterprise.vars, 'standard_vat_turnover'),
@@ -41,10 +30,10 @@ const EnterprisePanel = function ({ enterprise }) {
   </h1>);
   const url = `https://www.google.co.uk/maps/place/${json.ent_postcode}`;
   const mapsLink = <a href={url} target="_blank">{json.ent_postcode}</a>;
-  const leuData = getValues(enterprise.children, 'LEU');
-  const chData = getValues(enterprise.children, 'CH');
-  const vatData = getValues(enterprise.children, 'VAT');
-  const payeData = getValues(enterprise.children, 'PAYE');
+  const leuData = getChildValues(enterprise.children, 'LEU');
+  const chData = getChildValues(enterprise.children, 'CH');
+  const vatData = getChildValues(enterprise.children, 'VAT');
+  const payeData = getChildValues(enterprise.children, 'PAYE');
   return (
     <div>
       <div className="bootstrap-iso">

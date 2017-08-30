@@ -2,10 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel, ListGroup, ListGroupItem, Table, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
+import Button from 'react-bootstrap-button-loader';
 import PanelToolbar from '../components/PanelToolbar';
 import { getValueByKey } from '../utils/helperMethods';
+import ChildrenTable from '../components/ChildrenTable';
 
 const EnterprisePanel = function ({ enterprise }) {
+  function getValues(json, compareString) {
+    const arr = [];
+    Object.keys(json).forEach((k) => {
+      if (json[k] === compareString) {
+        const obj = {};
+        obj[compareString] = k;
+        arr.push(obj);
+      }
+    });
+    return arr;
+  }
   const json = {
     legalstatus: getValueByKey(enterprise.vars, 'legalstatus'),
     standard_vat_turnover: getValueByKey(enterprise.vars, 'standard_vat_turnover'),
@@ -28,6 +41,10 @@ const EnterprisePanel = function ({ enterprise }) {
   </h1>);
   const url = `https://www.google.co.uk/maps/place/${json.ent_postcode}`;
   const mapsLink = <a href={url} target="_blank">{json.ent_postcode}</a>;
+  const leuData = getValues(enterprise.children, 'LEU');
+  const chData = getValues(enterprise.children, 'CH');
+  const vatData = getValues(enterprise.children, 'VAT');
+  const payeData = getValues(enterprise.children, 'PAYE');
   return (
     <div>
       <div className="bootstrap-iso">
@@ -75,6 +92,19 @@ const EnterprisePanel = function ({ enterprise }) {
                   </tr>
                 </tbody>
               </Table>
+              <h3>Children</h3>
+              <Panel className="bg-inverse" collapsible defaultExpanded={false} header="Legal Units">
+                <ChildrenTable unitData={leuData} name={'LEU'} accessor={'LEU'} />
+              </Panel>
+              <Panel className="bg-inverse" collapsible defaultExpanded={false} header="Companies">
+                <ChildrenTable unitData={chData} name={'CH'} accessor={'CH'} />
+              </Panel>
+              <Panel className="bg-inverse" collapsible defaultExpanded={false} header="VATs">
+                <ChildrenTable unitData={vatData} name={'VAT'} accessor={'VAT'} />
+              </Panel>
+              <Panel className="bg-inverse" collapsible defaultExpanded={false} header="PAYEs">
+                <ChildrenTable unitData={payeData} name={'PAYE'} accessor={'PAYE'} />
+              </Panel>
             </ListGroupItem>
           </ListGroup>
         </Panel>

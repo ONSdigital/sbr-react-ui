@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, ListGroup, ListGroupItem, Table, Glyphicon } from 'react-bootstrap';
+import { Accordion, Panel, ListGroup, ListGroupItem, Table, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import Button from 'react-bootstrap-button-loader';
 import PanelToolbar from '../components/PanelToolbar';
@@ -82,18 +82,20 @@ const EnterprisePanel = function ({ enterprise }) {
                 </tbody>
               </Table>
               <h3>Children</h3>
-              <Panel className="bg-inverse" collapsible defaultExpanded={false} header="Legal Units">
-                <ChildrenTable unitData={leuData} name={'LEU'} accessor={'LEU'} />
-              </Panel>
-              <Panel className="bg-inverse" collapsible defaultExpanded={false} header="Companies">
-                <ChildrenTable unitData={chData} name={'CH'} accessor={'CH'} />
-              </Panel>
-              <Panel className="bg-inverse" collapsible defaultExpanded={false} header="VATs">
-                <ChildrenTable unitData={vatData} name={'VAT'} accessor={'VAT'} />
-              </Panel>
-              <Panel className="bg-inverse" collapsible defaultExpanded={false} header="PAYEs">
-                <ChildrenTable unitData={payeData} name={'PAYE'} accessor={'PAYE'} />
-              </Panel>
+              <Accordion>
+                <Panel className="bg-inverse" eventKey="1" collapsible defaultExpanded={false} header="Legal Units">
+                  <ChildrenTable unitData={leuData} name={'LEU'} accessor={'LEU'} />
+                </Panel>
+                <Panel className="bg-inverse" eventKey="2" collapsible defaultExpanded={false} header="Companies">
+                  <ChildrenTable unitData={chData} name={'CH'} accessor={'CH'} />
+                </Panel>
+                <Panel className="bg-inverse" eventKey="3" collapsible defaultExpanded={false} header="VATs">
+                  <ChildrenTable unitData={vatData} name={'VAT'} accessor={'VAT'} />
+                </Panel>
+                <Panel className="bg-inverse" eventKey="4" collapsible defaultExpanded={false} header="PAYEs">
+                  <ChildrenTable unitData={payeData} name={'PAYE'} accessor={'PAYE'} />
+                </Panel>
+              </Accordion>
             </ListGroupItem>
           </ListGroup>
         </Panel>

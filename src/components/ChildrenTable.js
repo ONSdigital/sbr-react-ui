@@ -8,7 +8,7 @@ import { refSearch } from '../actions/ApiActions';
 
 const ChildrenTable = ({ dispatch, data, unitData, name, accessor }) => {
   const columns = [
-    { Header: name, accessor },
+    { Header: name, accessor, width: 250 },
     { Header: 'Go to child',
       id: 'full',
       accessor: d =>
@@ -35,6 +35,7 @@ const ChildrenTable = ({ dispatch, data, unitData, name, accessor }) => {
       showPageSizeOptions
       pageSizeOptions={[5, 10, 20, 25, 50, 100]}
       defaultPageSize={5}
+      className="-striped -highlight"
     />
   );
 };

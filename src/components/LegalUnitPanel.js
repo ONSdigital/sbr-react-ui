@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, ListGroup, ListGroupItem, Table, Glyphicon } from 'react-bootstrap';
+import { Accordion, Panel, ListGroup, ListGroupItem, Table, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import PanelToolbar from '../components/PanelToolbar';
+import { getChildValues } from '../utils/helperMethods';
+import ChildrenTable from '../components/ChildrenTable';
 
 const LegalUnitPanel = function ({ legalUnit }) {
   const title = (<h1 style={{ fontSize: '30px' }}>
@@ -11,6 +13,9 @@ const LegalUnitPanel = function ({ legalUnit }) {
   </h1>);
   const url = `https://www.google.co.uk/maps/place/${legalUnit.vars.postCode}`;
   const mapsLink = <a href={url} target="_blank">{legalUnit.vars.postCode}</a>;
+  const chData = getChildValues(legalUnit.children, 'CH');
+  const vatData = getChildValues(legalUnit.children, 'VAT');
+  const payeData = getChildValues(legalUnit.children, 'PAYE');
   return (
     <div>
       <div className="bootstrap-iso">
@@ -59,6 +64,18 @@ const LegalUnitPanel = function ({ legalUnit }) {
                   </tr>
                 </tbody>
               </Table>
+              <h3>Children</h3>
+              <Accordion>
+                <Panel className="bg-inverse" eventKey="2" collapsible defaultExpanded={false} header="Companies">
+                  <ChildrenTable unitData={chData} name={'CH'} accessor={'CH'} />
+                </Panel>
+                <Panel className="bg-inverse" eventKey="3" collapsible defaultExpanded={false} header="VATs">
+                  <ChildrenTable unitData={vatData} name={'VAT'} accessor={'VAT'} />
+                </Panel>
+                <Panel className="bg-inverse" eventKey="4" collapsible defaultExpanded={false} header="PAYEs">
+                  <ChildrenTable unitData={payeData} name={'PAYE'} accessor={'PAYE'} />
+                </Panel>
+              </Accordion>
             </ListGroupItem>
           </ListGroup>
         </Panel>

@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { ButtonToolbar } from 'react-bootstrap';
 import Button from 'react-bootstrap-button-loader';
 import { connect } from 'react-redux';
-import { getLegalUnit, refSearch, setQuery } from '../actions/ApiActions';
-import { SET_REF_QUERY } from '../constants/ApiConstants';
+import { refSearch } from '../actions/ApiActions';
 
-const PanelToolbar = ({ dispatch, data, pageType, parents, children }) => {
+const PanelToolbar = ({ dispatch, data, pageType, parents }) => {
   function goToParent(e) {
     e.preventDefault();
     switch (pageType) {
@@ -29,6 +28,7 @@ const PanelToolbar = ({ dispatch, data, pageType, parents, children }) => {
   ) : (<div></div>);
   return (
     <ButtonToolbar>
+      <Button bsStyle="primary" loading={data.currentlySending}>Tree View</Button>
       {/* Provides extra visual weight and identifies the primary action in a set of buttons */}
       {goToParentButton}
       {goToEnterprise}
@@ -39,14 +39,13 @@ const PanelToolbar = ({ dispatch, data, pageType, parents, children }) => {
 PanelToolbar.propTypes = {
   pageType: PropTypes.string.isRequired,
   parents: PropTypes.object.isRequired,
-  children: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 function select(state) {
   return {
-    data: state.apiSearch.legalUnit,
+    data: state.apiSearch.refSearch,
   };
 }
 

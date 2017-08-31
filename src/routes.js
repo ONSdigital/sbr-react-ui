@@ -11,6 +11,8 @@ import ContactUs from './views/ContactUs';
 import WhatIsSbr from './views/WhatIsSbr';
 import Accessibility from './views/Accessibility';
 import RefSearch from './views/RefSearch';
+import TreeView1 from './views/TreeView1';
+import TreeView2 from './views/TreeView2';
 import EnterpriseView from './views/EnterpriseView';
 import LegalUnitView from './views/LegalUnitView';
 import CompanyView from './views/CompanyView';
@@ -71,6 +73,8 @@ const Routes = () => (
           <Route path={'/RefSearch/PAYE/:paye/:index'} component={PAYEView} />
           <Route path={'/RefSearch/CH/:company/:index'} component={CompanyView} />
           <Route path={'/SearchHistory'} component={SearchHistory} />
+          <Route path={'/TreeView1'} component={TreeView1} />
+          <Route path={'/TreeView2'} component={TreeView2} />
           <Route path={'/WhatIsSbr'} component={WhatIsSbr} />
           <Route path={'/Accessibility'} component={Accessibility} />
           <Route path={'/ContactUs'} component={ContactUs} />

@@ -88,7 +88,7 @@ const VATPanel = function ({ vat }) {
           </ListGroup>
         </Panel>
       </div>
-      <button className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" autoFocus onClick={() => browserHistory.push('/RefSearch')} bsStyle="info">
+      <button className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" onClick={() => browserHistory.push('/RefSearch')} bsStyle="info">
         Return to search
       </button>
     </div>

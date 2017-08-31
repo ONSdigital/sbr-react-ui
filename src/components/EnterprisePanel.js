@@ -100,7 +100,7 @@ const EnterprisePanel = function ({ enterprise }) {
           </ListGroup>
         </Panel>
       </div>
-      <button className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" autoFocus onClick={() => browserHistory.push('/RefSearch')}>
+      <button className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" onClick={() => browserHistory.push('/RefSearch')}>
         Return to search
       </button>
     </div>

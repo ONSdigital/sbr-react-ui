@@ -38,14 +38,6 @@ const BreadCrumb = ({ breadCrumbItems, title, description, marginBottom }) => {
                 </ol>
               </div>
             </nav>
-            <div className="col col--md-47 col--lg-48">
-              <h1 className="page-intro__title ">
-                {title}
-              </h1>
-              <p className={`page-intro__content margin-bottom--${marginBottom}`}>
-                {description}
-              </p>
-            </div>
           </div>
         </div>
       </div>

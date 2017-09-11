@@ -38,7 +38,7 @@ const CompanyPanel = function ({ company }) {
     mortgages_nummortpartsatisfied: getValueByKey(company.vars, 'mortgages_nummortpartsatisfied'),
   };
   const title = (<h1 style={{ fontSize: '30px' }}>
-    <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
+    <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="list" />
     &nbsp;&nbsp;{json.companyname}
   </h1>);
   const url = `https://www.google.co.uk/maps/place/${json.regaddress_postcode}`;

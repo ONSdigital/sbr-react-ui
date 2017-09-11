@@ -8,18 +8,17 @@ import { refSearch } from '../actions/ApiActions';
 
 const ChildrenTable = ({ dispatch, data, unitData, name, accessor }) => {
   const columns = [
-    { Header: name, accessor, width: 250 },
-    { Header: 'Go to child',
+    { Header: name, accessor},
+    { Header: 'View',
       id: 'full',
       accessor: d =>
         (<span>
           <Button
             bsStyle="primary"
-            style={{ width: '100%' }}
             loading={data.currentlySending}
             onClick={() => dispatch(refSearch(d[accessor]))}
           >
-              Go to record [{d[accessor]}]
+          View
           </Button>
         </span>),
     },

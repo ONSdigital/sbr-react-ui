@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, Form, FormGroup, FormControl, ControlLabel, Glyphicon, Tabs, Tab, Grid, Row, Col, Label } from 'react-bootstrap';
+import { Panel, Form, FormGroup, FormControl, ControlLabel, Glyphicon, Tabs, Tab, Grid, Row, Col } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
-import Button from 'react-bootstrap-button-loader';
 import PanelToolbar from '../components/PanelToolbar';
 import { getValueByKey, getChildValues } from '../utils/helperMethods';
 import ChildList from '../components/ChildList';
+import FormStaticValue from '../components/FormStaticValue';
+import FormStaticAddress from '../components/FormStaticAddress';
 
 const EnterprisePanel = function ({ enterprise }) {
   const json = {
@@ -24,8 +25,6 @@ const EnterprisePanel = function ({ enterprise }) {
     Num_Unique_PayeRefs: getValueByKey(enterprise.vars, 'Num_Unique_PayeRefs'),
     ent_address4: getValueByKey(enterprise.vars, 'ent_address4'),
   };
-  const url = `https://www.google.co.uk/maps/place/${json.ent_postcode}`;
-   const mapsLink = <a href={url} target="_blank">{json.ent_postcode}</a>;
   const title = (<h1><Glyphicon glyph="tower" />&nbsp;{json.ent_name} <small>{json.entref}</small></h1>);
   const leuData = getChildValues(enterprise.children, 'LEU');
   const chData = getChildValues(enterprise.children, 'CH');
@@ -37,68 +36,37 @@ const EnterprisePanel = function ({ enterprise }) {
         <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
         <Grid>
           <Row className="show-grid">
-          <Col sm={6} md={4}>
-          <Form horizontal>
-          <FormGroup controlId="formAddress">
-                          <Col componentClass={ControlLabel} sm={6}>
-                            Address
-                          </Col>
-                          <Col sm={6}>
-                            <FormControl.Static>{json.ent_address1}<br/>{json.ent_address2}<br/>{json.ent_address3}<br/>{json.ent_address4}<br/>{json.ent_address5}<br/>{mapsLink}</FormControl.Static>
-                          </Col>
-                        </FormGroup>
-          <FormGroup controlId="formLegalStatus">
-                          <Col componentClass={ControlLabel} sm={6}>
-                            Legal Status
-                          </Col>
-                          <Col sm={6}>
-                          <FormControl.Static bsClass="label" bsStyle="success">Active</FormControl.Static>
-                          </Col>
-                        </FormGroup>
-          <FormGroup controlId="formEmployees">
-                <Col componentClass={ControlLabel} sm={6}>
-                  Employees
-                </Col>
-                <Col sm={6}>
-                  <FormControl.Static>{json.employees}</FormControl.Static>
-                </Col>
-              </FormGroup>
-          <FormGroup controlId="formJobs">
-                          <Col componentClass={ControlLabel} sm={6}>
-                            PAYE Jobs
-                          </Col>
-                          <Col sm={6}>
-                            <FormControl.Static>{json.PAYE_jobs}</FormControl.Static>
-                          </Col>
-                        </FormGroup>
-          <FormGroup controlId="formStandardVATTurnover">
-                          <Col componentClass={ControlLabel} sm={6}>
-                            Standard VAT turnover
-                          </Col>
-                          <Col sm={6}>
-                            <FormControl.Static>{json.standard_vat_turnover}</FormControl.Static>
-                          </Col>
-                        </FormGroup>
-          </Form>
-           </Col>
-            <Col sm={2} md={4}>
-
-             <Tabs defaultActiveKey="1" animation={false} id="children-tabs" bsStyle="pills">
-                                                   <Tab eventKey="1" title="UBRN">
-                                                     <ChildList unitData={leuData} name={'UBRN'} accessor={'LEU'} />
-                                                   </Tab>
-                                                   <Tab eventKey="2" title="CRN">
-                                                     <ChildList unitData={chData} name={'CRN'} accessor={'CH'} />
-                                                   </Tab>
-                                                   <Tab eventKey="3" title="PAYE">
-                                                     <ChildList unitData={payeData} name={'PAYE'} accessor={'PAYE'} />
-                                                   </Tab>
-                                                   <Tab eventKey="4" title="VAT">
-                                                     <ChildList unitData={vatData} name={'VAT'} accessor={'VAT'} />
-                                                   </Tab>
-                                                 </Tabs>
-            </Col>
-            <Col sm={2} md={4}>   <PanelToolbar parents={enterprise.parents} children={enterprise.children} pageType="ENT" />
+            <Form horizontal>
+              <Col sm={3}>
+                <FormStaticAddress id="formAddress" label="Address" address1={json.ent_address1} address2={json.ent_address2} address3={json.ent_address3} address4={json.ent_address4} address5={json.ent_address5} postcode={json.ent_postcode} />
+                <FormGroup controlId="formLegalStatus">
+                  <Col componentClass={ControlLabel} sm={6}>
+                    Legal Status
+                  </Col>
+                  <Col sm={3}>
+                    <FormControl.Static bsClass="label" bsStyle="success">Active</FormControl.Static>
+                  </Col>
+                </FormGroup>
+                <FormStaticValue id="formEmployees" label="Employees" value={json.employees} />
+                <FormStaticValue id="formJobs" label="PAYE Jobs" value={json.PAYE_jobs} />
+                <FormStaticValue id="formStandardVATTurnover" label="Standard VAT turnover" value={json.standard_vat_turnover} />
+              </Col>
+            </Form>
+            <Col sm={4} xsOffset={2}>
+              <Tabs defaultActiveKey="1" animation={false} id="children-tabs" bsStyle="pills">
+                <Tab eventKey="1" title="UBRN">
+                  <ChildList unitData={leuData} name={'UBRN'} accessor={'LEU'} />
+                </Tab>
+                <Tab eventKey="2" title="CRN">
+                  <ChildList unitData={chData} name={'CRN'} accessor={'CH'} />
+                </Tab>
+                <Tab eventKey="3" title="PAYE">
+                  <ChildList unitData={payeData} name={'PAYE'} accessor={'PAYE'} />
+                </Tab>
+                <Tab eventKey="4" title="VAT">
+                  <ChildList unitData={vatData} name={'VAT'} accessor={'VAT'} />
+                </Tab>
+              </Tabs>
             </Col>
           </Row>
         </Grid>

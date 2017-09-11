@@ -45,7 +45,7 @@ const PAYEPanel = function ({ paye }) {
     deathcode: getValueByKey(paye.vars, 'deathcode'),
   };
   const title = (<h1 style={{ fontSize: '30px' }}>
-    <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
+    <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="user" />
     &nbsp;&nbsp;{json.name1}
   </h1>);
   const url = `https://www.google.co.uk/maps/place/${json.postcode}`;

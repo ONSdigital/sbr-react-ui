@@ -6,19 +6,18 @@ import 'react-table/react-table.css';
 import { connect } from 'react-redux';
 import { refSearch } from '../actions/ApiActions';
 
-const ChildrenTable = ({ dispatch, data, unitData, name, accessor }) => {
-  const columns = [
-    { Header: name, accessor},
-    { Header: 'View',
+const ChildList = ({ dispatch, data, unitData, name, accessor }) => {
+const columns = [
+    { Header: name,
       id: 'full',
       accessor: d =>
         (<span>
           <Button
-            bsStyle="primary"
+            bsStyle="link"
             loading={data.currentlySending}
             onClick={() => dispatch(refSearch(d[accessor]))}
           >
-          View
+          {d[accessor]}
           </Button>
         </span>),
     },
@@ -35,11 +34,12 @@ const ChildrenTable = ({ dispatch, data, unitData, name, accessor }) => {
       pageSizeOptions={[5, 10, 20, 25, 50, 100]}
       defaultPageSize={5}
       className="-striped -highlight"
+      width="50%"
     />
   );
 };
 
-ChildrenTable.propTypes = {
+ChildList.propTypes = {
   unitData: PropTypes.array.isRequired,
   data: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
@@ -53,4 +53,4 @@ function select(state) {
   };
 }
 
-export default connect(select)(ChildrenTable);
+export default connect(select)(ChildList);

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ButtonToolbar } from 'react-bootstrap';
+import { ButtonToolbar, Glyphicon } from 'react-bootstrap';
 import Button from 'react-bootstrap-button-loader';
 import { connect } from 'react-redux';
 import { refSearch } from '../actions/ApiActions';
@@ -24,14 +24,14 @@ const PanelToolbar = ({ dispatch, data, pageType, parents }) => {
     <Button bsStyle="primary" loading={data.currentlySending} onClick={goToParent}>Go to parent ({parentType})</Button>
   ) : (<div></div>);
   const goToEnterprise = (pageType === 'REF') ? (
-    <Button bsStyle="primary" loading={data.currentlySending} onClick={() => dispatch(refSearch(parents.ENT))}>Go to Enterprise</Button>
+    <Button bsStyle="primary" loading={data.currentlySending} onClick={() => dispatch(refSearch(parents.ENT))}><Glyphicon glyph="tower"/> Enterprise</Button>
   ) : (<div></div>);
   return (
     <ButtonToolbar>
-      <Button bsStyle="primary" loading={data.currentlySending}>Tree View</Button>
+      <Button bsStyle="primary" loading={data.currentlySending}><Glyphicon glyph="tree-deciduous"/> Tree</Button>
       {/* Provides extra visual weight and identifies the primary action in a set of buttons */}
-      {goToParentButton}
       {goToEnterprise}
+      {goToParentButton}
     </ButtonToolbar>
   );
 };

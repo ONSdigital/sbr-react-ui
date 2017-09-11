@@ -36,7 +36,7 @@ const VATPanel = function ({ vat }) {
     vatref: getValueByKey(vat.vars, 'vatref'),
   };
   const title = (<h1 style={{ fontSize: '30px' }}>
-    <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
+    <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="piggy-bank" />
     &nbsp;&nbsp;{json.name1}
   </h1>);
   const url = `https://www.google.co.uk/maps/place/${json.postcode}`;

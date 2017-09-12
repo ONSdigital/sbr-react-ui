@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel, Form, FormGroup, FormControl, ControlLabel, Glyphicon, Tabs, Tab, Grid, Row, Col } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
-import PanelToolbar from '../components/PanelToolbar';
 import { getValueByKey, getChildValues } from '../utils/helperMethods';
-import ChildList from '../components/ChildList';
+import ChildrenTable from '../components/ChildrenTable';
 import FormStaticValue from '../components/FormStaticValue';
 import FormStaticAddress from '../components/FormStaticAddress';
 
@@ -55,16 +54,16 @@ const EnterprisePanel = function ({ enterprise }) {
             <Col sm={4} xsOffset={2}>
               <Tabs defaultActiveKey="1" animation={false} id="children-tabs" bsStyle="pills">
                 <Tab eventKey="1" title="UBRN">
-                  <ChildList unitData={leuData} name={'UBRN'} accessor={'LEU'} />
+                  <ChildrenTable unitData={leuData} name={'UBRN'} accessor={'LEU'} />
                 </Tab>
                 <Tab eventKey="2" title="CRN">
-                  <ChildList unitData={chData} name={'CRN'} accessor={'CH'} />
+                  <ChildrenTable unitData={chData} name={'CRN'} accessor={'CH'} />
                 </Tab>
                 <Tab eventKey="3" title="PAYE">
-                  <ChildList unitData={payeData} name={'PAYE'} accessor={'PAYE'} />
+                  <ChildrenTable unitData={payeData} name={'PAYE'} accessor={'PAYE'} />
                 </Tab>
                 <Tab eventKey="4" title="VAT">
-                  <ChildList unitData={vatData} name={'VAT'} accessor={'VAT'} />
+                  <ChildrenTable unitData={vatData} name={'VAT'} accessor={'VAT'} />
                 </Tab>
               </Tabs>
             </Col>

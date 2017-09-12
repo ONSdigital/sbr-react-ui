@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, ListGroup, ListGroupItem, Table, Glyphicon } from 'react-bootstrap';
+import { Panel, Form, Glyphicon, Grid, Row, Col } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { getValueByKey } from '../utils/helperMethods';
 import PanelToolbar from '../components/PanelToolbar';
+import FormStaticValue from '../components/FormStaticValue';
+import FormStaticAddress from '../components/FormStaticAddress';
+import FormStaticThreePartValue from '../components/FormStaticThreePartValue';
 
 const VATPanel = function ({ vat }) {
   const json = {
@@ -35,57 +38,40 @@ const VATPanel = function ({ vat }) {
     turnover_date: getValueByKey(vat.vars, 'turnover_date'),
     vatref: getValueByKey(vat.vars, 'vatref'),
   };
-  const title = (<h1 style={{ fontSize: '30px' }}>
-    <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="piggy-bank" />
-    &nbsp;&nbsp;{json.name1}
-  </h1>);
-  const url = `https://www.google.co.uk/maps/place/${json.postcode}`;
-  const mapsLink = <a href={url} target="_blank">{json.postcode}</a>;
+  const title = (<h1><Glyphicon glyph="piggy-bank" />&nbsp;{json.name1} <small>{json.vatref}</small></h1>);
   return (
     <div>
       <div className="bootstrap-iso">
         <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
           <PanelToolbar parents={vat.parents} children={vat.children} pageType="REF" />
-          <ListGroup fill>
-            <ListGroupItem>
-              <Table striped bordered condensed hover>
-                <tbody>
-                  <tr><td><strong>Vatref</strong></td><td>{json.vatref}</td></tr>
-                  <tr><td><strong>Actiondate</strong></td><td>{json.actiondate}</td></tr>
-                  <tr><td><strong>Birthdate</strong></td><td>{json.birthdate}</td></tr>
-                  <tr><td><strong>Crn</strong></td><td>{json.crn}</td></tr>
-                  <tr><td><strong>Deathcode</strong></td><td>{json.deathcode}</td></tr>
-                  <tr><td><strong>Deathdate</strong></td><td>{json.deathdate}</td></tr>
-                  <tr><td><strong>Entref</strong></td><td>{json.entref}</td></tr>
-                  <tr><td><strong>Inqcode</strong></td><td>{json.inqcode}</td></tr>
-                  <tr><td><strong>Legalstatus</strong></td><td>{json.legalstatus}</td></tr>
-                  <tr><td><strong>Marker</strong></td><td>{json.marker}</td></tr>
-                  <tr><td><strong>name1</strong></td><td>{json.name1}</td></tr>
-                  <tr><td><strong>name2</strong></td><td>{json.name2}</td></tr>
-                  <tr><td><strong>name3</strong></td><td>{json.name3}</td></tr>
-                  <tr><td><strong>Record_type</strong></td><td>{json.record_type}</td></tr>
-                  <tr><td><strong>Sic92</strong></td><td>{json.sic92}</td></tr>
-                  <tr><td><strong>Tradstyle1</strong></td><td>{json.tradstyle1}</td></tr>
-                  <tr><td><strong>Tradstyle2</strong></td><td>{json.tradstyle2}</td></tr>
-                  <tr><td><strong>Tradstyle3</strong></td><td>{json.tradstyle3}</td></tr>
-                  <tr><td><strong>Turnover</strong></td><td>{json.turnover}</td></tr>
-                  <tr><td><strong>Turnover_date</strong></td><td>{json.turnover_date}</td></tr>
-                </tbody>
-              </Table>
-              <h4>Address</h4>
-              <Table striped bordered condensed hover>
-                <tbody>
-                  <tr><td><strong>Address1</strong></td><td>{json.address1}</td></tr>
-                  <tr><td><strong>Address2</strong></td><td>{json.address2}</td></tr>
-                  <tr><td><strong>Address3</strong></td><td>{json.address3}</td></tr>
-                  <tr><td><strong>Address4</strong></td><td>{json.address4}</td></tr>
-                  <tr><td><strong>Address5</strong></td><td>{json.address5}</td></tr>
-                  <tr><td><strong>Addressref</strong></td><td>{json.addressref}</td></tr>
-                  <tr><td><strong>Postcode</strong></td><td>{mapsLink}</td></tr>
-                </tbody>
-              </Table>
-            </ListGroupItem>
-          </ListGroup>
+          <Grid>
+            <Row className="show-grid">
+              <Form horizontal>
+                <Col sm={4}>
+                  <FormStaticAddress id="formAddress" label="Address" address1={json.address1} address2={json.address2} address3={json.address3} address4={json.address4} address5={json.address5} postcode={json.postcode} />
+                  <FormStaticThreePartValue id="formName" label="Name(s)" value1={json.name1} value2={json.name2} value3={json.name3} />
+                  <FormStaticThreePartValue id="formTradStyle" label="Trading Style(s)" value1={json.tradstyle1} value2={json.tradstyle2} value3={json.tradstyle3} />
+                </Col>
+                <Col sm={3}>
+                  <FormStaticValue id="formLegalStatus" label="Legal Status" value={json.legalstatus} />
+                  <FormStaticValue id="formEntRef" label="Ent. Ref." value={json.entref} />
+                  <FormStaticValue id="formCRN" label="CRN" value={json.crn} />
+                  <FormStaticValue id="formRecordType" label="Record Type" value={json.record_type} />
+                  <FormStaticValue id="formSic92" label="SIC (92)" value={json.sic92} />
+                  <FormStaticValue id="formTurnover" label="Turnover" value={json.turnover} />
+                  <FormStaticValue id="formTurnoverDate" label="Turnover Date" value={json.turnover_date} />
+                </Col>
+                <Col sm={3}>
+                  <FormStaticValue id="formInqCode" label="Inq. Code" value={json.inqcode} />
+                  <FormStaticValue id="formMarker" label="Marker" value={json.marker} />
+                  <FormStaticValue id="formActionDate" label="Action Date" value={json.actiondate} />
+                  <FormStaticValue id="formBirthDate" label="Birth Date" value={json.birthdate} />
+                  <FormStaticValue id="formDeathCode" label="Death Code" value={json.deathcode} />
+                  <FormStaticValue id="formDeathDate" label="Death Date" value={json.deathdate} />
+                </Col>
+              </Form>
+            </Row>
+          </Grid>
         </Panel>
       </div>
       <button className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" autoFocus onClick={() => browserHistory.push('/RefSearch')} bsStyle="info">

@@ -1,4 +1,4 @@
-import { SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE, SET_LEGAL_UNIT_RESULTS, SET_LEGAL_UNIT_HEADERS, SENDING_LEGAL_UNIT_REQUEST, SET_LEGAL_UNIT_QUERY, SET_LEGAL_UNIT_ERROR_MESSAGE } from '../constants/ApiConstants';
+import { SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE, SET_ENTERPRISE_RESULTS, SET_ENTERPRISE_HEADERS, SENDING_ENTERPRISE_REQUEST, SET_ENTERPRISE_QUERY, SET_ENTERPRISE_ERROR_MESSAGE, SET_LEGAL_UNIT_RESULTS, SET_LEGAL_UNIT_HEADERS, SENDING_LEGAL_UNIT_REQUEST, SET_LEGAL_UNIT_QUERY, SET_LEGAL_UNIT_ERROR_MESSAGE, SET_VAT_RESULTS, SET_VAT_HEADERS, SENDING_VAT_REQUEST, SET_VAT_QUERY, SET_VAT_ERROR_MESSAGE, SET_PAYE_RESULTS, SET_PAYE_HEADERS, SENDING_PAYE_REQUEST, SET_PAYE_QUERY, SET_PAYE_ERROR_MESSAGE, SET_CH_RESULTS, SET_CH_HEADERS, SENDING_CH_REQUEST, SET_CH_QUERY, SET_CH_ERROR_MESSAGE } from '../constants/ApiConstants';
 
 // Object.assign is not yet fully supported in all browsers, so we fallback to
 // a polyfill
@@ -13,7 +13,35 @@ const initialState = {
     currentlySending: false,
     errorMessage: '',
   },
+  enterprise: {
+    results: [],
+    headers: [],
+    query: '',
+    currentlySending: false,
+    errorMessage: '',
+  },
   legalUnit: {
+    results: [],
+    headers: [],
+    query: '',
+    currentlySending: false,
+    errorMessage: '',
+  },
+  vat: {
+    results: [],
+    headers: [],
+    query: '',
+    currentlySending: false,
+    errorMessage: '',
+  },
+  paye: {
+    results: [],
+    headers: [],
+    query: '',
+    currentlySending: false,
+    errorMessage: '',
+  },
+  ch: {
     results: [],
     headers: [],
     query: '',
@@ -33,11 +61,43 @@ function refReducer(state = initialState, action) {
           results: action.newState.results,
         },
       });
+    case SET_ENTERPRISE_RESULTS:
+      return assign({}, state, {
+        ...state,
+        enterprise: {
+          ...state.enterprise,
+          results: action.newState.results,
+        },
+      });
     case SET_LEGAL_UNIT_RESULTS:
       return assign({}, state, {
         ...state,
         legalUnit: {
           ...state.legalUnit,
+          results: action.newState.results,
+        },
+      });
+    case SET_VAT_RESULTS:
+      return assign({}, state, {
+        ...state,
+        vat: {
+          ...state.vat,
+          results: action.newState.results,
+        },
+      });
+    case SET_PAYE_RESULTS:
+      return assign({}, state, {
+        ...state,
+        paye: {
+          ...state.paye,
+          results: action.newState.results,
+        },
+      });
+    case SET_CH_RESULTS:
+      return assign({}, state, {
+        ...state,
+        ch: {
+          ...state.ch,
           results: action.newState.results,
         },
       });
@@ -49,11 +109,43 @@ function refReducer(state = initialState, action) {
           headers: action.newState.headers,
         },
       });
+    case SET_ENTERPRISE_HEADERS:
+      return assign({}, state, {
+        ...state,
+        enterprise: {
+          ...state.enterprise,
+          headers: action.newState.headers,
+        },
+      });
     case SET_LEGAL_UNIT_HEADERS:
       return assign({}, state, {
         ...state,
         legalUnit: {
           ...state.legalUnit,
+          headers: action.newState.headers,
+        },
+      });
+    case SET_VAT_HEADERS:
+      return assign({}, state, {
+        ...state,
+        vat: {
+          ...state.vat,
+          headers: action.newState.headers,
+        },
+      });
+    case SET_PAYE_HEADERS:
+      return assign({}, state, {
+        ...state,
+        paye: {
+          ...state.paye,
+          headers: action.newState.headers,
+        },
+      });
+    case SET_CH_HEADERS:
+      return assign({}, state, {
+        ...state,
+        ch: {
+          ...state.ch,
           headers: action.newState.headers,
         },
       });
@@ -65,11 +157,43 @@ function refReducer(state = initialState, action) {
           currentlySending: action.sending,
         },
       });
+    case SENDING_ENTERPRISE_REQUEST:
+      return assign({}, state, {
+        ...state,
+        enterprise: {
+          ...state.enterprise,
+          currentlySending: action.sending,
+        },
+      });
     case SENDING_LEGAL_UNIT_REQUEST:
       return assign({}, state, {
         ...state,
         legalUnit: {
           ...state.legalUnit,
+          currentlySending: action.sending,
+        },
+      });
+    case SENDING_VAT_REQUEST:
+      return assign({}, state, {
+        ...state,
+        vat: {
+          ...state.vat,
+          currentlySending: action.sending,
+        },
+      });
+    case SENDING_PAYE_REQUEST:
+      return assign({}, state, {
+        ...state,
+        paye: {
+          ...state.paye,
+          currentlySending: action.sending,
+        },
+      });
+    case SENDING_CH_REQUEST:
+      return assign({}, state, {
+        ...state,
+        ch: {
+          ...state.ch,
           currentlySending: action.sending,
         },
       });
@@ -81,11 +205,43 @@ function refReducer(state = initialState, action) {
           query: action.query,
         },
       });
+    case SET_ENTERPRISE_QUERY:
+      return assign({}, state, {
+        ...state,
+        enterprise: {
+          ...state.enterprise,
+          query: action.query,
+        },
+      });
     case SET_LEGAL_UNIT_QUERY:
       return assign({}, state, {
         ...state,
         legalUnit: {
           ...state.legalUnit,
+          query: action.query,
+        },
+      });
+    case SET_VAT_QUERY:
+      return assign({}, state, {
+        ...state,
+        vat: {
+          ...state.vat,
+          query: action.query,
+        },
+      });
+    case SET_PAYE_QUERY:
+      return assign({}, state, {
+        ...state,
+        paye: {
+          ...state.paye,
+          query: action.query,
+        },
+      });
+    case SET_CH_QUERY:
+      return assign({}, state, {
+        ...state,
+        ch: {
+          ...state.ch,
           query: action.query,
         },
       });
@@ -97,11 +253,43 @@ function refReducer(state = initialState, action) {
           errorMessage: action.message,
         },
       });
+    case SET_ENTERPRISE_ERROR_MESSAGE:
+      return assign({}, state, {
+        ...state,
+        enterprise: {
+          ...state.enterprise,
+          errorMessage: action.message,
+        },
+      });
     case SET_LEGAL_UNIT_ERROR_MESSAGE:
       return assign({}, state, {
         ...state,
         legalUnit: {
           ...state.legalUnit,
+          errorMessage: action.message,
+        },
+      });
+    case SET_PAYE_ERROR_MESSAGE:
+      return assign({}, state, {
+        ...state,
+        paye: {
+          ...state.paye,
+          errorMessage: action.message,
+        },
+      });
+    case SET_VAT_ERROR_MESSAGE:
+      return assign({}, state, {
+        ...state,
+        vat: {
+          ...state.vat,
+          errorMessage: action.message,
+        },
+      });
+    case SET_CH_ERROR_MESSAGE:
+      return assign({}, state, {
+        ...state,
+        ch: {
+          ...state.ch,
           errorMessage: action.message,
         },
       });

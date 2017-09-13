@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
 import { ButtonToolbar, Glyphicon } from 'react-bootstrap';
 import Button from 'react-bootstrap-button-loader';
 import { connect } from 'react-redux';
@@ -28,7 +29,8 @@ const PanelToolbar = ({ dispatch, data, pageType, parents }) => {
   ) : (<div></div>);
   return (
     <ButtonToolbar>
-      <Button bsStyle="primary" loading={data.currentlySending}><Glyphicon glyph="tree-deciduous"/> Tree</Button>
+      <Button bsStyle="primary" onClick={() => browserHistory.push('/TreeView1')} loading={data.currentlySending}><Glyphicon glyph="tree-deciduous"/> Tree 1</Button>
+      <Button bsStyle="primary" onClick={() => browserHistory.push('/TreeView2')} loading={data.currentlySending}><Glyphicon glyph="tree-deciduous"/> Tree 2</Button>
       {/* Provides extra visual weight and identifies the primary action in a set of buttons */}
       {goToEnterprise}
       {goToParentButton}

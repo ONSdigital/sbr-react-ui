@@ -6,6 +6,7 @@ import { getValueByKey, getChildValues } from '../utils/helperMethods';
 import ChildrenTable from '../components/ChildrenTable';
 import FormStaticValue from '../components/FormStaticValue';
 import FormStaticAddress from '../components/FormStaticAddress';
+import Button from 'react-bootstrap-button-loader';
 
 const EnterprisePanel = function ({ enterprise }) {
   const json = {
@@ -54,16 +55,16 @@ const EnterprisePanel = function ({ enterprise }) {
             <Col sm={4} xsOffset={2}>
               <Tabs defaultActiveKey="1" animation={false} id="children-tabs" bsStyle="pills">
                 <Tab eventKey="1" title="UBRN">
-                  <ChildrenTable unitData={leuData} name={'UBRN'} accessor={'LEU'} />
+                  <ChildrenTable unitData={leuData} name={'Universal Business Register No.'} accessor={'LEU'} />
                 </Tab>
                 <Tab eventKey="2" title="CRN">
-                  <ChildrenTable unitData={chData} name={'CRN'} accessor={'CH'} />
+                  <ChildrenTable unitData={chData} name={'Company Reference No.'} accessor={'CH'} />
                 </Tab>
                 <Tab eventKey="3" title="PAYE">
-                  <ChildrenTable unitData={payeData} name={'PAYE'} accessor={'PAYE'} />
+                  <ChildrenTable unitData={payeData} name={'PAYE Reference'} accessor={'PAYE'} />
                 </Tab>
                 <Tab eventKey="4" title="VAT">
-                  <ChildrenTable unitData={vatData} name={'VAT'} accessor={'VAT'} />
+                  <ChildrenTable unitData={vatData} name={'VAT Reference'} accessor={'VAT'} />
                 </Tab>
               </Tabs>
             </Col>

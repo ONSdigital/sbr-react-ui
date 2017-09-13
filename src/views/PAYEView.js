@@ -2,14 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PAYEPanel from '../components/PAYEPanel';
 import BreadCrumb from '../components/BreadCrumb';
-import { getValueByKey } from '../utils/helperMethods';
 
 const PAYEView = ({ routeParams, data }) => {
-  const name = getValueByKey(data[routeParams.index].vars, 'name1');
   const items = [
-    { name: 'Reference Search', link: '/RefSearch' },
+    { name: 'Enterprise', link: '' },
+    { name: `${data[routeParams.index].parents.ENT}`, link: `/enterprises/${data[routeParams.index].parents.ENT}` },
+    { name: 'Legal Unit', link: '' },
+    { name: `${data[routeParams.index].parents.LEU}`, link: `/legalunits/${data[routeParams.index].parents.LEU}` },
     { name: 'PAYE', link: '' },
-    { name: `${data[routeParams.index].id} [${name}]`, link: '' },
+    { name: `${data[routeParams.index].id}` , link: '' },
   ];
   return (
     <div>
@@ -32,7 +33,7 @@ const PAYEView = ({ routeParams, data }) => {
 };
 
 PAYEView.propTypes = {
-  data: React.PropTypes.object.isRequired,
+  data: React.PropTypes.array.isRequired,
   routeParams: React.PropTypes.object.isRequired,
 };
 

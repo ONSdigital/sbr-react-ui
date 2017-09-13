@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { browserHistory, Link } from 'react-router';
 import Loader from 'halogen/PulseLoader';
 import { logout } from '../actions/LoginActions';
+import Button from 'react-bootstrap-button-loader';
 
 const Header = function (props) {
   const spinner = (<Loader color="#FFFFFF" size="8px" margin="0px" />);
@@ -17,9 +18,9 @@ const Header = function (props) {
           <li className="secondary-nav__item">
             <Link className="secondary-nav__link  js-nav-clone__link" to="/TechnicalInformation">Information</Link>
           </li>
-          <button onClick={!props.currentlySending ? () => props.dispatch(logout()) : null} aria-label="Logout button" loading={props.currentlySending} type="submit" className="btn btn--primary btn--thin">
+          <Button onClick={!props.currentlySending ? () => props.dispatch(logout()) : null} aria-label="Logout button" loading={props.currentlySending} type="submit" className="btn btn--primary btn--thin">
             {buttonContent}
-          </button>
+          </Button>
         </ul>
       </div>);
   }

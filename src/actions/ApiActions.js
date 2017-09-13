@@ -16,17 +16,15 @@ export function refSearch(query) {
     apiSearch.getRef(query, (success, data) => {
       dispatch(sendingRequest(SENDING_REF_REQUEST, false));
       if (success) {
-        // dispatch(setResults(SET_REF_RESULTS, {
-        //   results: data.results,
-        // }));
+        dispatch(setResults(SET_REF_RESULTS, {
+          results: data.results,
+        }));
         dispatch(setResults(REFS[data.results[0].unitType].setResults, {
           results: data.results,
         }));
         dispatch(setHeaders(SET_REF_HEADERS, {
           headers: data.response,
         }));
-        console.log("data is")
-        console.log(REFS[data.results[0].unitType].setResults);
         if (data.results.length === 1) {
           const source = data.results[0].unitType;
           const destination = getDestination(source);

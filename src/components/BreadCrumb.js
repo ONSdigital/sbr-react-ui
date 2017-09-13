@@ -12,9 +12,7 @@ const BreadCrumb = ({ breadCrumbItems, title, description, marginBottom }) => {
       }
       return (<li key={obj.name} className="breadcrumb__item">
         <Link to={obj.link}>
-          <a className="breadcrumb__link">
             {obj.name}
-          </a>
         </Link>
       </li>);
     });
@@ -45,14 +43,12 @@ const BreadCrumb = ({ breadCrumbItems, title, description, marginBottom }) => {
   );
 };
 
+
 BreadCrumb.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  marginBottom: PropTypes.string.isRequired,
-  breadCrumbItems: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired,
-  }).isRequired,
+  marginBottom: PropTypes.number.isRequired,
+  breadCrumbItems: PropTypes.array.isRequired
 };
 
 export default BreadCrumb;

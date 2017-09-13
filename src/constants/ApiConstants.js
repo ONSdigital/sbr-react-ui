@@ -39,3 +39,46 @@ export const SET_CH_HEADERS = 'SET_CH_HEADERS';
 export const SENDING_CH_REQUEST = 'SENDING_CH_REQUEST';
 export const SET_CH_QUERY = 'SET_CH_QUERY';
 export const SET_CH_ERROR_MESSAGE = 'SET_CH_ERROR_MESSAGE';
+
+export const REFS = {
+  enterprise: {
+    url: 'ENT',
+    setResults: SET_ENTERPRISE_RESULTS,
+    setHeaders: SET_ENTERPRISE_HEADERS,
+    setSending: SENDING_ENTERPRISE_REQUEST,
+    setQuery: SET_ENTERPRISE_QUERY,
+    setError: SET_ENTERPRISE_ERROR_MESSAGE,
+  },
+  leu: {
+    url: 'LEU',
+    setResults: SET_LEGAL_UNIT_RESULTS,
+    setHeaders: SET_LEGAL_UNIT_HEADERS,
+    setSending: SENDING_LEGAL_UNIT_REQUEST,
+    setQuery: SET_LEGAL_UNIT_QUERY,
+    setError: SET_LEGAL_UNIT_ERROR_MESSAGE,
+  },
+  vat: {
+    url: 'VAT',
+    setResults: SET_VAT_RESULTS,
+    setHeaders: SET_VAT_HEADERS,
+    setSending: SENDING_VAT_REQUEST,
+    setQuery: SET_VAT_QUERY,
+    setError: SET_VAT_ERROR_MESSAGE,
+  },
+  paye: {
+    url: 'PAYE',
+    setResults: SET_PAYE_RESULTS,
+    setHeaders: SET_PAYE_HEADERS,
+    setSending: SENDING_PAYE_REQUEST,
+    setQuery: SET_PAYE_QUERY,
+    setError: SET_PAYE_ERROR_MESSAGE,
+  },
+  ch: {
+    url: 'CH',
+    setResults: SET_CH_RESULTS,
+    setHeaders: SET_CH_HEADERS,
+    setSending: SENDING_CH_REQUEST,
+    setQuery: SET_CH_QUERY,
+    setError: SET_CH_ERROR_MESSAGE,
+  },
+};

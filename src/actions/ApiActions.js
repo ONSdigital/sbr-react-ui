@@ -1,5 +1,5 @@
 import { browserHistory } from 'react-router';
-import { SET_CH_RESULTS, SET_CH_HEADERS, SENDING_CH_REQUEST, SET_CH_QUERY, SET_CH_ERROR_MESSAGE, SET_PAYE_RESULTS, SET_PAYE_HEADERS, SENDING_PAYE_REQUEST, SET_PAYE_QUERY, SET_PAYE_ERROR_MESSAGE, SET_VAT_RESULTS, SET_VAT_HEADERS, SENDING_VAT_REQUEST, SET_VAT_QUERY, SET_VAT_ERROR_MESSAGE, SET_ENTERPRISE_RESULTS, SET_ENTERPRISE_HEADERS, SENDING_ENTERPRISE_REQUEST, SET_ENTERPRISE_QUERY, SET_ENTERPRISE_ERROR_MESSAGE, SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE, SET_LEGAL_UNIT_RESULTS, SET_LEGAL_UNIT_HEADERS, SENDING_LEGAL_UNIT_REQUEST, SET_LEGAL_UNIT_QUERY, SET_LEGAL_UNIT_ERROR_MESSAGE } from '../constants/ApiConstants';
+import { REFS, SET_CH_RESULTS, SET_CH_HEADERS, SENDING_CH_REQUEST, SET_CH_QUERY, SET_CH_ERROR_MESSAGE, SET_PAYE_RESULTS, SET_PAYE_HEADERS, SENDING_PAYE_REQUEST, SET_PAYE_QUERY, SET_PAYE_ERROR_MESSAGE, SET_VAT_RESULTS, SET_VAT_HEADERS, SENDING_VAT_REQUEST, SET_VAT_QUERY, SET_VAT_ERROR_MESSAGE, SET_ENTERPRISE_RESULTS, SET_ENTERPRISE_HEADERS, SENDING_ENTERPRISE_REQUEST, SET_ENTERPRISE_QUERY, SET_ENTERPRISE_ERROR_MESSAGE, SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE, SET_LEGAL_UNIT_RESULTS, SET_LEGAL_UNIT_HEADERS, SENDING_LEGAL_UNIT_REQUEST, SET_LEGAL_UNIT_QUERY, SET_LEGAL_UNIT_ERROR_MESSAGE } from '../constants/ApiConstants';
 import apiSearch from '../utils/apiSearch';
 // import searchHistory from '../utils/searchHistory';
 import { getDestination } from '../utils/helperMethods';
@@ -38,65 +38,23 @@ export function refSearch(query) {
  * Get specific unit by id
  */
 export function getSpecificUnitType(unitType, id) {
-  const constants = {
-    enterprise: {
-      url: 'ENT',
-      setResults: SET_ENTERPRISE_RESULTS,
-      setHeaders: SET_ENTERPRISE_HEADERS,
-      setSending: SENDING_ENTERPRISE_REQUEST,
-      setQuery: SET_ENTERPRISE_QUERY,
-      setError: SET_ENTERPRISE_ERROR_MESSAGE,
-    },
-    leu: {
-      url: 'LEU',
-      setResults: SET_LEGAL_UNIT_RESULTS,
-      setHeaders: SET_LEGAL_UNIT_HEADERS,
-      setSending: SENDING_LEGAL_UNIT_REQUEST,
-      setQuery: SET_LEGAL_UNIT_QUERY,
-      setError: SET_LEGAL_UNIT_ERROR_MESSAGE,
-    },
-    vat: {
-      url: 'VAT',
-      setResults: SET_VAT_RESULTS,
-      setHeaders: SET_VAT_HEADERS,
-      setSending: SENDING_VAT_REQUEST,
-      setQuery: SET_VAT_QUERY,
-      setError: SET_VAT_ERROR_MESSAGE,
-    },
-    paye: {
-      url: 'PAYE',
-      setResults: SET_PAYE_RESULTS,
-      setHeaders: SET_PAYE_HEADERS,
-      setSending: SENDING_PAYE_REQUEST,
-      setQuery: SET_PAYE_QUERY,
-      setError: SET_PAYE_ERROR_MESSAGE,
-    },
-    ch: {
-      url: 'CH',
-      setResults: SET_CH_RESULTS,
-      setHeaders: SET_CH_HEADERS,
-      setSending: SENDING_CH_REQUEST,
-      setQuery: SET_CH_QUERY,
-      setError: SET_CH_ERROR_MESSAGE,
-    },
-  }
   return (dispatch) => {
-    dispatch(setErrorMessage(constants[unitType].setError, ''));
-    dispatch(sendingRequest(constants[unitType].setSending, true));
-    dispatch(setResults(constants[unitType].setResults, { results: [] }));
-    dispatch(setQuery(constants[unitType].setQuery, id));
-    apiSearch.getLegalUnitById(id, (success, data) => {
-      dispatch(sendingRequest(constants[unitType].setSending, false));
+    dispatch(setErrorMessage(REFS[unitType].setError, ''));
+    dispatch(sendingRequest(REFS[unitType].setSending, true));
+    dispatch(setResults(REFS[unitType].setResults, { results: [] }));
+    dispatch(setQuery(REFS[unitType].setQuery, id));
+    apiSearch.getSpecificRefById(REFS[unitType], id, (success, data) => {
+      dispatch(sendingRequest(REFS[unitType].setSending, false));
       if (success) {
-        dispatch(setResults(constants[unitType].setResults, {
+        dispatch(setResults(REFS[unitType].setResults, {
           results: [data.results],
         }));
-        dispatch(setHeaders(constants[unitType].setHeaders, {
+        dispatch(setHeaders(REFS[unitType].setHeaders, {
           headers: data.response,
         }));
-        browserHistory.push(`/RefSearch/${constants[unitType].url}/${id}/0`);
+        browserHistory.push(`/RefSearch/${REFS[unitType].url}/${id}/0`);
       } else {
-        dispatch(setErrorMessage(constants[unitType].setError, data.message));
+        dispatch(setErrorMessage(REFS[unitType].setError, data.message));
       }
     });
   };

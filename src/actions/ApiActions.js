@@ -28,7 +28,7 @@ export function refSearch(query) {
         if (data.results.length === 1) {
           const source = data.results[0].unitType;
           const destination = getDestination(source);
-          browserHistory.push(`/RefSearch/${destination}/${query}/0`);
+          browserHistory.push(`/${destination}/${query}/0`);
         }
       } else {
         dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message));
@@ -57,7 +57,7 @@ export function getSpecificUnitType(unitType, id) {
         dispatch(setHeaders(REFS[unitType].setHeaders, {
           headers: data.response,
         }));
-        browserHistory.push(`/RefSearch/${REFS[unitType].url}/${id}/0`);
+        browserHistory.push(`/${REFS[unitType].url}/${id}/0`);
       } else {
         dispatch(setErrorMessage(REFS[unitType].setError, data.message));
       }

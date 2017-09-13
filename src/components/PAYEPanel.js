@@ -9,6 +9,7 @@ import FormStaticValue from '../components/FormStaticValue';
 import FormStaticAddress from '../components/FormStaticAddress';
 import FormStaticThreePartValue from '../components/FormStaticThreePartValue';
 import FormStaticDatedValue from '../components/FormStaticDatedValue';
+import FormLink from '../components/FormLink';
 
 const PAYEPanel = function ({ paye }) {
   const json = {
@@ -51,6 +52,8 @@ const PAYEPanel = function ({ paye }) {
     deathcode: getValueByKey(paye.vars, 'deathcode'),
   };
   const title = (<h1><Glyphicon glyph="user" />&nbsp;{json.name1} <small>{json.payeref}</small></h1>);
+  const entLink = `/enterprises/${json.entref}`
+  const crnLink = `/companies/${json.crn}`
   return (
     <div>
       <div className="bootstrap-iso">
@@ -68,8 +71,8 @@ const PAYEPanel = function ({ paye }) {
                           <Col sm={3}>
                             <FormStaticValue id="formLegalStatus" label="Legal Status" value={json.legalstatus} />
                             <FormStaticValue id="formPreviousPaye" label="Previous PAYE" value={json.prevpaye} />
-                            <FormStaticValue id="formEntRef" label="Ent. Ref." value={json.entref} />
-                            <FormStaticValue id="formCRN" label="CRN" value={json.crn} />
+                            <FormLink id="formEntRef" label="Ent. Ref." value={json.entref} link={entLink} />
+                            <FormLink id="formCRN" label="CRN" value={json.crn} link={crnLink} />
                             <Table condensed hover>
                               <thead>
                                 <TableHeaderColumn colSpan='6'>Employees</TableHeaderColumn>

@@ -40,8 +40,8 @@ const VATPanel = function ({ vat }) {
     vatref: getValueByKey(vat.vars, 'vatref'),
   };
   const title = (<h1><Glyphicon glyph="piggy-bank" />&nbsp;{json.name1} <small>{json.vatref}</small></h1>);
-  const entLink = `/enterprises/${json.entref}`
-  const crnLink = `/companies/${json.crn}`
+  const entLink = `/Enterprises/${json.entref}/0`;
+  const crnLink = `/Companies/${json.crn}/0`;
   return (
     <div>
       <div className="bootstrap-iso">

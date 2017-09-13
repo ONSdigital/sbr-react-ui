@@ -18,22 +18,22 @@ export function getDestination(source: string) {
   let destination: string;
   switch (source) {
     case 'ENT':
-      destination = 'ENT';
+      destination = 'Enterprises';
       break;
     case 'LEU':
-      destination = 'LEU';
+      destination = 'LegalUnits';
       break;
     case 'VAT':
-      destination = 'VAT';
+      destination = 'Vats';
       break;
     case 'PAYE':
-      destination = 'PAYE';
+      destination = 'Payes';
       break;
     case 'CH':
-      destination = 'CH';
+      destination = 'Companies';
       break;
     default:
-      destination = 'ENT';
+      destination = 'Enterprises';
   }
   return destination;
 }

@@ -6,9 +6,9 @@ import BreadCrumb from '../components/BreadCrumb';
 const PAYEView = ({ routeParams, data }) => {
   const items = [
     { name: 'Enterprise', link: '' },
-    { name: `${data[routeParams.index].parents.ENT}`, link: `/ENT/${data[routeParams.index].parents.ENT}/0` },
+    { name: `${data[routeParams.index].parents.ENT}`, link: `/Enterprises/${data[routeParams.index].parents.ENT}/0` },
     { name: 'Legal Unit', link: '' },
-    { name: `${data[routeParams.index].parents.LEU}`, link: `/LEU/${data[routeParams.index].parents.LEU}/0` },
+    { name: `${data[routeParams.index].parents.LEU}`, link: `/LegalUnits/${data[routeParams.index].parents.LEU}/0` },
     { name: 'PAYE', link: '' },
     { name: `${data[routeParams.index].id}`, link: '' },
   ];

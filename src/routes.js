@@ -65,11 +65,11 @@ const Routes = () => (
         <Route onEnter={checkAuthentication} >
           <Route path={'/Home'} component={Home} />
           <Route path={'/RefSearch'} component={RefSearch} />
-          <Route path={'/ENT/:enterprise/:index'} component={EnterpriseView} />
-          <Route path={'/LEU/:legalUnit/:index'} component={LegalUnitView} />
-          <Route path={'/VAT/:vat/:index'} component={VATView} />
-          <Route path={'/PAYE/:paye/:index'} component={PAYEView} />
-          <Route path={'/CH/:company/:index'} component={CompanyView} />
+          <Route path={'/Enterprises/:enterprise/:index'} component={EnterpriseView} />
+          <Route path={'/LegalUnits/:legalUnit/:index'} component={LegalUnitView} />
+          <Route path={'/Vats/:vat/:index'} component={VATView} />
+          <Route path={'/Payes/:paye/:index'} component={PAYEView} />
+          <Route path={'/Companies/:company/:index'} component={CompanyView} />
           <Route path={'/SearchHistory'} component={SearchHistory} />
           <Route path={'/WhatIsSbr'} component={WhatIsSbr} />
           <Route path={'/Accessibility'} component={Accessibility} />

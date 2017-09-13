@@ -30,11 +30,11 @@ const apiSearch = {
     });
   },
   /**
-   * Gets legal unit from API.
+   * Gets unit from API.
    * @param  {Function} callback Called with returned data.
    */
-  getLegalUnitById(id: string, callback: (success: boolean, data: {}, response?: {}) => void) {
-    fetch(`${API_URL}/${API_VERSION}/leus/${id}`, {
+  getUnitById(type: string, id: string, callback: (success: boolean, data: {}, response?: {}) => void) {
+    fetch(`${API_URL}/${API_VERSION}/${type}/${id}`, {
       method: 'GET',
     }).then((response) => {
       if (response.status === 200) {

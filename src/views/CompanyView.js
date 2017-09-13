@@ -2,14 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import CompanyPanel from '../components/CompanyPanel';
 import BreadCrumb from '../components/BreadCrumb';
-import { getValueByKey } from '../utils/helperMethods';
 
 const CompanyView = ({ routeParams, data }) => {
-  const name = getValueByKey(data[routeParams.index].vars, 'companyname');
   const items = [
-    { name: 'Reference Search', link: '/RefSearch' },
-    { name: 'CH', link: '' },
-    { name: `${data[routeParams.index].id} [${name}]`, link: '' },
+    { name: 'Enterprise', link: '' },
+    { name: `${data[routeParams.index].parents.ENT}`, link: `/enterprises/${data[routeParams.index].parents.ENT}` },
+    { name: 'Legal Unit', link: '' },
+    { name: `${data[routeParams.index].parents.LEU}`, link: `/legalunits/${data[routeParams.index].parents.LEU}` },
+    { name: 'Company Registration', link: '' },
+    { name: `${data[routeParams.index].id}` , link: '' },
   ];
   return (
     <div>
@@ -32,7 +33,7 @@ const CompanyView = ({ routeParams, data }) => {
 };
 
 CompanyView.propTypes = {
-  data: React.PropTypes.object.isRequired,
+  data: React.PropTypes.array.isRequired,
   routeParams: React.PropTypes.object.isRequired,
 };
 

@@ -32,7 +32,7 @@ class NavBar extends React.Component {
               </li>
               <li className={this.getPrimary('/RefSearch')}>
                 <Link className="primary-nav__link col col--md-7 col--lg-9" to="/RefSearch">
-                    Ref Search
+                    Search
                 </Link>
               </li>
             </ul>
@@ -45,7 +45,7 @@ class NavBar extends React.Component {
 
 NavBar.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  primary: PropTypes.func.isRequired,
+  primary: PropTypes.string.isRequired,
 };
 
 // Which props do we want to inject, given the global state?

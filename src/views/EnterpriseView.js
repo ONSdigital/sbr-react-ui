@@ -38,7 +38,7 @@ EnterpriseView.propTypes = {
 
 function select(state) {
   return {
-    data: state.apiSearch.refSearch.results,
+    data: state.apiSearch.enterprise.results,
   };
 }
 

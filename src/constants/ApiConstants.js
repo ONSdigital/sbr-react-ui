@@ -41,7 +41,7 @@ export const SET_CH_QUERY = 'SET_CH_QUERY';
 export const SET_CH_ERROR_MESSAGE = 'SET_CH_ERROR_MESSAGE';
 
 export const REFS = {
-  enterprise: {
+  ENT: {
     url: 'ENT',
     setResults: SET_ENTERPRISE_RESULTS,
     setHeaders: SET_ENTERPRISE_HEADERS,
@@ -49,7 +49,7 @@ export const REFS = {
     setQuery: SET_ENTERPRISE_QUERY,
     setError: SET_ENTERPRISE_ERROR_MESSAGE,
   },
-  leu: {
+  LEU: {
     url: 'LEU',
     setResults: SET_LEGAL_UNIT_RESULTS,
     setHeaders: SET_LEGAL_UNIT_HEADERS,
@@ -57,7 +57,7 @@ export const REFS = {
     setQuery: SET_LEGAL_UNIT_QUERY,
     setError: SET_LEGAL_UNIT_ERROR_MESSAGE,
   },
-  vat: {
+  VAT: {
     url: 'VAT',
     setResults: SET_VAT_RESULTS,
     setHeaders: SET_VAT_HEADERS,
@@ -65,7 +65,7 @@ export const REFS = {
     setQuery: SET_VAT_QUERY,
     setError: SET_VAT_ERROR_MESSAGE,
   },
-  paye: {
+  PAYE: {
     url: 'PAYE',
     setResults: SET_PAYE_RESULTS,
     setHeaders: SET_PAYE_HEADERS,
@@ -73,7 +73,7 @@ export const REFS = {
     setQuery: SET_PAYE_QUERY,
     setError: SET_PAYE_ERROR_MESSAGE,
   },
-  ch: {
+  CH: {
     url: 'CH',
     setResults: SET_CH_RESULTS,
     setHeaders: SET_CH_HEADERS,

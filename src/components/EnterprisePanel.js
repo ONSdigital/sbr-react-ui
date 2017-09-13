@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Accordion, Panel, ListGroup, ListGroupItem, Table, Glyphicon } from 'react-bootstrap';
+import { Panel, Form, FormGroup, FormControl, ControlLabel, Glyphicon, Tabs, Tab, Grid, Row, Col } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
-import Button from 'react-bootstrap-button-loader';
-import PanelToolbar from '../components/PanelToolbar';
 import { getValueByKey, getChildValues } from '../utils/helperMethods';
 import ChildrenTable from '../components/ChildrenTable';
+import FormStaticValue from '../components/FormStaticValue';
+import FormStaticAddress from '../components/FormStaticAddress';
+import PanelToolbar from '../components/PanelToolbar';
 
 const EnterprisePanel = function ({ enterprise }) {
   const json = {
@@ -24,12 +25,7 @@ const EnterprisePanel = function ({ enterprise }) {
     Num_Unique_PayeRefs: getValueByKey(enterprise.vars, 'Num_Unique_PayeRefs'),
     ent_address4: getValueByKey(enterprise.vars, 'ent_address4'),
   };
-  const title = (<h1 style={{ fontSize: '30px' }}>
-    <Glyphicon style={{ fontSize: '28px', verticalAlign: 'middle', marginBottom: '2px' }} glyph="briefcase" />
-    &nbsp;&nbsp;{json.ent_name}
-  </h1>);
-  const url = `https://www.google.co.uk/maps/place/${json.ent_postcode}`;
-  const mapsLink = <a href={url} target="_blank">{json.ent_postcode}</a>;
+  const title = (<h1><Glyphicon glyph="tower" />&nbsp;{json.ent_name} <small>{json.entref}</small></h1>);
   const leuData = getChildValues(enterprise.children, 'LEU');
   const chData = getChildValues(enterprise.children, 'CH');
   const vatData = getChildValues(enterprise.children, 'VAT');
@@ -39,65 +35,42 @@ const EnterprisePanel = function ({ enterprise }) {
       <div className="bootstrap-iso">
         <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
           <PanelToolbar parents={enterprise.parents} children={enterprise.children} pageType="ENT" />
-          <ListGroup fill>
-            <ListGroupItem>
-              <Table striped bordered condensed hover>
-                <tbody>
-                  <tr><td><strong>Entref</strong></td><td>{json.entref}</td></tr>
-                  <tr><td><strong>Legalstatus</strong></td><td>{json.legalstatus}</td></tr>
-                  <tr><td><strong>Standard_vat_turnover</strong></td><td>{json.standard_vat_turnover}</td></tr>
-                  <tr><td><strong>PAYE_jobs</strong></td><td>{json.PAYE_jobs}</td></tr>
-                  <tr><td><strong>Employees</strong></td><td>{json.employees}</td></tr>
-                  <tr><td><strong>Num_Unique_VatRefs</strong></td><td>{json.Num_Unique_VatRefs}</td></tr>
-                  <tr><td><strong>Num_Unique_PayeRefs</strong></td><td>{json.Num_Unique_PayeRefs}</td></tr>
-                </tbody>
-              </Table>
-              <h4>Address</h4>
-              <Table striped bordered condensed hover>
-                <tbody>
-                  <tr>
-                    <td><strong>Line 1</strong></td>
-                    <td>{json.ent_address1}</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Line 2</strong></td>
-                    <td>{json.ent_address2}</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Line 3</strong></td>
-                    <td>{json.ent_address3}</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Town/City</strong></td>
-                    <td>{json.ent_address4}</td>
-                  </tr>
-                  <tr>
-                    <td><strong>County</strong></td>
-                    <td>{json.ent_address5}</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Post Code</strong></td>
-                    <td>{mapsLink}</td>
-                  </tr>
-                </tbody>
-              </Table>
-              <h3>Children</h3>
-              <Accordion>
-                <Panel className="bg-inverse" eventKey="1" collapsible defaultExpanded={false} header="Legal Units">
-                  <ChildrenTable unitData={leuData} name={'LEU'} accessor={'LEU'} />
-                </Panel>
-                <Panel className="bg-inverse" eventKey="2" collapsible defaultExpanded={false} header="Companies">
-                  <ChildrenTable unitData={chData} name={'CH'} accessor={'CH'} />
-                </Panel>
-                <Panel className="bg-inverse" eventKey="3" collapsible defaultExpanded={false} header="VATs">
-                  <ChildrenTable unitData={vatData} name={'VAT'} accessor={'VAT'} />
-                </Panel>
-                <Panel className="bg-inverse" eventKey="4" collapsible defaultExpanded={false} header="PAYEs">
+        <Grid>
+          <Row className="show-grid">
+            <Form horizontal>
+              <Col sm={3}>
+                <FormStaticAddress id="formAddress" label="Address" address1={json.ent_address1} address2={json.ent_address2} address3={json.ent_address3} address4={json.ent_address4} address5={json.ent_address5} postcode={json.ent_postcode} />
+                <FormGroup controlId="formLegalStatus">
+                  <Col componentClass={ControlLabel} sm={6}>
+                    Legal Status
+                  </Col>
+                  <Col sm={3}>
+                    <FormControl.Static bsClass="label" bsStyle="success">Active</FormControl.Static>
+                  </Col>
+                </FormGroup>
+                <FormStaticValue id="formEmployees" label="Employees" value={json.employees} />
+                <FormStaticValue id="formJobs" label="PAYE Jobs" value={json.PAYE_jobs} />
+                <FormStaticValue id="formStandardVATTurnover" label="Standard VAT turnover" value={json.standard_vat_turnover} />
+              </Col>
+            </Form>
+            <Col sm={4} xsOffset={2}>
+              <Tabs defaultActiveKey="1" animation={false} id="children-tabs" bsStyle="pills">
+                <Tab eventKey="1" title="UBRN">
+                  <ChildrenTable unitData={leuData} name={'UBRN'} accessor={'LEU'} />
+                </Tab>
+                <Tab eventKey="2" title="CRN">
+                  <ChildrenTable unitData={chData} name={'CRN'} accessor={'CH'} />
+                </Tab>
+                <Tab eventKey="3" title="PAYE">
                   <ChildrenTable unitData={payeData} name={'PAYE'} accessor={'PAYE'} />
-                </Panel>
-              </Accordion>
-            </ListGroupItem>
-          </ListGroup>
+                </Tab>
+                <Tab eventKey="4" title="VAT">
+                  <ChildrenTable unitData={vatData} name={'VAT'} accessor={'VAT'} />
+                </Tab>
+              </Tabs>
+            </Col>
+          </Row>
+        </Grid>
         </Panel>
       </div>
       <button className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" onClick={() => browserHistory.push('/RefSearch')}>

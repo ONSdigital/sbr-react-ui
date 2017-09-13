@@ -8,15 +8,15 @@ const EnterpriseView = ({ routeParams, data }) => {
   const name = getValueByKey(data[routeParams.index].vars, 'ent_name');
   const items = [
     { name: 'Reference Search', link: '/RefSearch' },
-    { name: 'ENT', link: '' },
-    { name: `${data[routeParams.index].id} [${name}]`, link: '' },
+    { name: 'Enterprise', link: '' },
+    { name: `${data[routeParams.index].id}`, link: '' },
   ];
   return (
     <div>
       <BreadCrumb
-        title="Enterprise View"
+        title=""
         description=""
-        marginBottom={1}
+        marginBottom="0"
         breadCrumbItems={items}
       />
       <div className="page-intro background--gallery">

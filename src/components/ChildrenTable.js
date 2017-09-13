@@ -7,21 +7,18 @@ import { connect } from 'react-redux';
 import { refSearch } from '../actions/ApiActions';
 
 const ChildrenTable = ({ dispatch, data, unitData, name, accessor }) => {
-  const columns = [
-    { Header: name, accessor, width: 250 },
-    { Header: 'Go to child',
+const columns = [
+    { Header: name,
       id: 'full',
       accessor: d =>
-        (<span>
-          <Button
-            bsStyle="primary"
-            style={{ width: '100%' }}
+        (<Button
+            bsStyle="link"
+            bsSize="xsmall"
             loading={data.currentlySending}
             onClick={() => dispatch(refSearch(d[accessor]))}
           >
-              Go to record [{d[accessor]}]
-          </Button>
-        </span>),
+          {d[accessor]}
+          </Button>),
     },
   ];
 
@@ -29,13 +26,13 @@ const ChildrenTable = ({ dispatch, data, unitData, name, accessor }) => {
     <ReactTable
       data={unitData}
       columns={columns}
-      showPagination
       showPaginationTop={false}
-      showPaginationBottom
-      showPageSizeOptions
-      pageSizeOptions={[5, 10, 20, 25, 50, 100]}
-      defaultPageSize={5}
-      className="-striped -highlight"
+      showPaginationBottom={false}
+      defaultPageSize={getPageSize(unitData.length)}
+      style={{
+        height: "400px" // This will force the table body to overflow and scroll, since there is not enough room
+      }}
+      className="-highlight"
     />
   );
 };
@@ -52,6 +49,13 @@ function select(state) {
   return {
     data: state.apiSearch.refSearch,
   };
+}
+
+function getPageSize(noOfItems) {
+  if (noOfItems < 10) {
+    return 10;
+  }
+  return noOfItems;
 }
 
 export default connect(select)(ChildrenTable);

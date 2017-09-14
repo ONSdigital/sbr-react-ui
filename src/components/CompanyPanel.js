@@ -6,6 +6,7 @@ import { browserHistory } from 'react-router';
 import { getValueByKey } from '../utils/helperMethods';
 import FormStaticValue from '../components/FormStaticValue';
 import FormStaticAddress from '../components/FormStaticAddress';
+import PanelTitle from '../components/PanelTitle';
 
 const CompanyPanel = function ({ company }) {
   const json = {
@@ -39,7 +40,7 @@ const CompanyPanel = function ({ company }) {
     companystatus: getValueByKey(company.vars, 'companystatus'),
     mortgages_nummortpartsatisfied: getValueByKey(company.vars, 'mortgages_nummortpartsatisfied'),
   };
-  const title = (<h1><Glyphicon glyph="list" />&nbsp;{json.companyname} <small>{json.companynumber}</small></h1>);
+  const title = (<PanelTitle name={json.companyname} id={json.companynumber} />);
   return (
     <div>
       <div className="bootstrap-iso">

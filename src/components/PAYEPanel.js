@@ -9,6 +9,7 @@ import FormStaticAddress from '../components/FormStaticAddress';
 import FormStaticThreePartValue from '../components/FormStaticThreePartValue';
 import FormStaticDatedValue from '../components/FormStaticDatedValue';
 import FormLink from '../components/FormLink';
+import PanelTitle from '../components/PanelTitle';
 
 const PAYEPanel = function ({ paye }) {
   const json = {
@@ -50,7 +51,7 @@ const PAYEPanel = function ({ paye }) {
     sept_jobs: getValueByKey(paye.vars, 'sept_jobs'),
     deathcode: getValueByKey(paye.vars, 'deathcode'),
   };
-  const title = (<h1><Glyphicon glyph="user" />&nbsp;{json.name1} <small>{json.payeref}</small></h1>);
+  const title = (<PanelTitle name={json.name1} id={json.payeref} />);
   const entLink = `/Enterprises/${json.entref}`;
   const crnLink = `/Companies/${json.crn}`;
   return (

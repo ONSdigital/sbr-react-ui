@@ -6,9 +6,10 @@ import { getChildValues } from '../utils/helperMethods';
 import ChildrenTable from '../components/ChildrenTable';
 import FormStaticValue from '../components/FormStaticValue';
 import FormStaticAddress from '../components/FormStaticAddress';
+import PanelTitle from '../components/PanelTitle';
 
 const LegalUnitPanel = function ({ legalUnit }) {
-  const title = (<h1><Glyphicon glyph="briefcase" />&nbsp;{legalUnit.vars.businessName} <small>{legalUnit.vars.id}</small></h1>);
+  const title = (<PanelTitle name={legalUnit.vars.businessName} id={legalUnit.vars.id} />);
   const chData = getChildValues(legalUnit.children, 'CH');
   const vatData = getChildValues(legalUnit.children, 'VAT');
   const payeData = getChildValues(legalUnit.children, 'PAYE');

@@ -7,6 +7,7 @@ import FormStaticValue from '../components/FormStaticValue';
 import FormStaticAddress from '../components/FormStaticAddress';
 import FormStaticThreePartValue from '../components/FormStaticThreePartValue';
 import FormLink from '../components/FormLink';
+import PanelTitle from '../components/PanelTitle';
 
 const VATPanel = function ({ vat }) {
   const json = {
@@ -38,7 +39,7 @@ const VATPanel = function ({ vat }) {
     turnover_date: getValueByKey(vat.vars, 'turnover_date'),
     vatref: getValueByKey(vat.vars, 'vatref'),
   };
-  const title = (<h1><Glyphicon glyph="piggy-bank" />&nbsp;{json.name1} <small>{json.vatref}</small></h1>);
+  const title = (<PanelTitle name={json.name1} id={json.vatref} />);
   const entLink = `/Enterprises/${json.entref}`;
   const crnLink = `/Companies/${json.crn}`;
   return (

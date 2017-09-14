@@ -6,6 +6,7 @@ import { getValueByKey, getChildValues } from '../utils/helperMethods';
 import ChildrenTable from '../components/ChildrenTable';
 import FormStaticValue from '../components/FormStaticValue';
 import FormStaticAddress from '../components/FormStaticAddress';
+import PanelTitle from '../components/PanelTitle';
 
 const EnterprisePanel = function ({ enterprise }) {
   const json = {
@@ -24,16 +25,7 @@ const EnterprisePanel = function ({ enterprise }) {
     Num_Unique_PayeRefs: getValueByKey(enterprise.vars, 'Num_Unique_PayeRefs'),
     ent_address4: getValueByKey(enterprise.vars, 'ent_address4'),
   };
-  const title = (<div style={{ height: '30px' }}>
-    <h3 style={{ marginTop: '0px', paddingBottom: '50px' }}>
-      <Glyphicon glyph="tower" />&nbsp;{json.ent_name} <small>{json.entref}</small>
-    </h3>
-    <ButtonToolbar className="pull-right" style={{ marginTop: '-92px' }}>
-      <Button bsStyle="primary" onClick={() => browserHistory.push('/TreeView1')}><Glyphicon glyph="tree-deciduous" />&nbsp;Tree 1</Button>
-      <Button bsStyle="primary" onClick={() => browserHistory.push('/TreeView2')}><Glyphicon glyph="tree-deciduous" />&nbsp;Tree 2</Button>
-      {/* Provides extra visual weight and identifies the primary action in a set of buttons */}
-    </ButtonToolbar>
-  </div>);
+  const title = (<PanelTitle name={json.ent_name} id={json.entref} />);
   const leuData = getChildValues(enterprise.children, 'LEU');
   const chData = getChildValues(enterprise.children, 'CH');
   const vatData = getChildValues(enterprise.children, 'VAT');

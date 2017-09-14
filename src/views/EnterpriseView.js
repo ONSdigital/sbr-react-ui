@@ -8,12 +8,12 @@ const EnterpriseView = ({ routeParams, data, dispatch }) => {
   // If there is not data in the store, or the correct id is not present,
   // send a request for the data.
   // (e.g. go straight to /Enterprises/:id and not going)
-  // if (data.length === 0 || data[routeParams.index].id === undefined) {
+  // if (data.length === 0 || data[0].id === undefined) {
   //   dispatch(getSpecificUnitType('ENT', routeParams.enterprise));
   // }
   const items = [
     { name: 'Enterprise', link: '', unitType: '' },
-    { name: `${data[routeParams.index].id}`, link: '', unitType: 'ENT' },
+    { name: `${data[0].id}`, link: '', unitType: 'ENT' },
   ];
   return (
     <div>
@@ -26,8 +26,8 @@ const EnterpriseView = ({ routeParams, data, dispatch }) => {
       <div className="page-intro background--gallery">
         <div className="wrapper">
           <EnterprisePanel
-            key={data[routeParams.index].id}
-            enterprise={data[routeParams.index]}
+            key={data[0].id}
+            enterprise={data[0]}
           />
         </div>
       </div>

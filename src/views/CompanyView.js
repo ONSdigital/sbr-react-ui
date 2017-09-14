@@ -6,11 +6,11 @@ import BreadCrumb from '../components/BreadCrumb';
 const CompanyView = ({ routeParams, data }) => {
   const items = [
     { name: 'Enterprise', link: '' },
-    { name: `${data[routeParams.index].parents.ENT}`, link: `/Enterprises/${data[routeParams.index].parents.ENT}/0`, unitType: 'ENT' },
+    { name: `${data[0].parents.ENT}`, link: `/Enterprises/${data[0].parents.ENT}/0`, unitType: 'ENT' },
     { name: 'Legal Unit', link: '' },
-    { name: `${data[routeParams.index].parents.LEU}`, link: `/LegalUnits/${data[routeParams.index].parents.LEU}/0`, unitType: 'LEU' },
+    { name: `${data[0].parents.LEU}`, link: `/LegalUnits/${data[0].parents.LEU}/0`, unitType: 'LEU' },
     { name: 'Company Registration', link: '' },
-    { name: `${data[routeParams.index].id}`, link: '' },
+    { name: `${data[0].id}`, link: '' },
   ];
   return (
     <div>
@@ -23,8 +23,8 @@ const CompanyView = ({ routeParams, data }) => {
       <div className="page-intro background--gallery">
         <div className="wrapper">
           <CompanyPanel
-            key={data[routeParams.index].id}
-            company={data[routeParams.index]}
+            key={data[0].id}
+            company={data[0]}
           />
         </div>
       </div>

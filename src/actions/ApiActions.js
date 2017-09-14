@@ -25,11 +25,11 @@ export function refSearch(query) {
         dispatch(setHeaders(SET_REF_HEADERS, {
           headers: data.response,
         }));
-        if (data.results.length === 1) {
+        // if (data.results.length === 1) {
           const source = data.results[0].unitType;
           const destination = getDestination(source);
-          browserHistory.push(`/${destination}/${query}/0`);
-        }
+          browserHistory.push(`/${destination}/${query}`);
+        // }
       } else {
         dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message));
       }
@@ -61,7 +61,7 @@ export function getSpecificUnitType(unitType, id, redirect = false) {
         // the search, we don't want to redirect them as they are already on
         // the correct page
         if (redirect) {
-          browserHistory.push(`/${REFS[unitType].url}/${id}/0`);
+          browserHistory.push(`/${REFS[unitType].url}/${id}`);
         }
       } else {
         dispatch(setErrorMessage(REFS[unitType].setError, data.message));

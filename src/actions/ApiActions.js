@@ -42,13 +42,13 @@ export function refSearch(query) {
  *
  * This is a generic method that can do a specific search for any REF type.
  */
-export function getSpecificUnitType(unitType, id) {
+export function getSpecificUnitType(unitType, id, redirect = false) {
   return (dispatch) => {
     dispatch(setErrorMessage(REFS[unitType].setError, ''));
     dispatch(sendingRequest(REFS[unitType].setSending, true));
     dispatch(setResults(REFS[unitType].setResults, { results: [] }));
     dispatch(setQuery(REFS[unitType].setQuery, id));
-    apiSearch.getSpecificRefById(REFS[unitType].url, id, (success, data) => {
+    apiSearch.getSpecificRefById(REFS[unitType].apiEndpoint, id, (success, data) => {
       dispatch(sendingRequest(REFS[unitType].setSending, false));
       if (success) {
         dispatch(setResults(REFS[unitType].setResults, {
@@ -57,7 +57,12 @@ export function getSpecificUnitType(unitType, id) {
         dispatch(setHeaders(REFS[unitType].setHeaders, {
           headers: data.response,
         }));
-        browserHistory.push(`/${REFS[unitType].url}/${id}/0`);
+        // If the user goes straight to /Enterprises/:id without going via
+        // the search, we don't want to redirect them as they are already on
+        // the correct page
+        if (redirect) {
+          browserHistory.push(`/${REFS[unitType].url}/${id}/0`);
+        }
       } else {
         dispatch(setErrorMessage(REFS[unitType].setError, data.message));
       }

@@ -1,7 +1,6 @@
 // @flow
 
 import config from '../config/api-urls';
-import { REFS } from '../constants/ApiConstants';
 
 const { API_URL, API_VERSION } = config;
 
@@ -35,7 +34,7 @@ const apiSearch = {
    * @param  {Function} callback Called with returned data.
    */
   getSpecificRefById(unitType: string, id: string, callback: (success: boolean, data: {}, response?: {}) => void) {
-    fetch(`${API_URL}/${API_VERSION}/${REFS[unitType].url.toLowerCase()}s/${id}`, {
+    fetch(`${API_URL}/${API_VERSION}/${unitType}/${id}`, {
       method: 'GET',
     }).then((response) => {
       if (response.status === 200) {

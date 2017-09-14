@@ -2,8 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import EnterprisePanel from '../components/EnterprisePanel';
 import BreadCrumb from '../components/BreadCrumb';
+import { getSpecificUnitType } from '../actions/ApiActions';
 
-const EnterpriseView = ({ routeParams, data }) => {
+const EnterpriseView = ({ routeParams, data, dispatch }) => {
+  // If there is not data in the store, or the correct id is not present,
+  // send a request for the data.
+  // (e.g. go straight to /Enterprises/:id and not going)
+  // if (data.length === 0 || data[routeParams.index].id === undefined) {
+  //   dispatch(getSpecificUnitType('ENT', routeParams.enterprise));
+  // }
   const items = [
     { name: 'Enterprise', link: '' },
     { name: `${data[routeParams.index].id}`, link: '' },
@@ -31,6 +38,7 @@ const EnterpriseView = ({ routeParams, data }) => {
 EnterpriseView.propTypes = {
   data: React.PropTypes.array.isRequired,
   routeParams: React.PropTypes.object.isRequired,
+  dispatch: React.PropTypes.func.isRequired,
 };
 
 function select(state) {

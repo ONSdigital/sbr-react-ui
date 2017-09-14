@@ -42,7 +42,8 @@ export const SET_CH_ERROR_MESSAGE = 'SET_CH_ERROR_MESSAGE';
 
 export const REFS = {
   ENT: {
-    url: 'ENT',
+    url: 'Enterprises',
+    apiEndpoint: 'ents',
     setResults: SET_ENTERPRISE_RESULTS,
     setHeaders: SET_ENTERPRISE_HEADERS,
     setSending: SENDING_ENTERPRISE_REQUEST,
@@ -50,7 +51,8 @@ export const REFS = {
     setError: SET_ENTERPRISE_ERROR_MESSAGE,
   },
   LEU: {
-    url: 'LEU',
+    url: 'LegalUnits',
+    apiEndpoint: 'leus',
     setResults: SET_LEGAL_UNIT_RESULTS,
     setHeaders: SET_LEGAL_UNIT_HEADERS,
     setSending: SENDING_LEGAL_UNIT_REQUEST,
@@ -58,7 +60,8 @@ export const REFS = {
     setError: SET_LEGAL_UNIT_ERROR_MESSAGE,
   },
   VAT: {
-    url: 'VAT',
+    url: 'Vats',
+    apiEndpoint: 'vats',
     setResults: SET_VAT_RESULTS,
     setHeaders: SET_VAT_HEADERS,
     setSending: SENDING_VAT_REQUEST,
@@ -66,7 +69,8 @@ export const REFS = {
     setError: SET_VAT_ERROR_MESSAGE,
   },
   PAYE: {
-    url: 'PAYE',
+    url: 'Payes',
+    apiEndpoint: 'payes',
     setResults: SET_PAYE_RESULTS,
     setHeaders: SET_PAYE_HEADERS,
     setSending: SENDING_PAYE_REQUEST,
@@ -74,7 +78,8 @@ export const REFS = {
     setError: SET_PAYE_ERROR_MESSAGE,
   },
   CH: {
-    url: 'CH',
+    url: 'Companies',
+    apiEndpoint: 'crns',
     setResults: SET_CH_RESULTS,
     setHeaders: SET_CH_HEADERS,
     setSending: SENDING_CH_REQUEST,

@@ -52,8 +52,8 @@ const PAYEPanel = function ({ paye }) {
     deathcode: getValueByKey(paye.vars, 'deathcode'),
   };
   const title = (<h1><Glyphicon glyph="user" />&nbsp;{json.name1} <small>{json.payeref}</small></h1>);
-  const entLink = `/Enterprises/${json.entref}/0`;
-  const crnLink = `/Companies/${json.crn}/0`;
+  const entLink = `/Enterprises/${json.entref}`;
+  const crnLink = `/Companies/${json.crn}`;
   return (
     <div>
       <div className="bootstrap-iso">
@@ -71,8 +71,8 @@ const PAYEPanel = function ({ paye }) {
                           <Col sm={3}>
                             <FormStaticValue id="formLegalStatus" label="Legal Status" value={json.legalstatus} />
                             <FormStaticValue id="formPreviousPaye" label="Previous PAYE" value={json.prevpaye} />
-                            <FormLink id="formEntRef" label="Ent. Ref." value={json.entref} link={entLink} />
-                            <FormLink id="formCRN" label="CRN" value={json.crn} link={crnLink} />
+                            <FormLink id="formEntRef" label="Ent. Ref." value={json.entref} unitType="ENT" />
+                            <FormLink id="formCRN" label="CRN" value={json.crn} unitType="CH" />
                             <Table condensed hover>
                               <thead>
                                 <TableHeaderColumn colSpan='6'>Employees</TableHeaderColumn>

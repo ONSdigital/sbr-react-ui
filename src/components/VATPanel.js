@@ -40,8 +40,8 @@ const VATPanel = function ({ vat }) {
     vatref: getValueByKey(vat.vars, 'vatref'),
   };
   const title = (<h1><Glyphicon glyph="piggy-bank" />&nbsp;{json.name1} <small>{json.vatref}</small></h1>);
-  const entLink = `/Enterprises/${json.entref}/0`;
-  const crnLink = `/Companies/${json.crn}/0`;
+  const entLink = `/Enterprises/${json.entref}`;
+  const crnLink = `/Companies/${json.crn}`;
   return (
     <div>
       <div className="bootstrap-iso">
@@ -57,8 +57,8 @@ const VATPanel = function ({ vat }) {
                 </Col>
                 <Col sm={3}>
                   <FormStaticValue id="formLegalStatus" label="Legal Status" value={json.legalstatus} />
-                  <FormLink id="formEntRef" label="Ent. Ref." value={json.entref} link={entLink} />
-                  <FormLink id="formCRN" label="CRN" value={json.crn} link={crnLink} />
+                  <FormLink id="formEntRef" label="Ent. Ref." value={json.entref} unitType="ENT" />
+                  <FormLink id="formCRN" label="CRN" value={json.crn} unitType="CH" />
                   <FormStaticValue id="formRecordType" label="Record Type" value={json.record_type} />
                   <FormStaticValue id="formSic92" label="SIC (92)" value={json.sic92} />
                   <FormStaticValue id="formTurnover" label="Turnover" value={json.turnover} />

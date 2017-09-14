@@ -66,7 +66,7 @@ class Search extends React.Component {
   }
   render() {
     const items = [
-      { name: 'Reference Search', link: '' },
+      { name: 'Search', link: '' },
     ];
     const results = (<SearchRefResultsTable results={this.props.data.results} />);
     const enterprises = (this.props.data.results.length > 1) ? results : <div></div>;
@@ -74,7 +74,7 @@ class Search extends React.Component {
       <div>
         <BreadCrumb
           title="Reference Search"
-          description="Search the Statistical Business Register on a reference (VAT/CH/UBRN)"
+          description="Search the Statistical Business Register for a reference (ERN/UBRN/VAT/CRN/PAYE)"
           marginBottom={1}
           breadCrumbItems={items}
         />
@@ -104,7 +104,7 @@ class Search extends React.Component {
 
 Search.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  data: React.PropTypes.shape.isRequired,
+  data: PropTypes.object.isRequired,
 };
 
 function select(state) {

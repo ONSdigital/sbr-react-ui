@@ -33,8 +33,8 @@ const apiSearch = {
    * Gets legal unit from API.
    * @param  {Function} callback Called with returned data.
    */
-  getLegalUnitById(id: string, callback: (success: boolean, data: {}, response?: {}) => void) {
-    fetch(`${API_URL}/${API_VERSION}/leus/${id}`, {
+  getSpecificRefById(unitType: string, id: string, callback: (success: boolean, data: {}, response?: {}) => void) {
+    fetch(`${API_URL}/${API_VERSION}/${unitType}/${id}`, {
       method: 'GET',
     }).then((response) => {
       if (response.status === 200) {

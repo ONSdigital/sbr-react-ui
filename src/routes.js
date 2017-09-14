@@ -67,11 +67,11 @@ const Routes = () => (
         <Route onEnter={checkAuthentication} >
           <Route path={'/Home'} component={Home} />
           <Route path={'/RefSearch'} component={RefSearch} />
-          <Route path={'/RefSearch/ENT/:enterprise/:index'} component={EnterpriseView} />
-          <Route path={'/RefSearch/LEU/:legalUnit/:index'} component={LegalUnitView} />
-          <Route path={'/RefSearch/VAT/:vat/:index'} component={VATView} />
-          <Route path={'/RefSearch/PAYE/:paye/:index'} component={PAYEView} />
-          <Route path={'/RefSearch/CH/:company/:index'} component={CompanyView} />
+          <Route path={'/Enterprises/:enterprise'} component={EnterpriseView} />
+          <Route path={'/LegalUnits/:legalUnit'} component={LegalUnitView} />
+          <Route path={'/Vats/:vat'} component={VATView} />
+          <Route path={'/Payes/:paye'} component={PAYEView} />
+          <Route path={'/Companies/:company'} component={CompanyView} />
           <Route path={'/SearchHistory'} component={SearchHistory} />
           <Route path={'/TreeView1'} component={TreeView1} />
           <Route path={'/TreeView2'} component={TreeView2} />

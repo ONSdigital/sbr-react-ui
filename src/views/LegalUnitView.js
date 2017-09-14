@@ -2,14 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import LegalUnitPanel from '../components/LegalUnitPanel';
 import BreadCrumb from '../components/BreadCrumb';
-import { getValueByKey } from '../utils/helperMethods';
 
 const LegalUnitView = ({ routeParams, data }) => {
-  const name = getValueByKey(data[routeParams.index].vars, 'businessName');
   const items = [
-    { name: 'Reference Search', link: '/RefSearch' },
-    { name: 'LEU', link: '' },
-    { name: `${data[routeParams.index].id} [${name}]`, link: '' },
+    { name: 'Enterprise', link: '' },
+    { name: `${data[0].parents.ENT}`, link: `/Enterprises/${data[0].parents.ENT}/0`, unitType: 'ENT' },
+    { name: 'Legal Unit', link: '' },
+    { name: `${data[0].id}`, link: '' },
   ];
   return (
     <div>
@@ -22,8 +21,8 @@ const LegalUnitView = ({ routeParams, data }) => {
       <div className="page-intro background--gallery">
         <div className="wrapper">
           <LegalUnitPanel
-            key={data[routeParams.index].id}
-            legalUnit={data[routeParams.index]}
+            key={data[0].id}
+            legalUnit={data[0]}
           />
         </div>
       </div>
@@ -32,13 +31,13 @@ const LegalUnitView = ({ routeParams, data }) => {
 };
 
 LegalUnitView.propTypes = {
-  data: React.PropTypes.object.isRequired,
+  data: React.PropTypes.array.isRequired,
   routeParams: React.PropTypes.object.isRequired,
 };
 
 function select(state) {
   return {
-    data: state.apiSearch.refSearch.results,
+    data: state.apiSearch.legalUnit.results,
   };
 }
 

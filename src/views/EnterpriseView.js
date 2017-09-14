@@ -12,8 +12,8 @@ const EnterpriseView = ({ routeParams, data, dispatch }) => {
   //   dispatch(getSpecificUnitType('ENT', routeParams.enterprise));
   // }
   const items = [
-    { name: 'Enterprise', link: '' },
-    { name: `${data[routeParams.index].id}`, link: '' },
+    { name: 'Enterprise', link: '', unitType: '' },
+    { name: `${data[routeParams.index].id}`, link: '', unitType: 'ENT' },
   ];
   return (
     <div>

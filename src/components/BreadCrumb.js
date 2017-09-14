@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { getSpecificUnitType } from '../actions/ApiActions';
 
-const BreadCrumb = ({ breadCrumbItems, title, description, marginBottom }) => {
+const BreadCrumb = ({ breadCrumbItems, title, description, marginBottom, dispatch }) => {
   function getBreadCrumbItems() {
     return breadCrumbItems.map((obj) => {
       if (obj.link === '') {
@@ -11,8 +13,8 @@ const BreadCrumb = ({ breadCrumbItems, title, description, marginBottom }) => {
         </li>);
       }
       return (<li key={obj.name} className="breadcrumb__item">
-        <Link to={obj.link}>
-            {obj.name}
+        <Link onClick={() => dispatch(getSpecificUnitType(obj.unitType, obj.name, true))} style={{ cursor: 'pointer' }}>
+          {obj.name}
         </Link>
       </li>);
     });
@@ -48,7 +50,14 @@ BreadCrumb.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   marginBottom: PropTypes.number.isRequired,
-  breadCrumbItems: PropTypes.array.isRequired
+  breadCrumbItems: PropTypes.array.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
-export default BreadCrumb;
+function select(state) {
+  return {
+    data: state.apiSearch.refSearch,
+  };
+}
+
+export default connect(select)(BreadCrumb);

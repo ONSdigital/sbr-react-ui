@@ -6,7 +6,7 @@ import BreadCrumb from '../components/BreadCrumb';
 const LegalUnitView = ({ routeParams, data }) => {
   const items = [
     { name: 'Enterprise', link: '' },
-    { name: `${data[routeParams.index].parents.ENT}`, link: `/Enterprises/${data[routeParams.index].parents.ENT}/0` },
+    { name: `${data[routeParams.index].parents.ENT}`, link: `/Enterprises/${data[routeParams.index].parents.ENT}/0`, unitType: 'ENT' },
     { name: 'Legal Unit', link: '' },
     { name: `${data[routeParams.index].id}`, link: '' },
   ];
@@ -31,7 +31,7 @@ const LegalUnitView = ({ routeParams, data }) => {
 };
 
 LegalUnitView.propTypes = {
-  data: React.PropTypes.object.isRequired,
+  data: React.PropTypes.array.isRequired,
   routeParams: React.PropTypes.object.isRequired,
 };
 

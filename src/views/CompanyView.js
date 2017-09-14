@@ -6,9 +6,9 @@ import BreadCrumb from '../components/BreadCrumb';
 const CompanyView = ({ routeParams, data }) => {
   const items = [
     { name: 'Enterprise', link: '' },
-    { name: `${data[routeParams.index].parents.ENT}`, link: `/Enterprises/${data[routeParams.index].parents.ENT}/0` },
+    { name: `${data[routeParams.index].parents.ENT}`, link: `/Enterprises/${data[routeParams.index].parents.ENT}/0`, unitType: 'ENT' },
     { name: 'Legal Unit', link: '' },
-    { name: `${data[routeParams.index].parents.LEU}`, link: `/LegalUnits/${data[routeParams.index].parents.LEU}/0` },
+    { name: `${data[routeParams.index].parents.LEU}`, link: `/LegalUnits/${data[routeParams.index].parents.LEU}/0`, unitType: 'LEU' },
     { name: 'Company Registration', link: '' },
     { name: `${data[routeParams.index].id}`, link: '' },
   ];

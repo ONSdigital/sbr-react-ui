@@ -28,9 +28,9 @@ const columns = [
       columns={columns}
       showPaginationTop={false}
       showPaginationBottom={false}
-      defaultPageSize={getPageSize(unitData.length)}
+      defaultPageSize={unitData.length}
       style={{
-        height: "400px" // This will force the table body to overflow and scroll, since there is not enough room
+        height: getHeight(unitData.length) // This will force the table body to overflow and scroll, since there is not enough room
       }}
       className="-highlight"
     />
@@ -51,11 +51,11 @@ function select(state) {
   };
 }
 
-function getPageSize(noOfItems) {
-  if (noOfItems < 10) {
-    return 10;
+function getHeight(noOfItems) {
+  if (noOfItems > 10) {
+    return "400px";
   }
-  return noOfItems;
+  return "100%";
 }
 
 export default connect(select)(ChildrenTable);

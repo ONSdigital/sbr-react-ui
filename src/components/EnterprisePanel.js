@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, Form, FormGroup, FormControl, ControlLabel, Glyphicon, Tabs, Tab, Grid, Row, Col } from 'react-bootstrap';
+import { Panel, Form, Glyphicon, Tabs, Tab, Grid, Row, Col } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { getValueByKey, getChildValues } from '../utils/helperMethods';
 import ChildrenTable from '../components/ChildrenTable';
@@ -38,14 +38,7 @@ const EnterprisePanel = function ({ enterprise }) {
             <Form horizontal>
               <Col sm={3}>
                 <FormStaticAddress id="formAddress" label="Address" address1={json.ent_address1} address2={json.ent_address2} address3={json.ent_address3} address4={json.ent_address4} address5={json.ent_address5} postcode={json.ent_postcode} />
-                <FormGroup controlId="formLegalStatus">
-                  <Col componentClass={ControlLabel} sm={6}>
-                    Legal Status
-                  </Col>
-                  <Col sm={3}>
-                    <FormControl.Static bsClass="label" bsStyle="success">Active</FormControl.Static>
-                  </Col>
-                </FormGroup>
+                <FormStaticValue id="formLegalStatus" label="Legal Status" value={getLegalStatusDescription(json.legalstatus)}/>
                 <FormStaticValue id="formEmployees" label="Employees" value={json.employees} />
                 <FormStaticValue id="formJobs" label="PAYE Jobs" value={json.PAYE_jobs} />
                 <FormStaticValue id="formStandardVATTurnover" label="Standard VAT turnover" value={json.standard_vat_turnover} />
@@ -54,16 +47,16 @@ const EnterprisePanel = function ({ enterprise }) {
             <Col sm={4} xsOffset={2}>
               <Tabs defaultActiveKey="1" animation={false} id="children-tabs" bsStyle="pills">
                 <Tab eventKey="1" title="UBRN">
-                  <ChildrenTable unitData={leuData} name={'UBRN'} accessor={'LEU'} />
+                  <ChildrenTable unitData={leuData} name={'Universal Business Register No.'} accessor={'LEU'} />
                 </Tab>
                 <Tab eventKey="2" title="CRN">
-                  <ChildrenTable unitData={chData} name={'CRN'} accessor={'CH'} />
+                  <ChildrenTable unitData={chData} name={'Company Reference No.'} accessor={'CH'} />
                 </Tab>
                 <Tab eventKey="3" title="PAYE">
-                  <ChildrenTable unitData={payeData} name={'PAYE'} accessor={'PAYE'} />
+                  <ChildrenTable unitData={payeData} name={'PAYE Reference'} accessor={'PAYE'} />
                 </Tab>
                 <Tab eventKey="4" title="VAT">
-                  <ChildrenTable unitData={vatData} name={'VAT'} accessor={'VAT'} />
+                  <ChildrenTable unitData={vatData} name={'VAT Reference'} accessor={'VAT'} />
                 </Tab>
               </Tabs>
             </Col>
@@ -77,6 +70,27 @@ const EnterprisePanel = function ({ enterprise }) {
     </div>
   );
 };
+
+ function getLegalStatusDescription(status) {
+    switch (status) {
+      case '1':
+        return "Company";
+      case '2':
+        return "Sole Proprietor";
+      case '3':
+        return "Partnership";
+      case '4':
+        return "Public Corporation";
+      case '5':
+        return "Central Government";
+      case '6':
+        return "Local Authority";
+      case '7':
+        return "Non-Profit Body";
+      default:
+        return "Not Allocated";
+    }
+  }
 
 EnterprisePanel.propTypes = {
   enterprise: PropTypes.object.isRequired,

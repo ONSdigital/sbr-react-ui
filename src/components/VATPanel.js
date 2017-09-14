@@ -7,6 +7,7 @@ import PanelToolbar from '../components/PanelToolbar';
 import FormStaticValue from '../components/FormStaticValue';
 import FormStaticAddress from '../components/FormStaticAddress';
 import FormStaticThreePartValue from '../components/FormStaticThreePartValue';
+import FormLink from '../components/FormLink';
 
 const VATPanel = function ({ vat }) {
   const json = {
@@ -39,6 +40,8 @@ const VATPanel = function ({ vat }) {
     vatref: getValueByKey(vat.vars, 'vatref'),
   };
   const title = (<h1><Glyphicon glyph="piggy-bank" />&nbsp;{json.name1} <small>{json.vatref}</small></h1>);
+  const entLink = `/Enterprises/${json.entref}`;
+  const crnLink = `/Companies/${json.crn}`;
   return (
     <div>
       <div className="bootstrap-iso">
@@ -54,8 +57,8 @@ const VATPanel = function ({ vat }) {
                 </Col>
                 <Col sm={3}>
                   <FormStaticValue id="formLegalStatus" label="Legal Status" value={json.legalstatus} />
-                  <FormStaticValue id="formEntRef" label="Ent. Ref." value={json.entref} />
-                  <FormStaticValue id="formCRN" label="CRN" value={json.crn} />
+                  <FormLink id="formEntRef" label="Ent. Ref." value={json.entref} unitType="ENT" />
+                  <FormLink id="formCRN" label="CRN" value={json.crn} unitType="CH" />
                   <FormStaticValue id="formRecordType" label="Record Type" value={json.record_type} />
                   <FormStaticValue id="formSic92" label="SIC (92)" value={json.sic92} />
                   <FormStaticValue id="formTurnover" label="Turnover" value={json.turnover} />

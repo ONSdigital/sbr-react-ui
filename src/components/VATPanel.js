@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Panel, Form, Glyphicon, Grid, Row, Col } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { getValueByKey } from '../utils/helperMethods';
-import PanelToolbar from '../components/PanelToolbar';
 import FormStaticValue from '../components/FormStaticValue';
 import FormStaticAddress from '../components/FormStaticAddress';
 import FormStaticThreePartValue from '../components/FormStaticThreePartValue';
@@ -46,7 +45,6 @@ const VATPanel = function ({ vat }) {
     <div>
       <div className="bootstrap-iso">
         <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
-          <PanelToolbar parents={vat.parents} children={vat.children} pageType="REF" />
           <Grid>
             <Row className="show-grid">
               <Form horizontal>

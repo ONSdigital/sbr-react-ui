@@ -4,7 +4,6 @@ import { Panel, Table, Form, FormGroup, FormControl, ControlLabel, Glyphicon, Gr
 import { TableHeaderColumn } from 'react-bootstrap-table';
 import { browserHistory } from 'react-router';
 import { getValueByKey } from '../utils/helperMethods';
-import PanelToolbar from '../components/PanelToolbar';
 import FormStaticValue from '../components/FormStaticValue';
 import FormStaticAddress from '../components/FormStaticAddress';
 
@@ -45,7 +44,6 @@ const CompanyPanel = function ({ company }) {
     <div>
       <div className="bootstrap-iso">
         <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
-          <PanelToolbar parents={company.parents} children={company.children} pageType="REF" />
           <Grid>
             <Form horizontal>
               <Row className="show-grid">

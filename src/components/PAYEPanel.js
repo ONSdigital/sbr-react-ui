@@ -4,7 +4,6 @@ import { Panel, Table, Form, Glyphicon, Grid, Row, Col } from 'react-bootstrap';
 import { TableHeaderColumn } from 'react-bootstrap-table';
 import { browserHistory } from 'react-router';
 import { getValueByKey } from '../utils/helperMethods';
-import PanelToolbar from '../components/PanelToolbar';
 import FormStaticValue from '../components/FormStaticValue';
 import FormStaticAddress from '../components/FormStaticAddress';
 import FormStaticThreePartValue from '../components/FormStaticThreePartValue';
@@ -58,7 +57,6 @@ const PAYEPanel = function ({ paye }) {
     <div>
       <div className="bootstrap-iso">
         <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
-          <PanelToolbar parents={paye.parents} children={paye.children} pageType="REF" />
                     <Grid>
                       <Row className="show-grid">
                         <Form horizontal>

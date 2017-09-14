@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel, Form, Glyphicon, Tabs, Tab, Grid, Row, Col } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
-import PanelToolbar from '../components/PanelToolbar';
 import { getChildValues } from '../utils/helperMethods';
 import ChildrenTable from '../components/ChildrenTable';
 import FormStaticValue from '../components/FormStaticValue';
@@ -17,7 +16,6 @@ const LegalUnitPanel = function ({ legalUnit }) {
     <div>
       <div className="bootstrap-iso">
         <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
-          <PanelToolbar parents={legalUnit.parents} children={legalUnit.children} pageType="LEU" />
             <Grid>
               <Row className="show-grid">
                 <Form horizontal>

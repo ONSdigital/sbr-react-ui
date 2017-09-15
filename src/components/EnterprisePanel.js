@@ -36,7 +36,7 @@ const EnterprisePanel = function ({ enterprise }) {
         <Grid>
           <Row className="show-grid">
             <Form horizontal>
-              <Col sm={3}>
+              <Col sm={4}>
                 <FormStaticAddress id="formAddress" label="Address" address1={json.ent_address1} address2={json.ent_address2} address3={json.ent_address3} address4={json.ent_address4} address5={json.ent_address5} postcode={json.ent_postcode} />
                 <FormStaticValue id="formLegalStatus" label="Legal Status" value={getLegalStatusDescription(json.legalstatus)}/>
                 <FormStaticValue id="formEmployees" label="Employees" value={json.employees} />
@@ -44,7 +44,7 @@ const EnterprisePanel = function ({ enterprise }) {
                 <FormStaticValue id="formStandardVATTurnover" label="Standard VAT turnover" value={json.standard_vat_turnover} />
               </Col>
             </Form>
-            <Col sm={4} xsOffset={2}>
+            <Col sm={4} xsOffset={1}>
               <Tabs defaultActiveKey="1" animation={false} id="children-tabs" bsStyle="pills">
                 <Tab eventKey="1" title="UBRN">
                   <ChildrenTable unitData={leuData} name={'Universal Business Register No.'} accessor={'LEU'} />

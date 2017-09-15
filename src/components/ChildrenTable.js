@@ -7,6 +7,11 @@ import { connect } from 'react-redux';
 import { getSpecificUnitType } from '../actions/ApiActions';
 
 const ChildrenTable = ({ dispatch, data, unitData, name, accessor }) => {
+  // Below is an attempt to get sorting working
+  // for (let x in unitData) {
+  //   unitData[x][accessor] = parseInt(unitData[x][accessor])
+  // }
+
   const columns = [
     {
       Header: name,
@@ -34,6 +39,12 @@ const ChildrenTable = ({ dispatch, data, unitData, name, accessor }) => {
         // This will force the table body to overflow and scroll, since there is not enough room
         height: getHeight(unitData.length),
       }}
+      defaultSorted={[
+        {
+          id: 'full',
+          desc: true,
+        },
+      ]}
       className="-highlight"
     />
   );

@@ -8,6 +8,7 @@ import SearchRefForm from '../components/SearchRefForm';
 import SearchRefResultsTable from '../components/SearchRefResultsTable';
 import { validateRefSearch } from '../utils/validation';
 import BreadCrumb from '../components/BreadCrumb';
+import TitleAndDescription from '../components/TitleAndDescription';
 
 class Search extends React.Component {
   constructor(props) {
@@ -72,11 +73,11 @@ class Search extends React.Component {
     const enterprises = (this.props.data.results.length > 1) ? results : <div></div>;
     return (
       <div>
-        <BreadCrumb
+        <BreadCrumb breadCrumbItems={items} />
+        <TitleAndDescription
+          marginBottom={1}
           title="Reference Search"
           description="Search the Statistical Business Register for a reference (ERN/UBRN/VAT/CRN/PAYE)"
-          marginBottom={1}
-          breadCrumbItems={items}
         />
         <div className="page-intro background--gallery">
           <div className="wrapper">

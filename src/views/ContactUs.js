@@ -1,5 +1,6 @@
 import React from 'react';
 import BreadCrumb from '../components/BreadCrumb';
+import TitleAndDescription from '../components/TitleAndDescription';
 
 const ContactUs = () => {
   const items = [
@@ -7,10 +8,11 @@ const ContactUs = () => {
   ];
   return (
     <div>
-      <BreadCrumb
+      <BreadCrumb breadCrumbItems={items} />
+      <TitleAndDescription
         title="Contact Us"
         description="Contact Us details etc."
-        breadCrumbItems={items}
+        marginBottom={1}
       />
     </div>
   );

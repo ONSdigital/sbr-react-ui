@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import LegalUnitPanel from '../components/LegalUnitPanel';
 import BreadCrumb from '../components/BreadCrumb';
+import TitleAndDescription from '../components/TitleAndDescription';
 
 const LegalUnitView = ({ routeParams, data }) => {
   const items = [
@@ -12,12 +13,7 @@ const LegalUnitView = ({ routeParams, data }) => {
   ];
   return (
     <div>
-      <BreadCrumb
-        title="Legal Unit View"
-        description=""
-        marginBottom={1}
-        breadCrumbItems={items}
-      />
+      <BreadCrumb breadCrumbItems={items} />
       <div className="page-intro background--gallery">
         <div className="wrapper">
           <LegalUnitPanel

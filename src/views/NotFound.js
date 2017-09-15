@@ -1,5 +1,6 @@
 import React from 'react';
 import BreadCrumb from '../components/BreadCrumb';
+import TitleAndDescription from '../components/TitleAndDescription';
 
 const NotFound = () => {
   const items = [
@@ -7,10 +8,11 @@ const NotFound = () => {
   ];
   return (
     <div>
-      <BreadCrumb
+      <BreadCrumb breadCrumbItems={items} />
+      <TitleAndDescription
         title="404 Not Found"
         description="Please navigate to a valid URL."
-        breadCrumbItems={items}
+        marginBottom={1}
       />
     </div>
   );

@@ -28,7 +28,7 @@ const PanelToolbar = ({ dispatch, data, pageType, parents }) => {
   ) : (<div></div>);
   return (
     <ButtonToolbar>
-      <Button bsStyle="primary" loading={data.currentlySending}><Glyphicon glyph="tree-deciduous" />&nbsp;Tree</Button>
+      {/* }<Button bsStyle="primary" loading={data.currentlySending}><Glyphicon glyph="tree-deciduous" />&nbsp;Tree</Button> */}
       {/* Provides extra visual weight and identifies the primary action in a set of buttons */}
     </ButtonToolbar>
   );

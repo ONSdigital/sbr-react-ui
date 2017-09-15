@@ -4,21 +4,27 @@ import ReactTable from 'react-table';
 import Button from 'react-bootstrap-button-loader';
 import 'react-table/react-table.css';
 import { connect } from 'react-redux';
-import { refSearch } from '../actions/ApiActions';
+import { getSpecificUnitType } from '../actions/ApiActions';
 
 const ChildrenTable = ({ dispatch, data, unitData, name, accessor }) => {
-const columns = [
-    { Header: name,
+  // Below is an attempt to get sorting working
+  // for (let x in unitData) {
+  //   unitData[x][accessor] = parseInt(unitData[x][accessor])
+  // }
+
+  const columns = [
+    {
+      Header: name,
       id: 'full',
       accessor: d =>
         (<Button
-            bsStyle="link"
-            bsSize="xsmall"
-            loading={data.currentlySending}
-            onClick={() => dispatch(refSearch(d[accessor]))}
-          >
+          bsStyle="link"
+          bsSize="xsmall"
+          loading={data.currentlySending}
+          onClick={() => dispatch(getSpecificUnitType(accessor, d[accessor], true))}
+        >
           {d[accessor]}
-          </Button>),
+        </Button>),
     },
   ];
 
@@ -30,8 +36,15 @@ const columns = [
       showPaginationBottom={false}
       defaultPageSize={unitData.length}
       style={{
-        height: getHeight(unitData.length) // This will force the table body to overflow and scroll, since there is not enough room
+        // This will force the table body to overflow and scroll, since there is not enough room
+        height: getHeight(unitData.length),
       }}
+      defaultSorted={[
+        {
+          id: 'full',
+          desc: true,
+        },
+      ]}
       className="-highlight"
     />
   );
@@ -53,9 +66,9 @@ function select(state) {
 
 function getHeight(noOfItems) {
   if (noOfItems > 10) {
-    return "400px";
+    return '400px';
   }
-  return "100%";
+  return '100%';
 }
 
 export default connect(select)(ChildrenTable);

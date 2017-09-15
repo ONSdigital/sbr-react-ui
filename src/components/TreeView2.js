@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import BreadCrumb from '../components/BreadCrumb';
 import { Button } from 'react-bootstrap';
@@ -33,21 +34,34 @@ class TreeView2 extends React.Component {
                 }]
           }]
     };
+
+    const json = {
+      name: `ENT - ${this.props.enterpriseId}`,
+      newId: this.props.enterpriseId,
+      type: 'ENT',
+      children: this.props.childrenJson,
+    };
+
     // Draw uses the draw method in resources/dndTree.js
     // This is imported in the index.html
-    draw(data);
+    draw(json);
   }
   componentDidMount() {
     this.drawGraph();
   }
   render() {
-    const items = [
-      { name: 'Tree View 2', link: '' },
-    ];
     return (
-      <div style={{ border: 'solid' }} id="tree-container"></div>
+      <div id="tree-container"> {/* className="rotate"> */}
+        {/* The SVG created by d3 will go here */}
+      </div>
     );
   }
 }
+
+TreeView2.propTypes = {
+  enterpriseId: PropTypes.string.isRequired,
+  childrenJson: PropTypes.array.isRequired,
+  unitType: PropTypes.string.isRequired,
+};
 
 export default TreeView2;

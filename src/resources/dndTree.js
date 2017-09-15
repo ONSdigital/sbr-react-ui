@@ -836,6 +836,8 @@ function draw(data){
     // Call visit function to establish maxLabelLength
     visit(treeData, function(d) {
         totalNodes++;
+        console.log('d is: ',d)
+        console.log('d.name: ',d.name)
         maxLabelLength = Math.max(d.name.length, maxLabelLength);
 
     }, function(d) {
@@ -938,6 +940,12 @@ function draw(data){
         .attr("height", viewerHeight)
         .attr("class", "overlay")
         .call(zoomListener);
+
+    // Below is to change the background colour
+    baseSvg.append("rect")
+      .attr("width", "100%")
+      .attr("height", "100%")
+      .attr("fill", "white");
 
 
     // Define the drag listeners for drag/drop behaviour of nodes.

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import BreadCrumb from '../components/BreadCrumb';
+import TitleAndDescription from '../components/TitleAndDescription';
 
 const TechnicalInformation = ({ username, role, uiVersion, apiVersion, uiLastUpdate, apiLastUpdate }) => {
   const items = [
@@ -9,11 +10,11 @@ const TechnicalInformation = ({ username, role, uiVersion, apiVersion, uiLastUpd
   return (
     <div>
       <div>
-        <BreadCrumb
+        <BreadCrumb breadCrumbItems={items} />
+        <TitleAndDescription
           title="Technical Information"
           description="Information regarding what versions are being used"
           marginBottom={1}
-          breadCrumbItems={items}
         />
       </div>
       <div className="page-content border-top--iron-sm border-top--iron-md">

@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import EnterprisePanel from '../components/EnterprisePanel';
 import BreadCrumb from '../components/BreadCrumb';
-import { getSpecificUnitType } from '../actions/ApiActions';
 import PanelContainer from '../components/PanelContainer';
 
 const EnterpriseView = ({ routeParams, data, dispatch }) => {

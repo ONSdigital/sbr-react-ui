@@ -62,16 +62,29 @@ class TreeView1 extends React.Component {
     return (
       <div>
         <div style={{ borderBottom: '2px solid', paddingBottom: '5px' }}>
-          <span className='label-text' style={{ fontSize: '20px', verticalAlign: 'top' }}>Toggle Collapsible &nbsp;&nbsp;</span>
+          <span className="label-text" style={{ fontSize: '20px', verticalAlign: 'top' }}>
+            Toggle Collapsible &nbsp;&nbsp;
+          </span>
           <Toggle
             collapsible={this.state.collapse}
             defaultChecked={false}
             onChange={this.handleToggle}
           />
-          <span className='label-text' style={{ fontSize: '16px', verticalAlign: 'top' }}>&nbsp;&nbsp;You can only go to a record when the collapsible toggle is off.</span>
+          <span
+            className="label-text"
+            style={{ fontSize: '16px', verticalAlign: 'top' }}
+          >
+            &nbsp;&nbsp;You can only go to a record when the collapsible toggle is off.
+          </span>
         </div>
         <div id="treeWrapper" style={{ width: '100%', height: '500px' }}>
-          <Tree data={json} collapsible={this.state.collapse} orientation={'vertical'} onClick={e => this.handleClick(e)} translate={translation} />
+          <Tree
+            data={json}
+            collapsible={this.state.collapse}
+            orientation={'vertical'}
+            onClick={e => this.handleClick(e)}
+            translate={translation}
+          />
         </div>
       </div>
     );

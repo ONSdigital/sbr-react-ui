@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import CompanyPanel from '../components/CompanyPanel';
 import BreadCrumb from '../components/BreadCrumb';
+import PanelContainer from '../components/PanelContainer';
 
-const CompanyView = ({ routeParams, data }) => {
+const CompanyView = ({ data }) => {
   const items = [
     { name: 'Enterprise', link: '' },
     { name: `${data[0].parents.ENT}`, link: `/Enterprises/${data[0].parents.ENT}/0`, unitType: 'ENT' },
@@ -22,10 +23,12 @@ const CompanyView = ({ routeParams, data }) => {
       />
       <div className="page-intro background--gallery">
         <div className="wrapper">
-          <CompanyPanel
-            key={data[0].id}
-            company={data[0]}
-          />
+          <PanelContainer>
+            <CompanyPanel
+              key={data[0].id}
+              company={data[0]}
+            />
+          </PanelContainer>
         </div>
       </div>
     </div>
@@ -34,7 +37,6 @@ const CompanyView = ({ routeParams, data }) => {
 
 CompanyView.propTypes = {
   data: React.PropTypes.array.isRequired,
-  routeParams: React.PropTypes.object.isRequired,
 };
 
 function select(state) {

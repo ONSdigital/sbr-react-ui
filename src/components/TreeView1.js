@@ -7,8 +7,6 @@ import Toggle from 'react-toggle';
 import { getSpecificUnitType } from '../actions/ApiActions';
 
 function findAndReplace(object, value, replacevalue) {
-  console.log(object)
-  console.log('find and replace')
   for (var x in object) {
     if (object.hasOwnProperty(x)) {
       if (typeof object[x] == 'object') {
@@ -32,6 +30,19 @@ class TreeView1 extends React.Component {
     };
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentDidMount() {
+    // Once the component has mounted, we search through all elements with the
+    // 'nodeBase' class and if we find the entryNodeId of the entry node in
+    // the innerHTML, we apply a fill colour.
+    const o = document.getElementsByClassName('nodeBase');
+    for (let m in o) {
+      const id = o[m].id;
+      if (o[m].innerHTML.indexOf(this.props.entryNodeId) !== -1) {
+        document.getElementById(id).style.fill = 'red';
+      }
+    }
   }
 
   handleClick(e) {
@@ -93,6 +104,7 @@ class TreeView1 extends React.Component {
 
 TreeView1.propTypes = {
   enterpriseId: PropTypes.string.isRequired,
+  entryNodeId: PropTypes.string.isRequired,
   childrenJson: PropTypes.array.isRequired,
   unitType: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,

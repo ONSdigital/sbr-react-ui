@@ -25,6 +25,7 @@ class EnterprisePanel extends React.Component {
       dataView = (
         <TreeView1
           unitType={'ENT'}
+          entryNodeId={this.props.enterprise.id}
           enterpriseId={this.props.enterprise.id}
           childrenJson={JSON.parse(JSON.stringify(this.props.enterprise.childrenJson))}
         />
@@ -33,6 +34,7 @@ class EnterprisePanel extends React.Component {
       dataView = (
         <TreeView2
           unitType={'ENT'}
+          entryNodeId={this.props.enterprise.id}
           enterpriseId={this.props.enterprise.id}
           childrenJson={JSON.parse(JSON.stringify(this.props.enterprise.childrenJson))}
         />

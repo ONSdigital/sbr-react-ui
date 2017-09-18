@@ -788,7 +788,7 @@ var data = {
 
 // Get JSON data
 //treeJSON = d3.json("flare.json", function(error, treeData) {
-function draw(data, entryNodeId, colour){
+function draw(data, entryNodeId, colour, moveX){
     var treeData = data;
     // Calculate total nodes, max label length
     var totalNodes = 0;
@@ -1033,7 +1033,7 @@ function draw(data, entryNodeId, colour){
         updateTempConnector();
         if (draggingNode !== null) {
             update(root);
-            centerNode(draggingNode);
+            centerNode(draggingNode, translateX);
             draggingNode = null;
         }
     }
@@ -1101,6 +1101,7 @@ function draw(data, entryNodeId, colour){
         y = -source.x0;
         x = x * scale + viewerWidth / 2;
         y = y * scale + viewerHeight / 2;
+        x = x - moveX;
         d3.select('g').transition()
             .duration(duration)
             .attr("transform", "translate(" + x + "," + y + ")scale(" + scale + ")");

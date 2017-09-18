@@ -15,6 +15,14 @@
     transform: rotate(90deg);
 }
 
+/* Change height of bootstrap tabs */
+.nav-tabs > li > a > p
+{
+    /* adjust padding for height*/
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
 /*body {
   padding-top: 20px;
   padding-bottom: 20px;

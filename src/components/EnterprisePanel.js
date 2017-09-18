@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, Form, Glyphicon, Tabs, Tab, Grid, Row, Col, ButtonToolbar, Button } from 'react-bootstrap';
+import { Panel, Form, Label, Tabs, Tab, Grid, Row, Col, ButtonToolbar, Button } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { getValueByKey, getChildValues } from '../utils/helperMethods';
 import ChildrenTable from '../components/ChildrenTable';
@@ -49,29 +49,30 @@ class EnterprisePanel extends React.Component {
       Num_Unique_PayeRefs: getValueByKey(enterprise.vars, 'Num_Unique_PayeRefs'),
       ent_address4: getValueByKey(enterprise.vars, 'ent_address4'),
     };
+    const formTitle = (name, count) => (<p>{name} <Label bsStyle="primary">{count}</Label></p>);
     return (<Grid>
       <Row className="show-grid">
         <Form horizontal>
           <Col sm={3}>
             <FormStaticAddress id="formAddress" label="Address" address1={json.ent_address1} address2={json.ent_address2} address3={json.ent_address3} address4={json.ent_address4} address5={json.ent_address5} postcode={json.ent_postcode} />
-            <FormStaticValue id="formLegalStatus" label="Legal Status" value={getLegalStatusDescription(json.legalstatus)}/>
+            <FormStaticValue id="formLegalStatus" label="Legal Status" value={getLegalStatusDescription(json.legalstatus)} />
             <FormStaticValue id="formEmployees" label="Employees" value={json.employees} />
             <FormStaticValue id="formJobs" label="PAYE Jobs" value={json.PAYE_jobs} />
             <FormStaticValue id="formStandardVATTurnover" label="Standard VAT turnover" value={json.standard_vat_turnover} />
           </Col>
         </Form>
-        <Col sm={4} xsOffset={2}>
-          <Tabs defaultActiveKey="1" animation={false} id="children-tabs" bsStyle="pills">
-            <Tab eventKey="1" title="UBRN">
+        <Col sm={5} xsOffset={1}>
+          <Tabs defaultActiveKey="1" animation={false} id="children-tabs" bsStyle="tabs">
+            <Tab disabled={leuData.length === 0} eventKey="1" title={formTitle('UBRN', leuData.length)}>
               <ChildrenTable unitData={leuData} name={'Universal Business Register No.'} accessor={'LEU'} />
             </Tab>
-            <Tab eventKey="2" title="CRN">
+            <Tab disabled={chData.length === 0} eventKey="2" title={formTitle('CRN', chData.length)}>
               <ChildrenTable unitData={chData} name={'Company Reference No.'} accessor={'CH'} />
             </Tab>
-            <Tab eventKey="3" title="PAYE">
+            <Tab disabled={payeData.length === 0} eventKey="3" title={formTitle('PAYE', payeData.length)}>
               <ChildrenTable unitData={payeData} name={'PAYE Reference'} accessor={'PAYE'} />
             </Tab>
-            <Tab eventKey="4" title="VAT">
+            <Tab disabled={vatData.length === 0} eventKey="4" title={formTitle('VAT', vatData.length)}>
               <ChildrenTable unitData={vatData} name={'VAT Reference'} accessor={'VAT'} />
             </Tab>
           </Tabs>

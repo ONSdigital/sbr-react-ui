@@ -5,20 +5,24 @@ import Button from 'react-bootstrap-button-loader';
 import 'react-table/react-table.css';
 import { connect } from 'react-redux';
 import { refSearch } from '../actions/ApiActions';
+import { getHeight } from '../utils/helperMethods';
 
 const ChildrenTable = ({ dispatch, data, unitData, name, accessor }) => {
-const columns = [
-    { Header: name,
+  const columns = [
+    {
+      Header: name,
       id: 'full',
       accessor: d =>
-        (<Button
+        (
+          <Button
             bsStyle="link"
             bsSize="xsmall"
             loading={data.currentlySending}
             onClick={() => dispatch(refSearch(d[accessor]))}
           >
-          {d[accessor]}
-          </Button>),
+            {d[accessor]}
+          </Button>
+        ),
     },
   ];
 
@@ -30,7 +34,8 @@ const columns = [
       showPaginationBottom={false}
       defaultPageSize={unitData.length}
       style={{
-        height: getHeight(unitData.length) // This will force the table body to overflow and scroll, since there is not enough room
+        // This will force the table body to overflow and scroll, since there is not enough room
+        height: getHeight(unitData.length),
       }}
       className="-highlight"
     />
@@ -49,13 +54,6 @@ function select(state) {
   return {
     data: state.apiSearch.refSearch,
   };
-}
-
-function getHeight(noOfItems) {
-  if (noOfItems > 10) {
-    return "400px";
-  }
-  return "100%";
 }
 
 export default connect(select)(ChildrenTable);

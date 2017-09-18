@@ -86,3 +86,10 @@ export function getLegalStatusDescription(status: string) {
       return 'Not Allocated';
   }
 }
+
+export function getHeight(noOfItems: number) {
+  if (noOfItems > 10) {
+    return '400px';
+  }
+  return '100%';
+}

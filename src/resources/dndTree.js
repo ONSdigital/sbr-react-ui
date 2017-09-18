@@ -788,7 +788,7 @@ var data = {
 
 // Get JSON data
 //treeJSON = d3.json("flare.json", function(error, treeData) {
-function draw(data){
+function draw(data, entryNodeId, colour){
     var treeData = data;
     // Calculate total nodes, max label length
     var totalNodes = 0;
@@ -836,8 +836,6 @@ function draw(data){
     // Call visit function to establish maxLabelLength
     visit(treeData, function(d) {
         totalNodes++;
-        console.log('d is: ',d)
-        console.log('d.name: ',d.name)
         maxLabelLength = Math.max(d.name.length, maxLabelLength);
 
     }, function(d) {
@@ -1179,6 +1177,7 @@ function draw(data){
             })
             .on('click', click);
 
+
         nodeEnter.append("circle")
             .attr('class', 'nodeCircle')
             .attr("r", 0)
@@ -1230,7 +1229,7 @@ function draw(data){
         node.select("circle.nodeCircle")
             .attr("r", 4.5)
             .style("fill", function(d) {
-                return d._children ? "lightsteelblue" : "#fff";
+                return (d.id == entryNodeId) ? colour : "#fff";
             });
 
         // Transition nodes to their new position.

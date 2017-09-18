@@ -7,8 +7,6 @@ import { Button } from 'react-bootstrap';
 // http://bl.ocks.org/robschmuecker/7880033
 
 function findAndReplace(object, value, replacevalue) {
-  console.log(object)
-  console.log('find and replace')
   for (var x in object) {
     if (object.hasOwnProperty(x)) {
       if (typeof object[x] == 'object') {
@@ -58,13 +56,14 @@ class TreeView2 extends React.Component {
     const json = {
       name: `ENT - ${this.props.enterpriseId}`,
       newId: this.props.enterpriseId,
+      id: this.props.enterpriseId,
       type: 'ENT',
       children: this.props.childrenJson,
     };
 
     // Draw uses the draw method in resources/dndTree.js
     // This is imported in the index.html
-    draw(json);
+    draw(json, this.props.entryNodeId, "red");
   }
   componentDidMount() {
     this.drawGraph();
@@ -80,8 +79,8 @@ class TreeView2 extends React.Component {
 
 TreeView2.propTypes = {
   enterpriseId: PropTypes.string.isRequired,
+  entryNodeId: PropTypes.string.isRequired,
   childrenJson: PropTypes.array.isRequired,
-  unitType: PropTypes.string.isRequired,
 };
 
 export default TreeView2;

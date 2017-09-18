@@ -106,7 +106,6 @@ TreeView1.propTypes = {
   enterpriseId: PropTypes.string.isRequired,
   entryNodeId: PropTypes.string.isRequired,
   childrenJson: PropTypes.array.isRequired,
-  unitType: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel, Form, Label, Tabs, Tab, Grid, Row, Col, ButtonToolbar, Button } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
-import { getValueByKey, getChildValues } from '../utils/helperMethods';
+import { getValueByKey, getChildValues, getLegalStatusDescription } from '../utils/helperMethods';
 import ChildrenTable from '../components/ChildrenTable';
 import FormStaticValue from '../components/FormStaticValue';
 import FormStaticAddress from '../components/FormStaticAddress';
@@ -127,27 +127,6 @@ class EnterprisePanel extends React.Component {
         </button>
       </div>
     );
-  }
-}
-
-function getLegalStatusDescription(status) {
-  switch (status) {
-    case '1':
-      return 'Company';
-    case '2':
-      return 'Sole Proprietor';
-    case '3':
-      return 'Partnership';
-    case '4':
-      return 'Public Corporation';
-    case '5':
-      return 'Central Government';
-    case '6':
-      return 'Local Authority';
-    case '7':
-      return 'Non-Profit Body';
-    default:
-      return 'Not Allocated';
   }
 }
 

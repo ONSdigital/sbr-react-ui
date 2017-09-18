@@ -6,6 +6,24 @@ import { Button } from 'react-bootstrap';
 
 // http://bl.ocks.org/robschmuecker/7880033
 
+function findAndReplace(object, value, replacevalue) {
+  console.log(object)
+  console.log('find and replace')
+  for (var x in object) {
+    if (object.hasOwnProperty(x)) {
+      if (typeof object[x] == 'object') {
+        findAndReplace(object[x], value, replacevalue);
+      }
+      if (object[value]) {
+        object[replacevalue] = object[value] + ' ' + object['id'];
+        // id gets overwritten by react-d3-tree, so use newId instead
+        object['newId'] = object['id'];
+        //delete object[value];
+      }
+    }
+  }
+}
+
 class TreeView2 extends React.Component {
   constructor(props) {
     super(props);
@@ -34,6 +52,8 @@ class TreeView2 extends React.Component {
                 }]
           }]
     };
+
+    findAndReplace(this.props.childrenJson, 'type', 'name');
 
     const json = {
       name: `ENT - ${this.props.enterpriseId}`,

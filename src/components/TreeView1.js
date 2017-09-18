@@ -7,6 +7,8 @@ import Toggle from 'react-toggle';
 import { getSpecificUnitType } from '../actions/ApiActions';
 
 function findAndReplace(object, value, replacevalue) {
+  console.log(object)
+  console.log('find and replace')
   for (var x in object) {
     if (object.hasOwnProperty(x)) {
       if (typeof object[x] == 'object') {

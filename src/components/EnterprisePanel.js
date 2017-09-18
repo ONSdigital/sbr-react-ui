@@ -86,10 +86,10 @@ class EnterprisePanel extends React.Component {
       return this.getPanelContent();
     } else if (this.state.showTreeView === 1) {
       console.log(1)
-      return <TreeView1 unitType={'ENT'} enterpriseId={this.props.enterprise.id} childrenJson={this.props.enterprise.childrenJson} />;
+      return <TreeView1 unitType={'ENT'} enterpriseId={this.props.enterprise.id} childrenJson={JSON.parse(JSON.stringify(this.props.enterprise.childrenJson))} />;
     } else if (this.state.showTreeView === 2) {
       console.log(2)
-      return <TreeView2 unitType={'ENT'} enterpriseId={this.props.enterprise.id} childrenJson={this.props.enterprise.childrenJson} />;
+      return <TreeView2 unitType={'ENT'} enterpriseId={this.props.enterprise.id} childrenJson={JSON.parse(JSON.stringify(this.props.enterprise.childrenJson))} />;
     }
   }
   render() {

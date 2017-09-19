@@ -110,10 +110,16 @@ export function findAndReplace(object: {}, value: string, replacevalue: string) 
   }
 }
 
-export function colourNode(node, id, index, searchTerm, colour) {
+export function colourNode(node, id, index, searchTerm, colour, entryNode) {
   try {
     if (node[index].innerHTML.indexOf(searchTerm) !== -1) {
       document.getElementById(id).style.fill = colour;
+      if (entryNode) {
+        // On the entry node, increase the size of the circle and move
+        // the text out of the way of the circle
+        document.getElementById(id).childNodes[1].r.baseVal.value = 20;
+        document.getElementById(id).childNodes[0].x.baseVal[0].value = 25;
+      }
     }
   } catch (e) {
     // e

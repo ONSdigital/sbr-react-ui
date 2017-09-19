@@ -40,20 +40,20 @@ class TreeView1 extends React.Component {
 
     for (let m = 0; m < nodeBase.length; m += 1) {
       const id = nodeBase[m].id;
-      colourNode(nodeBase, id, m, 'ENT', colours.ENT);
-      colourNode(nodeBase, id, m, 'LEU', colours.LEU);
+      colourNode(nodeBase, id, m, 'ENT', colours.ENT, false);
+      colourNode(nodeBase, id, m, 'LEU', colours.LEU, false);
       if (this.props.unitType === 'ENT' || this.props.unitType === 'LEU') {
-        colourNode(nodeBase, id, m, this.props.entryNodeId, colours.ENTRY_NODE);
+        colourNode(nodeBase, id, m, this.props.entryNodeId, colours.ENTRY_NODE, true);
       }
     }
 
     for (let i = 0; i < leafNodeBase.length; i += 1) {
       const id = leafNodeBase[i].id;
-      colourNode(leafNodeBase, id, i, 'VAT', colours.VAT);
-      colourNode(leafNodeBase, id, i, 'PAYE', colours.PAYE);
-      colourNode(leafNodeBase, id, i, 'CH', colours.CRN);
+      colourNode(leafNodeBase, id, i, 'VAT', colours.VAT, false);
+      colourNode(leafNodeBase, id, i, 'PAYE', colours.PAYE, false);
+      colourNode(leafNodeBase, id, i, 'CH', colours.CRN, false);
       if (this.props.unitType !== 'ENT' || this.props.unitType !== 'LEU') {
-        colourNode(leafNodeBase, id, i, this.props.entryNodeId, colours.ENTRY_NODE);
+        colourNode(leafNodeBase, id, i, this.props.entryNodeId, colours.ENTRY_NODE, true);
       }
     }
   }
@@ -135,6 +135,7 @@ class TreeView1 extends React.Component {
         </div>
         <div id="treeWrapper" style={{ width: '100%', height: '500px' }}>
           <Tree
+            separation={{ siblings: 1.25, nonSiblings: 2 }}
             data={json}
             collapsible={!this.state.ctrlKeyPress}
             orientation={'vertical'}

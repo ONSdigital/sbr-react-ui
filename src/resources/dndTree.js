@@ -787,7 +787,7 @@ var data = {
 // http://bl.ocks.org/robschmuecker/7880033
 
 // Get JSON data
-function draw(data, entryNodeId, colour, moveX){
+function draw(data, entryNodeId, colour, moveX, colourObject){
     var treeData = data;
 
     // Calculate total nodes, max label length
@@ -1121,7 +1121,6 @@ function draw(data, entryNodeId, colour, moveX){
 
     // Toggle children on click.
     function click(d) {
-        console.log('click, d: ',d)
         if (d3.event.defaultPrevented) return; // click suppressed
         d = toggleChildren(d);
         update(d);
@@ -1224,10 +1223,32 @@ function draw(data, entryNodeId, colour, moveX){
             });
 
         // Change the circle fill depending on whether it has children and is collapsed
+        // Fill the entry node and all other nodes
         node.select("circle.nodeCircle")
             .attr("r", 4.5)
             .style("fill", function(d) {
-                return (d.id == entryNodeId) ? colour : "#fff";
+                // colourObject
+                if (d.id === entryNodeId) {
+                    return colour;
+                } else {
+                    switch (d.type) {
+                        case 'ENT':
+                            return colourObject.ENT;
+                            break;
+                        case 'LEU':
+                            return colourObject.LEU;
+                            break;
+                        case 'PAYE':
+                            return colourObject.PAYE;
+                            break;
+                        case 'VAT':
+                            return colourObject.VAT;
+                            break;
+                        case 'CH':
+                            return colourObject.CRN;
+                            break;
+                    }
+                }
             });
 
         // Transition nodes to their new position.

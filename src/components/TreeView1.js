@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
-import { Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
+import { Button, ButtonToolbar, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { saveSvgAsPng } from 'save-svg-as-png';
 import Tree from 'react-d3-tree';
 import Toggle from 'react-toggle';
 import { getSpecificUnitType } from '../actions/ApiActions';
-import { findAndReplace } from '../utils/helperMethods';
-import { saveSvgAsPng } from 'save-svg-as-png';
+import { findAndReplace, colourNode } from '../utils/helperMethods';
+import colours from '../config/colours';
 
 class TreeView1 extends React.Component {
   constructor(props) {
@@ -30,19 +31,26 @@ class TreeView1 extends React.Component {
     // Once the component has mounted, we search through all elements with the
     // 'nodeBase' & 'nodeBaseLead' classes and if we find the entryNodeId of the 
     // entry node in the innerHTML, we apply a fill colour.
-    let classToSearch = '';
-    if (this.props.unitType === 'ENT' || this.props.unitType === 'LEU') {
-      classToSearch = 'nodeBase';
-    } else {
-      classToSearch = 'leafNodeBase';
+
+    const nodeBase = document.getElementsByClassName('nodeBase');
+    const leafNodeBase = document.getElementsByClassName('leafNodeBase');
+
+    for (let m = 0; m < nodeBase.length; m += 1) {
+      const id = nodeBase[m].id;
+      colourNode(nodeBase, id, m, 'ENT', colours.ENT);
+      colourNode(nodeBase, id, m, 'LEU', colours.LEU);
+      if (this.props.unitType === 'ENT' || this.props.unitType === 'LEU') {
+        colourNode(nodeBase, id, m, this.props.entryNodeId, colours.ENTRY_NODE);
+      }
     }
 
-    const o = document.getElementsByClassName(classToSearch);
-
-    for (let m in o) {
-      const id = o[m].id;
-      if (o[m].innerHTML.indexOf(this.props.entryNodeId) !== -1) {
-        document.getElementById(id).style.fill = 'red';
+    for (let i = 0; i < leafNodeBase.length; i += 1) {
+      const id = leafNodeBase[i].id;
+      colourNode(leafNodeBase, id, i, 'VAT', colours.VAT);
+      colourNode(leafNodeBase, id, i, 'PAYE', colours.PAYE);
+      colourNode(leafNodeBase, id, i, 'CH', colours.CRN);
+      if (this.props.unitType !== 'ENT' || this.props.unitType !== 'LEU') {
+        colourNode(leafNodeBase, id, i, this.props.entryNodeId, colours.ENTRY_NODE);
       }
     }
   }
@@ -112,23 +120,12 @@ class TreeView1 extends React.Component {
         <div style={{ borderBottom: '2px solid', paddingBottom: '5px' }}>
           <ButtonToolbar>
             <ButtonGroup>
-              <Button onClick={this.downloadImage} bsStyle="info">Download Tree PNG</Button>
+              <Glyphicon glyph="info-sign" />&nbsp;Click on a node cirlce to collapse/expand a node, or use Ctrl + Click to go to the data view for that node.
+            </ButtonGroup>
+            <ButtonGroup style={{ float: 'right' }}>
+              <Button onClick={this.downloadImage} bsSize="small" bsStyle="info"><Glyphicon glyph="download-alt" />&nbsp;&nbsp;Download Tree PNG</Button>
             </ButtonGroup>
           </ButtonToolbar>
-          <span className="label-text" style={{ fontSize: '20px', verticalAlign: 'top' }}>
-            Toggle Collapsible &nbsp;&nbsp;
-          </span>
-          <Toggle
-            collapsible={this.state.collapse}
-            defaultChecked={false}
-            onChange={this.handleToggle}
-          />
-          <span
-            className="label-text"
-            style={{ fontSize: '16px', verticalAlign: 'top' }}
-          >
-            &nbsp;&nbsp;You can only go to a record when the collapsible toggle is off.
-          </span>
         </div>
         <div id="treeWrapper" style={{ width: '100%', height: '500px' }}>
           <Tree

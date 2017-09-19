@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { findAndReplace } from '../utils/helperMethods';
+import colours from '../config/colours';
 
 class TreeView2 extends React.Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class TreeView2 extends React.Component {
 
     // Draw uses the draw method in resources/dndTree.js
     // This is imported in the index.html
-    draw(json, this.props.entryNodeId, 'red', 300);
+    draw(json, this.props.entryNodeId, colours.ENTRY_NODE, 300, colours);
   }
   render() {
     return (

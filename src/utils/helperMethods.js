@@ -109,3 +109,13 @@ export function findAndReplace(object: {}, value: string, replacevalue: string) 
     }
   }
 }
+
+export function colourNode(node, id, index, searchTerm, colour) {
+  try {
+    if (node[index].innerHTML.indexOf(searchTerm) !== -1) {
+      document.getElementById(id).style.fill = colour;
+    }
+  } catch (e) {
+    // e
+  }
+}

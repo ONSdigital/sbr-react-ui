@@ -1,26 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import Tree from 'react-d3-tree';
-import { ButtonToolbar, Button } from 'react-bootstrap';
 import Toggle from 'react-toggle';
 import { getSpecificUnitType } from '../actions/ApiActions';
-
-function findAndReplace(object, value, replacevalue) {
-  for (var x in object) {
-    if (object.hasOwnProperty(x)) {
-      if (typeof object[x] == 'object') {
-        findAndReplace(object[x], value, replacevalue);
-      }
-      if (object[value]) {
-        object[replacevalue] = object[value] + ' ' + object['id'];
-        // id gets overwritten by react-d3-tree, so use newId instead
-        object['newId'] = object['id'];
-        //delete object[value];
-      }
-    }
-  }
-}
+import { findAndReplace } from '../utils/helperMethods';
 
 class TreeView1 extends React.Component {
   constructor(props) {
@@ -34,10 +19,9 @@ class TreeView1 extends React.Component {
 
   componentDidMount() {
     // Once the component has mounted, we search through all elements with the
-    // 'nodeBase' class and if we find the entryNodeId of the entry node in
-    // the innerHTML, we apply a fill colour.
-
-    let classToSearch = "";
+    // 'nodeBase' & 'nodeBaseLead' classes and if we find the entryNodeId of the 
+    // entry node in the innerHTML, we apply a fill colour.
+    let classToSearch = '';
     if (this.props.unitType === 'ENT' || this.props.unitType === 'LEU') {
       classToSearch = 'nodeBase';
     } else {
@@ -46,11 +30,8 @@ class TreeView1 extends React.Component {
 
     const o = document.getElementsByClassName(classToSearch);
 
-    console.log('o is: ', o)
     for (let m in o) {
       const id = o[m].id;
-      console.log('id is: ', id)
-      console.log('index of: ', o[m].innerHTML.indexOf(this.props.entryNodeId))
       if (o[m].innerHTML.indexOf(this.props.entryNodeId) !== -1) {
         document.getElementById(id).style.fill = 'red';
       }
@@ -60,12 +41,13 @@ class TreeView1 extends React.Component {
   handleClick(e) {
     // If collapse is off, a click on a node will take the user to that record
     if (!this.state.collapse) {
-      // TODO:
-      // Potentially here, if the component calling the tree is an ENT panel,
-      // don't search on click, just toggle the tree view?
-
-      // Go to record
-      this.props.dispatch(getSpecificUnitType(e.type, e.newId, true));
+      // If the user has clicked on the Enterprise, they can be sent straight
+      // to the URL as we already have the data, otherwise do an API search.
+      if (e.type === 'ENT') {
+        browserHistory.push(`/Enterprises/${e.newId}`);
+      } else {
+        this.props.dispatch(getSpecificUnitType(e.type, e.newId, true));
+      }
     }
   }
 
@@ -74,10 +56,16 @@ class TreeView1 extends React.Component {
   }
 
   render() {
+    // TODO:
+    // Ensure translation below is dynamic, based upon number of child nodes,
+    // or find some way of calculating the width.
     const translation = { x: 350, y: 100 };
-    console.log('entryNodeId: ', this.props.entryNodeId)
     const data = JSON.parse(JSON.stringify(this.props.results[0]));
+    // We need the JSON to be in the correct format for react-d3-tree, so
+    // replace 'type' with 'name'
     findAndReplace(data, 'type', 'name');
+    // The childrenJson from the API does not have a parent ENT, so we add
+    // it in manually
     const json = [{
       name: `ENT - ${this.props.enterpriseId}`,
       newId: this.props.enterpriseId,
@@ -119,7 +107,6 @@ class TreeView1 extends React.Component {
 TreeView1.propTypes = {
   enterpriseId: PropTypes.string.isRequired,
   entryNodeId: PropTypes.string.isRequired,
-  childrenJson: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
   results: PropTypes.array.isRequired,
   unitType: PropTypes.string.isRequired,

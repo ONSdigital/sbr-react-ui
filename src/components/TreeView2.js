@@ -1,57 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import BreadCrumb from '../components/BreadCrumb';
-import { Button } from 'react-bootstrap';
-
-// http://bl.ocks.org/robschmuecker/7880033
-
-function findAndReplace(object, value, replacevalue) {
-  for (var x in object) {
-    if (object.hasOwnProperty(x)) {
-      if (typeof object[x] == 'object') {
-        findAndReplace(object[x], value, replacevalue);
-      }
-      if (object[value]) {
-        object[replacevalue] = object[value] + ' ' + object['id'];
-        // id gets overwritten by react-d3-tree, so use newId instead
-        object['newId'] = object['id'];
-        //delete object[value];
-      }
-    }
-  }
-}
+import { findAndReplace } from '../utils/helperMethods';
 
 class TreeView2 extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      draw: false,
-    };
     this.drawGraph = this.drawGraph.bind(this);
   }
+  componentDidMount() {
+    this.drawGraph();
+  }
   drawGraph() {
-    var data1 = {
-        "name": "flare",
-        "children": [{
-                "name": "cluster",
-                "children": [{
-                    "name": "AgglomerativeCluster",
-                    "size": 3938
-                }, {
-                    "name": "CommunityStructure",
-                    "size": 3812
-                }, {
-                    "name": "HierarchicalCluster",
-                    "size": 6714
-                }, {
-                    "name": "MergeEdge",
-                    "size": 743
-                }]
-          }]
-    };
+    // Take a copy of the results
     const data = JSON.parse(JSON.stringify(this.props.results[0]));
+    // The d3 code needs a 'name' key in each node, so add it in
     findAndReplace(data, 'type', 'name');
+    // We need to add in the top level Enterprise structure, as
+    // childrenJson from the API only has LEU and below.
     const json = {
       name: `ENT - ${this.props.enterpriseId}`,
       newId: this.props.enterpriseId,
@@ -64,12 +30,9 @@ class TreeView2 extends React.Component {
     // This is imported in the index.html
     draw(json, this.props.entryNodeId, 'red', 300);
   }
-  componentDidMount() {
-    this.drawGraph();
-  }
   render() {
     return (
-      <div id="tree-container"> {/* className="rotate"> */}
+      <div id="tree-container">
         {/* The SVG created by d3 will go here */}
       </div>
     );
@@ -79,7 +42,6 @@ class TreeView2 extends React.Component {
 TreeView2.propTypes = {
   enterpriseId: PropTypes.string.isRequired,
   entryNodeId: PropTypes.string.isRequired,
-  childrenJson: PropTypes.array.isRequired,
   results: PropTypes.array.isRequired,
 };
 

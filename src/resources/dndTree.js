@@ -1121,6 +1121,7 @@ function draw(data, entryNodeId, colour, moveX){
 
     // Toggle children on click.
     function click(d) {
+        console.log('click, d: ',d)
         if (d3.event.defaultPrevented) return; // click suppressed
         d = toggleChildren(d);
         update(d);

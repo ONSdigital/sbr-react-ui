@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { getSpecificUnitType } from '../actions/ApiActions';
 
 class PanelContainer extends React.Component {
   constructor(props) {
@@ -11,20 +9,16 @@ class PanelContainer extends React.Component {
     };
     this.toggleTreeView = this.toggleTreeView.bind(this);
   }
+  componentWillReceiveProps(nextProps) {
+    // The below is to fix a bug where if you are on TreeView and you navigate
+    // from one node to another of the same type, e.g. LEU -> LEU, the node
+    // will change but you will stay on tree view rather than going back to
+    // the original view.
+    if (this.props.children.type.name === nextProps.children.type.name) {
+      this.setState({ showTreeView: 0 });
+    }
+  }
   toggleTreeView(unitType, enterpriseId) {
-    // console.log(unitType)
-    // console.log(enterpriseId)
-    // if (this.state.showTreeView === 0) {
-    //   // Need to make sure the ENT data is present (for the child json)
-    //   if (this.props.data.results.le)
-    //   if (this.props.data.results[0].id === enterpriseId) {
-    //     // We already have the data, continue to the Tree View
-    //     const showTreeView = this.state.showTreeView + 1;
-    //     this.setState({ showTreeView });
-    //   } else {
-    //     this.props.dispatch(getSpecificUnitType('ENT', enterpriseId));
-    //   }
-
     if (this.state.showTreeView === 2) {
       this.setState({ showTreeView: 0 });
     } else {
@@ -51,14 +45,6 @@ class PanelContainer extends React.Component {
 
 PanelContainer.propTypes = {
   children: PropTypes.object.isRequired,
-  data: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
 };
 
-function select(state) {
-  return {
-    data: state.apiSearch.enterprise,
-  };
-}
-
-export default connect(select)(PanelContainer);
+export default PanelContainer;

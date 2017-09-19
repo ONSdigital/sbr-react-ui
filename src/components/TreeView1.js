@@ -31,7 +31,10 @@ class TreeView1 extends React.Component {
     // Once the component has mounted, we search through all elements with the
     // 'nodeBase' & 'nodeBaseLead' classes and if we find the entryNodeId of the 
     // entry node in the innerHTML, we apply a fill colour.
+    this.colourNodes();
+  }
 
+  colourNodes() {
     const nodeBase = document.getElementsByClassName('nodeBase');
     const leafNodeBase = document.getElementsByClassName('leafNodeBase');
 
@@ -83,6 +86,9 @@ class TreeView1 extends React.Component {
         this.props.dispatch(getSpecificUnitType(e.type, e.newId, true));
       }
     }
+    // We need to colour the nodes here too as on click messes with 
+    // the classes/styles
+    this.colourNodes();
   }
 
   handleToggle() {

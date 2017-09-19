@@ -1,20 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
+import { Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Tree from 'react-d3-tree';
 import Toggle from 'react-toggle';
 import { getSpecificUnitType } from '../actions/ApiActions';
 import { findAndReplace } from '../utils/helperMethods';
+import { saveSvgAsPng } from 'save-svg-as-png';
 
 class TreeView1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       collapse: false,
+      ctrlKeyPress: false,
     };
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.downloadImage = this.downloadImage.bind(this);
+  }
+
+  componentWillMount() {
+    document.addEventListener('keydown', this.handleKeyDown.bind(this));
+    document.addEventListener('keyup', this.handleKeyUp.bind(this));
   }
 
   componentDidMount() {
@@ -38,9 +47,26 @@ class TreeView1 extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown.bind(this));
+    document.removeEventListener('keyup', this.handleKeyUp.bind(this));
+  }
+
+  handleKeyDown(e) {
+    if (e.code === 'ControlLeft' || e.code === 'ControlRight' || e.code === 'AltLeft') {
+      this.setState({ ctrlKeyPress: true });
+    }
+  }
+
+  handleKeyUp(e) {
+    if (e.code === 'ControlLeft' || e.code === 'ControlRight' || e.code === 'AltLeft') {
+      this.setState({ ctrlKeyPress: false });
+    }
+  }
+
   handleClick(e) {
     // If collapse is off, a click on a node will take the user to that record
-    if (!this.state.collapse) {
+    if (this.state.ctrlKeyPress) {
       // If the user has clicked on the Enterprise, they can be sent straight
       // to the URL as we already have the data, otherwise do an API search.
       if (e.type === 'ENT') {
@@ -53,6 +79,15 @@ class TreeView1 extends React.Component {
 
   handleToggle() {
     this.setState({ collapse: !this.state.collapse });
+  }
+
+  downloadImage() {
+    saveSvgAsPng(document.getElementsByClassName('rd3t-svg')[0], `ENT-${this.props.enterpriseId}.png`, {
+      backgroundColor: 'white',
+      encoderOptions: 1,
+      width: 1000,
+      scale: 8,
+    });
   }
 
   render() {
@@ -75,6 +110,11 @@ class TreeView1 extends React.Component {
     return (
       <div>
         <div style={{ borderBottom: '2px solid', paddingBottom: '5px' }}>
+          <ButtonToolbar>
+            <ButtonGroup>
+              <Button onClick={this.downloadImage} bsStyle="info">Download Tree PNG</Button>
+            </ButtonGroup>
+          </ButtonToolbar>
           <span className="label-text" style={{ fontSize: '20px', verticalAlign: 'top' }}>
             Toggle Collapsible &nbsp;&nbsp;
           </span>
@@ -93,7 +133,7 @@ class TreeView1 extends React.Component {
         <div id="treeWrapper" style={{ width: '100%', height: '500px' }}>
           <Tree
             data={json}
-            collapsible={this.state.collapse}
+            collapsible={!this.state.ctrlKeyPress}
             orientation={'vertical'}
             onClick={e => this.handleClick(e)}
             translate={translation}

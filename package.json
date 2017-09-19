@@ -79,7 +79,8 @@
     "react-toggle": "^4.0.1",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "save-svg-as-png": "^1.2.0"
   },
   "engines": {
     "node": "5.10.1",

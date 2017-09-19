@@ -9,10 +9,11 @@ import FormStaticAddress from '../components/FormStaticAddress';
 import PanelTitle from '../components/PanelTitle';
 import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
+import colours from '../config/colours';
 
 const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView }) {
   function panelContent() {
-    const formTitle = (name, count) => (<p>{name} <Label bsStyle="primary">{count}</Label></p>);
+    const formTitle = (name, count, accessor) => (<p>{name} <Label bsStyle="primary" style={{ backgroundColor: colours[accessor] }}>{count}</Label></p>);    
     const chData = getChildValues(legalUnit.children, 'CH');
     const vatData = getChildValues(legalUnit.children, 'VAT');
     const payeData = getChildValues(legalUnit.children, 'PAYE');
@@ -31,13 +32,13 @@ const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView }) {
           </Form>
           <Col sm={5} xsOffset={1}>
             <Tabs defaultActiveKey="1" animation={false} id="children-tabs" bsStyle="tabs">
-              <Tab disabled={chData.length === 0} eventKey="1" title={formTitle('CRN', chData.length)}>
+              <Tab disabled={chData.length === 0} eventKey="1" title={formTitle('CRN', chData.length, 'CRN')}>
                 <ChildrenTable unitData={chData} name={'Company Reference No.'} accessor={'CH'} />
               </Tab>
-              <Tab disabled={payeData.length === 0} eventKey="2" title={formTitle('PAYE', payeData.length)}>
+              <Tab disabled={payeData.length === 0} eventKey="2" title={formTitle('PAYE', payeData.length, 'PAYE')}>
                 <ChildrenTable unitData={payeData} name={'PAYE Reference'} accessor={'PAYE'} />
               </Tab>
-              <Tab disabled={vatData.length === 0} eventKey="3" title={formTitle('VAT', vatData.length)}>
+              <Tab disabled={vatData.length === 0} eventKey="3" title={formTitle('VAT', vatData.length, 'VAT')}>
                 <ChildrenTable unitData={vatData} name={'VAT Reference'} accessor={'VAT'} />
               </Tab>
             </Tabs>

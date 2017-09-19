@@ -5,9 +5,10 @@ import { getLegalStatusDescription } from '../utils/helperMethods';
 import FormStaticValue from '../components/FormStaticValue';
 import FormStaticAddress from '../components/FormStaticAddress';
 import ChildrenTable from '../components/ChildrenTable';
+import colours from '../config/colours';
 
 const EnterpriseDataGrid = ({ json, leuData, chData, payeData, vatData }) => {
-  const formTitle = (name, count) => (<p>{name} <Label bsStyle="primary">{count}</Label></p>);
+  const formTitle = (name, count, accessor) => (<p>{name} <Label bsStyle="primary" style={{ backgroundColor: colours[accessor] }}>{count}</Label></p>);
   return (
     <Grid>
       <Row className="show-grid">
@@ -22,16 +23,16 @@ const EnterpriseDataGrid = ({ json, leuData, chData, payeData, vatData }) => {
         </Form>
         <Col sm={5} xsOffset={1}>
           <Tabs defaultActiveKey="1" animation={false} id="children-tabs" bsStyle="tabs">
-            <Tab disabled={leuData.length === 0} eventKey="1" title={formTitle('UBRN', leuData.length)}>
+            <Tab disabled={leuData.length === 0} eventKey="1" title={formTitle('UBRN', leuData.length, 'LEU')}>
               <ChildrenTable unitData={leuData} name={'Universal Business Register No.'} accessor={'LEU'} />
             </Tab>
-            <Tab disabled={chData.length === 0} eventKey="2" title={formTitle('CRN', chData.length)}>
+            <Tab disabled={chData.length === 0} eventKey="2" title={formTitle('CRN', chData.length, 'CRN')}>
               <ChildrenTable unitData={chData} name={'Company Reference No.'} accessor={'CH'} />
             </Tab>
-            <Tab disabled={payeData.length === 0} eventKey="3" title={formTitle('PAYE', payeData.length)}>
+            <Tab disabled={payeData.length === 0} eventKey="3" title={formTitle('PAYE', payeData.length, 'PAYE')}>
               <ChildrenTable unitData={payeData} name={'PAYE Reference'} accessor={'PAYE'} />
             </Tab>
-            <Tab disabled={vatData.length === 0} eventKey="4" title={formTitle('VAT', vatData.length)}>
+            <Tab disabled={vatData.length === 0} eventKey="4" title={formTitle('VAT', vatData.length, 'VAT')}>
               <ChildrenTable unitData={vatData} name={'VAT Reference'} accessor={'VAT'} />
             </Tab>
           </Tabs>

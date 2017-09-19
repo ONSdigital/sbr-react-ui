@@ -31,7 +31,7 @@ class TreeView2 extends React.Component {
     this.drawGraph = this.drawGraph.bind(this);
   }
   drawGraph() {
-    var data = {
+    var data1 = {
         "name": "flare",
         "children": [{
                 "name": "cluster",
@@ -50,15 +50,14 @@ class TreeView2 extends React.Component {
                 }]
           }]
     };
-
-    findAndReplace(this.props.childrenJson, 'type', 'name');
-
+    const data = JSON.parse(JSON.stringify(this.props.results[0]));
+    findAndReplace(data, 'type', 'name');
     const json = {
       name: `ENT - ${this.props.enterpriseId}`,
       newId: this.props.enterpriseId,
       id: this.props.enterpriseId,
       type: 'ENT',
-      children: this.props.childrenJson,
+      children: data.childrenJson,
     };
 
     // Draw uses the draw method in resources/dndTree.js
@@ -81,6 +80,13 @@ TreeView2.propTypes = {
   enterpriseId: PropTypes.string.isRequired,
   entryNodeId: PropTypes.string.isRequired,
   childrenJson: PropTypes.array.isRequired,
+  results: PropTypes.array.isRequired,
 };
 
-export default TreeView2;
+function select(state) {
+  return {
+    results: state.apiSearch.enterprise.results,
+  };
+}
+
+export default connect(select)(TreeView2);

@@ -24,6 +24,7 @@ class EnterprisePanel extends React.Component {
     if (this.props.showTreeView === 1) {
       dataView = (
         <TreeView1
+          unitType="ENT"
           entryNodeId={this.props.enterprise.id}
           enterpriseId={this.props.enterprise.id}
           childrenJson={JSON.parse(JSON.stringify(this.props.enterprise.childrenJson))}
@@ -32,6 +33,7 @@ class EnterprisePanel extends React.Component {
     } else if (this.props.showTreeView === 2) {
       dataView = (
         <TreeView2
+          unitType="ENT"
           entryNodeId={this.props.enterprise.id}
           enterpriseId={this.props.enterprise.id}
           childrenJson={JSON.parse(JSON.stringify(this.props.enterprise.childrenJson))}
@@ -43,7 +45,7 @@ class EnterprisePanel extends React.Component {
   render() {
     const title = (
       <PanelTitle
-        toggle={() => this.props.toggleTreeView()}
+        toggle={() => this.props.toggleTreeView('ENT', this.props.enterprise.id)}
         name={getValueByKey(this.props.enterprise.vars, 'ent_name')}
         id={getValueByKey(this.props.enterprise.vars, 'entref')}
       />

@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getSpecificUnitType } from '../actions/ApiActions';
 
 class PanelContainer extends React.Component {
   constructor(props) {
@@ -9,7 +11,20 @@ class PanelContainer extends React.Component {
     };
     this.toggleTreeView = this.toggleTreeView.bind(this);
   }
-  toggleTreeView() {
+  toggleTreeView(unitType, enterpriseId) {
+    // console.log(unitType)
+    // console.log(enterpriseId)
+    // if (this.state.showTreeView === 0) {
+    //   // Need to make sure the ENT data is present (for the child json)
+    //   if (this.props.data.results.le)
+    //   if (this.props.data.results[0].id === enterpriseId) {
+    //     // We already have the data, continue to the Tree View
+    //     const showTreeView = this.state.showTreeView + 1;
+    //     this.setState({ showTreeView });
+    //   } else {
+    //     this.props.dispatch(getSpecificUnitType('ENT', enterpriseId));
+    //   }
+
     if (this.state.showTreeView === 2) {
       this.setState({ showTreeView: 0 });
     } else {
@@ -36,6 +51,14 @@ class PanelContainer extends React.Component {
 
 PanelContainer.propTypes = {
   children: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
-export default PanelContainer;
+function select(state) {
+  return {
+    data: state.apiSearch.enterprise,
+  };
+}
+
+export default connect(select)(PanelContainer);

@@ -36,9 +36,21 @@ class TreeView1 extends React.Component {
     // Once the component has mounted, we search through all elements with the
     // 'nodeBase' class and if we find the entryNodeId of the entry node in
     // the innerHTML, we apply a fill colour.
-    const o = document.getElementsByClassName('nodeBase');
+
+    let classToSearch = "";
+    if (this.props.unitType === 'ENT' || this.props.unitType === 'LEU') {
+      classToSearch = 'nodeBase';
+    } else {
+      classToSearch = 'leafNodeBase';
+    }
+
+    const o = document.getElementsByClassName(classToSearch);
+
+    console.log('o is: ', o)
     for (let m in o) {
       const id = o[m].id;
+      console.log('id is: ', id)
+      console.log('index of: ', o[m].innerHTML.indexOf(this.props.entryNodeId))
       if (o[m].innerHTML.indexOf(this.props.entryNodeId) !== -1) {
         document.getElementById(id).style.fill = 'red';
       }
@@ -63,12 +75,14 @@ class TreeView1 extends React.Component {
 
   render() {
     const translation = { x: 350, y: 100 };
-    findAndReplace(this.props.childrenJson, 'type', 'name');
+    console.log('entryNodeId: ', this.props.entryNodeId)
+    const data = JSON.parse(JSON.stringify(this.props.results[0]));
+    findAndReplace(data, 'type', 'name');
     const json = [{
       name: `ENT - ${this.props.enterpriseId}`,
       newId: this.props.enterpriseId,
       type: 'ENT',
-      children: this.props.childrenJson,
+      children: data.childrenJson,
     }];
     return (
       <div>
@@ -107,11 +121,13 @@ TreeView1.propTypes = {
   entryNodeId: PropTypes.string.isRequired,
   childrenJson: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
+  results: PropTypes.array.isRequired,
+  unitType: PropTypes.string.isRequired,
 };
 
 function select(state) {
   return {
-    data: state.apiSearch.refSearch,
+    results: state.apiSearch.enterprise.results,
   };
 }
 

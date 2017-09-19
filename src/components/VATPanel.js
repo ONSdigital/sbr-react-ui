@@ -15,7 +15,7 @@ const VATPanel = function ({ vat, showTreeView, toggleTreeView }) {
   const json = formVatJson(vat);
   const title = (
     <PanelTitle
-      toggle={() => toggleTreeView()}
+      toggle={() => toggleTreeView('VAT', vat.parents.ENT)}
       name={json.name1}
       id={json.vatref}
     />
@@ -54,6 +54,7 @@ const VATPanel = function ({ vat, showTreeView, toggleTreeView }) {
     if (showTreeView === 1) {
       dataView = (
         <TreeView1
+          entryNodeId={vat.id}
           unitType={'VAT'}
           enterpriseId={vat.parents.ENT}
           childrenJson={{}}
@@ -62,6 +63,7 @@ const VATPanel = function ({ vat, showTreeView, toggleTreeView }) {
     } else if (showTreeView === 2) {
       dataView = (
         <TreeView2
+          entryNodeId={vat.id}
           unitType={'VAT'}
           enterpriseId={vat.parents.ENT}
           childrenJson={{}}

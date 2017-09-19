@@ -112,6 +112,7 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView }) {
     if (showTreeView === 1) {
       dataView = (
         <TreeView1
+          entryNodeId={company.id}
           unitType={'CRN'}
           enterpriseId={company.parents.ENT}
           childrenJson={{}}
@@ -120,6 +121,7 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView }) {
     } else if (showTreeView === 2) {
       dataView = (
         <TreeView2
+          entryNodeId={company.id}
           unitType={'CRN'}
           enterpriseId={company.parents.ENT}
           childrenJson={{}}
@@ -131,7 +133,7 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView }) {
   const json = formCompanyJson(company);
   const title = (
     <PanelTitle
-      toggle={() => toggleTreeView()}
+      toggle={() => toggleTreeView('CRN', company.parents.ENT)}
       name={json.companyname}
       id={json.companynumber}
     />

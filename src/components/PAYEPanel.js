@@ -89,6 +89,7 @@ const PAYEPanel = function ({ paye, showTreeView, toggleTreeView }) {
     if (showTreeView === 1) {
       dataView = (
         <TreeView1
+          entryNodeId={paye.id}
           unitType={'PAYE'}
           enterpriseId={paye.parents.ENT}
           childrenJson={{}}
@@ -97,6 +98,7 @@ const PAYEPanel = function ({ paye, showTreeView, toggleTreeView }) {
     } else if (showTreeView === 2) {
       dataView = (
         <TreeView2
+          entryNodeId={paye.id}
           unitType={'PAYE'}
           enterpriseId={paye.parents.ENT}
           childrenJson={{}}
@@ -108,7 +110,7 @@ const PAYEPanel = function ({ paye, showTreeView, toggleTreeView }) {
   const json = formPayeJson(paye);
   const title = (
     <PanelTitle
-      toggle={() => toggleTreeView()}
+      toggle={() => toggleTreeView('PAYE', paye.parents.ENT)}
       name={json.name1}
       id={json.payeref}
     />

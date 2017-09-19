@@ -48,6 +48,7 @@ const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView }) {
     if (showTreeView === 1) {
       dataView = (
         <TreeView1
+          entryNodeId={legalUnit.id}
           unitType={'LEU'}
           enterpriseId={legalUnit.parents.ENT}
           childrenJson={{}}
@@ -56,6 +57,7 @@ const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView }) {
     } else if (showTreeView === 2) {
       dataView = (
         <TreeView2
+          entryNodeId={legalUnit.id}
           unitType={'LEU'}
           enterpriseId={legalUnit.parents.ENT}
           childrenJson={{}}
@@ -66,7 +68,7 @@ const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView }) {
   }
   const title = (
     <PanelTitle
-      toggle={() => toggleTreeView()}
+      toggle={() => toggleTreeView('LEU', legalUnit.parents.ENT)}
       name={legalUnit.vars.businessName}
       id={legalUnit.vars.id}
     />

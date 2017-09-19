@@ -43,7 +43,7 @@ class TreeView1 extends React.Component {
       colourNode(nodeBase, id, m, 'ENT', colours.ENT, false);
       colourNode(nodeBase, id, m, 'LEU', colours.LEU, false);
       if (this.props.unitType === 'ENT' || this.props.unitType === 'LEU') {
-        colourNode(nodeBase, id, m, this.props.entryNodeId, colours.ENTRY_NODE, true);
+        colourNode(nodeBase, id, m, this.props.entryNodeId, colours[this.props.unitType], true);
       }
     }
 
@@ -53,7 +53,7 @@ class TreeView1 extends React.Component {
       colourNode(leafNodeBase, id, i, 'PAYE', colours.PAYE, false);
       colourNode(leafNodeBase, id, i, 'CH', colours.CRN, false);
       if (this.props.unitType !== 'ENT' || this.props.unitType !== 'LEU') {
-        colourNode(leafNodeBase, id, i, this.props.entryNodeId, colours.ENTRY_NODE, true);
+        colourNode(leafNodeBase, id, i, this.props.entryNodeId, colours[this.props.unitType], true);
       }
     }
   }
@@ -126,7 +126,7 @@ class TreeView1 extends React.Component {
         <div style={{ borderBottom: '2px solid', paddingBottom: '5px' }}>
           <ButtonToolbar>
             <ButtonGroup>
-              <Glyphicon glyph="info-sign" />&nbsp;Click on a node cirlce to collapse/expand a node, or use Ctrl + Click to go to the data view for that node.
+              <Glyphicon glyph="info-sign" />&nbsp;Click on a node circle to collapse/expand a node, or use Ctrl + Click to go to the data view for that node.
             </ButtonGroup>
             <ButtonGroup style={{ float: 'right' }}>
               <Button onClick={this.downloadImage} bsSize="small" bsStyle="info"><Glyphicon glyph="download-alt" />&nbsp;&nbsp;Download Tree PNG</Button>

@@ -117,6 +117,7 @@ export function colourNode(node, id, index, searchTerm, colour, entryNode) {
       if (entryNode) {
         // On the entry node, increase the size of the circle and move
         // the text out of the way of the circle
+        document.getElementById(id).style.stroke = 'red';
         document.getElementById(id).childNodes[1].r.baseVal.value = 20;
         document.getElementById(id).childNodes[0].x.baseVal[0].value = 25;
       }

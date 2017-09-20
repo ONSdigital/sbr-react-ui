@@ -4,7 +4,6 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import '../resources/css/react-bootstrap-table-all.min.css';
 import searchHistory from '../utils/searchHistory';
 import { countStatusBetween, countStatus } from '../utils/helperMethods';
-
 import '../resources/css/bootstrap-iso.css';
 
 function columnClassNameFormat(fieldValue) {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import BreadCrumb from '../components/BreadCrumb';
+import TitleAndDescription from '../components/TitleAndDescription';
 
 const UserDetails = ({ username, role }) => {
   const items = [
@@ -9,11 +10,11 @@ const UserDetails = ({ username, role }) => {
 
   return (
     <div>
-      <BreadCrumb
+      <BreadCrumb breadCrumbItems={items} />
+      <TitleAndDescription
         title="User Details"
         description="Information about the user logged in"
         marginBottom={1}
-        breadCrumbItems={items}
       />
       <div className="page-intro background--gallery">
         <div className="wrapper">

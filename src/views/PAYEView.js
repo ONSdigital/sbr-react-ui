@@ -15,12 +15,7 @@ const PAYEView = ({ data }) => {
   ];
   return (
     <div>
-      <BreadCrumb
-        title="PAYE View"
-        description=""
-        marginBottom={1}
-        breadCrumbItems={items}
-      />
+      <BreadCrumb breadCrumbItems={items} />
       <div className="page-intro background--gallery">
         <div className="wrapper">
           <PanelContainer>

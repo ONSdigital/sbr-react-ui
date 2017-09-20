@@ -17,12 +17,7 @@ const EnterpriseView = ({ routeParams, data, dispatch }) => {
   ];
   return (
     <div>
-      <BreadCrumb
-        title=""
-        description=""
-        marginBottom={0}
-        breadCrumbItems={items}
-      />
+      <BreadCrumb breadCrumbItems={items} />
       <div className="page-intro background--gallery">
         <div className="wrapper">
           <PanelContainer>

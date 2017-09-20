@@ -25,6 +25,25 @@ export function refSearch(query) {
         dispatch(setHeaders(SET_REF_HEADERS, {
           headers: data.response,
         }));
+
+        // If the unitType that is returned is not an ENT, do an additional
+        // search to get that data
+        if (data.results[0].unitType !== 'ENT') {
+          console.log('sending........')
+          apiSearch.getSpecificRefById(REFS['ENT'].apiEndpoint, data.results[0].parents['ENT'], (success, data) => {
+            if (success) {
+              dispatch(setResults(REFS['ENT'].setResults, {
+                results: [data.results],
+              }));
+              dispatch(setHeaders(REFS['ENT'].setHeaders, {
+                headers: data.response,
+              }));
+            } else {
+              dispatch(setErrorMessage(REFS['ENT'].setError, data.message));
+            }
+          });
+        }
+
         // if (data.results.length === 1) {
           const source = data.results[0].unitType;
           const destination = getDestination(source);

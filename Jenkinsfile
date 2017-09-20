@@ -86,8 +86,8 @@ pipeline {
           "Style Report" : {
             colourText("info","Generating style report...")
             sh 'npm run-script lint-report-xml'
-            step([$class: 'CheckStylePublisher', pattern: 'coverage/eslint-report-checkstyle.xml'])
-            //checkstyle canComputeNew: false, canRunOnFailed: true, defaultEncoding: '', healthy: '', pattern: 'coverage/eslint-report-checkstyle.xml', unHealthy: ''
+            // step([$class: 'CheckStylePublisher', pattern: 'coverage/eslint-report-checkstyle.xml'])
+            // checkstyle canComputeNew: false, canRunOnFailed: true, defaultEncoding: '', healthy: '', pattern: 'coverage/eslint-report-checkstyle.xml', unHealthy: ''
           }
         )
       }

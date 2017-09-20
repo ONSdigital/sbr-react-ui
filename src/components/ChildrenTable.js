@@ -4,6 +4,7 @@ import ReactTable from 'react-table';
 import Button from 'react-bootstrap-button-loader';
 import 'react-table/react-table.css';
 import { connect } from 'react-redux';
+import { getHeight } from '../utils/helperMethods';
 import { getSpecificUnitType } from '../actions/ApiActions';
 
 const ChildrenTable = ({ dispatch, data, unitData, name, accessor }) => {
@@ -62,13 +63,6 @@ function select(state) {
   return {
     data: state.apiSearch.refSearch,
   };
-}
-
-function getHeight(noOfItems) {
-  if (noOfItems > 10) {
-    return '400px';
-  }
-  return '100%';
 }
 
 export default connect(select)(ChildrenTable);

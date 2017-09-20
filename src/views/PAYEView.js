@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PAYEPanel from '../components/PAYEPanel';
 import BreadCrumb from '../components/BreadCrumb';
+import PanelContainer from '../components/PanelContainer';
 
-const PAYEView = ({ routeParams, data }) => {
+const PAYEView = ({ data }) => {
   const items = [
     { name: 'Enterprise', link: '' },
     { name: `${data[0].parents.ENT}`, link: `/Enterprises/${data[0].parents.ENT}/0`, unitType: 'ENT' },
@@ -17,10 +18,12 @@ const PAYEView = ({ routeParams, data }) => {
       <BreadCrumb breadCrumbItems={items} />
       <div className="page-intro background--gallery">
         <div className="wrapper">
-          <PAYEPanel
-            key={data[0].id}
-            paye={data[0]}
-          />
+          <PanelContainer>
+            <PAYEPanel
+              key={data[0].id}
+              paye={data[0]}
+            />
+          </PanelContainer>
         </div>
       </div>
     </div>
@@ -29,7 +32,6 @@ const PAYEView = ({ routeParams, data }) => {
 
 PAYEView.propTypes = {
   data: React.PropTypes.array.isRequired,
-  routeParams: React.PropTypes.object.isRequired,
 };
 
 function select(state) {

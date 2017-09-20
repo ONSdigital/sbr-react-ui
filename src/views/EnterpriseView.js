@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import EnterprisePanel from '../components/EnterprisePanel';
 import BreadCrumb from '../components/BreadCrumb';
-import { getSpecificUnitType } from '../actions/ApiActions';
+import PanelContainer from '../components/PanelContainer';
 
 const EnterpriseView = ({ routeParams, data, dispatch }) => {
   // If there is not data in the store, or the correct id is not present,
@@ -20,10 +20,12 @@ const EnterpriseView = ({ routeParams, data, dispatch }) => {
       <BreadCrumb breadCrumbItems={items} />
       <div className="page-intro background--gallery">
         <div className="wrapper">
-          <EnterprisePanel
-            key={data[0].id}
-            enterprise={data[0]}
-          />
+          <PanelContainer>
+            <EnterprisePanel
+              key={data[0].id}
+              enterprise={data[0]}
+            />
+          </PanelContainer>
         </div>
       </div>
     </div>

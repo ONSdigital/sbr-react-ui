@@ -7,6 +7,7 @@ const UserDetails = ({ username, role }) => {
   const items = [
     { name: 'User Details', link: '' },
   ];
+
   return (
     <div>
       <BreadCrumb breadCrumbItems={items} />

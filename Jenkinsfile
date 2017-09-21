@@ -117,6 +117,14 @@ pipeline {
           sh 'rm -rf manifest.yml'
           // Get the proper manifest from Gitlab
           sh 'cp conf/dev/manifest.yml .'
+          // Create the folder structure for dndTree.js
+          dir('build') {
+            sh 'mkdir src'
+          }
+          dir('build/src') {
+            sh 'mkdir resources'
+          }
+          sh 'cp src/resources/dndTree.js ./build/src/resources/dndTree.js'
           sh 'zip -r sbr-ui.zip build node_modules favicon.ico package.json server manifest.yml'
           stash name: 'zip'
         }

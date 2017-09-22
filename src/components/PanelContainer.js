@@ -8,6 +8,7 @@ class PanelContainer extends React.Component {
       showTreeView: 0,
     };
     this.toggleTreeView = this.toggleTreeView.bind(this);
+    this.goToView = this.goToView.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     // The below is to fix a bug where if you are on TreeView and you navigate
@@ -18,13 +19,19 @@ class PanelContainer extends React.Component {
       this.setState({ showTreeView: 0 });
     }
   }
-  toggleTreeView(unitType, enterpriseId) {
+  toggleTreeView(view) {
+    console.log('toggling')
+    console.log('view: ',view)
     if (this.state.showTreeView === 2) {
       this.setState({ showTreeView: 0 });
     } else {
       const showTreeView = this.state.showTreeView + 1;
       this.setState({ showTreeView });
     }
+  }
+  goToView(index) {
+    console.log('toggling')
+    this.setState({ showTreeView: index });
   }
   render() {
     // We need to pass toggleTreeView & showTreeView into each data Panel
@@ -33,6 +40,7 @@ class PanelContainer extends React.Component {
       child => React.cloneElement(child, {
         toggleTreeView: this.toggleTreeView,
         showTreeView: this.state.showTreeView,
+        goToView: this.goToView,
       }),
     );
     return (

@@ -10,7 +10,7 @@ import PanelTitle from '../components/PanelTitle';
 import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
 
-const CompanyPanel = function ({ company, showTreeView, toggleTreeView }) {
+const CompanyPanel = function ({ company, showTreeView, toggleTreeView, goToView }) {
   function panelContent() {
     let dataView = (
       <Grid>
@@ -134,8 +134,13 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView }) {
   const title = (
     <PanelTitle
       toggle={() => toggleTreeView('CRN', company.parents.ENT)}
+      goToDataView={() => goToView(0)}
+      goToTreeView1={() => goToView(1)}
+      goToTreeView2={() => goToView(2)}
+      goToEditView={() => goToView(3)}
       name={json.companyname}
       id={json.companynumber}
+      unitType="CRN"
     />
   );
   return (
@@ -156,6 +161,7 @@ CompanyPanel.propTypes = {
   company: PropTypes.object.isRequired,
   showTreeView: PropTypes.number.isRequired,
   toggleTreeView: PropTypes.func.isRequired,
+  goToView: PropTypes.func.isRequired,
 };
 
 export default CompanyPanel;

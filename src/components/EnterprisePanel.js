@@ -39,6 +39,10 @@ class EnterprisePanel extends React.Component {
           childrenJson={JSON.parse(JSON.stringify(this.props.enterprise.childrenJson))}
         />
       );
+    } else if (this.props.showTreeView === 3) {
+      dataView = (
+        <h1>Edit View</h1>
+      );
     }
     return dataView;
   }
@@ -46,8 +50,13 @@ class EnterprisePanel extends React.Component {
     const title = (
       <PanelTitle
         toggle={() => this.props.toggleTreeView('ENT', this.props.enterprise.id)}
+        goToDataView={() => this.props.goToView(0)}
+        goToTreeView1={() => this.props.goToView(1)}
+        goToTreeView2={() => this.props.goToView(2)}
+        goToEditView={() => this.props.goToView(3)}
         name={getValueByKey(this.props.enterprise.vars, 'ent_name')}
         id={getValueByKey(this.props.enterprise.vars, 'entref')}
+        unitType="ENT"
       />
     );
     return (
@@ -69,6 +78,7 @@ EnterprisePanel.propTypes = {
   enterprise: PropTypes.object.isRequired,
   toggleTreeView: PropTypes.func.isRequired,
   showTreeView: PropTypes.number.isRequired,
+  goToView: PropTypes.func.isRequired,
 };
 
 export default EnterprisePanel;

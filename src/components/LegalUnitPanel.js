@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, Form, Label, Tabs, Tab, Grid, Row, Col } from 'react-bootstrap';
+import { Panel, Form, Label, Tabs, Tab, Grid, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { getChildValues } from '../utils/helperMethods';
 import ChildrenTable from '../components/ChildrenTable';
@@ -11,7 +11,7 @@ import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
 import colours from '../config/colours';
 
-const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView }) {
+const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView, goToView }) {
   function panelContent() {
     const formTitle = (name, count, accessor) => (<p>{name} <Label bsStyle="primary" style={{ backgroundColor: colours[accessor] }}>{count}</Label></p>);    
     const chData = getChildValues(legalUnit.children, 'CH');
@@ -69,15 +69,23 @@ const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView }) {
   }
   const title = (
     <PanelTitle
-      toggle={() => toggleTreeView('LEU', legalUnit.parents.ENT)}
+      toggle={() => toggleTreeView()}
+      goToDataView={() => goToView(0)}
+      goToTreeView1={() => goToView(1)}
+      goToTreeView2={() => goToView(2)}
+      goToEditView={() => goToView(3)}
       name={legalUnit.vars.businessName}
       id={legalUnit.vars.id}
+      unitType="LEU"
     />
   );
   return (
     <div>
       <div className="bootstrap-iso">
         <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
+          <Panel collapsible bsStyle="info" defaultExpanded={false} header="Last Updated: admin">
+            Some default panel content here.
+          </Panel>
           {panelContent()}
         </Panel>
       </div>
@@ -92,6 +100,7 @@ LegalUnitPanel.propTypes = {
   legalUnit: PropTypes.object.isRequired,
   showTreeView: PropTypes.number.isRequired,
   toggleTreeView: PropTypes.func.isRequired,
+  goToView: PropTypes.func.isRequired,
 };
 
 export default LegalUnitPanel;

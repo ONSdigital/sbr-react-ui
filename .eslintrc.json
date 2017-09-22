@@ -21,7 +21,8 @@
         "class-methods-use-this": "off",
         "func-names": "off",
         "react/forbid-prop-types": "off",
-        "arrow-body-style": "off"
+        "arrow-body-style": "off",
+        "no-underscore-dangle": "off",
     },
     "env": {
       "browser": true

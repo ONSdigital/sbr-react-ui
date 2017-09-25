@@ -8,6 +8,7 @@ import EnterpriseDataGrid from '../components/EnterpriseDataGrid';
 import PanelTitle from '../components/PanelTitle';
 import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
+import EditData from '../components/EditData';
 
 class EnterprisePanel extends React.Component {
   panelContent() {
@@ -41,7 +42,19 @@ class EnterprisePanel extends React.Component {
       );
     } else if (this.props.showTreeView === 3) {
       dataView = (
-        <h1>Edit View</h1>
+        <EditData
+          unitType="ENT"
+          data={this.props.enterprise}
+          editableFields={[
+            { id: "editEnterpriseName", type:"text", label:"Enterprise Name", accessor:"ent_name" },
+            { id: "editEnterpriseAddress1", type:"text", label:"Address Line 1", accessor:"ent_address1" },
+            { id: "editEnterpriseAddress2", type:"text", label:"Address Line 2", accessor:"ent_address2" },
+            { id: "editEnterpriseAddress3", type:"text", label:"Address Line 3", accessor:"ent_address3" },
+            { id: "editEnterpriseAddress4", type:"text", label:"Address Line 4", accessor:"ent_address4" },
+            { id: "editEnterpriseAddress5", type:"text", label:"Address Line 5", accessor:"ent_address5" },
+            { id: "editEnterprisePostCode", type:"text", label:"Post Code", accessor:"ent_postcode" },
+          ]}
+        />
       );
     }
     return dataView;

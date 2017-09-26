@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Row, Col, Form, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 
-const FormItem = ({ id, label, help, ref, value, disabled, props }) => {
+const FormItem = ({ id, label, help, value, disabled, onInput, props }) => {
   return (
     <FormGroup controlId={id}>
       <ControlLabel>{label}</ControlLabel>
-      <FormControl disabled={disabled} value={value} {...props} />
+      <FormControl onChange={onInput} disabled={disabled} value={value} {...props} />
       {help && <HelpBlock>{help}</HelpBlock>}
     </FormGroup>
   );

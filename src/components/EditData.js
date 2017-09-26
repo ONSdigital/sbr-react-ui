@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Stepper from 'react-stepper-horizontal';
-import { Row, Col, Form, Alert, Glyphicon } from 'react-bootstrap';
+import { Alert, Glyphicon } from 'react-bootstrap';
 import Button from 'react-bootstrap-button-loader';
 import Loader from 'halogen/PulseLoader';
 import { editEnterprise } from '../actions/EditActions';
-import FormItem from './FormItem';
 import EditDataChanges from './EditDataChanges';
+import EditDataForm from './EditDataForm';
+import { editFormat, formEdits, hasFormChanged } from '../utils/helperMethods';
 
 class EditData extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class EditData extends React.Component {
       submitted: false,
     };
     this.onChange = this.onChange.bind(this);
-    this.submit = this.submit.bind(this);    
+    this.submit = this.submit.bind(this);
     this.back = this.back.bind(this);
     this.next = this.next.bind(this);
   }
@@ -43,8 +44,8 @@ class EditData extends React.Component {
   }
   next() {
     if (this.state.activeStep === 0) {
-      const formHasChanged = this.formHasChanged(this.props.data, this.state.formValues);
-      const edits = this.formEdits(this.props.data, this.state.formValues);
+      const formHasChanged = hasFormChanged(this.props.data, this.state.formValues);
+      const edits = formEdits(this.props.data, this.state.formValues);
       this.setState({
         edits,
         formHasChanged,
@@ -52,16 +53,8 @@ class EditData extends React.Component {
       });
     }
   }
-  formEdits(original, updated) {
-    return Object.keys(updated).map((key) => {
-      if (original.vars[key] !== updated[key].data) {
-        return { accessor: updated[key].accessor, original: original.vars[key], updated: updated[key].data };
-      }
-      return null;
-    }).filter(a => a !== null);
-  }
   submit() {
-    const editsObj = this.editFormat(this.state.edits);
+    const editsObj = editFormat(this.state.edits);
     const json = {
       updatedBy: this.props.username,
       vars: editsObj,
@@ -69,89 +62,17 @@ class EditData extends React.Component {
     this.props.dispatch(editEnterprise(this.props.data.id, json));
     this.setState({ submitted: true });
   }
-  editFormat(edits) {
-    const editObj = {};
-    edits.map((edit) => {
-      editObj[edit.accessor] = edit.updated;
-    });
-    return editObj;
-  }
-  formHasChanged(original, updated) {
-    // We don't want to check all the data, just the data items that are editable
-    // Map over the data, return true/false based on whether the data has changed,
-    // then reduce using OR, so any true will return true.
-    return Object.keys(updated).map((key) => {
-      return original.vars[key] !== updated[key].data;
-    }).reduce((a, b) => {
-      return a || b;
-    }, false);
-  }
-  renderContent() {
-    if (this.state.activeStep === 0) {
-      return (
-        <div>
-          <h3 className="text-center">Edit Enterprise</h3>
-          <Row className="show-grid">
-            <Col xs={6}>
-              <h3 className="text-center">Original Data</h3>
-              <Row className="show-grid">
-                <Col xs={10} xsOffset={1}>
-                  <Form horizontal>
-                    {
-                      this.props.editableFields.map((data) => {
-                        return (
-                          <FormItem disabled id={data.accessor} type={data.type} label={data.label} value={this.props.data.vars[data.accessor]} />
-                        );
-                      })
-                    }
-                  </Form>
-                </Col>
-              </Row>
-            </Col>
-            <Col xs={6}>
-              <h3 className="text-center">Modified Data</h3>
-              <Row className="show-grid">
-                <Col xs={10} xsOffset={1}>
-                  <Form horizontal>
-                    {
-                      this.props.editableFields.map((data) => {
-                        return (
-                          <FormItem value={this.state.formValues[data.accessor].data} onInput={this.onChange} id={data.accessor} type={data.type} label={data.label} />
-                        );
-                      })
-                    }
-                  </Form>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </div>
-      );
-    } else if (this.state.activeStep === 1) {
-      return (
-        <div>
-          <h4 className="text-center">Confirm Changes to the following Enterprise:</h4>
-          <h2 className="text-center"><Glyphicon glyph="tower" />&nbsp;{this.props.data.vars.ent_name} <small>{this.props.data.id}</small></h2>
-          <EditDataChanges edits={this.state.edits} />
-        </div>
-      );
-    }
-  }
   render() {
     const noChangesAlert = (
       <Alert bsStyle="warning">
         <strong>No changes have been made.</strong> Once an edit has been made, you can review and then sumbit your changes.
       </Alert>
     );
-    const nextButton = (this.formHasChanged(this.props.data, this.state.formValues)) ? (
-      // <Button disabled={nextDisabled} onClick={() => this.next()} bsStyle="primary">Next</Button>
+    const nextButton = (hasFormChanged(this.props.data, this.state.formValues)) ? (
       <button aria-label="Next Button" disabled={nextDisabled} onClick={() => this.next()} style={{color: 'white'}} type="submit" className="btn btn--primary btn--wide" id="nav-search-submit">
         Next
       </button>
     ) : noChangesAlert;
-    // const submitButton = (
-    //   <Button className="pull-right" disabled={nextDisabled} onClick={() => this.submit()} bsStyle="success" loading={true}>Submit</Button>
-    // );
     const spinner = (<Loader color="#FFFFFF" size="10px" margin="0px" />);
     const buttonContent = (false) ? spinner : "Submit Changes";
     const submitButton = (
@@ -180,7 +101,21 @@ class EditData extends React.Component {
           activeStep={this.state.activeStep}
         />
         <br />
-        {this.renderContent()}
+        {this.state.activeStep === 0 &&
+          <EditDataForm
+            editableFields={this.props.editableFields}
+            formValues={this.state.formValues}
+            enterprise={this.props.data}
+            onChange={this.onChange}
+          />
+        }
+        {this.state.activeStep === 1 &&
+          <div>
+            <h4 className="text-center">Confirm Changes to the following Enterprise:</h4>
+            <h2 className="text-center"><Glyphicon glyph="tower" />&nbsp;{this.props.data.vars.ent_name} <small>{this.props.data.id}</small></h2>
+            <EditDataChanges edits={this.state.edits} />
+          </div>
+        }
         <br />
         {backButton}
         {nextOrSubmitButton}

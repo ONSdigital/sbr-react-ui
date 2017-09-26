@@ -120,10 +120,11 @@ const PAYEPanel = function ({ paye, showTreeView, toggleTreeView, goToView }) {
       unitType="PAYE"
     />
   );
+  const footer = (<p style={{ margin: '0px', padding: '0px' }}>Last updated by: <Glyphicon glyph="user" />&nbsp; placeholder</p>);
   return (
     <div>
       <div className="bootstrap-iso">
-        <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
+        <Panel footer={footer} className="bg-inverse" collapsible={false} defaultExpanded header={title}>
           {panelContent()}
         </Panel>
       </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel } from 'react-bootstrap';
+import { Panel, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { getValueByKey, getChildValues } from '../utils/helperMethods';
 import { formEnterpriseJson } from '../utils/formJson';
@@ -72,10 +72,11 @@ class EnterprisePanel extends React.Component {
         unitType="ENT"
       />
     );
+    const footer = (<p style={{ margin: '0px', padding: '0px' }}>Last updated by: <Glyphicon glyph="user" />&nbsp; {this.props.enterprise.vars.updatedBy}</p>);
     return (
       <div>
         <div className="bootstrap-iso">
-          <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
+          <Panel footer={footer} className="bg-inverse" collapsible={false} defaultExpanded header={title}>
             {this.panelContent()}
           </Panel>
         </div>

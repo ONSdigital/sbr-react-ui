@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, Form, Label, Tabs, Tab, Grid, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Panel, Form, Label, Tabs, Tab, Grid, Row, Col, ListGroup, ListGroupItem, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { getChildValues } from '../utils/helperMethods';
 import ChildrenTable from '../components/ChildrenTable';
@@ -79,13 +79,11 @@ const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView, goTo
       unitType="LEU"
     />
   );
+  const footer = (<p style={{ margin: '0px', padding: '0px' }}>Last updated by: <Glyphicon glyph="user" />&nbsp; placeholder</p>);
   return (
     <div>
       <div className="bootstrap-iso">
-        <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
-          <Panel collapsible bsStyle="info" defaultExpanded={false} header="Last Updated: admin">
-            Some default panel content here.
-          </Panel>
+        <Panel footer={footer} className="bg-inverse" collapsible={false} defaultExpanded header={title}>
           {panelContent()}
         </Panel>
       </div>

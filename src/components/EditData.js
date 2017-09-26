@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Stepper from 'react-stepper-horizontal';
 import { Row, Col, Form, Alert, Glyphicon } from 'react-bootstrap';
 import Button from 'react-bootstrap-button-loader';
+import Loader from 'halogen/PulseLoader';
+import { editEnterprise } from '../actions/EditActions';
 import FormItem from './FormItem';
 import EditDataChanges from './EditDataChanges';
-import Loader from 'halogen/PulseLoader';
 
 class EditData extends React.Component {
   constructor(props) {
@@ -15,8 +17,10 @@ class EditData extends React.Component {
       formValues: {},
       formHasChanged: false,
       edits: {},
+      submitted: false,
     };
     this.onChange = this.onChange.bind(this);
+    this.submit = this.submit.bind(this);    
     this.back = this.back.bind(this);
     this.next = this.next.bind(this);
   }
@@ -57,7 +61,20 @@ class EditData extends React.Component {
     }).filter(a => a !== null);
   }
   submit() {
-    console.log('submitting...');
+    const editsObj = this.editFormat(this.state.edits);
+    const json = {
+      updatedBy: this.props.username,
+      vars: editsObj,
+    };
+    this.props.dispatch(editEnterprise(this.props.data.id, json));
+    this.setState({ submitted: true });
+  }
+  editFormat(edits) {
+    const editObj = {};
+    edits.map((edit) => {
+      editObj[edit.accessor] = edit.updated;
+    });
+    return editObj;
   }
   formHasChanged(original, updated) {
     // We don't want to check all the data, just the data items that are editable
@@ -138,13 +155,21 @@ class EditData extends React.Component {
     const spinner = (<Loader color="#FFFFFF" size="10px" margin="0px" />);
     const buttonContent = (false) ? spinner : "Submit Changes";
     const submitButton = (
-      <button aria-label="Search reference button" style={{color: 'white'}} loading={true} type="submit" className="btn btn--primary btn--wide pull-right" id="nav-search-submit">
+      <button aria-label="Search reference button" disabled={this.state.submitted || this.props.edit.currentlySending} onClick={this.submit} style={{ color: 'white' }} loading={this.props.edit.currentlySending} type="submit" className="btn btn--primary btn--wide pull-right" id="nav-search-submit">
         {buttonContent}
       </button>
     );
-    const backButton = (this.state.activeStep !== 0) ? <Button onClick={() => this.back()} bsStyle="default">Back</Button> : '';
+    const backButton = (this.state.activeStep !== 0 && !this.state.submitted) ? <Button onClick={() => this.back()} bsStyle="default">Back</Button> : '';
     const nextDisabled = (this.state.activeStep === 1);
     const nextOrSubmitButton = (this.state.activeStep === 1) ? submitButton : nextButton;
+    const successAlert = (this.state.submitted && !this.props.edit.currentlySending) ? (
+      <div>
+        <br /><br /><br />
+        <Alert bsStyle="success">
+          <strong>Success!</strong> {this.props.edit.errorMessage}
+        </Alert>
+      </div>
+    ) : (<div></div>);
     return (
       <div>
         <Stepper
@@ -159,6 +184,7 @@ class EditData extends React.Component {
         <br />
         {backButton}
         {nextOrSubmitButton}
+        {successAlert}
       </div>
     );
   }
@@ -168,4 +194,11 @@ class EditData extends React.Component {
 //   enterprise: PropTypes.object.isRequired,
 // };
 
-export default EditData;
+function select(state) {
+  return {
+    edit: state.edit.enterprise,
+    username: state.login.username,
+  };
+}
+
+export default connect(select)(EditData);

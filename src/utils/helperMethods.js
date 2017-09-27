@@ -137,8 +137,8 @@ export function editFormat(edits) {
 
 export function formEdits(original, updated) {
   return Object.keys(updated).map((key) => {
-    if (original.vars[key] !== updated[key].data) {
-      return { accessor: updated[key].accessor, original: original.vars[key], updated: updated[key].data };
+    if (getValueByKey(original.vars, key) !== updated[key].data) {
+      return { accessor: updated[key].accessor, original: getValueByKey(original.vars, key), updated: updated[key].data };
     }
     return null;
   }).filter(a => a !== null);
@@ -149,7 +149,7 @@ export function hasFormChanged(original, updated) {
   // Map over the data, return true/false based on whether the data has changed,
   // then reduce using OR, so any true will return true.
   return Object.keys(updated).map((key) => {
-    return original.vars[key] !== updated[key].data;
+    return getValueByKey(original.vars, key) !== updated[key].data;
   }).reduce((a, b) => {
     return a || b;
   }, false);

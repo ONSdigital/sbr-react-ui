@@ -10,9 +10,7 @@ const EditDataChanges = ({ edits }) => {
         <Col xs={5}>
           <h3 className="text-center">Original Data</h3>
         </Col>
-        <Col xs={2}>
-          {/* <h3 className="text-center">-></h3> */}
-        </Col>
+        <Col xs={2}></Col>
         <Col xs={5}>
           <h3 className="text-center">Modified Data</h3>
         </Col>

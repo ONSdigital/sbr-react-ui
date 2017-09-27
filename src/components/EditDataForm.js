@@ -46,8 +46,11 @@ const EditDataForm = ({ editableFields, formValues, enterprise, onChange }) => {
 };
 
 
-// EditDataForm.propTypes = {
-//   title: PropTypes.string.isRequired,
-// };
+EditDataForm.propTypes = {
+  editableFields: PropTypes.array.isRequired,
+  formValues: PropTypes.array.isRequired,
+  enterprise: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 export default EditDataForm;

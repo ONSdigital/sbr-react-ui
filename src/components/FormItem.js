@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Row, Col, Form, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 
 const FormItem = ({ id, label, help, value, disabled, onInput, props }) => {
   return (
@@ -13,12 +13,14 @@ const FormItem = ({ id, label, help, value, disabled, onInput, props }) => {
 };
 
 
-// FormItem.propTypes = {
-//   id: PropTypes.string.isRequired,
-//   label: PropTypes.string.isRequired,
-//   help: PropTypes.string.isRequired,
-//   ref: 
-//   props: PropTypes.object.isRequired,
-// };
+FormItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  help: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  onInput: PropTypes.func.isRequired,
+  props: PropTypes.object.isRequired,
+};
 
 export default FormItem;

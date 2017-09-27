@@ -27,6 +27,7 @@ class EditData extends React.Component {
     this.next = this.next.bind(this);
   }
   componentWillMount() {
+    // On mount, form the json to pass into the EditDataForm component
     const formValues = {};
     this.props.editableFields.map((data) => {
       formValues[data.accessor] = { data: getValueByKey(this.props.data.vars, data.accessor), accessor: data.accessor };
@@ -34,6 +35,9 @@ class EditData extends React.Component {
     this.setState({ formValues });
   }
   onChange(e) {
+    // We handle the changes for all the form items in EditDataForm here
+    // We cannot use refs because we need to initiate each input with the
+    // original value
     const formValues = this.state.formValues;
     formValues[e.target.id].data = e.target.value;
     this.setState({ formValues });
@@ -55,6 +59,7 @@ class EditData extends React.Component {
     }
   }
   submit() {
+    // Create the format of json for the API
     const editsObj = editFormat(this.state.edits);
     const json = {
       updatedBy: this.props.username,
@@ -64,26 +69,15 @@ class EditData extends React.Component {
     this.setState({ submitted: true });
   }
   render() {
+    // TODO: the code below is a little complex and could be refactored
     const noChangesAlert = (<AlertMessage warningLevel="warning" strong="No changes have been made." message="Once an edit has been made, you can review and then sumbit your changes." />);
-    const nextButton = (hasFormChanged(this.props.data, this.state.formValues)) ? (
-      <button aria-label="Next Button" onClick={() => this.next()} style={{ color: 'white' }} type="submit" className="btn btn--primary btn--wide" id="nav-search-submit">
-        Next
-      </button>
-    ) : noChangesAlert;
+    const nextButton = (hasFormChanged(this.props.data, this.state.formValues)) ? (<button aria-label="Next Button" onClick={() => this.next()} style={{ color: 'white' }} type="submit" className="btn btn--primary btn--wide" id="nav-search-submit">Next</button>) : noChangesAlert;
     const spinner = (<Loader color="#FFFFFF" size="10px" margin="0px" />);
     const buttonContent = (false) ? spinner : 'Submit Changes';
-    const submitButton = (
-      <button aria-label="Search reference button" disabled={this.state.submitted || this.props.edit.currentlySending} onClick={this.submit} style={{ color: 'white' }} loading={this.props.edit.currentlySending} type="submit" className="btn btn--primary btn--wide pull-right" id="nav-search-submit">
-        {buttonContent}
-      </button>
-    );
-    const backButton = (this.state.activeStep !== 0 && !this.state.submitted) ? <Button onClick={() => this.back()} bsStyle="default">Back</Button> : '';
+    const submitButton = (<button aria-label="Search reference button" disabled={this.state.submitted || this.props.edit.currentlySending} onClick={this.submit} style={{ color: 'white' }} loading={this.props.edit.currentlySending} type="submit" className="btn btn--primary btn--wide pull-right" id="nav-search-submit">{buttonContent}</button>);
     const nextOrSubmitButton = (this.state.activeStep === 1) ? submitButton : nextButton;
     const alertStyle = (this.props.edit.headers.status === 200) ? 'success' : 'danger';
     const alertStrong = (this.props.edit.headers.status === 200) ? 'Success!' : 'Error.';
-    const successAlert = (this.state.submitted && !this.props.edit.currentlySending) ? (<div><br /><br /><br />
-        <AlertMessage warningLevel={alertStyle} strong={alertStrong} message={this.props.edit.errorMessage} /></div>
-    ) : (<div></div>);
     return (
       <div>
         <Stepper
@@ -107,9 +101,16 @@ class EditData extends React.Component {
           </div>
         }
         <br />
-        {backButton}
+        {(this.state.activeStep !== 0 && !this.state.submitted) &&
+          <Button onClick={() => this.back()} bsStyle="default">Back</Button>
+        }
         {nextOrSubmitButton}
-        {successAlert}
+        {(this.state.submitted && !this.props.edit.currentlySending) &&
+          <div>
+            <br /><br /><br />
+            <AlertMessage warningLevel={alertStyle} strong={alertStrong} message={this.props.edit.errorMessage} />
+          </div>
+        }
       </div>
     );
   }

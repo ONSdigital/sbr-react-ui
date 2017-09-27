@@ -45,7 +45,7 @@ pipeline {
       }
     }
     stage('Install Dependancies & Build') {
-      agent { label 'adrianharristesting' }
+      agent any
       steps {
         colourText("info","Running 'npm install' and 'npm build'...")
         deleteDir()
@@ -61,7 +61,7 @@ pipeline {
       }
     }
     stage('Test - Unit, Component, Server, Coverage + Stress') {
-      agent { label 'adrianharristesting' }
+      agent any
       steps {
         parallel (
           "Unit" :  {
@@ -93,7 +93,7 @@ pipeline {
       }
     }
     stage('Zip Project') {
-      agent { label 'adrianharristesting' }
+      agent any
       when {
         anyOf {
           branch "develop"

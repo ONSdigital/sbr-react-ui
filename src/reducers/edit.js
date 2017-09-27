@@ -1,8 +1,7 @@
-import { SET_ENTERPRISE_EDIT_HEADERS, SET_ENTERPRISE_EDIT_ID, SENDING_ENTERPRISE_EDIT_REQUEST, SET_ENTERPRISE_EDIT_BODY, SET_ENTERPRISE_EDIT_ERROR_MESSAGE } from '../constants/EditConstants';
+import { SET_ENTERPRISE_EDIT_STATUS, SET_ENTERPRISE_EDIT_HEADERS, SET_ENTERPRISE_EDIT_ID, SENDING_ENTERPRISE_EDIT_REQUEST, SET_ENTERPRISE_EDIT_BODY, SET_ENTERPRISE_EDIT_ERROR_MESSAGE } from '../constants/EditConstants';
 
 const assign = Object.assign || require('object.assign');
 
-// The initial application state
 const initialState = {
   enterprise: {
     headers: [],
@@ -13,7 +12,6 @@ const initialState = {
   },
 };
 
-// Takes care of changing the application state
 function editReducer(state = initialState, action) {
   switch (action.type) {
     case SET_ENTERPRISE_EDIT_ID:
@@ -37,7 +35,7 @@ function editReducer(state = initialState, action) {
         ...state,
         enterprise: {
           ...state.enterprise,
-          headers: action.newState.headers,
+          headers: action.headers,
         },
       });
     case SENDING_ENTERPRISE_EDIT_REQUEST:

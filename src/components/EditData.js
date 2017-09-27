@@ -79,8 +79,10 @@ class EditData extends React.Component {
     );
     const backButton = (this.state.activeStep !== 0 && !this.state.submitted) ? <Button onClick={() => this.back()} bsStyle="default">Back</Button> : '';
     const nextOrSubmitButton = (this.state.activeStep === 1) ? submitButton : nextButton;
+    const alertStyle = (this.props.edit.headers.status === 200) ? 'success' : 'danger';
+    const alertStrong = (this.props.edit.headers.status === 200) ? 'Success!' : 'Error.';
     const successAlert = (this.state.submitted && !this.props.edit.currentlySending) ? (<div><br /><br /><br />
-        <AlertMessage bsStyle="success" strong="Success!" message={this.props.edit.errorMessage} /></div>
+        <AlertMessage warningLevel={alertStyle} strong={alertStrong} message={this.props.edit.errorMessage} /></div>
     ) : (<div></div>);
     return (
       <div>

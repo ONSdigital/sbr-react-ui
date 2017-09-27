@@ -17,9 +17,7 @@ export function editEnterprise(id, body) {
     apiEdit.editEnterprise(id, body, (success, data) => {
       dispatch(sendingRequest(SENDING_ENTERPRISE_EDIT_REQUEST, false));
       if (success) {
-        dispatch(setHeaders(SET_ENTERPRISE_EDIT_HEADERS, {
-          headers: data.response,
-        }));
+        dispatch(setHeaders(SET_ENTERPRISE_EDIT_HEADERS, data.resp));
         apiSearch.getSpecificRefById(REFS['ENT'].apiEndpoint, id, (success1, data1) => {
           dispatch(sendingRequest(REFS['ENT'].setSending, false));
           if (success1) {
@@ -35,6 +33,7 @@ export function editEnterprise(id, body) {
         });
         dispatch(setErrorMessage(SET_ENTERPRISE_EDIT_ERROR_MESSAGE, data.message));
       } else {
+        dispatch(setHeaders(SET_ENTERPRISE_EDIT_HEADERS, data.resp));
         dispatch(setErrorMessage(SET_ENTERPRISE_EDIT_ERROR_MESSAGE, data.message));
       }
     });
@@ -49,8 +48,8 @@ export function setId(type, id) {
   return { type, id };
 }
 
-export function setHeaders(type, newState) {
-  return { type, newState };
+export function setHeaders(type, headers) {
+  return { type, headers };
 }
 
 export function sendingRequest(type, sending) {

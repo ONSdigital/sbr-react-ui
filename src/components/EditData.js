@@ -111,7 +111,7 @@ class EditData extends React.Component {
         }
         {this.state.activeStep === 1 &&
           <div>
-            <h4 className="text-center">Confirm Changes to the following Enterprise:</h4>
+            <h4 className="text-center">Confirm changes to the following Enterprise:</h4>
             <h2 className="text-center"><Glyphicon glyph="tower" />&nbsp;{this.props.data.vars.ent_name} <small>{this.props.data.id}</small></h2>
             <EditDataChanges edits={this.state.edits} />
           </div>

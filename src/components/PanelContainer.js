@@ -16,12 +16,15 @@ class PanelContainer extends React.Component {
     // will change but you will stay on tree view rather than going back to
     // the original view.
     if (this.props.children.type.name === nextProps.children.type.name) {
-      this.setState({ showTreeView: 0 });
+      // For EnterprisePanel, as you cannot navigate between two Enterprises (only 1 on the tree),
+      // we don't reset the view, this is because after an Edit has been made and a search
+      // is completed again, we want to stay on the same view.
+      if (this.props.children.type.name !== 'EnterprisePanel') {
+        this.setState({ showTreeView: 0 });
+      }
     }
   }
-  toggleTreeView(view) {
-    console.log('toggling')
-    console.log('view: ',view)
+  toggleTreeView() {
     if (this.state.showTreeView === 2) {
       this.setState({ showTreeView: 0 });
     } else {
@@ -30,7 +33,6 @@ class PanelContainer extends React.Component {
     }
   }
   goToView(index) {
-    console.log('toggling')
     this.setState({ showTreeView: index });
   }
   render() {

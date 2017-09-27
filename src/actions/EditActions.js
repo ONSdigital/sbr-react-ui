@@ -1,6 +1,9 @@
 import { browserHistory } from 'react-router';
 import { SET_ENTERPRISE_EDIT_HEADERS, SET_ENTERPRISE_EDIT_ID, SENDING_ENTERPRISE_EDIT_REQUEST, SET_ENTERPRISE_EDIT_BODY, SET_ENTERPRISE_EDIT_ERROR_MESSAGE } from '../constants/EditConstants';
+import { REFS } from '../constants/ApiConstants';
 import apiEdit from '../utils/apiEdit';
+import apiSearch from '../utils/apiSearch';
+import { setResults } from './ApiActions';
 
 /**
  * Edit an Enterprise
@@ -17,6 +20,19 @@ export function editEnterprise(id, body) {
         dispatch(setHeaders(SET_ENTERPRISE_EDIT_HEADERS, {
           headers: data.response,
         }));
+        apiSearch.getSpecificRefById(REFS['ENT'].apiEndpoint, id, (success1, data1) => {
+          dispatch(sendingRequest(REFS['ENT'].setSending, false));
+          if (success1) {
+            dispatch(setResults(REFS['ENT'].setResults, {
+              results: [data1.results],
+            }));
+            dispatch(setHeaders(REFS['ENT'].setHeaders, {
+              headers: data1.response,
+            }));
+          } else {
+            dispatch(setErrorMessage(REFS['ENT'].setError, data1.message));
+          }
+        });
         dispatch(setErrorMessage(SET_ENTERPRISE_EDIT_ERROR_MESSAGE, data.message));
       } else {
         dispatch(setErrorMessage(SET_ENTERPRISE_EDIT_ERROR_MESSAGE, data.message));

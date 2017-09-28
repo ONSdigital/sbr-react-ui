@@ -106,6 +106,18 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView }) {
               </FormGroup>
             </Col>
           </Row>
+          <Row className="show-grid">
+            <Col sm={9}>
+              <FormGroup controlId="chLink" >
+                <Col componentClass={ControlLabel} sm={2}>
+                  CH Link
+                </Col>
+                <Col>
+                  <FormControl.Static><a target="_blank" href={`https://beta.companieshouse.gov.uk/company/${company.id}`}>{`https://beta.companieshouse.gov.uk/company/${company.id}`}</a></FormControl.Static>
+                </Col>
+              </FormGroup>
+            </Col>
+          </Row>
         </Form>
       </Grid>
     );

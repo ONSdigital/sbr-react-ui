@@ -51,13 +51,13 @@ class EnterprisePanel extends React.Component {
       />
     );
     return (
-      <div>
-        <div className="bootstrap-iso">
-          <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
+      <div id="bootstrap-container" style={{ height: '100%' }}>
+        <div className="bootstrap-iso" style={{ height: '95%' }}>
+          <Panel id="panelContainer" className="bg-inverse" style={{ height: '100%', marginBottom: '0px' }} collapsible={false} defaultExpanded header={title}>
             {this.panelContent()}
           </Panel>
         </div>
-        <button className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" onClick={() => browserHistory.push('/RefSearch')}>
+        <button id="returnToSearch" style={{ marginTop: '20px' }} className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" onClick={() => browserHistory.push('/RefSearch')}>
           Return to search
         </button>
       </div>

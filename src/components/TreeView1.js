@@ -96,12 +96,43 @@ class TreeView1 extends React.Component {
   }
 
   downloadImage() {
-    saveSvgAsPng(document.getElementsByClassName('rd3t-svg')[0], `ENT-${this.props.enterpriseId}.png`, {
-      backgroundColor: 'white',
-      encoderOptions: 1,
-      width: 1000,
-      scale: 8,
-    });
+    // console.log(document.fullscreenEnabled);
+    // const a = document.getElementById("treeWrapper");
+    const a = document.getElementById("panelContainer");
+    const b = document.getElementsByClassName("panel-body");
+    const c = document.getElementById("treeWrapper");
+    console.log(b)
+    b[0].style.height = '95%';
+    c.style.height = '95%';
+    // a.style.width = '100%';
+    // a.style.height = '100%';
+    //a.requestFullscreen();
+    //const fullScreen = document.fullscreenEnabled || document.mozFullscreenEnabled || document.webkitIsFullScreen ? true : false;
+    //console.log(fullScreen)
+    var docelem = a;
+    var conf = confirm("Fullscreen mode?");    
+    if (conf == true) {
+      if (docelem.requestFullscreen) {
+          docelem.requestFullscreen();
+      }
+      else if (docelem.mozRequestFullScreen) {
+          docelem.mozRequestFullScreen();
+      }
+      else if (docelem.webkitRequestFullscreen) {
+          docelem.webkitRequestFullscreen();
+      }
+      else if (docelem.msRequestFullscreen) {
+          docelem.msRequestFullscreen();
+      }
+  }
+    
+    //a.requestFullscreen();
+    // saveSvgAsPng(document.getElementsByClassName('rd3t-svg')[0], `ENT-${this.props.enterpriseId}.png`, {
+    //   backgroundColor: 'white',
+    //   encoderOptions: 1,
+    //   width: 1000,
+    //   scale: 8,
+    // });
   }
 
   render() {
@@ -122,7 +153,7 @@ class TreeView1 extends React.Component {
       children: data.childrenJson,
     }];
     return (
-      <div>
+      <div id="treeView1" style={{ height: '100%' }}>
         <div style={{ borderBottom: '2px solid', paddingBottom: '5px' }}>
           <ButtonToolbar>
             <ButtonGroup>
@@ -133,7 +164,7 @@ class TreeView1 extends React.Component {
             </ButtonGroup>
           </ButtonToolbar>
         </div>
-        <div id="treeWrapper" style={{ width: '100%', height: '500px' }}>
+        <div id="treeWrapper" style={{ width: '100%' }}>
           <Tree
             separation={{ siblings: 1.25, nonSiblings: 2 }}
             data={json}

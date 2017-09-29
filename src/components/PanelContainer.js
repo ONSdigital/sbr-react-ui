@@ -19,11 +19,18 @@ class PanelContainer extends React.Component {
     }
   }
   toggleTreeView(unitType, enterpriseId) {
+    // const a = document.getElementById('test1290');
     if (this.state.showTreeView === 2) {
       this.setState({ showTreeView: 0 });
+      // a.style = '';
+      // a.style.marginRight = '0px';
+      // a.className = 'wrapper';
     } else {
       const showTreeView = this.state.showTreeView + 1;
       this.setState({ showTreeView });
+      // a.className = '';
+      // a.style.marginLeft = '50px';
+      // a.style.marginRight = '50px';
     }
   }
   render() {

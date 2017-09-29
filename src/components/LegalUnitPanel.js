@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, Form, Label, Tabs, Tab, Grid, Row, Col } from 'react-bootstrap';
+import { Panel, Form, Label, Tabs, Tab, Grid, Row, Col, Nav, NavItem } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { getChildValues } from '../utils/helperMethods';
 import ChildrenTable from '../components/ChildrenTable';
@@ -13,7 +13,8 @@ import colours from '../config/colours';
 
 const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView }) {
   function panelContent() {
-    const formTitle = (name, count, accessor) => (<p>{name} <Label bsStyle="primary" style={{ backgroundColor: colours[accessor] }}>{count}</Label></p>);    
+    const formTitle = (name, count, accessor) => (<p style={{ margin: '0px', padding: '0px' }}>{name} <Label bsStyle="primary" style={{ backgroundColor: colours[accessor], margin: '0px'}}>{count}</Label></p>);    
+    // const formTitle = (name, count, accessor) => (<p>{name} <Label bsStyle="primary" style={{ backgroundColor: colours[accessor] }}>{count}</Label></p>);    
     const chData = getChildValues(legalUnit.children, 'CH');
     const vatData = getChildValues(legalUnit.children, 'VAT');
     const payeData = getChildValues(legalUnit.children, 'PAYE');
@@ -31,7 +32,7 @@ const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView }) {
             </Col>
           </Form>
           <Col sm={5} xsOffset={1}>
-            <Tabs defaultActiveKey="1" animation={false} id="children-tabs" bsStyle="tabs">
+            {/* <Tabs defaultActiveKey="1" animation={false} id="children-tabs" bsStyle="tabs">
               <Tab disabled={chData.length === 0} eventKey="1" title={formTitle('CRN', chData.length, 'CRN')}>
                 <ChildrenTable unitData={chData} name={'Company Reference No.'} accessor={'CH'} />
               </Tab>
@@ -41,7 +42,37 @@ const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView }) {
               <Tab disabled={vatData.length === 0} eventKey="3" title={formTitle('VAT', vatData.length, 'VAT')}>
                 <ChildrenTable unitData={vatData} name={'VAT Reference'} accessor={'VAT'} />
               </Tab>
-            </Tabs>
+            </Tabs> */}
+            <Tab.Container id="left-tabs-example" defaultActiveKey={1}>
+              <Row className="clearfix">
+                <Col sm={4}>
+                  <Nav bsStyle="pills" stacked style={{ margin: '0px', padding: '0px' }}>
+                    <NavItem style={{ margin: '0px', padding: '0px' }} disabled={chData.length === 0} eventKey={1}>
+                      {formTitle('CRN', chData.length, 'CRN')}
+                    </NavItem>
+                    <NavItem style={{ margin: '0px', padding: '0px' }} disabled={payeData.length === 0} eventKey={2}>
+                      {formTitle('PAYE', payeData.length, 'PAYE')}
+                    </NavItem>
+                    <NavItem style={{ margin: '0px', padding: '0px' }} disabled={vatData.length === 0} eventKey={3}>
+                      {formTitle('VAT', vatData.length, 'VAT')}
+                    </NavItem>
+                  </Nav>
+                </Col>
+                <Col sm={8}>
+                  <Tab.Content animation style={{ margin: '0px', padding: '0px' }}>
+                    <Tab.Pane eventKey={1}>
+                      <ChildrenTable unitData={chData} name={'Company Reference No.'} accessor={'CH'} />
+                    </Tab.Pane>
+                    <Tab.Pane eventKey={2}>
+                      <ChildrenTable unitData={payeData} name={'PAYE Reference'} accessor={'PAYE'} />
+                    </Tab.Pane>
+                    <Tab.Pane eventKey={3}>
+                      <ChildrenTable unitData={vatData} name={'VAT Reference'} accessor={'VAT'} />
+                    </Tab.Pane>
+                  </Tab.Content>
+                </Col>
+              </Row>
+            </Tab.Container>
           </Col>
         </Row>
       </Grid>

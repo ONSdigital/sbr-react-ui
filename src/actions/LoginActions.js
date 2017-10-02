@@ -111,9 +111,12 @@ export function logout() {
       if (success === true) {
         dispatch(sendingRequest(false));
         dispatch(setAuthState(false));
-        dispatch(resetState(undefined));
         localStorage.clear();
         browserHistory.push('/');
+        // This needs to go at the end, or else if we logout whilst on a page
+        // that uses the redux store, an error will occur before the user
+        // is redirected to '/'.
+        dispatch(resetState(undefined));
       } else {
         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
       }

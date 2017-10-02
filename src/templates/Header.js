@@ -6,6 +6,7 @@ import { logout } from '../actions/LoginActions';
 import Button from 'react-bootstrap-button-loader';
 
 const Header = function (props) {
+  console.log(props)
   const spinner = (<Loader color="#FFFFFF" size="8px" margin="0px" />);
   const buttonContent = (props.data.currentlySending) ? spinner : 'Logout';
   function getHeaderItems() {

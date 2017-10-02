@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Glyphicon, Button, Row, Col } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
+import periods from '../config/periods';
 
 class PanelTitle extends React.Component {
   constructor(props) {
@@ -38,13 +39,20 @@ class PanelTitle extends React.Component {
     } : '';
     return (
       <Row style={{ height: '30px', border: 'none' }}>
-        <Col lg={9} md={9} sm={8} xs={7} style={{ height: '30px', border: 'none' }}>
+        <Col lg={8} md={8} sm={7} xs={6} style={{ height: '30px', border: 'none' }}>
           <h3 {...props} onMouseEnter={() => this.mouseEnter()} onMouseLeave={() => this.mouseLeave()} id="panel-title-data-tip" style={h3Style}>
             <Glyphicon glyph="tower" />&nbsp;{this.props.name} <small>{this.props.id}</small>
           </h3>
         </Col>
-        <Col lg={3} md={3} sm={4} xs={5} style={{ height: '30px', border: 'none' }}>
-          <Button className="pull-right" bsSize="small" bsStyle="primary" onClick={() => this.props.toggle()}><Glyphicon glyph="tree-deciduous" />&nbsp;Toggle Tree View</Button>
+        <Col lg={4} md={4} sm={5} xs={6} style={{ height: '30px', border: 'none' }}>
+          <select style={{ height: '30px', float: 'right' }}>
+            {
+              periods.ALL_PERIODS.map((period) => {
+                return (<option key={period} value={period}>{period}</option>);
+              })
+            }
+          </select>
+          <Button style={{ float: 'right' }} bsSize="small" bsStyle="primary" onClick={() => this.props.toggle()}><Glyphicon glyph="tree-deciduous" />&nbsp;Toggle Tree View</Button>
         </Col>
         {this.state.showTooltip &&
           <ReactTooltip id="tooltip" type="info">

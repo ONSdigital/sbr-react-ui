@@ -5,7 +5,6 @@ import { Button, ButtonToolbar, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { saveSvgAsPng } from 'save-svg-as-png';
 import Tree from 'react-d3-tree';
-import Toggle from 'react-toggle';
 import { getSpecificUnitType } from '../actions/ApiActions';
 import { findAndReplace, colourNode } from '../utils/helperMethods';
 import colours from '../config/colours';
@@ -95,44 +94,29 @@ class TreeView1 extends React.Component {
     this.setState({ collapse: !this.state.collapse });
   }
 
-  downloadImage() {
-    // console.log(document.fullscreenEnabled);
-    // const a = document.getElementById("treeWrapper");
-    const a = document.getElementById("panelContainer");
-    const b = document.getElementsByClassName("panel-body");
-    const c = document.getElementById("treeWrapper");
-    console.log(b)
-    b[0].style.height = '95%';
-    c.style.height = '95%';
-    // a.style.width = '100%';
-    // a.style.height = '100%';
-    //a.requestFullscreen();
-    //const fullScreen = document.fullscreenEnabled || document.mozFullscreenEnabled || document.webkitIsFullScreen ? true : false;
-    //console.log(fullScreen)
-    var docelem = a;
-    var conf = confirm("Fullscreen mode?");    
-    if (conf == true) {
-      if (docelem.requestFullscreen) {
-          docelem.requestFullscreen();
+  fullScreen() {
+    const a = document.getElementById('treeWrapper');
+    const conf = confirm('Fullscreen mode?');
+    if (conf === true) {
+      if (a.requestFullscreen) {
+        a.requestFullscreen();
+      } else if (a.mozRequestFullScreen) {
+        a.mozRequestFullScreen();
+      } else if (a.webkitRequestFullscreen) {
+        a.webkitRequestFullscreen();
+      } else if (a.msRequestFullscreen) {
+        a.msRequestFullscreen();
       }
-      else if (docelem.mozRequestFullScreen) {
-          docelem.mozRequestFullScreen();
-      }
-      else if (docelem.webkitRequestFullscreen) {
-          docelem.webkitRequestFullscreen();
-      }
-      else if (docelem.msRequestFullscreen) {
-          docelem.msRequestFullscreen();
-      }
+    }
   }
-    
-    //a.requestFullscreen();
-    // saveSvgAsPng(document.getElementsByClassName('rd3t-svg')[0], `ENT-${this.props.enterpriseId}.png`, {
-    //   backgroundColor: 'white',
-    //   encoderOptions: 1,
-    //   width: 1000,
-    //   scale: 8,
-    // });
+
+  downloadImage() {
+    saveSvgAsPng(document.getElementsByClassName('rd3t-svg')[0], `ENT-${this.props.enterpriseId}.png`, {
+      backgroundColor: 'white',
+      encoderOptions: 1,
+      width: 1000,
+      scale: 8,
+    });
   }
 
   render() {
@@ -156,11 +140,15 @@ class TreeView1 extends React.Component {
       <div id="treeView1" style={{ height: '100%' }}>
         <div style={{ borderBottom: '2px solid', paddingBottom: '5px' }}>
           <ButtonToolbar>
-            <ButtonGroup>
-              <Glyphicon glyph="info-sign" />&nbsp;Click on a node circle to collapse/expand a node, or use Ctrl + Click to go to the data view for that node.
+            <ButtonGroup style={{ height: '30px' }}>
+              <Button onClick={this.fullScreen} style={{ height: '100%' }} bsSize="small" bsStyle="info"><Glyphicon glyph="download-alt" />&nbsp;&nbsp;Full Screen</Button>
+              <Button onClick={this.downloadImage} style={{ height: '100%', marginLeft: '5px' }} bsSize="small" bsStyle="info"><Glyphicon glyph="download-alt" />&nbsp;&nbsp;Download Tree PNG</Button>
             </ButtonGroup>
-            <ButtonGroup style={{ float: 'right' }}>
-              <Button onClick={this.downloadImage} bsSize="small" bsStyle="info"><Glyphicon glyph="download-alt" />&nbsp;&nbsp;Download Tree PNG</Button>
+          </ButtonToolbar>
+          <ButtonToolbar>
+            <ButtonGroup>
+              <br />
+              <Glyphicon glyph="info-sign" />&nbsp;Click on a node circle to collapse/expand a node, or use Ctrl + Click to go to the data view for that node.
             </ButtonGroup>
           </ButtonToolbar>
         </div>

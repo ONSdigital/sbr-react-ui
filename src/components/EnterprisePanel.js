@@ -51,9 +51,9 @@ class EnterprisePanel extends React.Component {
       />
     );
     return (
-      <div id="bootstrap-container" style={{ height: '100%' }}>
-        <div className="bootstrap-iso" style={{ height: '95%' }}>
-          <Panel id="panelContainer" className="bg-inverse" style={{ height: '100%', marginBottom: '0px' }} collapsible={false} defaultExpanded header={title}>
+      <div>
+        <div className="bootstrap-iso">
+          <Panel id="panelContainer" className="bg-inverse" style={{ marginBottom: '0px' }} collapsible={false} defaultExpanded header={title}>
             {this.panelContent()}
           </Panel>
         </div>

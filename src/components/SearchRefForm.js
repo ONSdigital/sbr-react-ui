@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loader from 'halogen/PulseLoader';
-import Button from 'react-bootstrap-button-loader';
 
 class SearchRefForm extends React.Component {
   render() {

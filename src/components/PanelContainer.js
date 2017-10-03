@@ -8,6 +8,7 @@ class PanelContainer extends React.Component {
       showTreeView: 0,
     };
     this.toggleTreeView = this.toggleTreeView.bind(this);
+    this.goToView = this.goToView.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     // The below is to fix a bug where if you are on TreeView and you navigate
@@ -15,16 +16,24 @@ class PanelContainer extends React.Component {
     // will change but you will stay on tree view rather than going back to
     // the original view.
     if (this.props.children.type.name === nextProps.children.type.name) {
-      this.setState({ showTreeView: 0 });
+      // For EnterprisePanel, as you cannot navigate between two Enterprises (only 1 on the tree),
+      // we don't reset the view, this is because after an Edit has been made and a search
+      // is completed again, we want to stay on the same view.
+      if (this.props.children.type.name !== 'EnterprisePanel') {
+        this.setState({ showTreeView: 0 });
+      }
     }
   }
-  toggleTreeView(unitType, enterpriseId) {
+  toggleTreeView() {
     if (this.state.showTreeView === 2) {
       this.setState({ showTreeView: 0 });
     } else {
       const showTreeView = this.state.showTreeView + 1;
       this.setState({ showTreeView });
     }
+  }
+  goToView(index) {
+    this.setState({ showTreeView: index });
   }
   render() {
     // We need to pass toggleTreeView & showTreeView into each data Panel
@@ -33,6 +42,7 @@ class PanelContainer extends React.Component {
       child => React.cloneElement(child, {
         toggleTreeView: this.toggleTreeView,
         showTreeView: this.state.showTreeView,
+        goToView: this.goToView,
       }),
     );
     return (

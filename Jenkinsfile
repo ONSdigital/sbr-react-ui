@@ -45,7 +45,7 @@ pipeline {
       }
     }
     stage('Install Dependancies & Build') {
-      agent { label 'adrianharristesting' }
+      agent any
       steps {
         colourText("info","Running 'npm install' and 'npm build'...")
         deleteDir()
@@ -61,7 +61,7 @@ pipeline {
       }
     }
     stage('Test - Unit, Component, Server, Coverage + Stress') {
-      agent { label 'adrianharristesting' }
+      agent any
       steps {
         parallel (
           "Unit" :  {
@@ -93,7 +93,7 @@ pipeline {
       }
     }
     stage('Zip Project') {
-      agent { label 'adrianharristesting' }
+      agent any
       when {
         anyOf {
           branch "develop"
@@ -117,6 +117,14 @@ pipeline {
           sh 'rm -rf manifest.yml'
           // Get the proper manifest from Gitlab
           sh 'cp conf/dev/manifest.yml .'
+          // Create the folder structure for dndTree.js
+          dir('build') {
+            sh 'mkdir src'
+          }
+          dir('build/src') {
+            sh 'mkdir resources'
+          }
+          sh 'cp src/resources/dndTree.js ./build/src/resources/dndTree.js'
           sh 'zip -r sbr-ui.zip build node_modules favicon.ico package.json server manifest.yml'
           stash name: 'zip'
         }

@@ -18,6 +18,8 @@ const VATPanel = function ({ vat, showTreeView, toggleTreeView }) {
       toggle={() => toggleTreeView('VAT', vat.parents.ENT)}
       name={json.name1}
       id={json.vatref}
+      accessor="vat"
+      unitType="VAT"
     />
   );
   function panelContent() {

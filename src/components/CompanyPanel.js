@@ -148,12 +148,14 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView }) {
       toggle={() => toggleTreeView('CRN', company.parents.ENT)}
       name={json.companyname}
       id={json.companynumber}
+      accessor="ch"
+      unitType="CH"
     />
   );
   return (
     <div id="bootstrap-container" style={{ height: '100%' }}>
       <div className="bootstrap-iso" style={{ height: '95%' }}>
-      <Panel id="panelContainer" className="bg-inverse" style={{ height: '100%', marginBottom: '0px' }} collapsible={false} defaultExpanded header={title}>
+        <Panel id="panelContainer" className="bg-inverse" style={{ height: '100%', marginBottom: '0px' }} collapsible={false} defaultExpanded header={title}>
           {panelContent()}
         </Panel>
       </div>

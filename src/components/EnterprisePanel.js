@@ -48,6 +48,8 @@ class EnterprisePanel extends React.Component {
         toggle={() => this.props.toggleTreeView('ENT', this.props.enterprise.id)}
         name={getValueByKey(this.props.enterprise.vars, 'ent_name')}
         id={getValueByKey(this.props.enterprise.vars, 'entref')}
+        accessor="enterprise"
+        unitType="ENT"
       />
     );
     return (

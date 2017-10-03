@@ -20,6 +20,7 @@ class EditData extends React.Component {
       formHasChanged: false,
       edits: {},
       submitted: false,
+      ent_name: '',
     };
     this.onChange = this.onChange.bind(this);
     this.submit = this.submit.bind(this);
@@ -27,12 +28,15 @@ class EditData extends React.Component {
     this.next = this.next.bind(this);
   }
   componentWillMount() {
+    // Take a copy of the JSON, so when the props change, the name on the 'confirm enterprise
+    // edit to xyz' does not change.
+    const entName = JSON.parse(JSON.stringify(this.props.data.vars.ent_name));
     // On mount, form the json to pass into the EditDataForm component
     const formValues = {};
     this.props.editableFields.map((data) => {
       formValues[data.accessor] = { data: getValueByKey(this.props.data.vars, data.accessor), accessor: data.accessor };
     });
-    this.setState({ formValues });
+    this.setState({ formValues, entName });
   }
   onChange(e) {
     // We handle the changes for all the form items in EditDataForm here
@@ -96,7 +100,7 @@ class EditData extends React.Component {
         {this.state.activeStep === 1 &&
           <div>
             <h4 className="text-center">Confirm changes to the following Enterprise:</h4>
-            <h2 className="text-center"><Glyphicon glyph="tower" />&nbsp;{getValueByKey(this.props.data.vars, 'ent_name')} <small>{this.props.data.id}</small></h2>
+            <h2 className="text-center"><Glyphicon glyph="tower" />&nbsp;{this.state.entName} <small>{this.props.data.id}</small></h2>
             <EditDataChanges edits={this.state.edits} />
           </div>
         }

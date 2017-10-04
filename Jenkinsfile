@@ -1,6 +1,6 @@
 #!groovy
 @Library('jenkins-pipeline-shared@develop') _
-
+ 
 /*
 * sbr-ui Jenkins Pipeline
 *
@@ -45,7 +45,7 @@ pipeline {
       }
     }
     stage('Install Dependancies & Build') {
-      agent any
+      agent { label 'build' }
       steps {
         colourText("info","Running 'npm install' and 'npm build'...")
         deleteDir()
@@ -53,7 +53,7 @@ pipeline {
         sh 'npm --version'
         unstash 'app'
         sh 'npm install'
-
+ 
         // Install the node_modules for just the server
         dir('server') {
           sh 'npm install'
@@ -61,7 +61,7 @@ pipeline {
       }
     }
     stage('Test - Unit, Component, Server, Coverage + Stress') {
-      agent any
+      agent { label 'build' }
       steps {
         parallel (
           "Unit" :  {
@@ -93,7 +93,7 @@ pipeline {
       }
     }
     stage('Zip Project') {
-      agent any
+      agent { label 'build' }
       when {
         anyOf {
           branch "develop"
@@ -131,7 +131,7 @@ pipeline {
       }
     }
     stage('Deploy - DEV') {
-      agent any
+      agent { label 'build' }
       when {
         anyOf {
           branch "develop"
@@ -146,7 +146,7 @@ pipeline {
       }
     }
     stage('Integration Tests') {
-      agent any
+      agent { label 'build' }
       when {
         anyOf {
           branch "release"
@@ -160,7 +160,7 @@ pipeline {
       }
     }
     stage('Deploy - TEST') {
-      agent any
+      agent { label 'build' }
       when {
         anyOf {
           branch "release"
@@ -175,7 +175,7 @@ pipeline {
       }
     }
     stage('Promote to BETA?') {
-      agent any
+      agent { label 'build' }
       when {
         anyOf {
           branch "master"
@@ -191,7 +191,7 @@ pipeline {
       }
     }
     stage('Deploy - BETA') {
-      agent any
+      agent { label 'build' }
       when {
         anyOf {
           branch "master"

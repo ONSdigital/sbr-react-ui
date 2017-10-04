@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, Form, Label, Tabs, Tab, Grid, Row, Col, Nav, NavItem } from 'react-bootstrap';
+import { Panel, Form, Label, Tabs, Tab, Grid, Row, Col, ListGroup, ListGroupItem, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { getChildValues } from '../utils/helperMethods';
 import ChildrenTable from '../components/ChildrenTable';
@@ -11,7 +11,7 @@ import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
 import colours from '../config/colours';
 
-const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView }) {
+const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView, goToView }) {
   function panelContent() {
     const formTitle = (name, count, accessor) => (<p style={{ margin: '0px', padding: '0px' }}><Label bsStyle="primary" style={{ backgroundColor: colours[accessor], margin: '0px'}}>{count}</Label>&nbsp;{name}</p>);    
     // const formTitle = (name, count, accessor) => (<p>{name} <Label bsStyle="primary" style={{ backgroundColor: colours[accessor] }}>{count}</Label></p>);    
@@ -100,15 +100,21 @@ const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView }) {
   }
   const title = (
     <PanelTitle
-      toggle={() => toggleTreeView('LEU', legalUnit.parents.ENT)}
+      toggle={() => toggleTreeView()}
+      goToDataView={() => goToView(0)}
+      goToTreeView1={() => goToView(1)}
+      goToTreeView2={() => goToView(2)}
+      goToEditView={() => goToView(3)}
       name={legalUnit.vars.businessName}
       id={legalUnit.vars.id}
+      unitType="LEU"
     />
   );
+  const footer = (<p style={{ margin: '0px', padding: '0px' }}>Last updated by: <Glyphicon glyph="user" />&nbsp; placeholder</p>);
   return (
     <div id="bootstrap-container" style={{ height: '100%' }}>
       <div className="bootstrap-iso" style={{ height: '95%' }}>
-      <Panel id="panelContainer" className="bg-inverse" style={{ height: '100%', marginBottom: '0px' }} collapsible={false} defaultExpanded header={title}>
+        <Panel id="panelContainer" className="bg-inverse" style={{ height: '100%', marginBottom: '0px' }} collapsible={false} defaultExpanded header={title}>
           {panelContent()}
         </Panel>
       </div>
@@ -123,6 +129,7 @@ LegalUnitPanel.propTypes = {
   legalUnit: PropTypes.object.isRequired,
   showTreeView: PropTypes.number.isRequired,
   toggleTreeView: PropTypes.func.isRequired,
+  goToView: PropTypes.func.isRequired,
 };
 
 export default LegalUnitPanel;

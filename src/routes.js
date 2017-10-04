@@ -35,7 +35,7 @@ import { checkAuth } from './actions/LoginActions';
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(
   reducer,
-  /* eslint no-underscore-dangle: "off"*/
+  /* eslint no-underscore-dangle: "off" */
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 

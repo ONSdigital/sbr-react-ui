@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, Form, Grid, Row, Col } from 'react-bootstrap';
+import { Panel, Form, Grid, Row, Col, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { formVatJson } from '../utils/formJson';
 import FormStaticValue from '../components/FormStaticValue';
@@ -11,13 +11,18 @@ import PanelTitle from '../components/PanelTitle';
 import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
 
-const VATPanel = function ({ vat, showTreeView, toggleTreeView }) {
+const VATPanel = function ({ vat, showTreeView, toggleTreeView, goToView }) {
   const json = formVatJson(vat);
   const title = (
     <PanelTitle
       toggle={() => toggleTreeView('VAT', vat.parents.ENT)}
+      goToDataView={() => goToView(0)}
+      goToTreeView1={() => goToView(1)}
+      goToTreeView2={() => goToView(2)}
+      goToEditView={() => goToView(3)}
       name={json.name1}
       id={json.vatref}
+      unitType="VAT"
     />
   );
   function panelContent() {
@@ -72,10 +77,11 @@ const VATPanel = function ({ vat, showTreeView, toggleTreeView }) {
     }
     return dataView;
   }
+  const footer = (<p style={{ margin: '0px', padding: '0px' }}>Last updated by: <Glyphicon glyph="user" />&nbsp; placeholder</p>);
   return (
     <div id="bootstrap-container" style={{ height: '100%' }}>
       <div className="bootstrap-iso" style={{ height: '95%' }}>
-      <Panel id="panelContainer" className="bg-inverse" style={{ height: '100%', marginBottom: '0px' }} collapsible={false} defaultExpanded header={title}>
+        <Panel id="panelContainer" className="bg-inverse" style={{ height: '100%', marginBottom: '0px' }} collapsible={false} defaultExpanded header={title}>
           {panelContent()}
         </Panel>
       </div>
@@ -90,6 +96,7 @@ VATPanel.propTypes = {
   vat: PropTypes.object.isRequired,
   showTreeView: PropTypes.number.isRequired,
   toggleTreeView: PropTypes.func.isRequired,
+  goToView: PropTypes.func.isRequired,
 };
 
 export default VATPanel;

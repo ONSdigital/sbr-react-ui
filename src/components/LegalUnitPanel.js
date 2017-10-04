@@ -13,7 +13,7 @@ import colours from '../config/colours';
 
 const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView }) {
   function panelContent() {
-    const formTitle = (name, count, accessor) => (<p style={{ margin: '0px', padding: '0px' }}>{name} <Label bsStyle="primary" style={{ backgroundColor: colours[accessor], margin: '0px'}}>{count}</Label></p>);    
+    const formTitle = (name, count, accessor) => (<p style={{ margin: '0px', padding: '0px' }}><Label bsStyle="primary" style={{ backgroundColor: colours[accessor], margin: '0px'}}>{count}</Label>&nbsp;{name}</p>);    
     // const formTitle = (name, count, accessor) => (<p>{name} <Label bsStyle="primary" style={{ backgroundColor: colours[accessor] }}>{count}</Label></p>);    
     const chData = getChildValues(legalUnit.children, 'CH');
     const vatData = getChildValues(legalUnit.children, 'VAT');

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Glyphicon, ButtonToolbar, Button, SplitButton, MenuItem, ButtonGroup, Row, Col } from 'react-bootstrap';
+import { Glyphicon, ButtonToolbar, Button, Row, Col } from 'react-bootstrap';
 
 import ReactTooltip from 'react-tooltip';
 
@@ -23,8 +23,11 @@ class PanelTitle extends React.Component {
     this.setState({ showTooltip: false });
   }
   render() {
+    const style = {
+      marginLeft: '0px',
+    };
     const editButton = (<Button onClick={() => this.props.goToEditView()} style={style}><Glyphicon glyph="edit" /></Button>);
-    const displayEditButton = (unitType === 'ENT') ? editButton : null;
+    const displayEditButton = (this.props.unitType === 'ENT') ? editButton : null;
     // Note: We should use a bootstrap tooltip/modal/overlay etc. for the title overflow,
     // however there is an issue with dynamic bootstrap elements not inheriting css, so
     // we use react-tooltip
@@ -47,7 +50,7 @@ class PanelTitle extends React.Component {
           </h3>
         </Col>
         <Col lg={3} md={3} sm={4} xs={5} style={{ height: '30px', border: 'none' }}>
-          <ButtonToolbar className="pull-right" style={{ marginTop: '-88px' }}>
+          <ButtonToolbar className="pull-right" >
             {/* Provides extra visual weight and identifies the primary action in a set of buttons */}
             {/* <Button bsStyle="primary" onClick={() => goToDataView()}><Glyphicon glyph="tree-deciduous" />&nbsp;Toggle Tree View</Button> */}
             <Button onClick={() => this.props.goToDataView()}><Glyphicon glyph="list" /></Button>

@@ -3,3 +3,48 @@
   padding: 0;
   font-family: 'Open Sans', sans-serif;
 }*/
+
+#treeWrapper:-webkit-full-screen {
+  height: 100%;
+  width: 100%;
+}
+
+#treeWrapper:-moz-full-screen {
+  height: 100%;
+  width: 100%;
+}
+
+#treeWrapper:-ms-fullscreen {
+  height: 100%;
+  width: 100%;
+}
+
+#treeWrapper:fullscreen {
+  height: 100%;
+  width: 100%;
+}
+
+#treeWrapper {
+  height: 500px;
+  width: 100%;
+}
+
+#tree-container:-webkit-full-screen {
+  height: 100%;
+  width: 100%;
+}
+
+#tree-container:-moz-full-screen {
+  height: 100%;
+  width: 100%;
+}
+
+#tree-container:-ms-fullscreen {
+  height: 100%;
+  width: 100%;
+}
+
+#tree-container:fullscreen {
+  height: 100%;
+  width: 100%;
+}

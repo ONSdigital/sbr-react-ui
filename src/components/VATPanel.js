@@ -79,13 +79,13 @@ const VATPanel = function ({ vat, showTreeView, toggleTreeView, goToView }) {
   }
   const footer = (<p style={{ margin: '0px', padding: '0px' }}>Last updated by: <Glyphicon glyph="user" />&nbsp; placeholder</p>);
   return (
-    <div>
-      <div className="bootstrap-iso">
-        <Panel footer={footer} className="bg-inverse" collapsible={false} defaultExpanded header={title}>
+    <div id="bootstrap-container" style={{ height: '100%' }}>
+      <div className="bootstrap-iso" style={{ height: '95%' }}>
+        <Panel id="panelContainer" className="bg-inverse" style={{ height: '100%', marginBottom: '0px' }} collapsible={false} defaultExpanded header={title}>
           {panelContent()}
         </Panel>
       </div>
-      <button className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" onClick={() => browserHistory.push('/RefSearch')} bsStyle="info">
+      <button style={{ marginTop: '20px' }} className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" onClick={() => browserHistory.push('/RefSearch')} bsStyle="info">
         Return to search
       </button>
     </div>

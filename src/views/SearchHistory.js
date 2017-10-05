@@ -19,7 +19,7 @@ const SearchHistory = () => {
   const history = searchHistory.getSearchHistory();
   const style = {
     labels: {
-      marginRight: '20',
+      marginRight: '20px',
     },
     h1: {
       float: 'left',

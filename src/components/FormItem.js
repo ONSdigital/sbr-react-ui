@@ -16,11 +16,11 @@ const FormItem = ({ id, label, help, value, disabled, onInput, props }) => {
 FormItem.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  help: PropTypes.string.isRequired,
+  help: PropTypes.string,
   value: PropTypes.string.isRequired,
-  disabled: PropTypes.bool.isRequired,
-  onInput: PropTypes.func.isRequired,
-  props: PropTypes.object.isRequired,
+  disabled: PropTypes.bool,
+  onInput: PropTypes.func,
+  props: PropTypes.object,
 };
 
 export default FormItem;

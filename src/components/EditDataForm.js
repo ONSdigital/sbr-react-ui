@@ -16,7 +16,7 @@ const EditDataForm = ({ editableFields, formValues, enterprise, onChange }) => {
                 {
                   editableFields.map((data) => {
                     return (
-                      <FormItem disabled id={data.accessor} type={data.type} label={data.label} value={enterprise.vars[data.accessor]} />
+                      <FormItem key={`${data.accessor}-${data.label}`} disabled id={data.accessor} type={data.type} label={data.label} value={enterprise.vars[data.accessor]} />
                     );
                   })
                 }
@@ -32,7 +32,7 @@ const EditDataForm = ({ editableFields, formValues, enterprise, onChange }) => {
                 {
                   editableFields.map((data) => {
                     return (
-                      <FormItem value={formValues[data.accessor].data} onInput={onChange} id={data.accessor} type={data.type} label={data.label} />
+                      <FormItem key={`${data.accessor}-${data.label}`} value={formValues[data.accessor].data} onInput={onChange} id={data.accessor} type={data.type} label={data.label} />
                     );
                   })
                 }
@@ -48,7 +48,7 @@ const EditDataForm = ({ editableFields, formValues, enterprise, onChange }) => {
 
 EditDataForm.propTypes = {
   editableFields: PropTypes.array.isRequired,
-  formValues: PropTypes.array.isRequired,
+  formValues: PropTypes.object.isRequired,
   enterprise: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
 };

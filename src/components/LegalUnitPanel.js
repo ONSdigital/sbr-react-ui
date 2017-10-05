@@ -106,7 +106,7 @@ const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView, goTo
       goToTreeView2={() => goToView(2)}
       goToEditView={() => goToView(3)}
       name={legalUnit.vars.businessName}
-      id={legalUnit.vars.id}
+      id={legalUnit.vars.id.toString()}
       accessor="legalUnit"
       unitType="LEU"
     />

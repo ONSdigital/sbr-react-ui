@@ -20,7 +20,7 @@ const EditDataChanges = ({ edits }) => {
           {
             edits.map((edit) => {
               return (
-                <Row className="show-grid">
+                <Row key={`${edit.accessor}-${edit.original}`} className="show-grid">
                   <Col xs={10} xsOffset={1}>
                     <Form horizontal>
                       <FormItem disabled id={edit.accessor} type="text" label={edit.accessor} value={edit.original} />
@@ -33,9 +33,9 @@ const EditDataChanges = ({ edits }) => {
         </Col>
         <Col xs={2}>
           {
-            edits.map(() => {
+            edits.map((edit) => {
               return (
-                <Row className="show-grid">
+                <Row key={`${edit.accessor}-${edit.original}`} className="show-grid">
                   <Col xs={10} xsOffset={1}>
                     <h1 className="text-center"><Glyphicon glyph="circle-arrow-right" /></h1>
                   </Col>
@@ -48,7 +48,7 @@ const EditDataChanges = ({ edits }) => {
           {
             edits.map((edit) => {
               return (
-                <Row className="show-grid">
+                <Row key={`${edit.accessor}-${edit.original}`} className="show-grid">
                   <Col xs={10} xsOffset={1}>
                     <Form horizontal>
                       <FormItem disabled id={edit.accessor} type="text" label={edit.accessor} value={edit.updated} />
@@ -66,7 +66,7 @@ const EditDataChanges = ({ edits }) => {
 
 
 EditDataChanges.propTypes = {
-  edits: PropTypes.object.isRequired,
+  edits: PropTypes.array.isRequired,
 };
 
 export default EditDataChanges;

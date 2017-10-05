@@ -79,7 +79,7 @@ class EditData extends React.Component {
     const nextButton = (hasFormChanged(this.props.data, this.state.formValues)) ? (<button aria-label="Next Button" onClick={() => this.next()} style={{ color: 'white' }} type="submit" className="btn btn--primary btn--wide" id="nav-search-submit">Next</button>) : noChangesAlert;
     const spinner = (<Loader color="#FFFFFF" size="10px" margin="0px" />);
     const buttonContent = (false) ? spinner : 'Submit Changes';
-    const submitButton = (<button aria-label="Search reference button" disabled={this.state.submitted || this.props.edit.currentlySending} onClick={this.submit} style={{ color: 'white' }} loading={this.props.edit.currentlySending} type="submit" className="btn btn--primary btn--wide pull-right" id="nav-search-submit">{buttonContent}</button>);
+    const submitButton = (<button aria-label="Search reference button" disabled={this.state.submitted || this.props.edit.currentlySending} onClick={this.submit} style={{ color: 'white' }} type="submit" className="btn btn--primary btn--wide pull-right" id="nav-search-submit">{buttonContent}</button>);
     const nextOrSubmitButton = (this.state.activeStep === 1) ? submitButton : nextButton;
     const alertStyle = (this.props.edit.headers.status === 200) ? 'success' : 'danger';
     const alertStrong = (this.props.edit.headers.status === 200) ? 'Success!' : 'Error.';

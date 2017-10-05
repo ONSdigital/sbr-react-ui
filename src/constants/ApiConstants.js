@@ -1,3 +1,6 @@
+// General
+export const SET_PERIOD = 'SET_PERIOD';
+
 // Ref Search
 export const SET_REF_RESULTS = 'SET_REF_RESULTS';
 export const SET_REF_HEADERS = 'SET_REF_HEADERS';

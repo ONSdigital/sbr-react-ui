@@ -5,6 +5,7 @@ import BreadCrumb from '../components/BreadCrumb';
 import PanelContainer from '../components/PanelContainer';
 
 const CompanyView = ({ data }) => {
+  console.log(data[0].parents)
   const items = [
     { name: 'Enterprise', link: '' },
     { name: `${data[0].parents.ENT}`, link: `/Enterprises/${data[0].parents.ENT}/0`, unitType: 'ENT' },

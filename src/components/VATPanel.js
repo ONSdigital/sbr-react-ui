@@ -22,6 +22,7 @@ const VATPanel = function ({ vat, showTreeView, toggleTreeView, goToView }) {
       goToEditView={() => goToView(3)}
       name={json.name1}
       id={json.vatref}
+      accessor="vat"
       unitType="VAT"
     />
   );

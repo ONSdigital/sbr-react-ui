@@ -152,7 +152,8 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView, goToView
       goToEditView={() => goToView(3)}
       name={json.companyname}
       id={json.companynumber}
-      unitType="CRN"
+      accessor="ch"
+      unitType="CH"
     />
   );
   const footer = (<p style={{ margin: '0px', padding: '0px' }}>Last updated by: <Glyphicon glyph="user" />&nbsp; placeholder</p>);

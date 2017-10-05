@@ -117,6 +117,7 @@ const PAYEPanel = function ({ paye, showTreeView, toggleTreeView, goToView }) {
       goToEditView={() => goToView(3)}
       name={json.name1}
       id={json.payeref}
+      accessor="paye"
       unitType="PAYE"
     />
   );

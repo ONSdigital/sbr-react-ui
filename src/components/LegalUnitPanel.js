@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, Form, Label, Tab, Grid, Row, Col, Nav, NavItem, Glyphicon } from 'react-bootstrap';
+import { Panel, Form, Label, Tabs, Tab, Grid, Row, Col, Nav, NavItem, Glyphicon } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { getChildValues } from '../utils/helperMethods';
 import ChildrenTable from '../components/ChildrenTable';
@@ -107,6 +107,7 @@ const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView, goTo
       goToEditView={() => goToView(3)}
       name={legalUnit.vars.businessName}
       id={legalUnit.vars.id}
+      accessor="legalUnit"
       unitType="LEU"
     />
   );

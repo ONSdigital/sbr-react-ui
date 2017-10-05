@@ -69,6 +69,7 @@ class EnterprisePanel extends React.Component {
         goToEditView={() => this.props.goToView(3)}
         name={getValueByKey(this.props.enterprise.vars, 'ent_name')}
         id={getValueByKey(this.props.enterprise.vars, 'entref')}
+        accessor="enterprise"
         unitType="ENT"
       />
     );

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel, Table, Form, Grid, Row, Col } from 'react-bootstrap';
-import { TableHeaderColumn } from 'react-bootstrap-table';
 import { browserHistory } from 'react-router';
 import { formPayeJson } from '../utils/formJson';
 import FormStaticValue from '../components/FormStaticValue';
@@ -33,14 +32,14 @@ const PAYEPanel = function ({ paye, showTreeView, toggleTreeView, goToView }) {
               <FormLink id="formCRN" label="CRN" value={json.crn} unitType="CH" />
               <Table condensed hover>
                 <thead>
-                  <TableHeaderColumn colSpan="6">Employees</TableHeaderColumn>
+                  <tr colSpan="6"><td><strong>Employees</strong></td></tr>
                   <tr>
-                    <th>FTE (M)</th>
-                    <th>FTE (F)</th>
-                    <th>FTE (U)</th>
-                    <th>SE (M)</th>
-                    <th>SE (F)</th>
-                    <th>SE (U)</th>
+                    <td>FTE (M)</td>
+                    <td>FTE (F)</td>
+                    <td>FTE (U)</td>
+                    <td>SE (M)</td>
+                    <td>SE (F)</td>
+                    <td>SE (U)</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -56,12 +55,12 @@ const PAYEPanel = function ({ paye, showTreeView, toggleTreeView, goToView }) {
               </Table>
               <Table condensed hover>
                 <thead>
-                  <TableHeaderColumn colSpan="4">Jobs ({json.jobs_lastupd})</TableHeaderColumn>
+                  <tr colSpan="4"><td><strong>Jobs ({json.jobs_lastupd})</strong></td></tr>
                   <tr>
-                    <th>Mar</th>
-                    <th>Jun</th>
-                    <th>Sep</th>
-                    <th>Dec</th>
+                    <td>Mar</td>
+                    <td>Jun</td>
+                    <td>Sep</td>
+                    <td>Dec</td>
                   </tr>
                 </thead>
                 <tbody>

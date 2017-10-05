@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel, Table, Form, FormGroup, FormControl, ControlLabel, Grid, Row, Col } from 'react-bootstrap';
-import { TableHeaderColumn } from 'react-bootstrap-table';
 import { browserHistory } from 'react-router';
 import { formCompanyJson } from '../utils/formJson';
 import FormStaticValue from '../components/FormStaticValue';
@@ -27,7 +26,7 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView, goToView
             <Col sm={5}>
               <Table condensed hover>
                 <thead>
-                  <TableHeaderColumn colSpan="4">Accounts</TableHeaderColumn>
+                  <tr colSpan="4"><td><strong>Accounts</strong></td></tr>
                   <tr>
                     <th>Ref. Date</th>
                     <th>Next Due</th>
@@ -46,7 +45,7 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView, goToView
               </Table>
               <Table condensed hover>
                 <thead>
-                  <TableHeaderColumn colSpan="4">Mortgages</TableHeaderColumn>
+                  <tr colSpan="4"><td><strong>Mortgages</strong></td></tr>
                   <tr>
                     <th>Charges</th>
                     <th>Outstanding</th>
@@ -65,7 +64,7 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView, goToView
               </Table>
               <Table condensed hover>
                 <thead>
-                  <TableHeaderColumn colSpan="2">Returns</TableHeaderColumn>
+                  <tr colSpan="2"><td><strong>Returns</strong></td></tr>
                   <tr>
                     <th>Next Due</th>
                     <th>Last Made</th>
@@ -80,7 +79,7 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView, goToView
               </Table>
               <Table condensed hover>
                 <thead>
-                  <TableHeaderColumn colSpan="2">Limited Partnerships</TableHeaderColumn>
+                  <tr colSpan="2"><td><strong>Limited Partnerships</strong></td></tr>
                   <tr>
                     <th>Limited Partners</th>
                     <th>General Partners</th>

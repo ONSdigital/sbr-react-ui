@@ -32,6 +32,7 @@ class TreeView2 extends React.Component {
 
     // Draw uses the draw method in resources/dndTree.js
     // This is imported in the index.html
+    /* eslint no-undef: "off" */
     draw(json, this.props.entryNodeId, colours.ENTRY_NODE, 300, colours);
   }
   fullScreen() {

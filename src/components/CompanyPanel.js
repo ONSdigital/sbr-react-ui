@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, Table, Form, FormGroup, FormControl, ControlLabel, Grid, Row, Col, Glyphicon } from 'react-bootstrap';
+import { Panel, Table, Form, FormGroup, FormControl, ControlLabel, Grid, Row, Col } from 'react-bootstrap';
 import { TableHeaderColumn } from 'react-bootstrap-table';
 import { browserHistory } from 'react-router';
 import { formCompanyJson } from '../utils/formJson';
@@ -11,6 +11,7 @@ import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
 
 const CompanyPanel = function ({ company, showTreeView, toggleTreeView, goToView }) {
+  const json = formCompanyJson(company);
   function panelContent() {
     let dataView = (
       <Grid>
@@ -142,7 +143,6 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView, goToView
     }
     return dataView;
   }
-  const json = formCompanyJson(company);
   const title = (
     <PanelTitle
       toggle={() => toggleTreeView('CRN', company.parents.ENT)}
@@ -156,7 +156,6 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView, goToView
       unitType="CH"
     />
   );
-  const footer = (<p style={{ margin: '0px', padding: '0px' }}>Last updated by: <Glyphicon glyph="user" />&nbsp; placeholder</p>);
   return (
     <div id="bootstrap-container" style={{ height: '100%' }}>
       <div className="bootstrap-iso" style={{ height: '95%' }}>

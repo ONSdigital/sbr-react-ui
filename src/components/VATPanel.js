@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, Form, Grid, Row, Col, Glyphicon } from 'react-bootstrap';
+import { Panel, Form, Grid, Row, Col } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { formVatJson } from '../utils/formJson';
 import FormStaticValue from '../components/FormStaticValue';
@@ -78,7 +78,6 @@ const VATPanel = function ({ vat, showTreeView, toggleTreeView, goToView }) {
     }
     return dataView;
   }
-  const footer = (<p style={{ margin: '0px', padding: '0px' }}>Last updated by: <Glyphicon glyph="user" />&nbsp; placeholder</p>);
   return (
     <div id="bootstrap-container" style={{ height: '100%' }}>
       <div className="bootstrap-iso" style={{ height: '95%' }}>

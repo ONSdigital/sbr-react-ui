@@ -19,6 +19,7 @@ const FormStaticAddress = ({ id, label, address1, address2, address3, address4, 
               if (addressItem !== '' && addressItem !== undefined) {
                 return (<div>{addressItem}<br /></div>);
               }
+              return null;
             })
           }
         </FormControl.Static>
@@ -33,17 +34,3 @@ FormStaticAddress.propTypes = {
 };
 
 export default FormStaticAddress;
-
-
-// {/*}
-// {address1}
-// <br />
-// {address2}
-// <br />
-// {address3}
-// <br />
-// {address4}
-// <br />
-// {address5}
-// <br />
-// */}

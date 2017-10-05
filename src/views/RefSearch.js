@@ -82,7 +82,7 @@ class Search extends React.Component {
         <div className="page-intro background--gallery">
           <div className="wrapper">
             <SearchRefForm
-              ref={(ch) => this.child = ch}
+              ref={(ch) => (this.child = ch)}
               currentlySending={this.props.data.currentlySending}
               onSubmit={this.onSubmit}
               onChange={this.changeQuery}

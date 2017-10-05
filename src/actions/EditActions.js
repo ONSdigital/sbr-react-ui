@@ -1,4 +1,3 @@
-import { browserHistory } from 'react-router';
 import { SET_ENTERPRISE_EDIT_HEADERS, SET_ENTERPRISE_EDIT_ID, SENDING_ENTERPRISE_EDIT_REQUEST, SET_ENTERPRISE_EDIT_BODY, SET_ENTERPRISE_EDIT_ERROR_MESSAGE } from '../constants/EditConstants';
 import { REFS } from '../constants/ApiConstants';
 import apiEdit from '../utils/apiEdit';

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Stepper from 'react-stepper-horizontal';
-import { Alert, Glyphicon } from 'react-bootstrap';
+import { Glyphicon } from 'react-bootstrap';
 import Button from 'react-bootstrap-button-loader';
 import Loader from 'halogen/PulseLoader';
 import { editEnterprise } from '../actions/EditActions';
@@ -33,6 +33,7 @@ class EditData extends React.Component {
     const entName = JSON.parse(JSON.stringify(this.props.data.vars.ent_name));
     // On mount, form the json to pass into the EditDataForm component
     const formValues = {};
+    /* eslint array-callback-return: "off" */
     this.props.editableFields.map((data) => {
       formValues[data.accessor] = { data: getValueByKey(this.props.data.vars, data.accessor), accessor: data.accessor };
     });

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, Table, Form, Glyphicon, Grid, Row, Col } from 'react-bootstrap';
+import { Panel, Table, Form, Grid, Row, Col } from 'react-bootstrap';
 import { TableHeaderColumn } from 'react-bootstrap-table';
 import { browserHistory } from 'react-router';
 import { formPayeJson } from '../utils/formJson';
@@ -14,6 +14,7 @@ import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
 
 const PAYEPanel = function ({ paye, showTreeView, toggleTreeView, goToView }) {
+  const json = formPayeJson(paye);
   function panelContent() {
     let dataView = (
       <Grid>
@@ -107,7 +108,6 @@ const PAYEPanel = function ({ paye, showTreeView, toggleTreeView, goToView }) {
     }
     return dataView;
   }
-  const json = formPayeJson(paye);
   const title = (
     <PanelTitle
       toggle={() => toggleTreeView('PAYE', paye.parents.ENT)}
@@ -121,7 +121,6 @@ const PAYEPanel = function ({ paye, showTreeView, toggleTreeView, goToView }) {
       unitType="PAYE"
     />
   );
-  const footer = (<p style={{ margin: '0px', padding: '0px' }}>Last updated by: <Glyphicon glyph="user" />&nbsp; placeholder</p>);
   return (
     <div id="bootstrap-container" style={{ height: '100%' }}>
       <div className="bootstrap-iso" style={{ height: '95%' }}>

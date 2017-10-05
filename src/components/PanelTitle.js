@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Glyphicon, Button, Row, Col } from 'react-bootstrap';
+import { Glyphicon, Button, ButtonToolbar, Row, Col } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
 import { getSpecificUnitType, changePeriod } from '../actions/ApiActions';
 import periods from '../config/periods';
@@ -31,6 +31,11 @@ class PanelTitle extends React.Component {
     this.setState({ showTooltip: false });
   }
   render() {
+    const style = {
+      marginLeft: '0px',
+    };
+    const editButton = (<Button onClick={() => this.props.goToEditView()} style={style}><Glyphicon glyph="edit" /></Button>);
+    const displayEditButton = (this.props.unitType === 'ENT') ? editButton : null;
     // Note: We should use a bootstrap tooltip/modal/overlay etc. for the title overflow,
     // however there is an issue with dynamic bootstrap elements not inheriting css, so
     // we use react-tooltip
@@ -47,14 +52,14 @@ class PanelTitle extends React.Component {
     } : '';
     return (
       <Row style={{ height: '30px', border: 'none' }}>
-        <Col lg={8} md={8} sm={7} xs={6} style={{ height: '30px', border: 'none' }}>
+        <Col lg={8} md={7} sm={6} xs={6} style={{ height: '30px', border: 'none' }}>
           <h3 {...props} onMouseEnter={() => this.mouseEnter()} onMouseLeave={() => this.mouseLeave()} id="panel-title-data-tip" style={h3Style}>
             <Glyphicon glyph="tower" />&nbsp;{this.props.name} <small>{this.props.id}</small>
           </h3>
         </Col>
-        <Col lg={4} md={4} sm={5} xs={6} style={{ height: '30px', border: 'none' }}>
+        <Col lg={4} md={5} sm={6} xs={6} style={{ height: '30px', border: 'none' }}>
           {(this.props.unitType !== 'LEU') &&
-            <select onChange={this.onPeriodChange} value={this.props.data.period} style={{ height: '30px', float: 'right' }}>
+            <select onChange={this.onPeriodChange} value={this.props.data.period} style={{ height: '34px', float: 'right' }}>
               {
                 periods.ALL_PERIODS.map((period) => {
                   return (<option key={period} value={period}>{period}</option>);
@@ -62,7 +67,16 @@ class PanelTitle extends React.Component {
               }
             </select>
           }
-          <Button style={{ float: 'right' }} bsSize="small" bsStyle="primary" onClick={() => this.props.toggle()}><Glyphicon glyph="tree-deciduous" />&nbsp;Toggle Tree View</Button>
+          <ButtonToolbar className="pull-right" >
+            {/* Provides extra visual weight and identifies the primary action in a set of buttons */}
+            {/* <Button bsStyle="primary" onClick={() => goToDataView()}><Glyphicon glyph="tree-deciduous" />&nbsp;Toggle Tree View</Button> */}
+            <Button onClick={() => this.props.goToDataView()}><Glyphicon glyph="list" /></Button>
+            {displayEditButton}
+            <Button style={style} onClick={() => this.props.goToTreeView1()}><Glyphicon glyph="tree-deciduous" /></Button>
+            <Button style={style} onClick={() => this.props.goToTreeView2()}><Glyphicon glyph="tree-conifer" /></Button>
+          </ButtonToolbar>
+        {/* <Col lg={3} md={3} sm={4} xs={5} style={{ height: '30px', border: 'none' }}> */}
+        
         </Col>
         {this.state.showTooltip &&
           <ReactTooltip id="tooltip" type="info">
@@ -78,10 +92,14 @@ PanelTitle.propTypes = {
   name: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired,
+  unitType: PropTypes.string.isRequired,
   toggle: PropTypes.func.isRequired,
   accessor: PropTypes.string.isRequired,
-  unitType: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
+  goToDataView: PropTypes.func.isRequired,
+  goToEditView: PropTypes.func.isRequired,
+  goToTreeView1: PropTypes.func.isRequired,
+  goToTreeView2: PropTypes.func.isRequired,
 };
 
 function select(state) {

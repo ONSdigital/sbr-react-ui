@@ -8,7 +8,7 @@ import ChildrenTable from '../components/ChildrenTable';
 import colours from '../config/colours';
 
 const EnterpriseDataGrid = ({ json, leuData, chData, payeData, vatData }) => {
-  const formTitle = (name, count, accessor) => (<p style={{ margin: '0px', padding: '0px' }}>{name} <Label bsStyle="primary" style={{ backgroundColor: colours[accessor], margin: '0px'}}>{count}</Label></p>);
+  const formTitle = (name, count, accessor) => (<p style={{ margin: '0px', padding: '0px' }}><Label bsStyle="primary" style={{ backgroundColor: colours[accessor], margin: '0px'}}>{count}</Label>&nbsp;{name}</p>);
   return (
     <Grid>
       <Row className="show-grid">

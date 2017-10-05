@@ -49,6 +49,7 @@ class TreeView2 extends React.Component {
       }
     }
     document.getElementsByClassName('overlay')[0].style.height = '100%';
+    document.getElementsByClassName('overlay')[0].style.width = '100%';
   }
   downloadImage() {
     saveSvgAsPng(document.getElementsByClassName('overlay')[0], `ENT-${this.props.enterpriseId}.png`);

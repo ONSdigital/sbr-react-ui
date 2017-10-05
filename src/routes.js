@@ -36,7 +36,7 @@ const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 // We export the store because we need to access it in apiActions
 export const store = createStoreWithMiddleware(
   reducer,
-  /* eslint no-underscore-dangle: "off"*/
+  /* eslint no-underscore-dangle: "off" */
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 

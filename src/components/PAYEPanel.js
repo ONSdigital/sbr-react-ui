@@ -13,7 +13,7 @@ import PanelTitle from '../components/PanelTitle';
 import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
 
-const PAYEPanel = function ({ paye, showTreeView, toggleTreeView }) {
+const PAYEPanel = function ({ paye, showTreeView, toggleTreeView, goToView }) {
   function panelContent() {
     let dataView = (
       <Grid>
@@ -111,12 +111,17 @@ const PAYEPanel = function ({ paye, showTreeView, toggleTreeView }) {
   const title = (
     <PanelTitle
       toggle={() => toggleTreeView('PAYE', paye.parents.ENT)}
+      goToDataView={() => goToView(0)}
+      goToTreeView1={() => goToView(1)}
+      goToTreeView2={() => goToView(2)}
+      goToEditView={() => goToView(3)}
       name={json.name1}
       id={json.payeref}
       accessor="paye"
       unitType="PAYE"
     />
   );
+  const footer = (<p style={{ margin: '0px', padding: '0px' }}>Last updated by: <Glyphicon glyph="user" />&nbsp; placeholder</p>);
   return (
     <div id="bootstrap-container" style={{ height: '100%' }}>
       <div className="bootstrap-iso" style={{ height: '95%' }}>
@@ -135,6 +140,7 @@ PAYEPanel.propTypes = {
   paye: PropTypes.object.isRequired,
   showTreeView: PropTypes.number.isRequired,
   toggleTreeView: PropTypes.func.isRequired,
+  goToView: PropTypes.func.isRequired,
 };
 
 export default PAYEPanel;

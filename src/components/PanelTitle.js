@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Glyphicon, Button, Row, Col } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
-import { getSpecificUnitTypeByPeriod, setPeriod } from '../actions/ApiActions';
+import { getSpecificUnitType, changePeriod } from '../actions/ApiActions';
 import periods from '../config/periods';
-import { REFS } from '../constants/ApiConstants';
+import { REFS, SET_PERIOD } from '../constants/ApiConstants';
 
 class PanelTitle extends React.Component {
   constructor(props) {
@@ -17,19 +17,9 @@ class PanelTitle extends React.Component {
     this.mouseLeave = this.mouseLeave.bind(this);
     this.onPeriodChange = this.onPeriodChange.bind(this);
   }
-  componentDidMount() {
-    // Every time the user navigates to a new data item, reset the period to the
-    // default one.
-    this.props.dispatch(setPeriod(REFS[this.props.unitType].setPeriod, periods.DEFAULT_PERIOD));
-  }
   onPeriodChange(evt) {
-    console.log('on period change');
-    console.log(evt.target.value);
-    console.log(REFS[this.props.unitType].setPeriod);
-    console.log(this.props)
-    this.props.dispatch(setPeriod(REFS[this.props.unitType].setPeriod, evt.target.value));
-    const period = evt.target.value.split('-').join(''); // Remove the dash
-    this.props.dispatch(getSpecificUnitTypeByPeriod(this.props.unitType, this.props.id, period));
+    this.props.dispatch(changePeriod(evt.target.value));
+    this.props.dispatch(getSpecificUnitType(this.props.unitType, this.props.id));
   }
   mouseEnter() {
     const a = document.getElementById('panel-title-data-tip');
@@ -63,13 +53,15 @@ class PanelTitle extends React.Component {
           </h3>
         </Col>
         <Col lg={4} md={4} sm={5} xs={6} style={{ height: '30px', border: 'none' }}>
-          <select onChange={this.onPeriodChange} value={this.props.data[this.props.accessor].period} style={{ height: '30px', float: 'right' }}>
-            {
-              periods.ALL_PERIODS.map((period) => {
-                return (<option key={period} value={period}>{period}</option>);
-              })
-            }
-          </select>
+          {(this.props.unitType !== 'LEU') &&
+            <select onChange={this.onPeriodChange} value={this.props.data.period} style={{ height: '30px', float: 'right' }}>
+              {
+                periods.ALL_PERIODS.map((period) => {
+                  return (<option key={period} value={period}>{period}</option>);
+                })
+              }
+            </select>
+          }
           <Button style={{ float: 'right' }} bsSize="small" bsStyle="primary" onClick={() => this.props.toggle()}><Glyphicon glyph="tree-deciduous" />&nbsp;Toggle Tree View</Button>
         </Col>
         {this.state.showTooltip &&

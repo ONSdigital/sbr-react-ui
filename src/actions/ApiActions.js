@@ -1,14 +1,19 @@
 import { browserHistory } from 'react-router';
-import { REFS, SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE } from '../constants/ApiConstants';
+import { REFS, SET_PERIOD, SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE } from '../constants/ApiConstants';
 import apiSearch from '../utils/apiSearch';
-// import searchHistory from '../utils/searchHistory';
 import { getDestination } from '../utils/helperMethods';
+import { store } from '../routes';
+import periods from '../config/periods';
 
 /**
  * Get info (version/last updated) from the Node server
  */
 export function refSearch(query) {
   return (dispatch) => {
+    // Reset the period, so that the period toggle shows the
+    // correct default value on the data results page
+    dispatch(setPeriod(SET_PERIOD, periods.DEFAULT_PERIOD));
+
     dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, ''));
     dispatch(sendingRequest(SENDING_REF_REQUEST, true));
     dispatch(setResults(SET_REF_RESULTS, { results: [] }));
@@ -55,12 +60,23 @@ export function refSearch(query) {
   };
 }
 
+export function getSpecificUnitType(unitType, id, redirect = false) {
+  return (dispatch) => {
+    if (unitType === 'LEU') {
+      // For LEU, period is not yet implemented, so get the default one
+      return dispatch(getUnitForDefaultPeriod(unitType, id, redirect));
+    }
+    const period = store.getState().apiSearch.period.split('-').join('');
+    return dispatch(getUnitForSpecificPeriod(unitType, id, period, redirect));
+  };
+}
+
 /**
  * Get specific unit by id
  *
  * This is a generic method that can do a specific search for any REF type.
  */
-export function getSpecificUnitType(unitType, id, redirect = false) {
+export function getUnitForDefaultPeriod(unitType, id, redirect = false) {
   return (dispatch) => {
     dispatch(setErrorMessage(REFS[unitType].setError, ''));
     dispatch(sendingRequest(REFS[unitType].setSending, true));
@@ -93,7 +109,7 @@ export function getSpecificUnitType(unitType, id, redirect = false) {
  *
  * This is a generic method that can do a specific search for any REF type by specific period
  */
-export function getSpecificUnitTypeByPeriod(unitType, id, period, redirect = false) {
+export function getUnitForSpecificPeriod(unitType, id, period, redirect = false) {
   return (dispatch) => {
     dispatch(setErrorMessage(REFS[unitType].setError, ''));
     dispatch(sendingRequest(REFS[unitType].setSending, true));
@@ -118,6 +134,23 @@ export function getSpecificUnitTypeByPeriod(unitType, id, period, redirect = fal
         dispatch(setErrorMessage(REFS[unitType].setError, data.message));
       }
     });
+  };
+}
+
+/**
+ * Change the period
+ *
+ * This is related to the period dropdown that is present on all the
+ * data view pages (apart from LEU)
+ */
+export function changePeriod(period) {
+  // Everytime the user changes the period, we need to get the
+  // childrenJson (for the tree view) again from the Enterprise.
+  return (dispatch) => {
+    dispatch(setPeriod(SET_PERIOD, period));
+    // There is always an Enterprise in the store, so get the id
+    const entId = store.getState().apiSearch.enterprise.results[0].id;
+    dispatch(getUnitForSpecificPeriod('ENT', entId, period.split('-').join(''), false));
   };
 }
 

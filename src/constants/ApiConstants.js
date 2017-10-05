@@ -1,3 +1,6 @@
+// General
+export const SET_PERIOD = 'SET_PERIOD';
+
 // Ref Search
 export const SET_REF_RESULTS = 'SET_REF_RESULTS';
 export const SET_REF_HEADERS = 'SET_REF_HEADERS';
@@ -7,7 +10,6 @@ export const SET_REF_ERROR_MESSAGE = 'SET_REF_ERROR_MESSAGE';
 
 // Enterprise Search
 export const SET_ENTERPRISE_RESULTS = 'SET_ENTERPRISE_RESULTS';
-export const SET_ENTERPRISE_PERIOD = 'SET_ENTERPRISE_PERIOD';
 export const SET_ENTERPRISE_HEADERS = 'SET_ENTERPRISE_HEADERS';
 export const SENDING_ENTERPRISE_REQUEST = 'SENDING_ENTERPRISE_REQUEST';
 export const SET_ENTERPRISE_QUERY = 'SET_ENTERPRISE_QUERY';
@@ -15,7 +17,6 @@ export const SET_ENTERPRISE_ERROR_MESSAGE = 'SET_ENTERPRISE_ERROR_MESSAGE';
 
 // Legal Unit Search
 export const SET_LEGAL_UNIT_RESULTS = 'SET_LEGAL_UNIT_RESULTS';
-export const SET_LEGAL_UNIT_PERIOD = 'SET_LEGAL_UNIT_PERIOD';
 export const SET_LEGAL_UNIT_HEADERS = 'SET_LEGAL_UNIT_HEADERS';
 export const SENDING_LEGAL_UNIT_REQUEST = 'SENDING_LEGAL_UNIT_REQUEST';
 export const SET_LEGAL_UNIT_QUERY = 'SET_LEGAL_UNIT_QUERY';
@@ -23,7 +24,6 @@ export const SET_LEGAL_UNIT_ERROR_MESSAGE = 'SET_LEGAL_UNIT_ERROR_MESSAGE';
 
 // VAT Search
 export const SET_VAT_RESULTS = 'SET_VAT_RESULTS';
-export const SET_VAT_PERIOD = 'SET_VAT_PERIOD';
 export const SET_VAT_HEADERS = 'SET_VAT_HEADERS';
 export const SENDING_VAT_REQUEST = 'SENDING_VAT_REQUEST';
 export const SET_VAT_QUERY = 'SET_VAT_QUERY';
@@ -31,7 +31,6 @@ export const SET_VAT_ERROR_MESSAGE = 'SET_VAT_ERROR_MESSAGE';
 
 // PAYE Search
 export const SET_PAYE_RESULTS = 'SET_PAYE_RESULTS';
-export const SET_PAYE_PERIOD = 'SET_PAYE_PERIOD';
 export const SET_PAYE_HEADERS = 'SET_PAYE_HEADERS';
 export const SENDING_PAYE_REQUEST = 'SENDING_PAYE_REQUEST';
 export const SET_PAYE_QUERY = 'SET_PAYE_QUERY';
@@ -39,7 +38,6 @@ export const SET_PAYE_ERROR_MESSAGE = 'SET_PAYE_ERROR_MESSAGE';
 
 // CH Search
 export const SET_CH_RESULTS = 'SET_CH_RESULTS';
-export const SET_CH_PERIOD = 'SET_CH_PERIOD';
 export const SET_CH_HEADERS = 'SET_CH_HEADERS';
 export const SENDING_CH_REQUEST = 'SENDING_CH_REQUEST';
 export const SET_CH_QUERY = 'SET_CH_QUERY';
@@ -50,7 +48,6 @@ export const REFS = {
     url: 'Enterprises',
     apiEndpoint: 'ents',
     setResults: SET_ENTERPRISE_RESULTS,
-    setPeriod: SET_ENTERPRISE_PERIOD,
     setHeaders: SET_ENTERPRISE_HEADERS,
     setSending: SENDING_ENTERPRISE_REQUEST,
     setQuery: SET_ENTERPRISE_QUERY,
@@ -60,7 +57,6 @@ export const REFS = {
     url: 'LegalUnits',
     apiEndpoint: 'leus',
     setResults: SET_LEGAL_UNIT_RESULTS,
-    setPeriod: SET_LEGAL_UNIT_PERIOD,
     setHeaders: SET_LEGAL_UNIT_HEADERS,
     setSending: SENDING_LEGAL_UNIT_REQUEST,
     setQuery: SET_LEGAL_UNIT_QUERY,
@@ -70,7 +66,6 @@ export const REFS = {
     url: 'Vats',
     apiEndpoint: 'vats',
     setResults: SET_VAT_RESULTS,
-    setPeriod: SET_VAT_PERIOD,
     setHeaders: SET_VAT_HEADERS,
     setSending: SENDING_VAT_REQUEST,
     setQuery: SET_VAT_QUERY,
@@ -80,7 +75,6 @@ export const REFS = {
     url: 'Payes',
     apiEndpoint: 'payes',
     setResults: SET_PAYE_RESULTS,
-    setPeriod: SET_PAYE_PERIOD,
     setHeaders: SET_PAYE_HEADERS,
     setSending: SENDING_PAYE_REQUEST,
     setQuery: SET_PAYE_QUERY,
@@ -90,7 +84,6 @@ export const REFS = {
     url: 'Companies',
     apiEndpoint: 'crns',
     setResults: SET_CH_RESULTS,
-    setPeriod: SET_CH_PERIOD,
     setHeaders: SET_CH_HEADERS,
     setSending: SENDING_CH_REQUEST,
     setQuery: SET_CH_QUERY,

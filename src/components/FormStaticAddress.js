@@ -13,16 +13,14 @@ const FormStaticAddress = ({ id, label, address1, address2, address3, address4, 
         {label}
       </Col>
       <Col sm={6}>
-        <FormControl.Static>
-          {
-            addressArr.map((addressItem) => {
-              if (addressItem !== '' && addressItem !== undefined) {
-                return (<div>{addressItem}<br /></div>);
-              }
-              return null;
-            })
-          }
-        </FormControl.Static>
+        {
+          addressArr.map((addressItem) => {
+            if (addressItem !== '' && addressItem !== undefined) {
+              return (<FormControl.Static key={`${id}-${addressItem}`} style={{ padding: '0px' }}>{addressItem}</FormControl.Static>);
+            }
+            return null;
+          })
+        }
       </Col>
     </FormGroup>
   );

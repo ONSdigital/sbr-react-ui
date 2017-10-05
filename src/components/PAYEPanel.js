@@ -137,9 +137,11 @@ const PAYEPanel = function ({ paye, showTreeView, toggleTreeView, goToView }) {
 
 PAYEPanel.propTypes = {
   paye: PropTypes.object.isRequired,
-  showTreeView: PropTypes.number.isRequired,
-  toggleTreeView: PropTypes.func.isRequired,
-  goToView: PropTypes.func.isRequired,
+  // We do not wrap the props below in .isRequired as they are passed in to
+  // PAYEPanel by PanelContainer.
+  showTreeView: PropTypes.number,
+  toggleTreeView: PropTypes.func,
+  goToView: PropTypes.func,
 };
 
 export default PAYEPanel;

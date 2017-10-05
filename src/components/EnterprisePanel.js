@@ -91,9 +91,11 @@ class EnterprisePanel extends React.Component {
 
 EnterprisePanel.propTypes = {
   enterprise: PropTypes.object.isRequired,
-  toggleTreeView: PropTypes.func.isRequired,
-  showTreeView: PropTypes.number.isRequired,
-  goToView: PropTypes.func.isRequired,
+  // We do not wrap the props below in .isRequired as they are passed in to
+  // EnterprisePanel by PanelContainer.
+  toggleTreeView: PropTypes.func,
+  showTreeView: PropTypes.number,
+  goToView: PropTypes.func,
 };
 
 export default EnterprisePanel;

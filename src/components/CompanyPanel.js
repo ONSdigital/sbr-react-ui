@@ -172,9 +172,11 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView, goToView
 
 CompanyPanel.propTypes = {
   company: PropTypes.object.isRequired,
-  showTreeView: PropTypes.number.isRequired,
-  toggleTreeView: PropTypes.func.isRequired,
-  goToView: PropTypes.func.isRequired,
+  // We do not wrap the props below in .isRequired as they are passed in to
+  // CompanyPanel by PanelContainer.
+  showTreeView: PropTypes.number,
+  toggleTreeView: PropTypes.func,
+  goToView: PropTypes.func,
 };
 
 export default CompanyPanel;

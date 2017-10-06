@@ -44,17 +44,17 @@ const auth = {
       return callback(false, { message: 'Server error: request timed out.' });
     });
   },
-  checkToken(username: string, accessToken: string, callback: (success: boolean, data: ?{}) => void) {
+  checkToken(accessToken: string, callback: (success: boolean, data: ?{}) => void) {
     fetch(`${AUTH_URL}/checkToken`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, accessToken }),
+      body: JSON.stringify({ accessToken }),
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {
-          const newAccessToken: string = json.newAccessToken;
+          const newAccessToken: string = json.accessToken;
           const username: string = json.username;
           // const role: string = json.role;
           // Send auth request to save token username pair
@@ -70,14 +70,14 @@ const auth = {
   /**
    * Logs the current user out
    */
-  logout(username: string, accessToken: string, callback: (success: boolean) => void) {
+  logout(accessToken: string, callback: (success: boolean) => void) {
     // const token: string = sessionStorage.token;
     fetch(`${AUTH_URL}/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, accessToken }),
+      body: JSON.stringify({ accessToken }),
     }).then(() => {
       // Whatever the response, log the user out.
       sessionStorage.clear();

@@ -96,7 +96,7 @@ export function login(username, password) {
  */
 export function checkAuth(username, token) {
   return (dispatch) => {
-    auth.checkToken(username, token, (success, data) => {
+    auth.checkToken(token, (success, data) => {
       dispatch(setAuthState(success));
       if (!success) {
         sessionStorage.clear();
@@ -109,10 +109,9 @@ export function checkAuth(username, token) {
         dispatch(getApiInfo());
         dispatch(setUserState({
           username: data.username,
-          accessToken: data.accessToken,
+          accessToken: data.newAccessToken,
         }));
         sessionStorage.setItem('accessToken', data.newAccessToken);
-        sessionStorage.setItem('username', data.username);
       }
     });
   };
@@ -124,7 +123,7 @@ export function checkAuth(username, token) {
 export function logout() {
   return (dispatch) => {
     dispatch(sendingRequest(true));
-    auth.logout(sessionStorage.username, sessionStorage.accessToken, (success) => {
+    auth.logout(sessionStorage.accessToken, (success) => {
       if (success) {
         dispatch(sendingRequest(false));
         dispatch(setAuthState(false));

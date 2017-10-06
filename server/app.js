@@ -40,9 +40,12 @@ const users = {};
 users[ADMIN_USERNAME] = ADMIN_HASHED_PASSWORD;
 users[USER_USERNAME] = USER_HASHED_PASSWORD;
 
-const session = {};
 const startTime = formatDate(new Date());
 const TOKEN_EXPIRE = 60 * 60 * 24;
+
+const RedisSessions = require('redis-sessions');
+const rs = new RedisSessions();
+const rsapp = 'sbr-ui-auth';
 
 /*
  * Call cache(duration) to cache a response for a certain
@@ -124,50 +127,30 @@ app.post('/login', (req, res) => {
      */
     if ((users[username] && bcrypt.compare(password, users[username])) ||
        (users[username] && bcrypt.compare(password, users[username]))) {
-      // Username exists in our fake database (the users object) and password
-      // hash matches
-      // const role = (username === ADMIN_USERNAME) ? 'admin' : 'user';
       // Create a fake apiKey, when deployed this will come from the CA Gateway
       const apiKey = uuidv4();
-      // Create the access token to send back to the user
-      const accessToken = uuidv4();
 
-      // Store username: accessToken in redis, we will use a session variable for now
-      session[username] = accessToken;
-
-      res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify({
-        username,
-        accessToken
-      }));
+      // User is authenticated, so create a user session
+      rs.create({
+        app: rsapp,
+        id: username,
+        ip: req.connection.remoteAddress,
+        ttl: 10,
+        d: { apiKey }
+      }, (err, resp) => {
+        if (err) {
+          res.sendStatus(500);
+        }
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify({
+          username,
+          accessToken: resp.token
+        }));
+      });
     } else {
       // Return 401 NOT AUTHORIZED if incorrect username/password
       res.sendStatus(401);
     }
-
-    // if ((username === ADMIN_USERNAME && password === ADMIN_PASSWORD)
-    //   || (username === USER_USERNAME && password === USER_PASSWORD)) {
-    //   const apiKey = 'API Key';
-
-    //   let role = 'user';
-    //   if (username === ADMIN_USERNAME) {
-    //     role = 'admin';
-    //   }
-
-    //   const payload = { username, role, apiKey };
-    //   const jToken = jwt.sign(payload, SECRET, {
-    //     expiresIn: TOKEN_EXPIRE
-    //   });
-
-    //   // Add user to key:value json store
-    //   users[jToken] = { username, role };
-
-    //   res.setHeader('Content-Type', 'application/json');
-    //   res.send(JSON.stringify({ jToken, username, role }));
-    // } else {
-    //   // Return 401 NOT AUTHORIZED if incorrect username/password
-    //   res.sendStatus(401);
-    // }
   } else if (ENV === 'deployed') {
     /*
      * For the deployed environment, the username/password is sent off to the
@@ -181,31 +164,36 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/checkToken', (req, res) => {
-  const username = req.body.username;
   const accessToken = req.body.accessToken;
-
-  // Eventually, the below will check redis and not the session variable
-  if (session[username] === accessToken) {
-    // If the users token is present and valid, create a new token and store it
-    const newAccessToken = uuidv4();
-    session[username] = newAccessToken;
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({ username, newAccessToken }));
-  } else {
-    res.sendStatus(401);
-  }
+  rs.get({
+    app: rsapp,
+    token: accessToken
+  }, (err, resp) => {
+    if (err) {
+      res.sendStatus(401);
+    } else if (Object.keys(resp).length === 0 && resp.constructor === Object) {
+      // If the session has timed out, the response will be empty
+      res.sendStatus(401);
+    } else {
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify({ username: resp.id, accessToken }));
+    }
+  });
 });
 
 app.post('/logout', (req, res) => {
-  const username = req.body.username;
   const accessToken = req.body.accessToken;
-  // Remove user from storage
-  if (session[username] === accessToken) {
-    delete session[username];
+
+  // Kill the user session
+  rs.kill({
+    app: rsapp,
+    token: accessToken
+  }, (err, resp) => {
+    if (err) {
+      res.sendStatus(401);
+    }
     res.sendStatus(200);
-  } else {
-    res.sendStatus(401);
-  }
+  });
 });
 
 module.exports = app;

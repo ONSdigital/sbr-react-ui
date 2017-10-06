@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, Form, Grid, Row, Col, Glyphicon } from 'react-bootstrap';
+import { Panel, Form, Grid, Row, Col } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { formVatJson } from '../utils/formJson';
 import FormStaticValue from '../components/FormStaticValue';
@@ -78,7 +78,6 @@ const VATPanel = function ({ vat, showTreeView, toggleTreeView, goToView }) {
     }
     return dataView;
   }
-  const footer = (<p style={{ margin: '0px', padding: '0px' }}>Last updated by: <Glyphicon glyph="user" />&nbsp; placeholder</p>);
   return (
     <div id="bootstrap-container" style={{ height: '100%' }}>
       <div className="bootstrap-iso" style={{ height: '95%' }}>
@@ -86,7 +85,7 @@ const VATPanel = function ({ vat, showTreeView, toggleTreeView, goToView }) {
           {panelContent()}
         </Panel>
       </div>
-      <button style={{ marginTop: '20px' }} className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" onClick={() => browserHistory.push('/RefSearch')} bsStyle="info">
+      <button style={{ marginTop: '20px' }} className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" onClick={() => browserHistory.push('/RefSearch')}>
         Return to search
       </button>
     </div>
@@ -95,9 +94,11 @@ const VATPanel = function ({ vat, showTreeView, toggleTreeView, goToView }) {
 
 VATPanel.propTypes = {
   vat: PropTypes.object.isRequired,
-  showTreeView: PropTypes.number.isRequired,
-  toggleTreeView: PropTypes.func.isRequired,
-  goToView: PropTypes.func.isRequired,
+  // We do not wrap the props below in .isRequired as they are passed in to
+  // VATPanel by PanelContainer.
+  showTreeView: PropTypes.number,
+  toggleTreeView: PropTypes.func,
+  goToView: PropTypes.func,
 };
 
 export default VATPanel;

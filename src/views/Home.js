@@ -56,7 +56,7 @@ const Home = ({ username, role, uiVersion, apiVersion }) => {
               <div className="padding-left--1 padding-right--1 padding-top--2 padding-bottom--1">
                 <div className="box__content box__content--homepage height-sm--19 height-md--19 height-md--44 padding-top-lg--17 padding-top-md--17">
                   <br /><br /><br />
-                  <h2 className="tiles__title tiles__title-h2--home"><Link to="/RefSearch"><a>Reference Search</a></Link></h2>
+                  <h2 className="tiles__title tiles__title-h2--home"><Link to="/RefSearch">Reference Search</Link></h2>
                   <span className="image-holder hide--sm width-lg--12 width-md--12"><Link to="/RefSearch"><img src={RefSearchImage} style={{ width: '200px' }} alt="" className="no-border" /></Link></span>
                   <p className="margin-top-lg--1 margin-top-md--1">Search for a reference (VAT, Company House, UBRN) and explore the data</p>
                 </div>

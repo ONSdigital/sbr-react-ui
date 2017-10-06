@@ -5,7 +5,6 @@ import { Glyphicon, Button, ButtonToolbar, Row, Col } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
 import { getSpecificUnitType, changePeriod } from '../actions/ApiActions';
 import periods from '../config/periods';
-import { REFS, SET_PERIOD } from '../constants/ApiConstants';
 
 class PanelTitle extends React.Component {
   constructor(props) {

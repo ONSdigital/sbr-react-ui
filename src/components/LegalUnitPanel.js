@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, Form, Label, Tabs, Tab, Grid, Row, Col, Nav, NavItem, Glyphicon } from 'react-bootstrap';
+import { Panel, Form, Label, Tab, Grid, Row, Col, Nav, NavItem } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { getChildValues } from '../utils/helperMethods';
 import ChildrenTable from '../components/ChildrenTable';
@@ -106,12 +106,11 @@ const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView, goTo
       goToTreeView2={() => goToView(2)}
       goToEditView={() => goToView(3)}
       name={legalUnit.vars.businessName}
-      id={legalUnit.vars.id}
+      id={legalUnit.vars.id.toString()}
       accessor="legalUnit"
       unitType="LEU"
     />
   );
-  const footer = (<p style={{ margin: '0px', padding: '0px' }}>Last updated by: <Glyphicon glyph="user" />&nbsp; placeholder</p>);
   return (
     <div id="bootstrap-container" style={{ height: '100%' }}>
       <div className="bootstrap-iso" style={{ height: '95%' }}>
@@ -128,9 +127,11 @@ const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView, goTo
 
 LegalUnitPanel.propTypes = {
   legalUnit: PropTypes.object.isRequired,
-  showTreeView: PropTypes.number.isRequired,
-  toggleTreeView: PropTypes.func.isRequired,
-  goToView: PropTypes.func.isRequired,
+  // We do not wrap the props below in .isRequired as they are passed in to
+  // LegalUnitPanel by PanelContainer.
+  showTreeView: PropTypes.number,
+  toggleTreeView: PropTypes.func,
+  goToView: PropTypes.func,
 };
 
 export default LegalUnitPanel;

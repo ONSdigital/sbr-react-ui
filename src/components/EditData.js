@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Stepper from 'react-stepper-horizontal';
-import { Alert, Glyphicon } from 'react-bootstrap';
+import { Glyphicon } from 'react-bootstrap';
 import Button from 'react-bootstrap-button-loader';
 import Loader from 'halogen/PulseLoader';
 import { editEnterprise } from '../actions/EditActions';
@@ -33,6 +33,7 @@ class EditData extends React.Component {
     const entName = JSON.parse(JSON.stringify(this.props.data.vars.ent_name));
     // On mount, form the json to pass into the EditDataForm component
     const formValues = {};
+    /* eslint array-callback-return: "off" */
     this.props.editableFields.map((data) => {
       formValues[data.accessor] = { data: getValueByKey(this.props.data.vars, data.accessor), accessor: data.accessor };
     });
@@ -78,7 +79,7 @@ class EditData extends React.Component {
     const nextButton = (hasFormChanged(this.props.data, this.state.formValues)) ? (<button aria-label="Next Button" onClick={() => this.next()} style={{ color: 'white' }} type="submit" className="btn btn--primary btn--wide" id="nav-search-submit">Next</button>) : noChangesAlert;
     const spinner = (<Loader color="#FFFFFF" size="10px" margin="0px" />);
     const buttonContent = (false) ? spinner : 'Submit Changes';
-    const submitButton = (<button aria-label="Search reference button" disabled={this.state.submitted || this.props.edit.currentlySending} onClick={this.submit} style={{ color: 'white' }} loading={this.props.edit.currentlySending} type="submit" className="btn btn--primary btn--wide pull-right" id="nav-search-submit">{buttonContent}</button>);
+    const submitButton = (<button aria-label="Search reference button" disabled={this.state.submitted || this.props.edit.currentlySending} onClick={this.submit} style={{ color: 'white' }} type="submit" className="btn btn--primary btn--wide pull-right" id="nav-search-submit">{buttonContent}</button>);
     const nextOrSubmitButton = (this.state.activeStep === 1) ? submitButton : nextButton;
     const alertStyle = (this.props.edit.headers.status === 200) ? 'success' : 'danger';
     const alertStrong = (this.props.edit.headers.status === 200) ? 'Success!' : 'Error.';

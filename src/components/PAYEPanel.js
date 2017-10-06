@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, Table, Form, Glyphicon, Grid, Row, Col } from 'react-bootstrap';
-import { TableHeaderColumn } from 'react-bootstrap-table';
+import { Panel, Table, Form, Grid, Row, Col } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { formPayeJson } from '../utils/formJson';
 import FormStaticValue from '../components/FormStaticValue';
@@ -14,6 +13,7 @@ import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
 
 const PAYEPanel = function ({ paye, showTreeView, toggleTreeView, goToView }) {
+  const json = formPayeJson(paye);
   function panelContent() {
     let dataView = (
       <Grid>
@@ -32,14 +32,14 @@ const PAYEPanel = function ({ paye, showTreeView, toggleTreeView, goToView }) {
               <FormLink id="formCRN" label="CRN" value={json.crn} unitType="CH" />
               <Table condensed hover>
                 <thead>
-                  <TableHeaderColumn colSpan="6">Employees</TableHeaderColumn>
+                  <tr colSpan="6"><td><strong>Employees</strong></td></tr>
                   <tr>
-                    <th>FTE (M)</th>
-                    <th>FTE (F)</th>
-                    <th>FTE (U)</th>
-                    <th>SE (M)</th>
-                    <th>SE (F)</th>
-                    <th>SE (U)</th>
+                    <td>FTE (M)</td>
+                    <td>FTE (F)</td>
+                    <td>FTE (U)</td>
+                    <td>SE (M)</td>
+                    <td>SE (F)</td>
+                    <td>SE (U)</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -55,12 +55,12 @@ const PAYEPanel = function ({ paye, showTreeView, toggleTreeView, goToView }) {
               </Table>
               <Table condensed hover>
                 <thead>
-                  <TableHeaderColumn colSpan="4">Jobs ({json.jobs_lastupd})</TableHeaderColumn>
+                  <tr colSpan="4"><td><strong>Jobs ({json.jobs_lastupd})</strong></td></tr>
                   <tr>
-                    <th>Mar</th>
-                    <th>Jun</th>
-                    <th>Sep</th>
-                    <th>Dec</th>
+                    <td>Mar</td>
+                    <td>Jun</td>
+                    <td>Sep</td>
+                    <td>Dec</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -107,7 +107,6 @@ const PAYEPanel = function ({ paye, showTreeView, toggleTreeView, goToView }) {
     }
     return dataView;
   }
-  const json = formPayeJson(paye);
   const title = (
     <PanelTitle
       toggle={() => toggleTreeView('PAYE', paye.parents.ENT)}
@@ -121,7 +120,6 @@ const PAYEPanel = function ({ paye, showTreeView, toggleTreeView, goToView }) {
       unitType="PAYE"
     />
   );
-  const footer = (<p style={{ margin: '0px', padding: '0px' }}>Last updated by: <Glyphicon glyph="user" />&nbsp; placeholder</p>);
   return (
     <div id="bootstrap-container" style={{ height: '100%' }}>
       <div className="bootstrap-iso" style={{ height: '95%' }}>
@@ -129,7 +127,7 @@ const PAYEPanel = function ({ paye, showTreeView, toggleTreeView, goToView }) {
           {panelContent()}
         </Panel>
       </div>
-      <button style={{ marginTop: '20px' }} className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" onClick={() => browserHistory.push('/RefSearch')} bsStyle="info">
+      <button style={{ marginTop: '20px' }} className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" onClick={() => browserHistory.push('/RefSearch')}>
         Return to search
       </button>
     </div>
@@ -138,9 +136,11 @@ const PAYEPanel = function ({ paye, showTreeView, toggleTreeView, goToView }) {
 
 PAYEPanel.propTypes = {
   paye: PropTypes.object.isRequired,
-  showTreeView: PropTypes.number.isRequired,
-  toggleTreeView: PropTypes.func.isRequired,
-  goToView: PropTypes.func.isRequired,
+  // We do not wrap the props below in .isRequired as they are passed in to
+  // PAYEPanel by PanelContainer.
+  showTreeView: PropTypes.number,
+  toggleTreeView: PropTypes.func,
+  goToView: PropTypes.func,
 };
 
 export default PAYEPanel;

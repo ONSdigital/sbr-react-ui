@@ -16,12 +16,13 @@
           "component": false,
           "html": false
         }],
-        "arrow-body-style": ["error", "always"],
         "global-require": "off",
         "class-methods-use-this": "off",
         "func-names": "off",
         "react/forbid-prop-types": "off",
-        "arrow-body-style": "off"
+        "arrow-body-style": "off",
+        "no-return-assign": "off",
+        "arrow-parens": "off"
     },
     "env": {
       "browser": true

@@ -25,7 +25,7 @@ const TitleAndDescription = ({ title, description, marginBottom }) => {
 TitleAndDescription.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  marginBottom: PropTypes.string.isRequired,
+  marginBottom: PropTypes.number.isRequired,
 };
 
 export default TitleAndDescription;

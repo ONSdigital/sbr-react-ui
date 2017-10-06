@@ -97,7 +97,7 @@ export function getHeight(noOfItems: number) {
 export function findAndReplace(object: {}, value: string, replacevalue: string) {
   for (var x in object) {
     if (object.hasOwnProperty(x)) {
-      if (typeof object[x] == 'object') {
+      if (typeof object[x] === 'object') {
         findAndReplace(object[x], value, replacevalue);
       }
       if (object[value]) {
@@ -129,6 +129,7 @@ export function colourNode(node, id, index, searchTerm, colour, entryNode) {
 
 export function editFormat(edits) {
   const editObj = {};
+  /* eslint array-callback-return: "off" */
   edits.map((edit) => {
     editObj[edit.accessor] = edit.updated;
   });

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Label, Form, Tabs, Tab, Grid, Row, Col, NavItem, Nav } from 'react-bootstrap';
+import { Label, Form, Tab, Grid, Row, Col, NavItem, Nav } from 'react-bootstrap';
 import { getLegalStatusDescription } from '../utils/helperMethods';
 import FormStaticValue from '../components/FormStaticValue';
 import FormStaticAddress from '../components/FormStaticAddress';

@@ -43,7 +43,7 @@ const Footer = function () {
               </div>
               <div className="col col--lg-one-third col--md-one-third">
                 <h3 className="footer-nav__heading">Connect with us</h3>
-                <ul className="footer-nav__list" style={footerMailToStyle} onClick={() => window.location.href = 'mailto:statistical.business.register@ons.gov.uk?subject=SBR&body=message%20goes%20here'}>
+                <ul className="footer-nav__list" style={footerMailToStyle} onClick={() => (window.location.href = 'mailto:statistical.business.register@ons.gov.uk?subject=SBR&body=message%20goes%20here')}>
                   statistical.business.register@ons.gov.uk
                 </ul>
               </div>

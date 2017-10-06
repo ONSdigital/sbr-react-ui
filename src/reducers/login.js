@@ -19,6 +19,7 @@ const assign = Object.assign || require('object.assign');
 // The initial application state
 const initialState = {
   username: '',
+  accessToken: '',
   role: '',
   apiKey: '',
   currentlySending: false,

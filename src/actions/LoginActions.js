@@ -24,6 +24,8 @@
  */
 
 import { browserHistory } from 'react-router';
+import bcrypt from 'bcryptjs';
+import genSalt from '../utils/salt';
 import { SET_AUTH, USER_LOGOUT, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/LoginConstants';
 import * as errorMessages from '../constants/MessageConstants';
 import auth from '../utils/auth';
@@ -46,32 +48,45 @@ export function login(username, password) {
       return;
     }
 
-    auth.login(username, password, (success, data) => {
-      // When the request is finished, hide the loading indicator
-      dispatch(sendingRequest(false));
-      dispatch(setAuthState(success));
-      if (success) {
-        // If the login worked, forward the user to the dashboard and clear the form
-        dispatch(setUserState({
-          username,
-          role: data.role,
-          apiKey: data.apiKey,
-        }));
-        dispatch(getUiInfo());
-        dispatch(getApiInfo());
-        forwardTo('/Home');
-      } else {
-        switch (data.type) {
-          case 'user-doesnt-exist':
-            dispatch(setErrorMessage(errorMessages.USER_NOT_FOUND));
-            return;
-          case 'password-wrong':
-            dispatch(setErrorMessage(errorMessages.WRONG_PASSWORD));
-            return;
-          default:
-            dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
-        }
+    // Generate salt for password encryption
+    const salt = genSalt(username);
+
+    // Encrypt password
+    bcrypt.hash(password, salt, (err, hash) => {
+      // Something went wrong while hashing
+      if (err) {
+        dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
+        return;
       }
+      auth.login(username, hash, (success, data) => {
+        // When the request is finished, hide the loading indicator
+        dispatch(sendingRequest(false));
+        dispatch(setAuthState(success));
+        if (success) {
+          // If the login worked, forward the user to the dashboard and clear the form
+          dispatch(setUserState({
+            username,
+            // role: data.role,
+            accessToken: data.accessToken,
+          }));
+          sessionStorage.setItem('accessToken', data.accessToken);
+          sessionStorage.setItem('username', username);
+          dispatch(getUiInfo());
+          dispatch(getApiInfo());
+          forwardTo('/Home');
+        } else {
+          switch (data.type) {
+            case 'user-doesnt-exist':
+              dispatch(setErrorMessage(errorMessages.USER_NOT_FOUND));
+              return;
+            case 'password-wrong':
+              dispatch(setErrorMessage(errorMessages.WRONG_PASSWORD));
+              return;
+            default:
+              dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
+          }
+        }
+      });
     });
   };
 }
@@ -79,9 +94,9 @@ export function login(username, password) {
 /**
  * Check the users token
  */
-export function checkAuth(token) {
+export function checkAuth(username, token) {
   return (dispatch) => {
-    auth.checkToken(token, (success, data) => {
+    auth.checkToken(username, token, (success, data) => {
       dispatch(setAuthState(success));
       if (!success) {
         sessionStorage.clear();
@@ -94,8 +109,10 @@ export function checkAuth(token) {
         dispatch(getApiInfo());
         dispatch(setUserState({
           username: data.username,
-          role: data.role,
+          accessToken: data.accessToken,
         }));
+        sessionStorage.setItem('accessToken', data.newAccessToken);
+        sessionStorage.setItem('username', data.username);
       }
     });
   };
@@ -107,8 +124,8 @@ export function checkAuth(token) {
 export function logout() {
   return (dispatch) => {
     dispatch(sendingRequest(true));
-    auth.logout((success) => {
-      if (success === true) {
+    auth.logout(sessionStorage.username, sessionStorage.accessToken, (success) => {
+      if (success) {
         dispatch(sendingRequest(false));
         dispatch(setAuthState(false));
         localStorage.clear();

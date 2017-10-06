@@ -14,6 +14,9 @@ const version = require('./package.json').version;
 const formatDate = require('./formatDate.js');
 const compression = require('compression');
 const mcache = require('memory-cache');
+const bcrypt = require('bcryptjs');
+const genSalt = require('./salt.js');
+const uuidv4 = require('uuid/v4');
 
 // To allow hot-reloading, the node server only serves the React.js index.html
 // in the /build file if SERVE_HTML is true
@@ -27,7 +30,17 @@ const USER_USERNAME = process.env.SBR_UI_TEST_USER_USERNAME;
 const USER_PASSWORD = process.env.SBR_UI_TEST_USER_PASSWORD;
 const SECRET = process.env.JWT_SECRET;
 
-const users = {}; // For the user sessions
+// Generate salt for password encryption
+const ADMIN_SALT = genSalt(ADMIN_USERNAME);
+const USER_SALT = genSalt(USER_USERNAME);
+const ADMIN_HASHED_PASSWORD = bcrypt.hashSync(ADMIN_PASSWORD, ADMIN_SALT);
+const USER_HASHED_PASSWORD = bcrypt.hashSync(USER_PASSWORD, USER_SALT);
+
+const users = {};
+users[ADMIN_USERNAME] = ADMIN_HASHED_PASSWORD;
+users[USER_USERNAME] = USER_HASHED_PASSWORD;
+
+const session = {};
 const startTime = formatDate(new Date());
 const TOKEN_EXPIRE = 60 * 60 * 24;
 
@@ -109,29 +122,52 @@ app.post('/login', (req, res) => {
      * username:hashed/salted(role,apiKey)
      *
      */
-    if ((username === ADMIN_USERNAME && password === ADMIN_PASSWORD)
-      || (username === USER_USERNAME && password === USER_PASSWORD)) {
-      const apiKey = 'API Key';
+    if ((users[username] && bcrypt.compare(password, users[username])) ||
+       (users[username] && bcrypt.compare(password, users[username]))) {
+      // Username exists in our fake database (the users object) and password
+      // hash matches
+      // const role = (username === ADMIN_USERNAME) ? 'admin' : 'user';
+      // Create a fake apiKey, when deployed this will come from the CA Gateway
+      const apiKey = uuidv4();
+      // Create the access token to send back to the user
+      const accessToken = uuidv4();
 
-      let role = 'user';
-      if (username === ADMIN_USERNAME) {
-        role = 'admin';
-      }
-
-      const payload = { username, role, apiKey };
-      const jToken = jwt.sign(payload, SECRET, {
-        expiresIn: TOKEN_EXPIRE
-      });
-
-      // Add user to key:value json store
-      users[jToken] = { username, role };
+      // Store username: accessToken in redis, we will use a session variable for now
+      session[username] = accessToken;
 
       res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify({ jToken, username, role }));
+      res.send(JSON.stringify({
+        username,
+        accessToken
+      }));
     } else {
       // Return 401 NOT AUTHORIZED if incorrect username/password
       res.sendStatus(401);
     }
+
+    // if ((username === ADMIN_USERNAME && password === ADMIN_PASSWORD)
+    //   || (username === USER_USERNAME && password === USER_PASSWORD)) {
+    //   const apiKey = 'API Key';
+
+    //   let role = 'user';
+    //   if (username === ADMIN_USERNAME) {
+    //     role = 'admin';
+    //   }
+
+    //   const payload = { username, role, apiKey };
+    //   const jToken = jwt.sign(payload, SECRET, {
+    //     expiresIn: TOKEN_EXPIRE
+    //   });
+
+    //   // Add user to key:value json store
+    //   users[jToken] = { username, role };
+
+    //   res.setHeader('Content-Type', 'application/json');
+    //   res.send(JSON.stringify({ jToken, username, role }));
+    // } else {
+    //   // Return 401 NOT AUTHORIZED if incorrect username/password
+    //   res.sendStatus(401);
+    // }
   } else if (ENV === 'deployed') {
     /*
      * For the deployed environment, the username/password is sent off to the
@@ -145,30 +181,31 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/checkToken', (req, res) => {
-  const token = req.body.token;
-  if (users[token] !== undefined) {
-    jwt.verify(token, SECRET, (err) => {
-      if (err) {
-        delete users[token];
-        res.sendStatus(401);
-      } else {
-        const decode = jwtDecode(token);
-        const username = decode.username;
-        const role = decode.role;
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({ token, username, role }));
-      }
-    });
+  const username = req.body.username;
+  const accessToken = req.body.accessToken;
+
+  // Eventually, the below will check redis and not the session variable
+  if (session[username] === accessToken) {
+    // If the users token is present and valid, create a new token and store it
+    const newAccessToken = uuidv4();
+    session[username] = newAccessToken;
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({ username, newAccessToken }));
   } else {
     res.sendStatus(401);
   }
 });
 
 app.post('/logout', (req, res) => {
-  const token = req.body.token;
+  const username = req.body.username;
+  const accessToken = req.body.accessToken;
   // Remove user from storage
-  delete users[token];
-  res.sendStatus(200);
+  if (session[username] === accessToken) {
+    delete session[username];
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(401);
+  }
 });
 
 module.exports = app;

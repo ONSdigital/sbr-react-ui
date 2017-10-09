@@ -12,10 +12,10 @@ const myParser = require('body-parser');
 const version = require('./package.json').version;
 const formatDate = require('./formatDate.js');
 const compression = require('compression');
-const request = require('request');
 const urls = require('../server/config/urls');
 const RedisSessions = require('redis-sessions');
 const cache = require('../server/cache');
+const rp = require('request-promise');
 
 const ENV = process.env.ENV;
 const SERVE_HTML = (process.env.SERVE_HTML === 'true');
@@ -66,90 +66,89 @@ app.post('/login', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  // TODO: refactor below to use promises rather than callbacks
-  callApiGateway(username, password, (apiSuccess, apiData) => {
-    if (apiSuccess) {
-      createRedisSession(username, req.connection.remoteAddress, apiData.key, (sessionSuccess, sessionData) => {
-        if (sessionSuccess) {
+  const options = {
+    method: 'POST',
+    uri: urls.AUTH_URL,
+    headers: { 'content-type': 'application/json' },
+    json: true,
+    body: { username, password }
+  };
+
+  rp(options)
+    .then((gatewayJson) => {
+      createRedisSession(username, req.connection.remoteAddress, gatewayJson.key)
+        .then((sessionJson) => {
           res.setHeader('Content-Type', 'application/json');
           return res.send(JSON.stringify({
             username,
-            accessToken: sessionData.accessToken,
-            role: apiData.role
+            accessToken: sessionJson.accessToken,
+            role: gatewayJson.role
           }));
-        }
-        return res.sendStatus(500);
-      });
-    } else {
-      return res.sendStatus(401);
-    }
-  });
+        })
+        .catch((err) => res.sendStatus(err.statusCode));
+    })
+    .catch((err) => {
+      return res.sendStatus(err.statusCode);
+    });
 });
 
 app.post('/checkToken', (req, res) => {
   const accessToken = req.body.accessToken;
-  rs.get({
-    app: rsapp,
-    token: accessToken
-  }, (err, resp) => {
-    if (err) {
-      res.sendStatus(401);
-    } else if (Object.keys(resp).length === 0 && resp.constructor === Object) {
-      // If the session has timed out, the response will be empty
-      res.sendStatus(401);
-    } else {
-      res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify({ username: resp.id, accessToken }));
-    }
-  });
+
+  getRedisSession(accessToken)
+  .then((json) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({ username: json.username, accessToken }));
+  })
+  .catch(() => res.sendStatus(401));
 });
 
 app.post('/logout', (req, res) => {
   const accessToken = req.body.accessToken;
 
-  // Kill the user session
-  rs.kill({
-    app: rsapp,
-    token: accessToken
-  }, (err, resp) => {
-    if (err) {
-      res.sendStatus(401);
-    }
-    res.sendStatus(200);
-  });
+  killRedisSession(accessToken)
+  .then(() => res.sendStatus(200))
+  .catch(() => res.sendStatus(401));
 });
 
-function createRedisSession(username, remoteAddress, key, callback) {
-  rs.create({
-    app: rsapp,
-    id: username,
-    ip: remoteAddress,
-    ttl: SESSION_EXPIRE,
-    d: { key }
-  }, (err, resp) => {
-    if (!err) {
-      return callback(true, { accessToken: resp.token });
-    }
-    return callback(false, { error: err });
+function createRedisSession(username, remoteAddress, key) {
+  return new Promise((resolve, reject) => {
+    rs.create({
+      app: rsapp,
+      id: username,
+      ip: remoteAddress,
+      ttl: SESSION_EXPIRE,
+      d: { key }
+    }, (err, resp) => {
+      if (!err) resolve({ accessToken: resp.token });
+      reject({ error: err });
+    });
   });
 }
 
-function callApiGateway(username, password, callback) {
-  request.post({
-    headers: { 'content-type': 'application/json' },
-    url: urls.AUTH_URL,
-    body: JSON.stringify({
-      username,
-      password
-    })
-  }, (error, response, body) => {
-    if (!error && response.statusCode === 200) {
-      const requestBody = JSON.parse(body);
-      const key = requestBody.key;
-      const role = requestBody.role;
-      return callback(true, { key, role });
-    }
-    return callback(false, { error });
+function getRedisSession(accessToken) {
+  return new Promise((resolve, reject) => {
+    rs.get({
+      app: rsapp,
+      token: accessToken
+    }, (err, resp) => {
+      if (err) reject();
+      // If the session has timed out, the response will be empty
+      if (Object.keys(resp).length === 0 && resp.constructor === Object) reject()
+      resolve({ username: resp.id, accessToken });
+    });
+  });
+}
+
+function killRedisSession(accessToken) {
+  return new Promise((resolve, reject) => {
+    rs.kill({
+      app: rsapp,
+      token: accessToken
+    }, (err) => {
+      if (!err) resolve();
+      reject();
+    });
   });
 }
 

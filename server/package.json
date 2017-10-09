@@ -17,7 +17,8 @@
     "bcryptjs": "^2.4.3",
     "uuid": "^3.1.0",
     "redis-sessions": "^1.2.0",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "request-promise": "^4.2.2"
   },
   "engines": {
     "node": "5.10.1",

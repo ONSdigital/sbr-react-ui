@@ -70,7 +70,7 @@ app.post('/login', (req, res) => {
   const options = {
     method: 'POST',
     uri: urls.AUTH_URL,
-    timrout: timeouts.API_GW,
+    timeout: timeouts.API_GW,
     headers: { 'content-type': 'application/json' },
     json: true,
     body: { username, password }
@@ -87,10 +87,11 @@ app.post('/login', (req, res) => {
             role: gatewayJson.role
           }));
         })
-        .catch((err) => res.sendStatus(err.statusCode));
+        .catch(() => res.sendStatus(200));
     })
     .catch((err) => {
-      return res.sendStatus(err.statusCode);
+      if (err.statusCode) return res.sendStatus(err.statusCode);
+      return res.sendStatus(504); // Timeout
     });
 });
 

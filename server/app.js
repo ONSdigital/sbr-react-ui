@@ -3,75 +3,26 @@
 // Rule exceptions:
 /* eslint strict: "off" */
 /* eslint comma-dangle: ["error", "never"] */
+/* eslint no-console: "off" */
 
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const myParser = require('body-parser');
-const jwt = require('jsonwebtoken');
-const jwtDecode = require('jwt-decode');
 const version = require('./package.json').version;
 const formatDate = require('./formatDate.js');
 const compression = require('compression');
-const mcache = require('memory-cache');
-const bcrypt = require('bcryptjs');
-const genSalt = require('./salt.js');
-const uuidv4 = require('uuid/v4');
+const request = require('request');
+const urls = require('../server/config/urls');
+const RedisSessions = require('redis-sessions');
+const cache = require('../server/cache');
 
-// To allow hot-reloading, the node server only serves the React.js index.html
-// in the /build file if SERVE_HTML is true
 const ENV = process.env.ENV;
 const SERVE_HTML = (process.env.SERVE_HTML === 'true');
-
-// Get the admin/user credentials from environment variables
-const ADMIN_USERNAME = process.env.SBR_UI_TEST_ADMIN_USERNAME;
-const ADMIN_PASSWORD = process.env.SBR_UI_TEST_ADMIN_PASSWORD;
-const USER_USERNAME = process.env.SBR_UI_TEST_USER_USERNAME;
-const USER_PASSWORD = process.env.SBR_UI_TEST_USER_PASSWORD;
-const SECRET = process.env.JWT_SECRET;
-
-// Generate salt for password encryption
-const ADMIN_SALT = genSalt(ADMIN_USERNAME);
-const USER_SALT = genSalt(USER_USERNAME);
-const ADMIN_HASHED_PASSWORD = bcrypt.hashSync(ADMIN_PASSWORD, ADMIN_SALT);
-const USER_HASHED_PASSWORD = bcrypt.hashSync(USER_PASSWORD, USER_SALT);
-
-const users = {};
-users[ADMIN_USERNAME] = ADMIN_HASHED_PASSWORD;
-users[USER_USERNAME] = USER_HASHED_PASSWORD;
-
 const startTime = formatDate(new Date());
-const TOKEN_EXPIRE = 60 * 60 * 24;
-
-const RedisSessions = require('redis-sessions');
+const SESSION_EXPIRE = 60 * 60 * 8;
 const rs = new RedisSessions();
 const rsapp = 'sbr-ui-auth';
-
-/*
- * Call cache(duration) to cache a response for a certain
- * duration, or an unlimited duration if no duration is passed in.
-*/
-const cache = (duration) => {
-  return (req, res, next) => {
-    const url = (req.originalUrl || req.url);
-    const key = `__express__${url}`;
-    const cachedBody = mcache.get(key);
-    if (cachedBody) {
-      res.send(cachedBody);
-      return;
-    }
-    res.sendResponse = res.send;
-    res.send = (body) => {
-      if (duration === undefined) {
-        mcache.put(key, body);
-      } else {
-        mcache.put(key, body, duration);
-      }
-      res.sendResponse(body);
-    };
-    next();
-  };
-};
 
 const app = express();
 
@@ -115,52 +66,24 @@ app.post('/login', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  if (ENV === 'local') {
-    /*
-     * For local environment, need to compare username/password against
-     * environment variables. If the provided username/password is correct, a
-     * new key:value pair is added to the 'users' variable.
-     *
-     * key:value
-     * username:hashed/salted(role,apiKey)
-     *
-     */
-    if ((users[username] && bcrypt.compare(password, users[username])) ||
-       (users[username] && bcrypt.compare(password, users[username]))) {
-      // Create a fake apiKey, when deployed this will come from the CA Gateway
-      const apiKey = uuidv4();
-
-      // User is authenticated, so create a user session
-      rs.create({
-        app: rsapp,
-        id: username,
-        ip: req.connection.remoteAddress,
-        ttl: 60 * 60 * 8,
-        d: { apiKey }
-      }, (err, resp) => {
-        if (err) {
-          res.sendStatus(500);
+  // TODO: refactor below to use promises rather than callbacks
+  callApiGateway(username, password, (apiSuccess, apiData) => {
+    if (apiSuccess) {
+      createRedisSession(username, req.connection.remoteAddress, apiData.key, (sessionSuccess, sessionData) => {
+        if (sessionSuccess) {
+          res.setHeader('Content-Type', 'application/json');
+          return res.send(JSON.stringify({
+            username,
+            accessToken: sessionData.accessToken,
+            role: apiData.role
+          }));
         }
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({
-          username,
-          accessToken: resp.token
-        }));
+        return res.sendStatus(500);
       });
     } else {
-      // Return 401 NOT AUTHORIZED if incorrect username/password
-      res.sendStatus(401);
+      return res.sendStatus(401);
     }
-  } else if (ENV === 'deployed') {
-    /*
-     * For the deployed environment, the username/password is sent off to the
-     * gateway, which will return 200 OK for a correct username/password or
-     * 401 UNAUTHORIZED if they are incorrect.
-     *
-     *
-     *
-     */
-  }
+  });
 });
 
 app.post('/checkToken', (req, res) => {
@@ -195,5 +118,39 @@ app.post('/logout', (req, res) => {
     res.sendStatus(200);
   });
 });
+
+function createRedisSession(username, remoteAddress, key, callback) {
+  rs.create({
+    app: rsapp,
+    id: username,
+    ip: remoteAddress,
+    ttl: SESSION_EXPIRE,
+    d: { key }
+  }, (err, resp) => {
+    if (!err) {
+      return callback(true, { accessToken: resp.token });
+    }
+    return callback(false, { error: err });
+  });
+}
+
+function callApiGateway(username, password, callback) {
+  request.post({
+    headers: { 'content-type': 'application/json' },
+    url: urls.AUTH_URL,
+    body: JSON.stringify({
+      username,
+      password
+    })
+  }, (error, response, body) => {
+    if (!error && response.statusCode === 200) {
+      const requestBody = JSON.parse(body);
+      const key = requestBody.key;
+      const role = requestBody.role;
+      return callback(true, { key, role });
+    }
+    return callback(false, { error });
+  });
+}
 
 module.exports = app;

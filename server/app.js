@@ -13,6 +13,7 @@ const version = require('./package.json').version;
 const formatDate = require('./helpers/formatDate.js');
 const compression = require('compression');
 const urls = require('./config/urls');
+const timeouts = require('./config/timeouts');
 const RedisSessions = require('redis-sessions');
 const cache = require('../server/helpers/cache');
 const rp = require('request-promise');
@@ -69,6 +70,7 @@ app.post('/login', (req, res) => {
   const options = {
     method: 'POST',
     uri: urls.AUTH_URL,
+    timrout: timeouts.API_GW,
     headers: { 'content-type': 'application/json' },
     json: true,
     body: { username, password }

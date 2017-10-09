@@ -1,6 +1,6 @@
 // @flow
 
-const formatDate = require('../../server/formatDate.js');
+const formatDate = require('../../server/helpers/formatDate.js');
 
 const searchHistory = {
   /**

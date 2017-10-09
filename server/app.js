@@ -10,11 +10,11 @@ const morgan = require('morgan');
 const path = require('path');
 const myParser = require('body-parser');
 const version = require('./package.json').version;
-const formatDate = require('./formatDate.js');
+const formatDate = require('./helpers/formatDate.js');
 const compression = require('compression');
-const urls = require('../server/config/urls');
+const urls = require('./config/urls');
 const RedisSessions = require('redis-sessions');
-const cache = require('../server/cache');
+const cache = require('../server/helpers/cache');
 const rp = require('request-promise');
 
 const ENV = process.env.ENV;

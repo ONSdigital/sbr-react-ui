@@ -9,7 +9,7 @@ const morgan = require('morgan');
 const myParser = require('body-parser');
 const compression = require('compression');
 const bcrypt = require('bcryptjs');
-const genSalt = require('./salt.js');
+const genSalt = require('./helpers/salt.js');
 const uuidv4 = require('uuid/v4');
 
 const PORT = process.env.PORT || 3002;

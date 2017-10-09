@@ -135,7 +135,7 @@ app.post('/login', (req, res) => {
         app: rsapp,
         id: username,
         ip: req.connection.remoteAddress,
-        ttl: 10,
+        ttl: 60 * 60 * 8,
         d: { apiKey }
       }, (err, resp) => {
         if (err) {

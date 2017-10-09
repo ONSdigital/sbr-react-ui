@@ -43,6 +43,20 @@ This will run Node and React on localhost:3001, since Node is serving
 To use hot-reloading, use `npm restart` which runs `react-scripts start`, this
 will start React on port 3000. To start the server, use `ENV=local node server/index.js`.
 
+## Running the redis-server (used for storing user sessions):
+
+1. Install redis
+
+```shell
+brew install redis
+```
+
+2. Start the redis-server
+
+```shell
+redis-server
+```
+
 ## Running the API's
 
 * [sbr-api](https://github.com/ONSdigital/sbr-api):

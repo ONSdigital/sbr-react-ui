@@ -1,8 +1,10 @@
 const exec = require('mz/child_process').exec;
 const request = require('supertest-as-promised');
 const expect = require('chai').expect;
+const bcrypt = require('bcryptjs');
 
 const app = require('../server/app');
+const genSalt = require('../server/helpers/salt.js');
 
 describe('builds application', function () {
   it('builds to "build" directory', function () {
@@ -15,8 +17,13 @@ describe('builds application', function () {
 });
 
 describe('routes and authentication work', function () {
-  let adminToken;
-  let userToken;
+  let adminAccessToken;
+  let adminRole;
+  let adminUsername;
+
+  let userAccessToken;
+  let userRole;
+  let userUsername;
 
   it('responds to / with the index.html', function () {
     return request(app)
@@ -47,12 +54,14 @@ describe('routes and authentication work', function () {
       .type('application/json')
       .send({
         'username': 'admin',
-        'password': 'admin'
+        'password': bcrypt.hashSync('admin', genSalt('admin'))
       })
       .then(res => {
         expect('Content-Type', 'application/json; charset=utf-8')
         const resp = JSON.parse(res.text);
-        adminToken = resp.jToken;
+        adminAccessToken = resp.accessToken;
+        adminUsername = resp.username;
+        adminRole = resp.role;
         expect(200);
       });
   });
@@ -62,7 +71,7 @@ describe('routes and authentication work', function () {
       .post('/checkToken')
       .type('application/json')
       .send({
-        'token': adminToken
+        'accessToken': adminAccessToken
       })
       .expect(200);
   });
@@ -72,7 +81,7 @@ describe('routes and authentication work', function () {
       .post('/logout')
       .type('application/json')
       .send({
-        'token': adminToken
+        'accessToken': adminAccessToken
       })
       .expect(200);
   });
@@ -83,12 +92,14 @@ describe('routes and authentication work', function () {
       .type('application/json')
       .send({
         'username': 'test',
-        'password': 'test'
+        'password': bcrypt.hashSync('test', genSalt('test')),
       })
       .then(res => {
         expect('Content-Type', 'application/json; charset=utf-8')
         const resp = JSON.parse(res.text);
-        userToken = resp.jToken;
+        userAccessToken = resp.accessToken;
+        userUsername = resp.username;
+        userRole = resp.role;
         expect(200);
       });
   });
@@ -98,7 +109,7 @@ describe('routes and authentication work', function () {
       .post('/checkToken')
       .type('application/json')
       .send({
-        'token': userToken
+        'accessToken': userAccessToken
       })
       .expect(200);
   });
@@ -108,7 +119,7 @@ describe('routes and authentication work', function () {
       .post('/logout')
       .type('application/json')
       .send({
-        'token': userToken
+        'accessToken': userAccessToken
       })
       .expect(200);
   });

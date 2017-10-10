@@ -95,6 +95,55 @@ app.post('/login', (req, res) => {
     });
 });
 
+app.post('/api', (req, res) => {
+  // re route api requests with API key
+  const method = req.body.method;
+  const endpoint = req.body.endpoint;
+  if (method === 'GET') {
+    getApiEndpoint(`${urls.API_URL}/${endpoint}`)
+      .then((response) => {
+        return res.send(response);
+      })
+      .catch((err) => {
+        return res.sendStatus(err.statusCode).send(err);
+      });
+  } else if (method === 'POST') {
+    const postBody = req.body.postBody;
+    postApiEndpoint(`${urls.API_URL}/${endpoint}`, postBody)
+      .then((response) => {
+        return res.send(response);
+      })
+      .catch((err) => {
+        return res.status(err.statusCode).send(err);
+      });
+  }
+});
+
+function getApiEndpoint(url) {
+  const options = {
+    method: 'GET',
+    uri: url,
+    timeout: timeouts.API_GET
+  };
+
+  return rp(options);
+}
+
+function postApiEndpoint(url, postBody) {
+  const options = {
+    method: 'POST',
+    uri: url,
+    timeout: timeouts.API_POST,
+    headers: {
+      'Content-Type': 'text/plain;charset=UTF-8'
+    },
+    body: JSON.stringify(postBody), // '{"updatedBy":"name","vars":{"ent_name":"name"}}',
+    json: false
+  };
+
+  return rp(options);
+}
+
 app.post('/checkToken', (req, res) => {
   const accessToken = req.body.accessToken;
 

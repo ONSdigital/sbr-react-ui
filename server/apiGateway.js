@@ -49,6 +49,7 @@ app.post('/auth', (req, res) => {
   // If the provided username/password match the username/password in the users JSON,
   // return an API key and the user role
   if (users[username] && users[username] === password) {
+    logger.info('Creating API Key for user');
     const key = uuidv4();
     validApiKeys[key] = username;
     res.setHeader('Content-Type', 'application/json');
@@ -62,15 +63,18 @@ app.post('/auth', (req, res) => {
 
 app.get('/sbr/*', (req, res) => {
   const url = getUrlEndpoint(req.originalUrl);
+  logger.info(`Rerouting GET API request to ${url}`);
 
   // Check if the API Key is valid
   const apiKey = req.get('Authorization');
   if (validApiKey(apiKey)) {
     getApiEndpoint(`${urls.API_URL}${url}`)
     .then((response) => {
+      logger.info('Returning re-routed GET API request');
       return res.send(response);
     })
     .catch((error) => {
+      logger.error('Error rerouting GET request');
       return res.status(error.statusCode).send(error);
     });
   } else {
@@ -80,6 +84,7 @@ app.get('/sbr/*', (req, res) => {
 
 app.post('/sbr/*', (req, res) => {
   const url = getUrlEndpoint(req.originalUrl);
+  logger.info(`Rerouting POST API request to ${url}`);
 
   // Check if the API Key is valid
   const apiKey = req.get('Authorization');
@@ -87,9 +92,11 @@ app.post('/sbr/*', (req, res) => {
     const postBody = req.body;
     postApiEndpoint(`${urls.API_URL}${url}`, postBody)
       .then((response) => {
+        logger.info('Returning re-routed POST API request');
         return res.send(response);
       })
       .catch((error) => {
+        logger.error('Error rerouting POST request');
         return res.status(error.statusCode).send(error);
       });
   } else {
@@ -106,6 +113,7 @@ function getUrlEndpoint(url) {
 }
 
 function getApiEndpoint(url) {
+  logger.debug(`GET API endpoint for ${url}`);
   const options = {
     method: 'GET',
     uri: url,
@@ -116,6 +124,7 @@ function getApiEndpoint(url) {
 }
 
 function postApiEndpoint(url, postBody) {
+  logger.debug(`POST API endpoint for ${url}`);
   const options = {
     method: 'POST',
     uri: url,
@@ -130,4 +139,5 @@ function postApiEndpoint(url, postBody) {
 
 app.listen(PORT, () => {
   console.log(`sbr-ui-mock-api-gateway listening on port ${PORT}!`);
+  logger.info(`sbr-ui-mock-api-gateway listening on port ${PORT}!`);
 });

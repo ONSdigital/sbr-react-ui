@@ -78,16 +78,16 @@ app.post('/login', (req, res) => {
 
   rp(options)
     .then((gatewayJson) => {
-      createRedisSession(username, req.connection.remoteAddress, gatewayJson.key)
+      createRedisSession(username, req.connection.remoteAddress, gatewayJson.key, gatewayJson.role)
         .then((sessionJson) => {
           res.setHeader('Content-Type', 'application/json');
           return res.send(JSON.stringify({
             username,
             accessToken: sessionJson.accessToken,
-            role: gatewayJson.role
+            role: sessionJson.role
           }));
         })
-        .catch(() => res.sendStatus(200));
+        .catch(() => res.sendStatus(500));
     })
     .catch((err) => {
       if (err.statusCode) return res.sendStatus(err.statusCode);
@@ -114,7 +114,7 @@ app.post('/logout', (req, res) => {
   .catch(() => res.sendStatus(401));
 });
 
-function createRedisSession(username, remoteAddress, key) {
+function createRedisSession(username, remoteAddress, key, role) {
   return new Promise((resolve, reject) => {
     rs.create({
       app: rsapp,
@@ -123,7 +123,7 @@ function createRedisSession(username, remoteAddress, key) {
       ttl: SESSION_EXPIRE,
       d: { key }
     }, (err, resp) => {
-      if (!err) resolve({ accessToken: resp.token });
+      if (!err) resolve({ accessToken: resp.token, role });
       reject({ error: err });
     });
   });

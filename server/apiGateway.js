@@ -14,6 +14,7 @@ const rp = require('request-promise');
 const timeouts = require('./config/timeouts');
 const urls = require('./config/urls');
 const uuidv4 = require('uuid/v4');
+const logger = require('./logger');
 
 const PORT = process.env.PORT || 3002;
 

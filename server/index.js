@@ -5,15 +5,20 @@
 
 const fork = require('child_process').fork;
 const app = require('./app');
+const logger = require('./logger');
 
 const PORT = process.env.PORT || 3001;
 
 // On a local environment, we mock the API Gateway with the a node script on localhost:3002
 const child = (process.env.ENV === 'local') ? fork('./server/apiGateway') : null;
 
+logger.level = 'debug';
+logger.info('Started Winston logger & created log file');
+
 app.maxSockets = 500;
 app.listen(PORT, () => {
   console.log(`sbr-ui-node-server listening on port ${PORT}!`);
+  logger.info(`sbr-ui-node-server listening on port ${PORT}!`);
 });
 
 // Cleanup Code - for before the application exits
@@ -23,6 +28,7 @@ function exitHandler(options, err) {
   if (options.cleanup) {
     if (process.env.ENV === 'local') {
       console.log('Killing child process (sbr-ui-mock-api-gateway)...');
+      logger.info('Killing child process (sbr-ui-mock-api-gateway)...');
       child.kill('SIGINT');
     }
   }

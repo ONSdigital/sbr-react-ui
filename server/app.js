@@ -41,7 +41,7 @@ if (SERVE_HTML) {
 if (ENV === 'local') {
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     next();
   });
 }
@@ -99,29 +99,39 @@ app.post('/api', (req, res) => {
   // re route api requests with API key
   const method = req.body.method;
   const endpoint = req.body.endpoint;
-  if (method === 'GET') {
-    getApiEndpoint(`${urls.API_URL}/${endpoint}`)
-      .then((response) => {
-        return res.send(response);
-      })
-      .catch((err) => {
-        return res.status(err.statusCode).send(err);
-      });
-  } else if (method === 'POST') {
-    const postBody = req.body.postBody;
-    postApiEndpoint(`${urls.API_URL}/${endpoint}`, postBody)
-      .then((response) => {
-        return res.send(response);
-      })
-      .catch((err) => {
-        return res.status(err.statusCode).send(err);
-      });
-  }
+  const accessToken = req.get('Authorization');
+  getApiKey(accessToken)
+    .then((data) => {
+      if (method === 'GET') {
+        getApiEndpoint(`${urls.API_GW}/sbr/${endpoint}`, data.apiKey)
+          .then((response) => {
+            return res.send(response);
+          })
+          .catch((err) => {
+            return res.status(err.statusCode).send(err);
+          });
+      } else if (method === 'POST') {
+        const postBody = req.body.postBody;
+        postApiEndpoint(`${urls.API_GW}/sbr/${endpoint}`, postBody, data.apiKey)
+          .then((response) => {
+            return res.send(response);
+          })
+          .catch((err) => {
+            return res.status(err.statusCode).send(err);
+          });
+      }
+    })
+    .catch(() => {
+      return res.sendStatus(401);
+    });
 });
 
-function getApiEndpoint(url) {
+function getApiEndpoint(url, apiKey) {
   const options = {
     method: 'GET',
+    headers: {
+      'Authorization': apiKey
+    },
     uri: url,
     timeout: timeouts.API_GET
   };
@@ -129,13 +139,14 @@ function getApiEndpoint(url) {
   return rp(options);
 }
 
-function postApiEndpoint(url, postBody) {
+function postApiEndpoint(url, postBody, apiKey) {
   const options = {
     method: 'POST',
     uri: url,
     timeout: timeouts.API_POST,
     headers: {
-      'Content-Type': 'text/plain;charset=UTF-8'
+      'Authorization': apiKey,
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(postBody), // '{"updatedBy":"name","vars":{"ent_name":"name"}}',
     json: false
@@ -178,6 +189,20 @@ function createRedisSession(username, remoteAddress, key, role) {
   });
 }
 
+function getApiKey(accessToken) {
+  return new Promise((resolve, reject) => {
+    rs.get({
+      app: rsapp,
+      token: accessToken
+    }, (err, resp) => {
+      if (err) reject();
+      // If the session has timed out, the response will be empty
+      if (Object.keys(resp).length === 0 && resp.constructor === Object) reject();
+      resolve({ username: resp.id, accessToken, apiKey: resp.d.key });
+    });
+  });
+}
+
 function getRedisSession(accessToken) {
   return new Promise((resolve, reject) => {
     rs.get({
@@ -186,7 +211,7 @@ function getRedisSession(accessToken) {
     }, (err, resp) => {
       if (err) reject();
       // If the session has timed out, the response will be empty
-      if (Object.keys(resp).length === 0 && resp.constructor === Object) reject()
+      if (Object.keys(resp).length === 0 && resp.constructor === Object) reject();
       resolve({ username: resp.id, accessToken });
     });
   });

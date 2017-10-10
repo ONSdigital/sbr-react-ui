@@ -10,6 +10,9 @@ const myParser = require('body-parser');
 const compression = require('compression');
 const bcrypt = require('bcryptjs');
 const genSalt = require('./helpers/salt.js');
+const rp = require('request-promise');
+const timeouts = require('./config/timeouts');
+const urls = require('./config/urls');
 const uuidv4 = require('uuid/v4');
 
 const PORT = process.env.PORT || 3002;
@@ -29,6 +32,9 @@ const users = {};
 users[ADMIN_USERNAME] = ADMIN_HASHED_PASSWORD;
 users[USER_USERNAME] = USER_HASHED_PASSWORD;
 
+// We need to store all the valid API keys that uuidv4() has made
+const validApiKeys = {};
+
 const app = express();
 app.use(compression()); // gzip all responses
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
@@ -42,14 +48,84 @@ app.post('/auth', (req, res) => {
   // If the provided username/password match the username/password in the users JSON,
   // return an API key and the user role
   if (users[username] && users[username] === password) {
+    const key = uuidv4();
+    validApiKeys[key] = username;
     res.setHeader('Content-Type', 'application/json');
     return res.send(JSON.stringify({
-      key: uuidv4(),
+      key,
       role: username
     }));
   }
   return res.sendStatus(401);
 });
+
+app.get('/sbr/*', (req, res) => {
+  const url = getUrlEndpoint(req.originalUrl);
+
+  // Check if the API Key is valid
+  const apiKey = req.get('Authorization');
+  if (validApiKey(apiKey)) {
+    getApiEndpoint(`${urls.API_URL}${url}`)
+    .then((response) => {
+      return res.send(response);
+    })
+    .catch((error) => {
+      return res.status(error.statusCode).send(error);
+    });
+  } else {
+    return res.sendStatus(401);
+  }
+});
+
+app.post('/sbr/*', (req, res) => {
+  const url = getUrlEndpoint(req.originalUrl);
+
+  // Check if the API Key is valid
+  const apiKey = req.get('Authorization');
+  if (validApiKey(apiKey)) {
+    const postBody = req.body;
+    postApiEndpoint(`${urls.API_URL}${url}`, postBody)
+      .then((response) => {
+        return res.send(response);
+      })
+      .catch((error) => {
+        return res.status(error.statusCode).send(error);
+      });
+  } else {
+    return res.sendStatus(401);
+  }
+});
+
+function validApiKey(apiKey) {
+  return validApiKeys[apiKey];
+}
+
+function getUrlEndpoint(url) {
+  return url.substring(url.indexOf('/', 1), url.length);
+}
+
+function getApiEndpoint(url) {
+  const options = {
+    method: 'GET',
+    uri: url,
+    timeout: timeouts.API_GET
+  };
+
+  return rp(options);
+}
+
+function postApiEndpoint(url, postBody) {
+  const options = {
+    method: 'POST',
+    uri: url,
+    timeout: timeouts.API_POST,
+    headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+    body: JSON.stringify(postBody), // '{"updatedBy":"name","vars":{"ent_name":"name"}}',
+    json: false
+  };
+
+  return rp(options);
+}
 
 app.listen(PORT, () => {
   console.log(`sbr-ui-mock-api-gateway listening on port ${PORT}!`);

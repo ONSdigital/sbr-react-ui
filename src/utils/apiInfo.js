@@ -37,7 +37,10 @@ const apiInfo = {
   getApiInfo(callback: (success: boolean, data: {}) => void) {
     fetch(`${REROUTE_URL}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': sessionStorage.getItem('accessToken'),
+      },
       body: JSON.stringify({
         method: 'GET',
         endpoint: 'version',

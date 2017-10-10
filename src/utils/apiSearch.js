@@ -16,7 +16,10 @@ const apiSearch = {
   getRef(id: string, callback: (success: boolean, data: {}, response?: {}) => void) {
     fetch(`${REROUTE_URL}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': sessionStorage.getItem('accessToken'),
+      },
       body: JSON.stringify({
         method: 'GET',
         endpoint: `${API_VERSION}/search?id=${id}`,
@@ -41,7 +44,10 @@ const apiSearch = {
   getSpecificRefById(unitType: string, id: string, callback: (success: boolean, data: {}, response?: {}) => void) {
     fetch(`${REROUTE_URL}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': sessionStorage.getItem('accessToken'),
+      },
       body: JSON.stringify({
         method: 'GET',
         endpoint: `${API_VERSION}/${unitType}/${id}`,
@@ -66,7 +72,10 @@ const apiSearch = {
   getSpecificRefByIdAndPeriod(unitType: string, id: string, period: string, callback: (success: boolean, data: {}, response?: {}) => void) {
     fetch(`${REROUTE_URL}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': sessionStorage.getItem('accessToken'),
+      },
       body: JSON.stringify({
         method: 'GET',
         endpoint: `${API_VERSION}/periods/${period}/${unitType}/${id}`,

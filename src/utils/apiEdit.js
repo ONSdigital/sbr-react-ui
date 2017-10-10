@@ -19,7 +19,10 @@ const apiEdit = {
       method: 'POST',
       // Should be able to use the headers below, however a CORS issue prevents it
       // So we have to send the data as a String rather than as JSON
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': sessionStorage.getItem('accessToken'),
+      },
       body: JSON.stringify({
         method: 'POST',
         endpoint: `${API_VERSION}/enterprises/${id}`,

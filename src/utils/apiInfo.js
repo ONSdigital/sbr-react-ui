@@ -2,7 +2,7 @@
 
 import config from '../config/api-urls';
 
-const { AUTH_URL, API_URL } = config;
+const { AUTH_URL, REROUTE_URL } = config;
 
 /**
  * API lib for getting info (version/last updated etc.)
@@ -16,9 +16,7 @@ const apiInfo = {
   getUiInfo(callback: (success: boolean, data: {}) => void) {
     fetch(`${AUTH_URL}/info`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {
@@ -37,8 +35,13 @@ const apiInfo = {
    * @param  {Function} callback Called with returned data.
    */
   getApiInfo(callback: (success: boolean, data: {}) => void) {
-    fetch(`${API_URL}/version`, {
-      method: 'GET',
+    fetch(`${REROUTE_URL}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        method: 'GET',
+        endpoint: 'version',
+      }),
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {

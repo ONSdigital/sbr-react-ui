@@ -2,7 +2,7 @@
 
 import config from '../config/api-urls';
 
-const { API_URL, API_VERSION } = config;
+const { REROUTE_URL, API_VERSION } = config;
 
 /**
  * API lib for getting info (version/last updated etc.)
@@ -14,8 +14,13 @@ const apiSearch = {
    * @param  {Function} callback Called with returned data.
    */
   getRef(id: string, callback: (success: boolean, data: {}, response?: {}) => void) {
-    fetch(`${API_URL}/${API_VERSION}/search?id=${id}`, {
-      method: 'GET',
+    fetch(`${REROUTE_URL}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        method: 'GET',
+        endpoint: `${API_VERSION}/search?id=${id}`,
+      }),
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {
@@ -34,8 +39,13 @@ const apiSearch = {
    * @param  {Function} callback Called with returned data.
    */
   getSpecificRefById(unitType: string, id: string, callback: (success: boolean, data: {}, response?: {}) => void) {
-    fetch(`${API_URL}/${API_VERSION}/${unitType}/${id}`, {
-      method: 'GET',
+    fetch(`${REROUTE_URL}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        method: 'GET',
+        endpoint: `${API_VERSION}/${unitType}/${id}`,
+      }),
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {
@@ -54,8 +64,13 @@ const apiSearch = {
    * @param  {Function} callback Called with returned data.
    */
   getSpecificRefByIdAndPeriod(unitType: string, id: string, period: string, callback: (success: boolean, data: {}, response?: {}) => void) {
-    fetch(`${API_URL}/${API_VERSION}/periods/${period}/${unitType}/${id}`, {
-      method: 'GET',
+    fetch(`${REROUTE_URL}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        method: 'GET',
+        endpoint: `${API_VERSION}/periods/${period}/${unitType}/${id}`,
+      }),
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {

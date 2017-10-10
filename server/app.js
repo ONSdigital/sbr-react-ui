@@ -105,7 +105,7 @@ app.post('/api', (req, res) => {
         return res.send(response);
       })
       .catch((err) => {
-        return res.sendStatus(err.statusCode).send(err);
+        return res.status(err.statusCode).send(err);
       });
   } else if (method === 'POST') {
     const postBody = req.body.postBody;

@@ -21,7 +21,6 @@ const initialState = {
   username: '',
   accessToken: '',
   role: '',
-  apiKey: '',
   currentlySending: false,
   loggedIn: false,
   errorMessage: '',
@@ -34,6 +33,7 @@ function loginReducer(state = initialState, action) {
       return assign({}, state, {
         ...state,
         username: action.newState.username,
+        accessToken: action.newState.accessToken,
         role: action.newState.role,
       });
     case SET_AUTH:

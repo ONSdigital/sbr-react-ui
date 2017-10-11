@@ -2,10 +2,14 @@
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](./LICENSE) [![Dependency Status](https://www.versioneye.com/user/projects/59cb91720fb24f005d4bc6c6/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/59cb91720fb24f005d4bc6c6)
 
-The following tutorials were used to help with the deployment using Node.js, the login with redux and the isolation of bootstrap styles: [Node](https://medium.com/@patriciolpezjuri/using-create-react-app-with-react-router-express-js-8fa658bf892d#.mt6bbdd8m
-), [Login](https://github.com/mxstbr/login-flow) and [Bootstrap Isolation](https://formden.com/blog/isolate-bootstrap).
+The Statistical Business Register allows a user to search for Enterprise data, including Enterprise Children such as LEU (Legal Unit), VAT, PAYE & Company House data. Navigation around this hierarchy can be done through a breadcrumb, or using a 'Tree' view.
+
+In the diagram below, this repository includes the top half, the ui (ReactJS), the server to serve the ui (NodeJS), the session management (Redis), and a mock API Gateway (NodeJS).
 
 ![sbr architecture diagram](https://user-images.githubusercontent.com/23335263/31433187-768c9672-ae70-11e7-8ad0-a8b112b703b3.png)
+
+The following tutorials were used to help with the deployment using Node.js, the login with redux and the isolation of bootstrap styles: [Node](https://medium.com/@patriciolpezjuri/using-create-react-app-with-react-router-express-js-8fa658bf892d#.mt6bbdd8m
+), [Login](https://github.com/mxstbr/login-flow) and [Bootstrap Isolation](https://formden.com/blog/isolate-bootstrap).
 
 ## Environment Setup for the UI
 

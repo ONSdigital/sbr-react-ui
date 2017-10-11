@@ -4,18 +4,27 @@ import Button from 'react-bootstrap-button-loader';
 import Loader from 'halogen/PulseLoader';
 import { connect } from 'react-redux';
 import { login } from '../actions/LoginActions';
-import ErrorMessage from '../components/LoginErrorMessage';
+import ErrorModal from '../components/ErrorModal';
 import ONSLogo from '../resources/img/ons-symbol.svg';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      show: false,
+      errorMessage: '',
+    };
+    this.closeModal = this.closeModal.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
   onSubmit(evt) {
     // http://stackoverflow.com/questions/39724481/cannot-post-error-react-js
     evt.preventDefault();
     this.props.dispatch(login(this.usernameInput.value, this.passwordInput.value));
+    this.setState({ show: true });
+  }
+  closeModal() {
+    this.setState({ show: false, errorMessage: '' });
   }
   render() {
     const spinner = (<Loader color="#FFFFFF" size="8px" margin="0px" />);
@@ -31,7 +40,11 @@ class Login extends React.Component {
               <Button className="btn btn--primary btn--wide" bsStyle="primary" type="submit" id="loginButton" aria-label="Login button" onClick={!this.props.data.currentlySending ? this.onSubmit : null}>
                 {this.props.data.currentlySending ? spinner : 'Login'}
               </Button>
-              <ErrorMessage />
+              <ErrorModal
+                show={this.state.show && this.props.data.errorMessage !== ''}
+                message={this.props.data.errorMessage}
+                close={this.closeModal}
+              />
             </form>
           </div>
         </div>
@@ -44,6 +57,7 @@ Login.propTypes = {
   dispatch: PropTypes.func.isRequired,
   data: React.PropTypes.shape({
     currentlySending: PropTypes.bool.isRequired,
+    errorMessage: PropTypes.string.isRequired,
   }).isRequired,
 };
 

@@ -1,19 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Glyphicon, Button, ButtonToolbar, Row, Col } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
 import { getSpecificUnitType, changePeriod } from '../actions/ApiActions';
 import periods from '../config/periods';
+import ErrorModal from '../components/ErrorModal';
 
 class PanelTitle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showTooltip: false,
+      show: false,
     };
     this.mouseEnter = this.mouseEnter.bind(this);
     this.mouseLeave = this.mouseLeave.bind(this);
+    this.onCopy = this.onCopy.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     this.onPeriodChange = this.onPeriodChange.bind(this);
   }
   onPeriodChange(evt) {
@@ -25,6 +30,12 @@ class PanelTitle extends React.Component {
     if (a.offsetWidth < a.scrollWidth) {
       this.setState({ showTooltip: true });
     }
+  }
+  onCopy() {
+    this.setState({ show: true });
+  }
+  closeModal() {
+    this.setState({ show: false });
   }
   mouseLeave() {
     this.setState({ showTooltip: false });
@@ -52,9 +63,11 @@ class PanelTitle extends React.Component {
     return (
       <Row style={{ height: '30px', border: 'none' }}>
         <Col lg={8} md={7} sm={6} xs={6} style={{ height: '30px', border: 'none' }}>
-          <h3 {...props} onMouseEnter={() => this.mouseEnter()} onMouseLeave={() => this.mouseLeave()} id="panel-title-data-tip" style={h3Style}>
-            <Glyphicon glyph="tower" />&nbsp;{this.props.name} <small>{this.props.id}</small>
-          </h3>
+          <CopyToClipboard text={this.props.name} onCopy={() => this.onCopy()}>
+            <h3 {...props} onMouseEnter={() => this.mouseEnter()} onMouseLeave={() => this.mouseLeave()} id="panel-title-data-tip" style={h3Style}>
+              <Glyphicon style={{ cursor: 'pointer' }} glyph="tower" />&nbsp;{this.props.name} <small>{this.props.id}</small>
+            </h3>
+          </CopyToClipboard>
         </Col>
         <Col lg={4} md={5} sm={6} xs={6} style={{ height: '30px', border: 'none' }}>
           {(this.props.unitType !== 'LEU') &&
@@ -82,6 +95,11 @@ class PanelTitle extends React.Component {
             <span>{this.props.name} - {this.props.id}</span>
           </ReactTooltip>
         }
+        <ErrorModal
+          show={this.state.show}
+          message={`Copied '${this.props.name}' to clipboard.`}
+          close={this.closeModal}
+        />
       </Row>
     );
   }

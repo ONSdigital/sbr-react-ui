@@ -5,6 +5,8 @@
 The following tutorials were used to help with the deployment using Node.js, the login with redux and the isolation of bootstrap styles: [Node](https://medium.com/@patriciolpezjuri/using-create-react-app-with-react-router-express-js-8fa658bf892d#.mt6bbdd8m
 ), [Login](https://github.com/mxstbr/login-flow) and [Bootstrap Isolation](https://formden.com/blog/isolate-bootstrap).
 
+![sbr architecture diagram](https://user-images.githubusercontent.com/23335263/31433187-768c9672-ae70-11e7-8ad0-a8b112b703b3.png)
+
 ## Environment Setup for the UI
 
 1. Install NPM, it is included with Node.js ([Download](https://nodejs.org/en/))

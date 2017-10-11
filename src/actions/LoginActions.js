@@ -163,14 +163,7 @@ export function sendingRequest(sending) {
  * @param message
  */
 function setErrorMessage(message) {
-  return (dispatch) => {
-    dispatch({ type: SET_ERROR_MESSAGE, message });
-
-    // Remove the error message after 3 seconds
-    setTimeout(() => {
-      dispatch({ type: SET_ERROR_MESSAGE, message: '' });
-    }, 3000);
-  };
+  return { type: SET_ERROR_MESSAGE, message };
 }
 
 /**

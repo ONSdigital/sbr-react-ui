@@ -3,13 +3,11 @@ import login from './login';
 import info from './info';
 import apiSearch from './apiSearch';
 import edit from './edit';
-import error from './error';
 
 const appReducer = combineReducers({
   login,
   info,
   apiSearch,
-  error,
   edit,
 });
 

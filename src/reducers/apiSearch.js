@@ -1,4 +1,4 @@
-import { SET_PERIOD, SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE, SET_ENTERPRISE_RESULTS, SET_ENTERPRISE_HEADERS, SENDING_ENTERPRISE_REQUEST, SET_ENTERPRISE_QUERY, SET_ENTERPRISE_ERROR_MESSAGE, SET_LEGAL_UNIT_RESULTS, SET_LEGAL_UNIT_HEADERS, SENDING_LEGAL_UNIT_REQUEST, SET_LEGAL_UNIT_QUERY, SET_LEGAL_UNIT_ERROR_MESSAGE, SET_VAT_RESULTS, SET_VAT_HEADERS, SENDING_VAT_REQUEST, SET_VAT_QUERY, SET_VAT_ERROR_MESSAGE, SET_PAYE_RESULTS, SET_PAYE_HEADERS, SENDING_PAYE_REQUEST, SET_PAYE_QUERY, SET_PAYE_ERROR_MESSAGE, SET_CH_RESULTS, SET_CH_HEADERS, SENDING_CH_REQUEST, SET_CH_QUERY, SET_CH_ERROR_MESSAGE } from '../constants/ApiConstants';
+import { SET_PERIOD, REMOVE_LAST_ERROR, ADD_MOST_RECENT_ERROR, SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE, SET_ENTERPRISE_RESULTS, SET_ENTERPRISE_HEADERS, SENDING_ENTERPRISE_REQUEST, SET_ENTERPRISE_QUERY, SET_ENTERPRISE_ERROR_MESSAGE, SET_LEGAL_UNIT_RESULTS, SET_LEGAL_UNIT_HEADERS, SENDING_LEGAL_UNIT_REQUEST, SET_LEGAL_UNIT_QUERY, SET_LEGAL_UNIT_ERROR_MESSAGE, SET_VAT_RESULTS, SET_VAT_HEADERS, SENDING_VAT_REQUEST, SET_VAT_QUERY, SET_VAT_ERROR_MESSAGE, SET_PAYE_RESULTS, SET_PAYE_HEADERS, SENDING_PAYE_REQUEST, SET_PAYE_QUERY, SET_PAYE_ERROR_MESSAGE, SET_CH_RESULTS, SET_CH_HEADERS, SENDING_CH_REQUEST, SET_CH_QUERY, SET_CH_ERROR_MESSAGE } from '../constants/ApiConstants';
 import periods from '../config/periods';
 
 // Object.assign is not yet fully supported in all browsers, so we fallback to
@@ -8,6 +8,7 @@ const assign = Object.assign || require('object.assign');
 // The initial application state
 const initialState = {
   period: periods.DEFAULT_PERIOD,
+  errorArray: [],
   refSearch: {
     results: [],
     headers: [],
@@ -61,6 +62,20 @@ const initialState = {
 // Takes care of changing the application state
 function refReducer(state = initialState, action) {
   switch (action.type) {
+    case REMOVE_LAST_ERROR:
+      return assign({}, state, {
+        ...state,
+        errorArray: state.errorArray.slice(0, state.errorArray.length - 1),
+      });
+    case ADD_MOST_RECENT_ERROR:
+      return assign({}, state, {
+        ...state,
+        errorArray: [...state.errorArray, {
+          unitType: action.unitType,
+          timeStamp: action.timeStamp,
+          errorMessage: action.errorMessage,
+        }],
+      });
     case SET_REF_RESULTS:
       return assign({}, state, {
         ...state,

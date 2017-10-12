@@ -1,5 +1,5 @@
 import { browserHistory } from 'react-router';
-import { REFS, REMOVE_LAST_ERROR, SET_PERIOD, SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE } from '../constants/ApiConstants';
+import { REFS, ADD_MOST_RECENT_ERROR, REMOVE_LAST_ERROR, SET_PERIOD, SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE } from '../constants/ApiConstants';
 import apiSearch from '../utils/apiSearch';
 import { getDestination } from '../utils/helperMethods';
 import { store } from '../routes';
@@ -44,6 +44,7 @@ export function refSearch(query) {
               }));
             } else {
               dispatch(setErrorMessage(REFS['ENT'].setError, data.message, Math.floor(new Date() / 1000)));
+              dispatch(addMostRecentError('ENT', data.message, Math.floor(new Date() / 1000)));
             }
           });
         }
@@ -99,6 +100,7 @@ export function getUnitForDefaultPeriod(unitType, id, redirect = false) {
         }
       } else {
         dispatch(setErrorMessage(REFS[unitType].setError, data.message, Math.floor(new Date() / 1000)));
+        dispatch(addMostRecentError(unitType, data.message, Math.floor(new Date() / 1000)));
       }
     });
   };
@@ -132,6 +134,7 @@ export function getUnitForSpecificPeriod(unitType, id, period, redirect = false)
         }
       } else {
         dispatch(setErrorMessage(REFS[unitType].setError, data.message, Math.floor(new Date() / 1000)));
+        dispatch(addMostRecentError(unitType, data.message, Math.floor(new Date() / 1000)));
       }
     });
   };
@@ -154,8 +157,12 @@ export function changePeriod(period) {
   };
 }
 
+export function addMostRecentError(unitType, errorMessage, timeStamp) {
+  return { type: ADD_MOST_RECENT_ERROR, unitType, errorMessage, timeStamp };
+}
+
 export function removeLastError() {
-  return { type: REMOVE_LAST_ERROR, message: 'h' };
+  return { type: REMOVE_LAST_ERROR };
 }
 
 export function setResults(type, newState) {

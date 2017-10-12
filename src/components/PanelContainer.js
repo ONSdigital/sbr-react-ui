@@ -12,7 +12,6 @@ class PanelContainer extends React.Component {
       errorMessage: '',
       show: false,
       loading: false,
-      previousStoreState: {},
     };
     this.toggleTreeView = this.toggleTreeView.bind(this);
     this.goToView = this.goToView.bind(this);
@@ -35,14 +34,11 @@ class PanelContainer extends React.Component {
       }
     }
 
-    if (nextProps.error.errorArray.length > 0) {
-      this.setState({ show: true, errorMessage: nextProps.error.errorArray[0].message });
+    if (nextProps.data.errorArray.length > 0) {
+      this.setState({ show: true, errorMessage: nextProps.data.errorArray[0].errorMessage });
     }
   }
   isLoading(...args) {
-    return args.reduce((a, b) => a || b);
-  }
-  errorPresent(...args) {
     return args.reduce((a, b) => a || b);
   }
   closeModal() {
@@ -96,7 +92,6 @@ PanelContainer.propTypes = {
 function select(state) {
   return {
     data: state.apiSearch,
-    error: state.error,
     enterpriseLoading: state.apiSearch.enterprise.currentlySending,
     companyLoading: state.apiSearch.ch.currentlySending,
     vatLoading: state.apiSearch.vat.currentlySending,

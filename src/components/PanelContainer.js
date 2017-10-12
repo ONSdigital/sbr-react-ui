@@ -10,7 +10,7 @@ class PanelContainer extends React.Component {
     this.state = {
       showTreeView: 0,
       errorMessage: '',
-      show: true,
+      show: false,
       loading: false,
       previousStoreState: {},
     };
@@ -36,7 +36,6 @@ class PanelContainer extends React.Component {
     }
 
     if (nextProps.error.errorArray.length > 0) {
-      console.log('errors present...')
       this.setState({ show: true, errorMessage: 'generic' });
     }
   }
@@ -75,11 +74,13 @@ class PanelContainer extends React.Component {
     return (
       <div className={c}>
         {childrenWithProps}
-        <ErrorModal
-          show={this.state.show && this.state.errorMessage !== ''}
-          message={this.state.errorMessage}
-          close={this.closeModal}
-        />
+        {this.state.show &&
+          <ErrorModal
+            show={this.state.show && this.state.errorMessage !== ''}
+            message={this.state.errorMessage}
+            close={this.closeModal}
+          />
+        }
         {this.state.loading &&
           <div className="spinner"></div>
         }

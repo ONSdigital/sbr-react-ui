@@ -14,6 +14,7 @@ const initialState = {
     query: '',
     currentlySending: false,
     errorMessage: '',
+    timeStamp: '',
   },
   enterprise: {
     results: [],
@@ -21,6 +22,7 @@ const initialState = {
     query: '',
     currentlySending: false,
     errorMessage: '',
+    timeStamp: '',
   },
   legalUnit: {
     results: [],
@@ -28,6 +30,7 @@ const initialState = {
     query: '',
     currentlySending: false,
     errorMessage: '',
+    timeStamp: '',
   },
   vat: {
     results: [],
@@ -35,6 +38,7 @@ const initialState = {
     query: '',
     currentlySending: false,
     errorMessage: '',
+    timeStamp: '',
   },
   paye: {
     results: [],
@@ -42,6 +46,7 @@ const initialState = {
     query: '',
     currentlySending: false,
     errorMessage: '',
+    timeStamp: '',
   },
   ch: {
     results: [],
@@ -49,6 +54,7 @@ const initialState = {
     query: '',
     currentlySending: false,
     errorMessage: '',
+    timeStamp: '',
   },
 };
 
@@ -258,6 +264,7 @@ function refReducer(state = initialState, action) {
         refSearch: {
           ...state.refSearch,
           errorMessage: action.message,
+          timeStamp: action.timeStamp,
         },
       });
     case SET_ENTERPRISE_ERROR_MESSAGE:
@@ -266,6 +273,7 @@ function refReducer(state = initialState, action) {
         enterprise: {
           ...state.enterprise,
           errorMessage: action.message,
+          timeStamp: action.timeStamp,
         },
       });
     case SET_LEGAL_UNIT_ERROR_MESSAGE:
@@ -274,6 +282,7 @@ function refReducer(state = initialState, action) {
         legalUnit: {
           ...state.legalUnit,
           errorMessage: action.message,
+          timeStamp: action.timeStamp,
         },
       });
     case SET_PAYE_ERROR_MESSAGE:
@@ -282,6 +291,7 @@ function refReducer(state = initialState, action) {
         paye: {
           ...state.paye,
           errorMessage: action.message,
+          timeStamp: action.timeStamp,
         },
       });
     case SET_VAT_ERROR_MESSAGE:
@@ -290,6 +300,7 @@ function refReducer(state = initialState, action) {
         vat: {
           ...state.vat,
           errorMessage: action.message,
+          timeStamp: action.timeStamp,
         },
       });
     case SET_CH_ERROR_MESSAGE:
@@ -298,6 +309,7 @@ function refReducer(state = initialState, action) {
         ch: {
           ...state.ch,
           errorMessage: action.message,
+          timeStamp: action.timeStamp,
         },
       });
     default:

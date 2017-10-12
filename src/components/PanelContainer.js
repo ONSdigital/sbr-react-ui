@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ErrorModal from '../components/ErrorModal';
-import { store } from '../routes';
+import { removeLastError } from '../actions/ApiActions';
 
 class PanelContainer extends React.Component {
   constructor(props) {
@@ -18,45 +18,9 @@ class PanelContainer extends React.Component {
     this.goToView = this.goToView.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
-  componentDidMount() {
-    this.errorPresent(this.props.enterpriseLoading, this.props.companyLoading, this.props.vatLoading, this.props.leuLoading, this.props.payeLoading);
-    store.subscribe(() => {
-      const reduxStore = store.getState();
-      this.setState({ previousStoreState: reduxStore });
-      let a = false;
-      if (reduxStore.apiSearch.enterprise.errorMessage !== '') {
-        this.setState({ errorMessage: reduxStore.apiSearch.enterprise.errorMessage });
-        a = true;
-      }
-      if (reduxStore.apiSearch.ch.errorMessage !== '') {
-        this.setState({ errorMessage: reduxStore.apiSearch.ch.errorMessage });
-        a = true;
-      }
-      if (reduxStore.apiSearch.vat.errorMessage !== '') {
-        this.setState({ errorMessage: reduxStore.apiSearch.vat.errorMessage });
-        a = true;
-      }
-      if (reduxStore.apiSearch.paye.errorMessage !== '') {
-        this.setState({ errorMessage: reduxStore.apiSearch.paye.errorMessage });
-        a = true;
-      }
-      if (reduxStore.apiSearch.legalUnit.errorMessage !== '') {
-        this.setState({ errorMessage: reduxStore.apiSearch.legalUnit.errorMessage });
-        a = true;
-      }
-
-      if (!a) {
-        this.setState({ errorMessage: '' });
-      }
-    });
-  }
   componentWillReceiveProps(nextProps) {
-    const a = this.errorPresent(nextProps.enterpriseLoading, nextProps.companyLoading, nextProps.vatLoading, nextProps.leuLoading, nextProps.payeLoading);
-    if (a) {
-      this.setState({ loading: true });
-    } else {
-      this.setState({ loading: false });
-    }
+    const s = this.isLoading(nextProps.enterpriseLoading, nextProps.companyLoading, nextProps.vatLoading, nextProps.leuLoading, nextProps.payeLoading);
+    this.setState({ loading: s });
 
     // The below is to fix a bug where if you are on TreeView and you navigate
     // from one node to another of the same type, e.g. LEU -> LEU, the node
@@ -70,14 +34,23 @@ class PanelContainer extends React.Component {
         this.setState({ showTreeView: 0 });
       }
     }
+
+    if (nextProps.error.errorArray.length > 0) {
+      console.log('errors present...')
+      this.setState({ show: true, errorMessage: 'generic' });
+    }
+  }
+  isLoading(...args) {
+    return args.reduce((a, b) => a || b);
   }
   errorPresent(...args) {
     return args.reduce((a, b) => a || b);
   }
   closeModal() {
+    this.props.dispatch(removeLastError());
     this.setState({ show: false, errorMessage: '' });
   }
-  toggleTreeView(unitType, enterpriseId) {
+  toggleTreeView() {
     if (this.state.showTreeView === 2) {
       this.setState({ showTreeView: 0 });
     } else {
@@ -121,11 +94,8 @@ PanelContainer.propTypes = {
 
 function select(state) {
   return {
-    enterpriseError: state.apiSearch.enterprise.errorMessage,
-    companyError: state.apiSearch.ch.errorMessage,
-    vatError: state.apiSearch.vat.errorMessage,
-    leuError: state.apiSearch.legalUnit.errorMessage,
-    payeError: state.apiSearch.paye.errorMessage,
+    data: state.apiSearch,
+    error: state.error,
     enterpriseLoading: state.apiSearch.enterprise.currentlySending,
     companyLoading: state.apiSearch.ch.currentlySending,
     vatLoading: state.apiSearch.vat.currentlySending,

@@ -1,6 +1,9 @@
 // General
 export const SET_PERIOD = 'SET_PERIOD';
 
+// Error
+export const REMOVE_LAST_ERROR = 'REMOVE_LAST_ERROR';
+
 // Ref Search
 export const SET_REF_RESULTS = 'SET_REF_RESULTS';
 export const SET_REF_HEADERS = 'SET_REF_HEADERS';

@@ -82,25 +82,27 @@ export function getUnitForDefaultPeriod(unitType, id, redirect = false) {
     dispatch(sendingRequest(REFS[unitType].setSending, true));
     dispatch(setResults(REFS[unitType].setResults, { results: [] }));
     dispatch(setQuery(REFS[unitType].setQuery, id));
-    apiSearch.getSpecificRefById(REFS[unitType].apiEndpoint, id, (success, data) => {
-      dispatch(sendingRequest(REFS[unitType].setSending, false));
-      if (success) {
-        dispatch(setResults(REFS[unitType].setResults, {
-          results: [data.results],
-        }));
-        dispatch(setHeaders(REFS[unitType].setHeaders, {
-          headers: data.response,
-        }));
-        // If the user goes straight to /Enterprises/:id without going via
-        // the search, we don't want to redirect them as they are already on
-        // the correct page
-        if (redirect) {
-          browserHistory.push(`/${REFS[unitType].url}/${id}`);
+    setTimeout(() => {
+      apiSearch.getSpecificRefById(REFS[unitType].apiEndpoint, id, (success, data) => {
+        dispatch(sendingRequest(REFS[unitType].setSending, false));
+        if (success) {
+          dispatch(setResults(REFS[unitType].setResults, {
+            results: [data.results],
+          }));
+          dispatch(setHeaders(REFS[unitType].setHeaders, {
+            headers: data.response,
+          }));
+          // If the user goes straight to /Enterprises/:id without going via
+          // the search, we don't want to redirect them as they are already on
+          // the correct page
+          if (redirect) {
+            browserHistory.push(`/${REFS[unitType].url}/${id}`);
+          }
+        } else {
+          dispatch(setErrorMessage(REFS[unitType].setError, data.message));
         }
-      } else {
-        dispatch(setErrorMessage(REFS[unitType].setError, data.message));
-      }
-    });
+      });
+    }, 2000);
   };
 }
 
@@ -115,25 +117,27 @@ export function getUnitForSpecificPeriod(unitType, id, period, redirect = false)
     dispatch(sendingRequest(REFS[unitType].setSending, true));
     // dispatch(setResults(REFS[unitType].setResults, { results: [] }));
     dispatch(setQuery(REFS[unitType].setQuery, id));
-    apiSearch.getSpecificRefByIdAndPeriod(REFS[unitType].apiEndpoint, id, period, (success, data) => {
-      dispatch(sendingRequest(REFS[unitType].setSending, false));
-      if (success) {
-        dispatch(setResults(REFS[unitType].setResults, {
-          results: [data.results],
-        }));
-        dispatch(setHeaders(REFS[unitType].setHeaders, {
-          headers: data.response,
-        }));
-        // If the user goes straight to /Enterprises/:id without going via
-        // the search, we don't want to redirect them as they are already on
-        // the correct page
-        if (redirect) {
-          browserHistory.push(`/${REFS[unitType].url}/${id}`);
+    setTimeout(() => {
+      apiSearch.getSpecificRefByIdAndPeriod(REFS[unitType].apiEndpoint, id, period, (success, data) => {
+        dispatch(sendingRequest(REFS[unitType].setSending, false));
+        if (success) {
+          dispatch(setResults(REFS[unitType].setResults, {
+            results: [data.results],
+          }));
+          dispatch(setHeaders(REFS[unitType].setHeaders, {
+            headers: data.response,
+          }));
+          // If the user goes straight to /Enterprises/:id without going via
+          // the search, we don't want to redirect them as they are already on
+          // the correct page
+          if (redirect) {
+            browserHistory.push(`/${REFS[unitType].url}/${id}`);
+          }
+        } else {
+          dispatch(setErrorMessage(REFS[unitType].setError, data.message));
         }
-      } else {
-        dispatch(setErrorMessage(REFS[unitType].setError, data.message));
-      }
-    });
+      });
+    }, 2000);
   };
 }
 

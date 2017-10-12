@@ -36,7 +36,7 @@ class PanelContainer extends React.Component {
     }
 
     if (nextProps.error.errorArray.length > 0) {
-      this.setState({ show: true, errorMessage: 'generic' });
+      this.setState({ show: true, errorMessage: nextProps.error.errorArray[0].message });
     }
   }
   isLoading(...args) {

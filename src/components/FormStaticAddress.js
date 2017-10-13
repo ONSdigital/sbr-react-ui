@@ -6,7 +6,6 @@ const FormStaticAddress = ({ id, label, address1, address2, address3, address4, 
   const url = `https://www.google.co.uk/maps/place/${postcode}`;
   const mapsLink = <a href={url} target="_blank">{postcode}</a>;
   const addressArr = [address1, address2, address3, address4, address5, mapsLink];
-  // addressArr.filter(addressItem => addressItem !== '');
   return (
     <FormGroup controlId={id}>
       <Col componentClass={ControlLabel} sm={6}>
@@ -29,6 +28,12 @@ const FormStaticAddress = ({ id, label, address1, address2, address3, address4, 
 FormStaticAddress.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  address1: PropTypes.string.isRequired,
+  address2: PropTypes.string.isRequired,
+  address3: PropTypes.string.isRequired,
+  address4: PropTypes.string.isRequired,
+  address5: PropTypes.string.isRequired,
+  postcode: PropTypes.string.isRequired,
 };
 
 export default FormStaticAddress;

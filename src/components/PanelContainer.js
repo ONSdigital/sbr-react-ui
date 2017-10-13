@@ -1,16 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import ErrorModal from '../components/ErrorModal';
+import { removeLastError } from '../actions/ApiActions';
 
 class PanelContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showTreeView: 0,
+      errorMessage: '',
+      show: false,
+      loading: false,
     };
     this.toggleTreeView = this.toggleTreeView.bind(this);
     this.goToView = this.goToView.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
   componentWillReceiveProps(nextProps) {
+    const s = this.isLoading(nextProps.enterpriseLoading, nextProps.companyLoading, nextProps.vatLoading, nextProps.leuLoading, nextProps.payeLoading);
+    this.setState({ loading: s });
+
     // The below is to fix a bug where if you are on TreeView and you navigate
     // from one node to another of the same type, e.g. LEU -> LEU, the node
     // will change but you will stay on tree view rather than going back to
@@ -23,20 +33,24 @@ class PanelContainer extends React.Component {
         this.setState({ showTreeView: 0 });
       }
     }
+
+    if (nextProps.data.errorArray.length > 0) {
+      this.setState({ show: true, errorMessage: nextProps.data.errorArray[0].errorMessage });
+    }
   }
-  toggleTreeView(unitType, enterpriseId) {
-    // const a = document.getElementById('test1290');
+  isLoading(...args) {
+    return args.reduce((a, b) => a || b);
+  }
+  closeModal() {
+    this.props.dispatch(removeLastError());
+    this.setState({ show: false, errorMessage: '' });
+  }
+  toggleTreeView() {
     if (this.state.showTreeView === 2) {
       this.setState({ showTreeView: 0 });
-      // a.style = '';
-      // a.style.marginRight = '0px';
-      // a.className = 'wrapper';
     } else {
       const showTreeView = this.state.showTreeView + 1;
       this.setState({ showTreeView });
-      // a.className = '';
-      // a.style.marginLeft = '50px';
-      // a.style.marginRight = '50px';
     }
   }
   goToView(index) {
@@ -52,9 +66,20 @@ class PanelContainer extends React.Component {
         goToView: this.goToView,
       }),
     );
+    const c = (this.state.loading) ? 'blur' : '';
     return (
-      <div>
+      <div className={c}>
         {childrenWithProps}
+        {this.state.show &&
+          <ErrorModal
+            show={this.state.show && this.state.errorMessage !== ''}
+            message={this.state.errorMessage}
+            close={this.closeModal}
+          />
+        }
+        {this.state.loading &&
+          <div className="spinner"></div>
+        }
       </div>
     );
   }
@@ -64,4 +89,15 @@ PanelContainer.propTypes = {
   children: PropTypes.object.isRequired,
 };
 
-export default PanelContainer;
+function select(state) {
+  return {
+    data: state.apiSearch,
+    enterpriseLoading: state.apiSearch.enterprise.currentlySending,
+    companyLoading: state.apiSearch.ch.currentlySending,
+    vatLoading: state.apiSearch.vat.currentlySending,
+    leuLoading: state.apiSearch.legalUnit.currentlySending,
+    payeLoading: state.apiSearch.paye.currentlySending,
+  };
+}
+
+export default connect(select)(PanelContainer);

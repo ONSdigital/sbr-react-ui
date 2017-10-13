@@ -1,5 +1,5 @@
 import { browserHistory } from 'react-router';
-import { REFS, SET_PERIOD, SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE } from '../constants/ApiConstants';
+import { REFS, ADD_MOST_RECENT_ERROR, REMOVE_LAST_ERROR, SET_PERIOD, SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE } from '../constants/ApiConstants';
 import apiSearch from '../utils/apiSearch';
 import { getDestination } from '../utils/helperMethods';
 import { store } from '../routes';
@@ -14,7 +14,7 @@ export function refSearch(query) {
     // correct default value on the data results page
     dispatch(setPeriod(SET_PERIOD, periods.DEFAULT_PERIOD));
 
-    dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, ''));
+    dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, '', ''));
     dispatch(sendingRequest(SENDING_REF_REQUEST, true));
     dispatch(setResults(SET_REF_RESULTS, { results: [] }));
     dispatch(setQuery(SET_REF_QUERY, query));
@@ -43,7 +43,8 @@ export function refSearch(query) {
                 headers: data.response,
               }));
             } else {
-              dispatch(setErrorMessage(REFS['ENT'].setError, data.message));
+              dispatch(setErrorMessage(REFS['ENT'].setError, data.message, Math.floor(new Date() / 1000)));
+              dispatch(addMostRecentError('ENT', data.message, Math.floor(new Date() / 1000)));
             }
           });
         }
@@ -54,7 +55,7 @@ export function refSearch(query) {
           browserHistory.push(`/${destination}/${query}`);
         // }
       } else {
-        dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message));
+        dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message, Math.floor(new Date() / 1000)));
       }
     });
   };
@@ -78,7 +79,7 @@ export function getSpecificUnitType(unitType, id, redirect = false) {
  */
 export function getUnitForDefaultPeriod(unitType, id, redirect = false) {
   return (dispatch) => {
-    dispatch(setErrorMessage(REFS[unitType].setError, ''));
+    dispatch(setErrorMessage(REFS[unitType].setError, '', ''));
     dispatch(sendingRequest(REFS[unitType].setSending, true));
     dispatch(setResults(REFS[unitType].setResults, { results: [] }));
     dispatch(setQuery(REFS[unitType].setQuery, id));
@@ -98,7 +99,8 @@ export function getUnitForDefaultPeriod(unitType, id, redirect = false) {
           browserHistory.push(`/${REFS[unitType].url}/${id}`);
         }
       } else {
-        dispatch(setErrorMessage(REFS[unitType].setError, data.message));
+        dispatch(setErrorMessage(REFS[unitType].setError, data.message, Math.floor(new Date() / 1000)));
+        dispatch(addMostRecentError(unitType, data.message, Math.floor(new Date() / 1000)));
       }
     });
   };
@@ -111,7 +113,7 @@ export function getUnitForDefaultPeriod(unitType, id, redirect = false) {
  */
 export function getUnitForSpecificPeriod(unitType, id, period, redirect = false) {
   return (dispatch) => {
-    dispatch(setErrorMessage(REFS[unitType].setError, ''));
+    dispatch(setErrorMessage(REFS[unitType].setError, '', ''));
     dispatch(sendingRequest(REFS[unitType].setSending, true));
     // dispatch(setResults(REFS[unitType].setResults, { results: [] }));
     dispatch(setQuery(REFS[unitType].setQuery, id));
@@ -131,7 +133,8 @@ export function getUnitForSpecificPeriod(unitType, id, period, redirect = false)
           browserHistory.push(`/${REFS[unitType].url}/${id}`);
         }
       } else {
-        dispatch(setErrorMessage(REFS[unitType].setError, data.message));
+        dispatch(setErrorMessage(REFS[unitType].setError, data.message, Math.floor(new Date() / 1000)));
+        dispatch(addMostRecentError(unitType, data.message, Math.floor(new Date() / 1000)));
       }
     });
   };
@@ -154,6 +157,14 @@ export function changePeriod(period) {
   };
 }
 
+export function addMostRecentError(unitType, errorMessage, timeStamp) {
+  return { type: ADD_MOST_RECENT_ERROR, unitType, errorMessage, timeStamp };
+}
+
+export function removeLastError() {
+  return { type: REMOVE_LAST_ERROR };
+}
+
 export function setResults(type, newState) {
   return { type, newState };
 }
@@ -174,6 +185,6 @@ export function sendingRequest(type, sending) {
   return { type, sending };
 }
 
-function setErrorMessage(type, message) {
-  return { type, message };
+function setErrorMessage(type, message, timeStamp) {
+  return { type, message, timeStamp };
 }

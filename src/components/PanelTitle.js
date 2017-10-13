@@ -44,7 +44,7 @@ class PanelTitle extends React.Component {
     const style = {
       marginLeft: '0px',
     };
-    const editButton = (<Button onClick={() => this.props.goToEditView()} style={style}><Glyphicon glyph="edit" /></Button>);
+    const editButton = (<Button data-for="edit-tooltip" data-tip onClick={() => this.props.goToEditView()} style={style}><Glyphicon glyph="edit" /></Button>);
     const displayEditButton = (this.props.unitType === 'ENT') ? editButton : null;
     // Note: We should use a bootstrap tooltip/modal/overlay etc. for the title overflow,
     // however there is an issue with dynamic bootstrap elements not inheriting css, so
@@ -80,15 +80,11 @@ class PanelTitle extends React.Component {
             </select>
           }
           <ButtonToolbar className="pull-right" >
-            {/* Provides extra visual weight and identifies the primary action in a set of buttons */}
-            {/* <Button bsStyle="primary" onClick={() => goToDataView()}><Glyphicon glyph="tree-deciduous" />&nbsp;Toggle Tree View</Button> */}
-            <Button onClick={() => this.props.goToDataView()}><Glyphicon glyph="list" /></Button>
+            <Button onClick={() => this.props.goToDataView()} data-for="data-tooltip" data-tip><Glyphicon glyph="list" /></Button>
             {displayEditButton}
-            <Button style={style} onClick={() => this.props.goToTreeView1()}><Glyphicon glyph="tree-deciduous" /></Button>
-            <Button style={style} onClick={() => this.props.goToTreeView2()}><Glyphicon glyph="tree-conifer" /></Button>
+            <Button data-for="tree1-tooltip" data-tip style={style} onClick={() => this.props.goToTreeView1()}><Glyphicon glyph="tree-deciduous" /></Button>
+            <Button data-for="tree2-tooltip" data-tip style={style} onClick={() => this.props.goToTreeView2()}><Glyphicon glyph="tree-conifer" /></Button>
           </ButtonToolbar>
-        {/* <Col lg={3} md={3} sm={4} xs={5} style={{ height: '30px', border: 'none' }}> */}
-        
         </Col>
         {this.state.showTooltip &&
           <ReactTooltip id="tooltip" type="info">
@@ -100,6 +96,18 @@ class PanelTitle extends React.Component {
           message={`Copied '${this.props.name}' to clipboard.`}
           close={this.closeModal}
         />
+        <ReactTooltip id="data-tooltip" type="info">
+          <span>Data View</span>
+        </ReactTooltip>
+        <ReactTooltip id="edit-tooltip" type="info">
+          <span>Edit Enterprise</span>
+        </ReactTooltip>
+        <ReactTooltip id="tree1-tooltip" type="info">
+          <span>Tree View 1</span>
+        </ReactTooltip>
+        <ReactTooltip id="tree2-tooltip" type="info">
+          <span>Tree View 2</span>
+        </ReactTooltip>
       </Row>
     );
   }

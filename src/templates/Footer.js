@@ -1,7 +1,7 @@
 import React from 'react';
 import { Footer } from 'registers-react-library';
 
-const FooterTemplate = function () {
+const FooterTemplate = () => {
   return (
     <Footer
       footerSection={[

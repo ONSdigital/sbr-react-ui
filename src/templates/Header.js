@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Button, Header } from 'registers-react-library';
 import { logout } from '../actions/LoginActions';
 
-const HeaderTemplate = function (props) {
+const HeaderTemplate = (props) => {
   return (
     <Header
       showHeaderItems={props.data.loggedIn}

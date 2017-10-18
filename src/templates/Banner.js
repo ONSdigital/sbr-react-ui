@@ -1,7 +1,7 @@
 import React from 'react';
 import { Banner } from 'registers-react-library';
 
-const BannerTemplate = function () {
+const BannerTemplate = () => {
   return (
     <Banner
       text="ALPHA"

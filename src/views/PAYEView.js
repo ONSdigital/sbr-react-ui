@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { BreadCrumb } from 'registers-react-library';
 import PAYEPanel from '../components/PAYEPanel';
-import BreadCrumb from '../components/BreadCrumb';
 import PanelContainer from '../components/PanelContainer';
 
 const PAYEView = ({ data }) => {
   const items = [
+    { name: 'Home', link: '' },
     { name: 'Enterprise', link: '' },
     { name: `${data[0].parents.ENT}`, link: `/Enterprises/${data[0].parents.ENT}/0`, unitType: 'ENT' },
     { name: 'Legal Unit', link: '' },

@@ -1,46 +1,13 @@
 import React from 'react';
+import { Banner } from 'registers-react-library';
 
-const Banner = function () {
-  const style = {
-    banner: {
-      marginTop: '-20px',
-      width: '100vw',
-      backgroundColor: '#3B7A9E',
-      color: '#fff',
-      boxSizing: 'border-box',
-      display: 'block',
-      height: '40px',
-    },
-    bannerTag: {
-      paddingTop: '2px',
-      paddingRight: '7px',
-      paddingBottom: '3px',
-      paddingLeft: '7px',
-      marginLeft: '10px',
-      textTransform: 'uppercase',
-      color: '#FFFFFF',
-      fontWeight: '700',
-      backgroundColor: '#323132',
-      boxSizing: 'border-box',
-    },
-    p: {
-      paddingTop: '10px',
-    },
-  };
+const BannerTemplate = function () {
   return (
-    <div style={style.banner}>
-      <div style={style.banner}>
-        <div className="container">
-          <p style={style.p}>
-            <strong style={style.bannerTag}>
-              Alpha
-            </strong>&nbsp;
-            this release is still in development.
-          </p>
-        </div>
-      </div>
-    </div>
+    <Banner
+      text="ALPHA"
+      message="this release is still in development."
+    />
   );
 };
 
-export default Banner;
+export default BannerTemplate;

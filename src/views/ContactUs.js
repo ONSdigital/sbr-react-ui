@@ -1,18 +1,19 @@
 import React from 'react';
-import BreadCrumb from '../components/BreadCrumb';
-import TitleAndDescription from '../components/TitleAndDescription';
+import { TitleAndDescription, BreadCrumb } from 'registers-react-library';
 
 const ContactUs = () => {
-  const items = [
-    { name: 'Contact Us', link: '' },
-  ];
   return (
     <div>
-      <BreadCrumb breadCrumbItems={items} />
+      <BreadCrumb
+        breadCrumbItems={[
+          { name: 'Home', link: '/Home' },
+          { name: 'Contact Us', link: '' },
+        ]}
+      />
       <TitleAndDescription
         title="Contact Us"
         description="Contact Us details etc."
-        marginBottom={1}
+        marginBottom="1"
       />
     </div>
   );

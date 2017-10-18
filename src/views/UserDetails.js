@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import BreadCrumb from '../components/BreadCrumb';
-import TitleAndDescription from '../components/TitleAndDescription';
+import { TitleAndDescription, BreadCrumb } from 'registers-react-library';
 
 const UserDetails = ({ username, role }) => {
   const items = [
+    { name: 'Home', link: '/Home' },
     { name: 'User Details', link: '' },
   ];
 
@@ -14,7 +14,7 @@ const UserDetails = ({ username, role }) => {
       <TitleAndDescription
         title="User Details"
         description="Information about the user logged in"
-        marginBottom={1}
+        marginBottom="1"
       />
       <div className="page-intro background--gallery">
         <div className="wrapper">

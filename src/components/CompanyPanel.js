@@ -10,7 +10,7 @@ import PanelTitle from '../components/PanelTitle';
 import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
 
-const CompanyPanel = function ({ company, showTreeView, toggleTreeView, goToView }) {
+const CompanyPanel = ({ company, showTreeView, toggleTreeView, goToView }) => {
   const json = formCompanyJson(company);
   function panelContent() {
     let dataView = (

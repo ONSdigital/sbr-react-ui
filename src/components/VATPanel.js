@@ -12,7 +12,7 @@ import PanelTitle from '../components/PanelTitle';
 import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
 
-const VATPanel = function ({ vat, showTreeView, toggleTreeView, goToView }) {
+const VATPanel = ({ vat, showTreeView, toggleTreeView, goToView }) => {
   const json = formVatJson(vat);
   const title = (
     <PanelTitle

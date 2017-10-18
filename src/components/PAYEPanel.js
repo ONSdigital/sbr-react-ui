@@ -13,7 +13,7 @@ import PanelTitle from '../components/PanelTitle';
 import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
 
-const PAYEPanel = function ({ paye, showTreeView, toggleTreeView, goToView }) {
+const PAYEPanel = ({ paye, showTreeView, toggleTreeView, goToView }) => {
   const json = formPayeJson(paye);
   function panelContent() {
     let dataView = (

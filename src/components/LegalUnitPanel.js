@@ -12,7 +12,7 @@ import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
 import colours from '../config/colours';
 
-const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView, goToView }) {
+const LegalUnitPanel = ({ legalUnit, showTreeView, toggleTreeView, goToView }) => {
   function panelContent() {
     const formTitle = (name, count, accessor) => (<p style={{ margin: '0px', padding: '0px' }}><Label bsStyle="primary" style={{ backgroundColor: colours[accessor], margin: '0px'}}>{count}</Label>&nbsp;{name}</p>);    
     // const formTitle = (name, count, accessor) => (<p>{name} <Label bsStyle="primary" style={{ backgroundColor: colours[accessor] }}>{count}</Label></p>);    

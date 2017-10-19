@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import BreadCrumb from '../components/BreadCrumb';
-import TitleAndDescription from '../components/TitleAndDescription';
+import { TitleAndDescription, BreadCrumb } from 'registers-react-library';
 
 const TechnicalInformation = ({ username, role, uiVersion, apiVersion, uiLastUpdate, apiLastUpdate }) => {
   const items = [
+    { name: 'Home', link: '/Home' },
     { name: 'Technical Information', link: '' },
   ];
   return (
@@ -14,7 +14,7 @@ const TechnicalInformation = ({ username, role, uiVersion, apiVersion, uiLastUpd
         <TitleAndDescription
           title="Technical Information"
           description="Information regarding what versions are being used"
-          marginBottom={1}
+          marginBottom="1"
         />
       </div>
       <div className="page-content border-top--iron-sm border-top--iron-md">

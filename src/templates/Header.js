@@ -1,43 +1,35 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { browserHistory, Link } from 'react-router';
-import Loader from 'halogen/PulseLoader';
+import { Button, Header } from 'registers-react-library';
 import { logout } from '../actions/LoginActions';
-import Button from 'react-bootstrap-button-loader';
 
-const Header = function (props) {
-  const spinner = (<Loader color="#FFFFFF" size="8px" margin="0px" />);
-  const buttonContent = (props.data.currentlySending) ? spinner : 'Logout';
-  function getHeaderItems() {
-    return (
-      <div className="secondary-nav col col--lg-two-thirds col--md-two-thirds print--hide">
-        <ul className="secondary-nav__list js-nav-clone__list">
-          <li className="secondary-nav__item">
-            <Link className="secondary-nav__link  js-nav-clone__link" to="/UserDetails">User Details</Link>
-          </li>
-          <li className="secondary-nav__item">
-            <Link className="secondary-nav__link  js-nav-clone__link" to="/TechnicalInformation">Information</Link>
-          </li>
-          <Button onClick={!props.currentlySending ? () => props.dispatch(logout()) : null} aria-label="Logout button" loading={props.currentlySending} type="submit" className="btn btn--primary btn--thin">
-            {buttonContent}
-          </Button>
-        </ul>
-      </div>);
-  }
-  const div = (props.data.loggedIn) ? getHeaderItems() : '';
+const HeaderTemplate = (props) => {
   return (
-    <div className="wrapper">
-      <div className="header col-wrap">
-        <div className="col col--lg-one-third col--md-one-third">
-          <a onClick={() => browserHistory.push('/Home')} style={{ cursor: 'pointer' }}>
-            <img className="logo" src="https://cdn.ons.gov.uk/assets/images/ons-logo/v2/ons-logo.svg" alt="Office for National Statistics" />
-          </a>
-        </div>
-        <div className="col col--lg-two-thirds col--md-two-thirds print--hide">&nbsp;</div>
-        {div}
-      </div>
-    </div>
+    <Header
+      showHeaderItems={props.data.loggedIn}
+      headerLinks={[
+        { text: 'User Details', link: '/UserDetails' },
+        { text: 'Information', link: '/TechnicalInformation' },
+      ]}
+      imageUrl="/Home"
+    >
+      <Button
+        id="logoutButton"
+        size="thin"
+        text="Logout"
+        onClick={!props.data.currentlySending ? () => props.dispatch(logout()) : null}
+        ariaLabel="Logout Button"
+        type="submit"
+        loading={props.data.currentlySending}
+      />
+    </Header>
   );
+};
+
+HeaderTemplate.propTypes = {
+  data: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 function select(state) {
@@ -46,4 +38,4 @@ function select(state) {
   };
 }
 
-export default connect(select)(Header);
+export default connect(select)(HeaderTemplate);

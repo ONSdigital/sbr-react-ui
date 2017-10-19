@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'registers-react-library';
 import { Panel, Form, Grid, Row, Col } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { formVatJson } from '../utils/formJson';
@@ -11,7 +12,7 @@ import PanelTitle from '../components/PanelTitle';
 import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
 
-const VATPanel = function ({ vat, showTreeView, toggleTreeView, goToView }) {
+const VATPanel = ({ vat, showTreeView, toggleTreeView, goToView }) => {
   const json = formVatJson(vat);
   const title = (
     <PanelTitle
@@ -85,9 +86,9 @@ const VATPanel = function ({ vat, showTreeView, toggleTreeView, goToView }) {
           {panelContent()}
         </Panel>
       </div>
-      <button style={{ marginTop: '20px' }} className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" onClick={() => browserHistory.push('/RefSearch')}>
-        Return to search
-      </button>
+      <div className="margin-bottom-md--2" style={{ marginTop: '20px' }}>
+        <Button id="returnToSearchButton" size="wide" text="Return to search" onClick={() => browserHistory.push('/RefSearch')} ariaLabel="Return to search Button" type="submit" />
+      </div>
     </div>
   );
 };

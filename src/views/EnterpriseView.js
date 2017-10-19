@@ -4,13 +4,7 @@ import EnterprisePanel from '../components/EnterprisePanel';
 import BreadCrumb from '../components/BreadCrumb';
 import PanelContainer from '../components/PanelContainer';
 
-const EnterpriseView = ({ routeParams, data, dispatch }) => {
-  // If there is not data in the store, or the correct id is not present,
-  // send a request for the data.
-  // (e.g. go straight to /Enterprises/:id and not going)
-  // if (data.length === 0 || data[0].id === undefined) {
-  //   dispatch(getSpecificUnitType('ENT', routeParams.enterprise));
-  // }
+const EnterpriseView = ({ data }) => {
   const items = [
     { name: 'Enterprise', link: '', unitType: '' },
     { name: `${data[0].id}`, link: '', unitType: 'ENT' },
@@ -34,8 +28,6 @@ const EnterpriseView = ({ routeParams, data, dispatch }) => {
 
 EnterpriseView.propTypes = {
   data: React.PropTypes.array.isRequired,
-  routeParams: React.PropTypes.object.isRequired,
-  dispatch: React.PropTypes.func.isRequired,
 };
 
 function select(state) {

@@ -8,7 +8,7 @@ import config from '../config/constants';
 
 const { ENV } = config;
 
-const Template = function (props) {
+const Template = (props) => {
   const onProdEnv = (ENV === 'prod');
   const banner = (onProdEnv) ? '' : (<Banner />);
   if (props.location.pathname === '/' || props.location.pathname === 'Login') {

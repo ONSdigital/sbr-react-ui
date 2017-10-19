@@ -67,7 +67,7 @@
     "react": "^15.6.2",
     "react-a11y": "^0.3.4",
     "react-bootstrap": "^0.30.7",
-    "react-bootstrap-button-loader": "^1.0.8",
+    "react-bootstrap-button-loader": "1.0.8",
     "react-bootstrap-table": "^3.4.5",
     "react-copy-to-clipboard": "^5.0.1",
     "react-d3-tree": "^1.4.0",
@@ -82,6 +82,7 @@
     "react-tooltip": "^3.3.0",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
+    "registers-react-library": "^1.0.0",
     "request": "^2.81.0",
     "save-svg-as-png": "^1.2.0"
   },

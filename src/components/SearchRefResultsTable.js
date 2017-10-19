@@ -6,7 +6,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { formatResultsTable, getDestination } from '../utils/helperMethods';
 import '../resources/css/react-bootstrap-table-all.min.css';
 
-const SearchRefResultsTable = function ({ results }) {
+const SearchRefResultsTable = ({ results }) => {
   function buttonFormatter(cell, row, enumObject, index) {
     const focus = (index === 0);
     const destination = getDestination(row.source);

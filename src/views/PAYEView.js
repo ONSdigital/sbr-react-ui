@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PAYEPanel from '../components/PAYEPanel';
-import BreadCrumb from '../components/BreadCrumb';
 import PanelContainer from '../components/PanelContainer';
+import BreadCrumb from '../components/BreadCrumb';
 
 const PAYEView = ({ data }) => {
   const items = [

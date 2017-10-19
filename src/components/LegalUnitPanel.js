@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'registers-react-library';
 import { Panel, Form, Label, Tab, Grid, Row, Col, Nav, NavItem } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { getChildValues } from '../utils/helperMethods';
@@ -11,7 +12,7 @@ import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
 import colours from '../config/colours';
 
-const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView, goToView }) {
+const LegalUnitPanel = ({ legalUnit, showTreeView, toggleTreeView, goToView }) => {
   function panelContent() {
     const formTitle = (name, count, accessor) => (<p style={{ margin: '0px', padding: '0px' }}><Label bsStyle="primary" style={{ backgroundColor: colours[accessor], margin: '0px'}}>{count}</Label>&nbsp;{name}</p>);    
     // const formTitle = (name, count, accessor) => (<p>{name} <Label bsStyle="primary" style={{ backgroundColor: colours[accessor] }}>{count}</Label></p>);    
@@ -118,9 +119,9 @@ const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView, goTo
           {panelContent()}
         </Panel>
       </div>
-      <button style={{ marginTop: '20px' }} className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" onClick={() => browserHistory.push('/RefSearch')}>
-        Return to search
-      </button>
+      <div className="margin-bottom-md--2" style={{ marginTop: '20px' }}>
+        <Button id="returnToSearchButton" size="wide" text="Return to search" onClick={() => browserHistory.push('/RefSearch')} ariaLabel="Return to search Button" type="submit" />
+      </div>
     </div>
   );
 };

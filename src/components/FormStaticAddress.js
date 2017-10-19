@@ -25,15 +25,24 @@ const FormStaticAddress = ({ id, label, address1, address2, address3, address4, 
   );
 };
 
+FormStaticAddress.defaultProps = {
+  address1: '',
+  address2: '',
+  address3: '',
+  address4: '',
+  address5: '',
+  postcode: '',
+};
+
 FormStaticAddress.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  address1: PropTypes.string.isRequired,
-  address2: PropTypes.string.isRequired,
-  address3: PropTypes.string.isRequired,
-  address4: PropTypes.string.isRequired,
-  address5: PropTypes.string.isRequired,
-  postcode: PropTypes.string.isRequired,
+  address1: PropTypes.string,
+  address2: PropTypes.string,
+  address3: PropTypes.string,
+  address4: PropTypes.string,
+  address5: PropTypes.string,
+  postcode: PropTypes.string,
 };
 
 export default FormStaticAddress;

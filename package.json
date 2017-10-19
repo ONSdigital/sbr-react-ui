@@ -82,7 +82,7 @@
     "react-tooltip": "^3.3.0",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
-    "registers-react-library": "file:///Users/coolit/Desktop/Git Repos/registers/registers-react-library/registers-react-library",
+    "registers-react-library": "^1.0.0",
     "request": "^2.81.0",
     "save-svg-as-png": "^1.2.0"
   },

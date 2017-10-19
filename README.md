@@ -1,5 +1,6 @@
 # Statistical Business Register User Interface
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4e4fd30114bf491ba640872d0e902f3c)](https://www.codacy.com/app/ONSDigital/sbr-ui?utm_source=github.com&utm_medium=referral&utm_content=ONSdigital/sbr-ui&utm_campaign=badger)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](./LICENSE) [![Dependency Status](https://www.versioneye.com/user/projects/59cb91720fb24f005d4bc6c6/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/59cb91720fb24f005d4bc6c6)
 
 The following tutorials were used to help with the deployment using Node.js, the login with redux and the isolation of bootstrap styles: [Node](https://medium.com/@patriciolpezjuri/using-create-react-app-with-react-router-express-js-8fa658bf892d#.mt6bbdd8m

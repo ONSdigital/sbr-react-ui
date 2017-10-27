@@ -12,7 +12,7 @@ const PsqlSession = require('./Sessions/PsqlSession');
 const JsonSession = require('./Sessions/JsonSession');
 
 const PORT = process.env.PORT || 3001;
-const DB = process.env.DB || 'json';
+const SESSION_DB = process.env.SESSION_DB || 'json';
 
 // Choose which session type to use
 const session = ((db) => {
@@ -30,7 +30,7 @@ const session = ((db) => {
       logger.debug('Creating new JsonSession');
       return new JsonSession();
   }
-})(DB);
+})(SESSION_DB);
 logger.info(`Using session type: ${session.name}`);
 
 // On a local environment, we mock the API Gateway with the a node script on localhost:3002

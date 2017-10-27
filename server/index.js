@@ -7,7 +7,31 @@ const fork = require('child_process').fork;
 const app = require('./app');
 const logger = require('./logger');
 
+const RedisSession = require('./Sessions/RedisSession');
+const PsqlSession = require('./Sessions/PsqlSession');
+const JsonSession = require('./Sessions/JsonSession');
+
 const PORT = process.env.PORT || 3001;
+const DB = process.env.DB || 'json';
+
+// Choose which session type to use
+const session = ((db) => {
+  switch (db) {
+    case 'json':
+      logger.debug('Creating new JsonSession');
+      return new JsonSession();
+    case 'psql':
+      logger.debug('Creating new PsqlSession');
+      return new PsqlSession();
+    case 'redis':
+      logger.debug('Creating new RedisSession');
+      return new RedisSession();
+    default:
+      logger.debug('Creating new JsonSession');
+      return new JsonSession();
+  }
+})(DB);
+logger.info(`Using session type: ${session.name}`);
 
 // On a local environment, we mock the API Gateway with the a node script on localhost:3002
 const child = (process.env.ENV === 'local') ? fork('./server/apiGateway') : null;
@@ -15,6 +39,7 @@ const child = (process.env.ENV === 'local') ? fork('./server/apiGateway') : null
 logger.level = 'debug';
 logger.info('Started Winston logger & created log file');
 
+app.session = session;
 app.maxSockets = 500;
 app.listen(PORT, () => {
   console.log(`sbr-ui-node-server listening on port ${PORT}!`);

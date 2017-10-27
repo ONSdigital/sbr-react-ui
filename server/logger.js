@@ -25,4 +25,12 @@ const logger = new (winston.Logger)({
   ],
 });
 
+// Morgan appends an extra \n, so we need to remove it
+logger.stream = {
+  write: (message, encoding) => {
+    logger.info(message.substring(0, message.lastIndexOf('\n')));
+  },
+};
+
+
 module.exports = logger;

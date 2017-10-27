@@ -1,11 +1,10 @@
 'use strict';
 
 /* eslint strict: "off" */
-/* eslint no-console: "off" */
 
 const fork = require('child_process').fork;
-const app = require('./app');
 const logger = require('./logger');
+const app = require('./app');
 
 const RedisSession = require('./Sessions/RedisSession');
 const PsqlSession = require('./Sessions/PsqlSession');
@@ -42,7 +41,6 @@ logger.info('Started Winston logger & created log file');
 app.session = session;
 app.maxSockets = 500;
 app.listen(PORT, () => {
-  console.log(`sbr-ui-node-server listening on port ${PORT}!`);
   logger.info(`sbr-ui-node-server listening on port ${PORT}!`);
 });
 
@@ -52,12 +50,11 @@ process.stdin.resume(); // so the program will not close instantly
 function exitHandler(options, err) {
   if (options.cleanup) {
     if (process.env.ENV === 'local') {
-      console.log('Killing child process (sbr-ui-mock-api-gateway)...');
       logger.info('Killing child process (sbr-ui-mock-api-gateway)...');
       child.kill('SIGINT');
     }
   }
-  if (err) console.log(err.stack);
+  if (err) logger.error(err.stack);
   if (options.exit) process.exit();
 }
 

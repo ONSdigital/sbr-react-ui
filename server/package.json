@@ -19,7 +19,8 @@
     "redis-sessions": "^1.2.0",
     "request": "^2.81.0",
     "request-promise": "^4.2.2",
-    "winston": "^2.4.0"
+    "winston": "^2.4.0",
+    "pg": "^6.4.2"
   },
   "engines": {
     "node": "5.10.1",

@@ -15,13 +15,12 @@ The following tutorials were used to help with the deployment using Node.js, the
 **[1. Environment Setup](#environment-setup-for-the-ui)**<br>
 **[2. Running the UI](#running-the-ui)**<br>
 **[3. Running the Redis Server](#running-the-redis-server:)**<br>
-**[4. Running the API's](#running-the-api's)**<br>
+**[4. Running the API's](#running-the-apis)**<br>
 **[5. Testing](#testing)**<br>
-**[6. Useful Extensions](#useful-extensions)**<br>
-**[7. Logging into the UI](#logging-into-the-ui)**<br>
-**[8. Troubleshooting](#troubleshooting)**<br>
-**[9. Contributing](#contributing)**<br>
-**[10. License](#license)**<br>
+**[6. Useful Extensions](#useful-extensions/programs)**<br>
+**[7. Troubleshooting](#troubleshooting)**<br>
+**[8. Contributing](#contributing)**<br>
+**[9. License](#license)**<br>
 
 ## Environment Setup for the UI
 
@@ -37,7 +36,7 @@ export SBR_UI_TEST_USER_PASSWORD=test
 export JWT_SECRET=SECRET
 ```
 
-## Running the Demo UI:
+## Running the UI:
 
 1. Clone this repo, install dependencies and start NPM
 
@@ -151,10 +150,6 @@ The node server will carry on running afterwards, you can shut it down with `kil
 * [Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd) - for seeing what is happening in your Redux store
 
 * [Postico](https://eggerapps.at/postico/) - a GUI for PostgreSQL
-
-## Logging into the Demo UI:
-
-Username and password are `test` or `admin`.
 
 ## Troubleshooting
 

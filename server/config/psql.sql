@@ -1,4 +1,5 @@
 -- SQL
+-- https://stackoverflow.com/questions/6763692/postgres-update-after-select
 
 Instructions:
 psql
@@ -14,32 +15,38 @@ CREATE TABLE IF NOT EXISTS sbr_sessions (
   sessionExpire timestamp DEFAULT now() + INTERVAL '8 hours'
 );
 
+-- Create a session
+-- 1. Delete the current user session (if it exists)
+-- 2. Create the new session
+
+DELETE FROM sbr_sessions WHERE username='admin'
+
 INSERT INTO SBR_SESSIONS
 (accessToken, username, role, remoteAddress, apiKey)
 VALUES
 ('abc', 'admin', 'admin', '192.168.1.1', 'abc123-def'),
 ('def', 'test', 'user', '192.168.2.2', 'def-345-cba');
 
--- SELECT
-SELECT * FROM SBR_SESSIONS
-WHERE accessToken='abc';
+-- Get an API key relating to a session
+-- 1. Update the sessionExpire
+-- 2. Get the API key
 
--- CREATE SESSION
-INSERT INTO SBR_SESSIONS
-(accessToken, username, remoteAddress, apiKey)
-VALUES
-('qwe', 'admin', 'admin', '192.168.1.4', 'asdasd-def');
+UPDATE sbr_sessions
+SET sessionExpire=now() + INTERVAL '8 hours'
+FROM (SELECT username, apiKey FROM sbr_sessions) AS subquery
+WHERE accessToken='abc'
+RETURNING subquery.username, subquery.apiKey
 
--- GET API KEY
-SELECT username, apiKey
-FROM SBR_SESSIONS
-WHERE accessToken='qwe';
+-- Get a session relating to an accessToken
+-- 1. Update the sessionExpire
+-- 2. Get the username from the session
 
--- GET SESSION
-SELECT username
-FROM SBR_SESSIONS
-WHERE accessToken='qwe';
+UPDATE sbr_sessions
+SET sessionExpire=now() + INTERVAL '8 hours'
+FROM (SELECT username FROM sbr_sessions) AS subquery
+WHERE accessToken='abc'
+RETURNING subquery.username
 
--- KILL SESSION
+-- Kill the user session
 DELETE FROM SBR_SESSIONS
 WHERE accessToken='qwe';

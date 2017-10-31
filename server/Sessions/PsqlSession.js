@@ -25,11 +25,17 @@ class PsqlSession {
 
     return new Promise((resolve, reject) => {
       const accessToken = uuidv4();
+
       const query = `INSERT INTO ${this.tableName}
       (accessToken, username, role, remoteAddress, apiKey)
       VALUES ('${accessToken}', '${username}', '${role}', '${remoteAddress}', '${key}');`;
 
-      client.query(query)
+      // We delete any sessions relating to that user (if any exist) and then
+      // create the session. In future, this could use an upsert?
+      client.query(`DELETE FROM ${this.tableName} WHERE username='${username}'`)
+      .then(() => {
+        return client.query(query);
+      })
       .then(res => {
         logger.debug('Create PostgreSQL session was successful');
         resolve({ accessToken, role });
@@ -45,7 +51,14 @@ class PsqlSession {
     logger.debug('Getting apiKey from PostgreSQL session');
 
     return new Promise((resolve, reject) => {
-      client.query(`SELECT username, apiKey FROM ${this.tableName} WHERE accessToken='${accessToken}'`)
+      const query = `
+        UPDATE ${this.tableName}
+        SET sessionExpire=now() + INTERVAL '8 hours'
+        FROM (SELECT username, apiKey FROM ${this.tableName}) AS subquery
+        WHERE accessToken='${accessToken}'
+        RETURNING subquery.username, subquery.apiKey
+      `;
+      client.query(query)
       .then(res => {
         logger.debug('Get API Key from PostgreSQL session was successful');
         resolve({ username: res.rows[0].username, accessToken, apiKey: res.rows[0].apikey });
@@ -61,7 +74,15 @@ class PsqlSession {
     logger.debug('Getting PostgreSQL session');
 
     return new Promise((resolve, reject) => {
-      client.query(`SELECT username FROM ${this.tableName} WHERE accessToken='${accessToken}'`)
+      const query = `
+        UPDATE ${this.tableName}
+        SET sessionExpire=now() + INTERVAL '8 hours'
+        FROM (SELECT username FROM ${this.tableName}) AS subquery
+        WHERE accessToken='${accessToken}'
+        RETURNING subquery.username
+      `;
+
+      client.query(query)
       .then(res => {
         logger.debug('Get PostgreSQL session was successful');
         resolve({ username: res.rows[0].username, accessToken });

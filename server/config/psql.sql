@@ -1,5 +1,6 @@
 -- SQL
 -- https://stackoverflow.com/questions/6763692/postgres-update-after-select
+-- http://www.the-art-of-web.com/sql/trigger-delete-old/
 
 Instructions:
 psql
@@ -12,14 +13,24 @@ CREATE TABLE IF NOT EXISTS sbr_sessions (
   role varchar(255) NOT NULL,
   remoteAddress varchar(39) NOT NULL,
   apiKey varchar(36) NOT NULL,
-  sessionExpire timestamp DEFAULT now() + INTERVAL '8 hours'
+  sessionExpire timestamp DEFAULT now() + INTERVAL '1 minute'
 );
 
--- Create a session
--- 1. Delete the current user session (if it exists)
--- 2. Create the new session
+CREATE FUNCTION expire_table_delete_old_rows() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  DELETE FROM sbr_sessions WHERE sessionExpire < now();
+  RETURN NEW;
+END;
+$$;
 
-DELETE FROM sbr_sessions WHERE username='admin'
+CREATE TRIGGER expire_table_delete_old_rows_trigger
+    BEFORE UPDATE ON sbr_sessions
+    EXECUTE PROCEDURE expire_table_delete_old_rows();
+
+-- Create a session
+-- 1. Create the new session
 
 INSERT INTO SBR_SESSIONS
 (accessToken, username, role, remoteAddress, apiKey)

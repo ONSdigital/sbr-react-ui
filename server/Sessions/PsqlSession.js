@@ -12,7 +12,6 @@ const client = new Client();
 // https://node-postgres.com/api/client
 // Where to put client.connect?
 
-
 class PsqlSession {
   constructor() {
     this.name = 'psql';
@@ -29,13 +28,8 @@ class PsqlSession {
       const query = `INSERT INTO ${this.tableName}
       (accessToken, username, role, remoteAddress, apiKey)
       VALUES ('${accessToken}', '${username}', '${role}', '${remoteAddress}', '${key}');`;
-
-      // We delete any sessions relating to that user (if any exist) and then
-      // create the session. In future, this could use an upsert?
-      client.query(`DELETE FROM ${this.tableName} WHERE username='${username}'`)
-      .then(() => {
-        return client.query(query);
-      })
+      
+      client.query(query)
       .then(res => {
         logger.debug('Create PostgreSQL session was successful');
         resolve({ accessToken, role });

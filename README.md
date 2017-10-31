@@ -4,7 +4,7 @@
 
 The Statistical Business Register allows a user to search for Enterprise data, including Enterprise Children such as LEU (Legal Unit), VAT, PAYE & Company House data. Navigation around this hierarchy can be done through a breadcrumb, or using a 'Tree' view.
 
-In the diagram below, this repository includes the top half, the ui (ReactJS), the server to serve the ui (NodeJS), the session management (Redis), and a mock API Gateway (NodeJS).
+In the diagram below, this repository includes the top half, the ui (ReactJS), the server to serve the ui (NodeJS), the session management (Redis/PostgreSQL), and a mock API Gateway (NodeJS).
 
 ![sbr architecture diagram](https://user-images.githubusercontent.com/23335263/32229336-770caf14-be48-11e7-87ce-dc406523ddaf.png)
 

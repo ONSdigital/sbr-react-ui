@@ -14,10 +14,10 @@ The following tutorials were used to help with the deployment using Node.js, the
 ### Table of Contents
 **[1. Environment Setup](#environment-setup-for-the-ui)**<br>
 **[2. Running the UI](#running-the-ui)**<br>
-**[3. Running the Redis Server](#running-the-redis-server:)**<br>
+**[3. Running the Redis Server](#running-the-redis-server)**<br>
 **[4. Running the API's](#running-the-apis)**<br>
 **[5. Testing](#testing)**<br>
-**[6. Useful Extensions](#useful-extensions/programs)**<br>
+**[6. Useful Extensions](#useful-extensionsprograms)**<br>
 **[7. Troubleshooting](#troubleshooting)**<br>
 **[8. Contributing](#contributing)**<br>
 **[9. License](#license)**<br>

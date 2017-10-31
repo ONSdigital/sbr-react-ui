@@ -6,7 +6,7 @@ The Statistical Business Register allows a user to search for Enterprise data, i
 
 In the diagram below, this repository includes the top half, the ui (ReactJS), the server to serve the ui (NodeJS), the session management (Redis), and a mock API Gateway (NodeJS).
 
-![sbr architecture diagram](https://user-images.githubusercontent.com/23335263/31433187-768c9672-ae70-11e7-8ad0-a8b112b703b3.png)
+![sbr architecture diagram](https://user-images.githubusercontent.com/23335263/32229336-770caf14-be48-11e7-87ce-dc406523ddaf.png)
 
 The following tutorials were used to help with the deployment using Node.js, the login with redux and the isolation of bootstrap styles: [Node](https://medium.com/@patriciolpezjuri/using-create-react-app-with-react-router-express-js-8fa658bf892d#.mt6bbdd8m
 ), [Login](https://github.com/mxstbr/login-flow) and [Bootstrap Isolation](https://formden.com/blog/isolate-bootstrap).

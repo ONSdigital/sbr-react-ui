@@ -67,10 +67,10 @@ You can choose which type of session database to use by changing the value of th
 | SESSION_DB     | Session Location      | Setup                                       |
 |----------------|-----------------------|---------------------------------------------|
 | json (default) | A local JSON variable | No setup required                           |
-| psql           | A PostgreSQL database | Setup details [here](#sessions--postgresql) |
-| redis          | A Redis instance      | Setup details [here](#sessions--redis)      |
+| psql           | A PostgreSQL database | Setup details [here](#postgresql-setup)     |
+| redis          | A Redis instance      | Setup details [here](#redis-setup)          |
 
-### PostgreSQL
+### PostgreSQL Setup
 
 1. Install PostgreSQL
 
@@ -80,7 +80,7 @@ brew install postgresql
 
 2. Create the table that is defined in [sbr_sessions_table.sql](./server/config/sbr_sessions_table.sql)
 
-### Redis
+### Redis Setup
 
 1. Install redis
 

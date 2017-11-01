@@ -1,22 +1,25 @@
 const logger = require('../logger');
-const { Client } = require('pg');
+const { Pool } = require('pg');
 const uuidv4 = require('uuid/v4');
 
-const client = new Client();
+const pool = new Pool();
 
-// pg.defaults.poolSize ??
-
-// TODO: use the proper way of using pools/clients
+// Useful documentation:
 // https://gist.github.com/brianc/f906bacc17409203aee0
 // https://stackoverflow.com/questions/8484404/what-is-the-proper-way-to-use-the-node-js-postgresql-module
 // https://node-postgres.com/api/client
-// Where to put client.connect?
+
+// the pool will emit an error on behalf of any idle clients
+// it contains if a backend error or network partition happens
+pool.on('error', (err, client) => {
+  logger.error('Unexpected error on idle client', err);
+  process.exit(-1);
+});
 
 class PsqlSession {
   constructor() {
     this.name = 'psql';
     this.tableName = 'sbr_sessions';
-    client.connect();
   }
 
   createSession(username, remoteAddress, key, role) {
@@ -28,15 +31,25 @@ class PsqlSession {
       const query = `INSERT INTO ${this.tableName}
       (accessToken, username, role, remoteAddress, apiKey)
       VALUES ('${accessToken}', '${username}', '${role}', '${remoteAddress}', '${key}');`;
-      
-      client.query(query)
-      .then(res => {
-        logger.debug('Create PostgreSQL session was successful');
-        resolve({ accessToken, role });
-      })
-      .catch(error => {
-        logger.error(`Create PostgreSQL session error: ${error}`);
-        reject({ error });
+
+      pool.connect()
+      .then(client => {
+        return client.query(query)
+          .then(res => {
+            client.release();
+            if (res.rowCount === 1) {
+              logger.debug('Create PostgreSQL session was successful');
+              resolve({ accessToken, role });
+            } else {
+              logger.error('Unable to create PostgreSQL session');
+              reject({ error: 'Unable to create PostgreSQL session' });
+            }
+          })
+          .catch(error => {
+            client.release();
+            logger.error(`Create PostgreSQL session error: ${error}`);
+            reject({ error });
+          });
       });
     });
   }
@@ -52,14 +65,25 @@ class PsqlSession {
         WHERE accessToken='${accessToken}'
         RETURNING subquery.username, subquery.apiKey
       `;
-      client.query(query)
-      .then(res => {
-        logger.debug('Get API Key from PostgreSQL session was successful');
-        resolve({ username: res.rows[0].username, accessToken, apiKey: res.rows[0].apikey });
-      })
-      .catch(error => {
-        logger.error(`Get API Key from PostgreSQL session error: ${error}`);
-        reject({ error });
+
+      pool.connect()
+      .then(client => {
+        return client.query(query)
+          .then(res => {
+            client.release();
+            if (res.rowCount === 1) {
+              logger.debug('Get API Key from PostgreSQL session was successful');
+              resolve({ username: res.rows[0].username, accessToken, apiKey: res.rows[0].apikey });
+            } else {
+              logger.error('Unable to get API key from PostgreSQL session');
+              reject({ error: 'Unable to get API key from PostgreSQL session' });
+            }
+          })
+          .catch(error => {
+            client.release();
+            logger.error(`Get API Key from PostgreSQL session error: ${error}`);
+            reject({ error });
+          });
       });
     });
   }
@@ -76,14 +100,24 @@ class PsqlSession {
         RETURNING subquery.username
       `;
 
-      client.query(query)
-      .then(res => {
-        logger.debug('Get PostgreSQL session was successful');
-        resolve({ username: res.rows[0].username, accessToken });
-      })
-      .catch(error => {
-        logger.error(`Get PostgreSQL session error: ${error}`);
-        reject({ error });
+      pool.connect()
+      .then(client => {
+        return client.query(query)
+          .then(res => {
+            client.release();
+            if (res.rowCount === 1) {
+              logger.debug('Get PostgreSQL session was successful');
+              resolve({ username: res.rows[0].username, accessToken });
+            } else {
+              logger.error('Unable to get PostgreSQL session');
+              reject({ error: 'Unable to get PostgreSQL session' });
+            }
+          })
+          .catch(error => {
+            client.release();
+            logger.error(`Get PostgreSQL session error: ${error}`);
+            reject({ error });
+          });
       });
     });
   }
@@ -92,14 +126,26 @@ class PsqlSession {
     logger.debug('Killing PostgreSQL session');
 
     return new Promise((resolve, reject) => {
-      client.query(`DELETE FROM ${this.tableName} WHERE accessToken='${accessToken}'`)
-      .then(() => {
-        logger.debug('Kill PostgreSQL session was successful');
-        resolve();
-      })
-      .catch(error => {
-        logger.error(`Kill PostgreSQL session error: ${error}`);
-        reject({ error });
+      const query = `DELETE FROM ${this.tableName} WHERE accessToken='${accessToken}'`;
+
+      pool.connect()
+      .then(client => {
+        return client.query(query)
+          .then(res => {
+            client.release();
+            if (res.rowCount === 1) {
+              logger.debug('PostgreSQL session was successfully killed');
+              resolve();
+            } else {
+              logger.error('Unable to kill PostgreSQL session');
+              reject({ error: 'Unable to kill PostgreSQL session' });
+            }
+          })
+          .catch(error => {
+            client.release();
+            logger.error(`Kill PostgreSQL session error: ${error}`);
+            reject({ error });
+          });
       });
     });
   }

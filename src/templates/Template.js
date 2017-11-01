@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Header from './Header';
 import NavBar from './NavBar';
 import Banner from './Banner';
@@ -13,17 +14,20 @@ const Template = (props) => {
   const banner = (onProdEnv) ? '' : (<Banner />);
   if (props.location.pathname === '/' || props.location.pathname === 'Login') {
     return (
-      <div>
+      <div className={(props.currentlySending) ? 'blur' : ''}>
         {banner}
         <div className="container">
           <Header />
           {props.children}
         </div>
+        {props.currentlySending &&
+          <div className="spinner"></div>
+        }
       </div>
     );
   }
   return (
-    <div>
+    <div className={(props.currentlySending) ? 'blur' : ''}>
       {banner}
       <Header />
       <NavBar primary={props.location.pathname} />
@@ -31,6 +35,9 @@ const Template = (props) => {
         {props.children}
       </div>
       <Footer />
+      {props.currentlySending &&
+        <div className="spinner"></div>
+      }
     </div>
   );
 };
@@ -40,6 +47,13 @@ Template.propTypes = {
     pathname: PropTypes.string.isRequired,
   }).isRequired,
   children: PropTypes.object.isRequired,
+  currentlySending: PropTypes.bool.isRequired,
 };
 
-export default Template;
+function select(state) {
+  return {
+    currentlySending: state.login.currentlySending,
+  };
+}
+
+export default connect(select)(Template);

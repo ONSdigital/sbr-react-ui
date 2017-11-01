@@ -81,7 +81,9 @@ export function login(username, password) {
  */
 export function checkAuth(token) {
   return (dispatch) => {
+    dispatch(sendingRequest(true));
     auth.checkToken(token, (success, data) => {
+      dispatch(sendingRequest(false));
       dispatch(setAuthState(success));
       if (!success) {
         sessionStorage.clear();

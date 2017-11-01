@@ -4,12 +4,23 @@
 
 The Statistical Business Register allows a user to search for Enterprise data, including Enterprise Children such as LEU (Legal Unit), VAT, PAYE & Company House data. Navigation around this hierarchy can be done through a breadcrumb, or using a 'Tree' view.
 
-In the diagram below, this repository includes the top half, the ui (ReactJS), the server to serve the ui (NodeJS), the session management (Redis), and a mock API Gateway (NodeJS).
+In the diagram below, this repository includes the top half, the ui (ReactJS), the server to serve the ui (NodeJS), the session management (Redis/PostgreSQL), and a mock API Gateway (NodeJS).
 
-![sbr architecture diagram](https://user-images.githubusercontent.com/23335263/31433187-768c9672-ae70-11e7-8ad0-a8b112b703b3.png)
+![sbr architecture diagram](https://user-images.githubusercontent.com/23335263/32229336-770caf14-be48-11e7-87ce-dc406523ddaf.png)
 
 The following tutorials were used to help with the deployment using Node.js, the login with redux and the isolation of bootstrap styles: [Node](https://medium.com/@patriciolpezjuri/using-create-react-app-with-react-router-express-js-8fa658bf892d#.mt6bbdd8m
 ), [Login](https://github.com/mxstbr/login-flow) and [Bootstrap Isolation](https://formden.com/blog/isolate-bootstrap).
+
+### Table of Contents
+**[1. Environment Setup](#environment-setup-for-the-ui)**<br>
+**[2. Running the UI](#running-the-ui)**<br>
+**[3. Running the Redis Server](#running-the-redis-server)**<br>
+**[4. Running the API's](#running-the-apis)**<br>
+**[5. Testing](#testing)**<br>
+**[6. Useful Extensions](#useful-extensionsprograms)**<br>
+**[7. Troubleshooting](#troubleshooting)**<br>
+**[8. Contributing](#contributing)**<br>
+**[9. License](#license)**<br>
 
 ## Environment Setup for the UI
 
@@ -25,7 +36,7 @@ export SBR_UI_TEST_USER_PASSWORD=test
 export JWT_SECRET=SECRET
 ```
 
-## Running the Demo UI:
+## Running the UI:
 
 1. Clone this repo, install dependencies and start NPM
 
@@ -49,7 +60,7 @@ This will run Node and React on localhost:3001, since Node is serving
 To use hot-reloading, use `npm restart` which runs `react-scripts start`, this
 will start React on port 3000. To start the server, use `ENV=local node server/index.js`.
 
-## Running the redis-server (used for storing user sessions):
+## Running the Redis server:
 
 1. Install redis
 
@@ -130,7 +141,7 @@ To run the stress tests and the node server together, use the following:
 
 The node server will carry on running afterwards, you can shut it down with `killall node`.
 
-## Useful Extensions
+## Useful Extensions/Programs
 
 * [Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo) - for testing Node routes
 
@@ -138,9 +149,7 @@ The node server will carry on running afterwards, you can shut it down with `kil
 
 * [Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd) - for seeing what is happening in your Redux store
 
-## Logging into the Demo UI:
-
-Username and password are `test` or `admin`.
+* [Postico](https://eggerapps.at/postico/) - a GUI for PostgreSQL
 
 ## Troubleshooting
 

@@ -58,6 +58,7 @@
     "morgan": "^1.7.0",
     "npm-run-script": "0.0.4",
     "object.assign": "^4.0.4",
+    "pg": "^6.4.2",
     "prop-types": "^15.5.10",
     "rc-pagination": "^1.7.3",
     "react": "^15.5.4",

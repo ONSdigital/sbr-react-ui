@@ -14,7 +14,6 @@ const formatDate = require('./helpers/formatDate.js');
 const compression = require('compression');
 const urls = require('./config/urls');
 const timeouts = require('./config/timeouts');
-const RedisSessions = require('redis-sessions');
 const cache = require('../server/helpers/cache');
 const rp = require('request-promise');
 const logger = require('./logger');
@@ -22,14 +21,12 @@ const logger = require('./logger');
 const ENV = process.env.ENV;
 const SERVE_HTML = (process.env.SERVE_HTML === 'true');
 const startTime = formatDate(new Date());
-const SESSION_EXPIRE = 60 * 60 * 8;
-const rs = new RedisSessions();
-const rsapp = 'sbr-ui-auth';
 
 const app = express();
 
 app.use(compression()); // gzip all responses
-app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
+morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms');
+app.use(morgan('combined', { stream: logger.stream }));
 app.use(myParser.json()); // For parsing body of POSTs
 
 // Serve static assets (static js files for React from 'npm run build')
@@ -82,7 +79,7 @@ app.post('/login', (req, res) => {
 
   rp(options)
     .then((gatewayJson) => {
-      createRedisSession(username, req.connection.remoteAddress, gatewayJson.key, gatewayJson.role)
+      app.session.createSession(username, req.connection.remoteAddress, gatewayJson.key, gatewayJson.role)
         .then((sessionJson) => {
           logger.info('Successful login');
           res.setHeader('Content-Type', 'application/json');
@@ -109,7 +106,7 @@ app.post('/api', (req, res) => {
   const method = req.body.method;
   const endpoint = req.body.endpoint;
   const accessToken = req.get('Authorization');
-  getApiKey(accessToken)
+  app.session.getApiKey(accessToken)
     .then((data) => {
       if (method === 'GET') {
         getApiEndpoint(`${urls.API_GW}/sbr/${endpoint}`, data.apiKey)
@@ -138,6 +135,35 @@ app.post('/api', (req, res) => {
       logger.info('Unable to use /api endpoint, not authenticated');
       return res.sendStatus(401);
     });
+});
+
+app.post('/checkToken', (req, res) => {
+  const accessToken = req.body.accessToken;
+
+  app.session.getSession(accessToken)
+  .then((json) => {
+    logger.info('Valid token');
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({ username: json.username, accessToken }));
+  })
+  .catch(() => {
+    logger.info('Invalid token');
+    res.sendStatus(401);
+  });
+});
+
+app.post('/logout', (req, res) => {
+  const accessToken = req.body.accessToken;
+
+  app.session.killSession(accessToken)
+  .then(() => {
+    logger.info('Successful user log out');
+    res.sendStatus(200);
+  })
+  .catch(() => {
+    logger.info('Unable to log user out');
+    res.sendStatus(401);
+  });
 });
 
 function getApiEndpoint(url, apiKey) {
@@ -169,94 +195,6 @@ function postApiEndpoint(url, postBody, apiKey) {
   };
 
   return rp(options);
-}
-
-app.post('/checkToken', (req, res) => {
-  const accessToken = req.body.accessToken;
-
-  getRedisSession(accessToken)
-  .then((json) => {
-    logger.info('Valid token');
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({ username: json.username, accessToken }));
-  })
-  .catch(() => {
-    logger.info('Invalid token');
-    res.sendStatus(401);
-  });
-});
-
-app.post('/logout', (req, res) => {
-  const accessToken = req.body.accessToken;
-
-  killRedisSession(accessToken)
-  .then(() => {
-    logger.info('Successful user log out');
-    res.sendStatus(200);
-  })
-  .catch(() => {
-    logger.info('Unable to log user out');
-    res.sendStatus(401);
-  });
-});
-
-function createRedisSession(username, remoteAddress, key, role) {
-  logger.debug('Creating new Redis session');
-  return new Promise((resolve, reject) => {
-    rs.create({
-      app: rsapp,
-      id: username,
-      ip: remoteAddress,
-      ttl: SESSION_EXPIRE,
-      d: { key }
-    }, (err, resp) => {
-      if (!err) resolve({ accessToken: resp.token, role });
-      reject({ error: err });
-    });
-  });
-}
-
-function getApiKey(accessToken) {
-  logger.debug('Getting API Key from Redis session');
-  return new Promise((resolve, reject) => {
-    rs.get({
-      app: rsapp,
-      token: accessToken
-    }, (err, resp) => {
-      if (err) reject();
-      // If the session has timed out, the response will be empty
-      if (Object.keys(resp).length === 0 && resp.constructor === Object) reject();
-      resolve({ username: resp.id, accessToken, apiKey: resp.d.key });
-    });
-  });
-}
-
-function getRedisSession(accessToken) {
-  logger.debug('Getting Redis session');
-  return new Promise((resolve, reject) => {
-    rs.get({
-      app: rsapp,
-      token: accessToken
-    }, (err, resp) => {
-      if (err) reject();
-      // If the session has timed out, the response will be empty
-      if (Object.keys(resp).length === 0 && resp.constructor === Object) reject();
-      resolve({ username: resp.id, accessToken });
-    });
-  });
-}
-
-function killRedisSession(accessToken) {
-  logger.debug('Killing Redis session');
-  return new Promise((resolve, reject) => {
-    rs.kill({
-      app: rsapp,
-      token: accessToken
-    }, (err) => {
-      if (!err) resolve();
-      reject();
-    });
-  });
 }
 
 module.exports = app;

@@ -28,9 +28,11 @@ class PsqlSession {
     return new Promise((resolve, reject) => {
       const accessToken = uuidv4();
 
-      const query = `INSERT INTO ${this.tableName}
-      (accessToken, username, role, remoteAddress, apiKey)
-      VALUES ('${accessToken}', '${username}', '${role}', '${remoteAddress}', '${key}');`;
+      const query = `
+        INSERT INTO ${this.tableName}
+        (accessToken, username, role, remoteAddress, apiKey)
+        VALUES ('${accessToken}', '${username}', '${role}', '${remoteAddress}', '${key}');
+      `;
 
       pool.connect()
       .then(client => {
@@ -126,7 +128,10 @@ class PsqlSession {
     logger.debug('Killing PostgreSQL session');
 
     return new Promise((resolve, reject) => {
-      const query = `DELETE FROM ${this.tableName} WHERE accessToken='${accessToken}'`;
+      const query = `
+        DELETE FROM ${this.tableName} 
+        WHERE accessToken='${accessToken}'
+      `;
 
       pool.connect()
       .then(client => {

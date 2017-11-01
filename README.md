@@ -45,30 +45,12 @@ will start React on port 3000. To start the server, use `ENV=local node server/i
 
 ## Running the API's
 
-* [sbr-api](https://github.com/ONSdigital/sbr-api):
-
-```shell
-sbt "api/run -Dhttp.port=9002"
-```
-
-* [sbr-admin-data-api](https://github.com/ONSdigital/sbr-admin-data-api):
-
-```shell
-sbt "api/run -Dsource=hbaseInMemory -Dsbr.hbase.inmemory=true -Dhttp.port=9003"
-```
-
-* [sbr-control-api](https://github.com/ONSdigital/sbr-control-api):
-
-```shell
-sbt "api/run -Dsbr.hbase.inmemory=true -Dhttp.port=9001"
-```
-
-* [business-index-api](https://github.com/ONSdigital/business-index-api):
-
-```shell
-elasticsearch
-sbt "api/run -Denvironment=local"
-```
+| API                                                                    | Start Command                                                                     |
+|------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
+| [sbr-api](https://github.com/ONSdigital/sbr-api)                       | `sbt "api/run -Dhttp.port=9002"`                                                  |
+| [sbr-admin-data-api](https://github.com/ONSdigital/sbr-admin-data-api) | `sbt "api/run -Dsource=hbaseInMemory -Dsbr.hbase.inmemory=true -Dhttp.port=9003"` |
+| [sbr-control-api](https://github.com/ONSdigital/sbr-control-api)       | `sbt "api/run -Dsbr.hbase.inmemory=true -Dhttp.port=9001"`                        |
+| [business-index-api](https://github.com/ONSdigital/business-index-api) | `elasticsearch & sbt "api/run -Denvironment=local"`                               |
 
 ## Testing
 

@@ -14,7 +14,7 @@ The following tutorials were used to help with the deployment using Node.js, the
 ### Table of Contents
 **[1. Environment Setup](#environment-setup-for-the-ui)**<br>
 **[2. Running the UI](#running-the-ui)**<br>
-**[3. Running the Redis Server](#running-the-redis-server)**<br>
+**[3. Sessions](#sessions)**<br>
 **[4. Running the API's](#running-the-apis)**<br>
 **[5. Testing](#testing)**<br>
 **[6. Useful Extensions](#useful-extensionsprograms)**<br>
@@ -51,16 +51,36 @@ The NPM start command uses the following commands:
 
 ```shell
 npm run build
-SERVE_HTML=true ENV=local node server
+SERVE_HTML=true SESSION_DB=psql ENV=local node server
 ```
 
 This will run Node and React on localhost:3001, since Node is serving
 `index.html`, hot-reloading will not work.
 
 To use hot-reloading, use `npm restart` which runs `react-scripts start`, this
-will start React on port 3000. To start the server, use `ENV=local node server/index.js`.
+will start React on port 3000. To start the server, use `ENV=local node SESSION_DB=psql server/index.js`.
 
-## Running the Redis server:
+## Sessions
+
+You can choose which type of session database to use by changing the value of the `SESSION_DB` environment variable that is passed into the Node server.
+
+| SESSION_DB     | Session Location      | Setup                                       |
+|----------------|-----------------------|---------------------------------------------|
+| json (default) | A local JSON variable | No setup required                           |
+| psql           | A PostgreSQL database | Setup details [here](#sessions--postgresql) |
+| redis          | A Redis instance      | Setup details [here](#sessions--redis)      |
+
+### PostgreSQL
+
+1. Install PostgreSQL
+
+```shell
+brew install postgresql
+```
+
+2. Create the table that is defined in [sbr_sessions_table.sql](./server/config/sbr_sessions_table.sql)
+
+### Redis
 
 1. Install redis
 

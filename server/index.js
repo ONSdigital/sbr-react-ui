@@ -6,9 +6,9 @@ const fork = require('child_process').fork;
 const logger = require('./logger');
 const app = require('./app');
 
-const RedisSession = require('./Sessions/RedisSession');
-const PsqlSession = require('./Sessions/PsqlSession');
-const JsonSession = require('./Sessions/JsonSession');
+const RedisSession = require('./sessions/RedisSession');
+const PsqlSession = require('./sessions/PsqlSession');
+const JsonSession = require('./sessions/JsonSession');
 
 const PORT = process.env.PORT || 3001;
 const SESSION_DB = process.env.SESSION_DB || 'json';

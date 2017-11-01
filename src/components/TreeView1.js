@@ -5,7 +5,6 @@ import { Button, ButtonToolbar, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { saveSvgAsPng } from 'save-svg-as-png';
 import Tree from 'react-d3-tree';
-import Toggle from 'react-toggle';
 import { getSpecificUnitType } from '../actions/ApiActions';
 import { findAndReplace, colourNode } from '../utils/helperMethods';
 import colours from '../config/colours';
@@ -20,11 +19,13 @@ class TreeView1 extends React.Component {
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.downloadImage = this.downloadImage.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
   }
 
   componentWillMount() {
-    document.addEventListener('keydown', this.handleKeyDown.bind(this));
-    document.addEventListener('keyup', this.handleKeyUp.bind(this));
+    document.addEventListener('keydown', this.handleKeyDown);
+    document.addEventListener('keyup', this.handleKeyUp);
   }
 
   componentDidMount() {
@@ -59,8 +60,8 @@ class TreeView1 extends React.Component {
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown.bind(this));
-    document.removeEventListener('keyup', this.handleKeyUp.bind(this));
+    document.removeEventListener('keydown', this.handleKeyDown);
+    document.removeEventListener('keyup', this.handleKeyUp);
   }
 
   handleKeyDown(e) {
@@ -95,6 +96,22 @@ class TreeView1 extends React.Component {
     this.setState({ collapse: !this.state.collapse });
   }
 
+  fullScreen() {
+    const a = document.getElementById('treeWrapper');
+    const conf = confirm('Fullscreen mode?');
+    if (conf === true) {
+      if (a.requestFullscreen) {
+        a.requestFullscreen();
+      } else if (a.mozRequestFullScreen) {
+        a.mozRequestFullScreen();
+      } else if (a.webkitRequestFullscreen) {
+        a.webkitRequestFullscreen();
+      } else if (a.msRequestFullscreen) {
+        a.msRequestFullscreen();
+      }
+    }
+  }
+
   downloadImage() {
     saveSvgAsPng(document.getElementsByClassName('rd3t-svg')[0], `ENT-${this.props.enterpriseId}.png`, {
       backgroundColor: 'white',
@@ -122,18 +139,22 @@ class TreeView1 extends React.Component {
       children: data.childrenJson,
     }];
     return (
-      <div>
+      <div id="treeView1" style={{ height: '100%' }}>
         <div style={{ borderBottom: '2px solid', paddingBottom: '5px' }}>
           <ButtonToolbar>
-            <ButtonGroup>
-              <Glyphicon glyph="info-sign" />&nbsp;Click on a node circle to collapse/expand a node, or use Ctrl + Click to go to the data view for that node.
+            <ButtonGroup style={{ height: '30px' }}>
+              <Button onClick={this.fullScreen} style={{ height: '100%' }} bsSize="small" bsStyle="info"><Glyphicon glyph="download-alt" />&nbsp;&nbsp;Full Screen</Button>
+              <Button onClick={this.downloadImage} style={{ height: '100%', marginLeft: '5px' }} bsSize="small" bsStyle="info"><Glyphicon glyph="download-alt" />&nbsp;&nbsp;Download Tree PNG</Button>
             </ButtonGroup>
-            <ButtonGroup style={{ float: 'right' }}>
-              <Button onClick={this.downloadImage} bsSize="small" bsStyle="info"><Glyphicon glyph="download-alt" />&nbsp;&nbsp;Download Tree PNG</Button>
+          </ButtonToolbar>
+          <ButtonToolbar>
+            <ButtonGroup>
+              <br />
+              <Glyphicon glyph="info-sign" />&nbsp;Click on a node circle to collapse/expand a node, or use Ctrl + Click to go to the data view for that node.
             </ButtonGroup>
           </ButtonToolbar>
         </div>
-        <div id="treeWrapper" style={{ width: '100%', height: '500px' }}>
+        <div id="treeWrapper" style={{ width: '100%' }}>
           <Tree
             separation={{ siblings: 1.25, nonSiblings: 2 }}
             data={json}

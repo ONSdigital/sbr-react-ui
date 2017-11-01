@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Label, Form, Tabs, Tab, Grid, Row, Col } from 'react-bootstrap';
+import { Label, Form, Tab, Grid, Row, Col, NavItem, Nav } from 'react-bootstrap';
 import { getLegalStatusDescription } from '../utils/helperMethods';
 import FormStaticValue from '../components/FormStaticValue';
 import FormStaticAddress from '../components/FormStaticAddress';
@@ -8,7 +8,7 @@ import ChildrenTable from '../components/ChildrenTable';
 import colours from '../config/colours';
 
 const EnterpriseDataGrid = ({ json, leuData, chData, payeData, vatData }) => {
-  const formTitle = (name, count, accessor) => (<p>{name} <Label bsStyle="primary" style={{ backgroundColor: colours[accessor] }}>{count}</Label></p>);
+  const formTitle = (name, count, accessor) => (<p style={{ margin: '0px', padding: '0px' }}><Label bsStyle="primary" style={{ backgroundColor: colours[accessor], margin: '0px'}}>{count}</Label>&nbsp;{name}</p>);
   return (
     <Grid>
       <Row className="show-grid">
@@ -21,21 +21,43 @@ const EnterpriseDataGrid = ({ json, leuData, chData, payeData, vatData }) => {
             <FormStaticValue id="formStandardVATTurnover" label="Standard VAT turnover" value={json.standard_vat_turnover} />
           </Col>
         </Form>
-        <Col sm={5} xsOffset={1}>
-          <Tabs defaultActiveKey="1" animation={false} id="children-tabs" bsStyle="tabs">
-            <Tab disabled={leuData.length === 0} eventKey="1" title={formTitle('UBRN', leuData.length, 'LEU')}>
-              <ChildrenTable unitData={leuData} name={'Universal Business Register No.'} accessor={'LEU'} />
-            </Tab>
-            <Tab disabled={chData.length === 0} eventKey="2" title={formTitle('CRN', chData.length, 'CRN')}>
-              <ChildrenTable unitData={chData} name={'Company Reference No.'} accessor={'CH'} />
-            </Tab>
-            <Tab disabled={payeData.length === 0} eventKey="3" title={formTitle('PAYE', payeData.length, 'PAYE')}>
-              <ChildrenTable unitData={payeData} name={'PAYE Reference'} accessor={'PAYE'} />
-            </Tab>
-            <Tab disabled={vatData.length === 0} eventKey="4" title={formTitle('VAT', vatData.length, 'VAT')}>
-              <ChildrenTable unitData={vatData} name={'VAT Reference'} accessor={'VAT'} />
-            </Tab>
-          </Tabs>
+        <Col sm={5}>
+          <Tab.Container id="left-tabs-example" defaultActiveKey={1}>
+            <Row className="clearfix">
+              <Col sm={4}>
+                <Nav bsStyle="pills" stacked style={{ margin: '0px', padding: '0px' }}>
+                  <NavItem style={{ margin: '0px', padding: '0px' }} disabled={leuData.length === 0} eventKey={1}>
+                    {formTitle('UBRN', leuData.length, 'LEU')}
+                  </NavItem>
+                  <NavItem style={{ margin: '0px', padding: '0px' }} disabled={chData.length === 0} eventKey={2}>
+                    {formTitle('CRN', chData.length, 'CRN')}
+                  </NavItem>
+                  <NavItem style={{ margin: '0px', padding: '0px' }} disabled={payeData.length === 0} eventKey={3}>
+                    {formTitle('PAYE', payeData.length, 'PAYE')}
+                  </NavItem>
+                  <NavItem style={{ margin: '0px', padding: '0px' }} disabled={vatData.length === 0} eventKey={4}>
+                    {formTitle('VAT', vatData.length, 'VAT')}
+                  </NavItem>
+                </Nav>
+              </Col>
+              <Col sm={8}>
+                <Tab.Content animation style={{ margin: '0px', padding: '0px' }}>
+                  <Tab.Pane eventKey={1}>
+                    <ChildrenTable unitData={leuData} name={'Universal Business Register No.'} accessor={'LEU'} />
+                  </Tab.Pane>
+                  <Tab.Pane eventKey={2}>
+                    <ChildrenTable unitData={chData} name={'Company Reference No.'} accessor={'CH'} />
+                  </Tab.Pane>
+                  <Tab.Pane eventKey={3}>
+                    <ChildrenTable unitData={payeData} name={'PAYE Reference'} accessor={'PAYE'} />
+                  </Tab.Pane>
+                  <Tab.Pane eventKey={4}>
+                    <ChildrenTable unitData={vatData} name={'VAT Reference'} accessor={'VAT'} />
+                  </Tab.Pane>
+                </Tab.Content>
+              </Col>
+            </Row>
+          </Tab.Container>
         </Col>
       </Row>
     </Grid>

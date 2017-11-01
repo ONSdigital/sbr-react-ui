@@ -33,7 +33,8 @@ import { checkAuth } from './actions/LoginActions';
 // Creates the Redux reducer with the redux-thunk middleware, which allows us
 // to do asynchronous things in the actions
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
-const store = createStoreWithMiddleware(
+// We export the store because we need to access it in apiActions
+export const store = createStoreWithMiddleware(
   reducer,
   /* eslint no-underscore-dangle: "off" */
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),

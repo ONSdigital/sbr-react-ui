@@ -97,7 +97,7 @@ export function getHeight(noOfItems: number) {
 export function findAndReplace(object: {}, value: string, replacevalue: string) {
   for (var x in object) {
     if (object.hasOwnProperty(x)) {
-      if (typeof object[x] == 'object') {
+      if (typeof object[x] === 'object') {
         findAndReplace(object[x], value, replacevalue);
       }
       if (object[value]) {
@@ -125,4 +125,33 @@ export function colourNode(node, id, index, searchTerm, colour, entryNode) {
   } catch (e) {
     // e
   }
+}
+
+export function editFormat(edits) {
+  const editObj = {};
+  /* eslint array-callback-return: "off" */
+  edits.map((edit) => {
+    editObj[edit.accessor] = edit.updated;
+  });
+  return editObj;
+}
+
+export function formEdits(original, updated) {
+  return Object.keys(updated).map((key) => {
+    if (getValueByKey(original.vars, key) !== updated[key].data) {
+      return { accessor: updated[key].accessor, original: getValueByKey(original.vars, key), updated: updated[key].data };
+    }
+    return null;
+  }).filter(a => a !== null);
+}
+
+export function hasFormChanged(original, updated) {
+  // We don't want to check all the data, just the data items that are editable
+  // Map over the data, return true/false based on whether the data has changed,
+  // then reduce using OR, so any true will return true.
+  return Object.keys(updated).map((key) => {
+    return getValueByKey(original.vars, key) !== updated[key].data;
+  }).reduce((a, b) => {
+    return a || b;
+  }, false);
 }

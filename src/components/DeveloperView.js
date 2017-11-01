@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const DeveloperView = function ({ enterprise }) {
+const DeveloperView = ({ enterprise }) => {
   return (
     <div>
       <pre>{JSON.stringify(enterprise, null, 2) }</pre>

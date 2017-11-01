@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'registers-react-library';
 import { Panel, Table, Form, FormGroup, FormControl, ControlLabel, Grid, Row, Col } from 'react-bootstrap';
-import { TableHeaderColumn } from 'react-bootstrap-table';
 import { browserHistory } from 'react-router';
 import { formCompanyJson } from '../utils/formJson';
 import FormStaticValue from '../components/FormStaticValue';
@@ -10,7 +10,8 @@ import PanelTitle from '../components/PanelTitle';
 import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
 
-const CompanyPanel = function ({ company, showTreeView, toggleTreeView }) {
+const CompanyPanel = ({ company, showTreeView, toggleTreeView, goToView }) => {
+  const json = formCompanyJson(company);
   function panelContent() {
     let dataView = (
       <Grid>
@@ -26,7 +27,7 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView }) {
             <Col sm={5}>
               <Table condensed hover>
                 <thead>
-                  <TableHeaderColumn colSpan="4">Accounts</TableHeaderColumn>
+                  <tr colSpan="4"><td><strong>Accounts</strong></td></tr>
                   <tr>
                     <th>Ref. Date</th>
                     <th>Next Due</th>
@@ -45,7 +46,7 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView }) {
               </Table>
               <Table condensed hover>
                 <thead>
-                  <TableHeaderColumn colSpan="4">Mortgages</TableHeaderColumn>
+                  <tr colSpan="4"><td><strong>Mortgages</strong></td></tr>
                   <tr>
                     <th>Charges</th>
                     <th>Outstanding</th>
@@ -64,7 +65,7 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView }) {
               </Table>
               <Table condensed hover>
                 <thead>
-                  <TableHeaderColumn colSpan="2">Returns</TableHeaderColumn>
+                  <tr colSpan="2"><td><strong>Returns</strong></td></tr>
                   <tr>
                     <th>Next Due</th>
                     <th>Last Made</th>
@@ -79,7 +80,7 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView }) {
               </Table>
               <Table condensed hover>
                 <thead>
-                  <TableHeaderColumn colSpan="2">Limited Partnerships</TableHeaderColumn>
+                  <tr colSpan="2"><td><strong>Limited Partnerships</strong></td></tr>
                   <tr>
                     <th>Limited Partners</th>
                     <th>General Partners</th>
@@ -102,6 +103,18 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView }) {
                 </Col>
                 <Col>
                   <FormControl.Static>{json.siccode_sictext_1}</FormControl.Static>
+                </Col>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row className="show-grid">
+            <Col sm={9}>
+              <FormGroup controlId="chLink" >
+                <Col componentClass={ControlLabel} sm={2}>
+                  CH Link
+                </Col>
+                <Col>
+                  <FormControl.Static><a target="_blank" href={`https://beta.companieshouse.gov.uk/company/${company.id}`}>{`https://beta.companieshouse.gov.uk/company/${company.id}`}</a></FormControl.Static>
                 </Col>
               </FormGroup>
             </Col>
@@ -130,32 +143,40 @@ const CompanyPanel = function ({ company, showTreeView, toggleTreeView }) {
     }
     return dataView;
   }
-  const json = formCompanyJson(company);
   const title = (
     <PanelTitle
       toggle={() => toggleTreeView('CRN', company.parents.ENT)}
+      goToDataView={() => goToView(0)}
+      goToTreeView1={() => goToView(1)}
+      goToTreeView2={() => goToView(2)}
+      goToEditView={() => goToView(3)}
       name={json.companyname}
       id={json.companynumber}
+      accessor="ch"
+      unitType="CH"
     />
   );
   return (
-    <div>
-      <div className="bootstrap-iso">
-        <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
+    <div id="bootstrap-container" style={{ height: '100%' }}>
+      <div className="bootstrap-iso" style={{ height: '95%' }}>
+        <Panel id="panelContainer" className="bg-inverse" style={{ height: '100%', marginBottom: '0px' }} collapsible={false} defaultExpanded header={title}>
           {panelContent()}
         </Panel>
       </div>
-      <button className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" onClick={() => browserHistory.push('/RefSearch')} bsStyle="info">
-        Return to search
-      </button>
+      <div className="margin-bottom-md--2" style={{ marginTop: '20px' }}>
+        <Button id="returnToSearchButton" size="wide" text="Return to search" onClick={() => browserHistory.push('/RefSearch')} ariaLabel="Return to search Button" type="submit" />
+      </div>
     </div>
   );
 };
 
 CompanyPanel.propTypes = {
   company: PropTypes.object.isRequired,
-  showTreeView: PropTypes.number.isRequired,
-  toggleTreeView: PropTypes.func.isRequired,
+  // We do not wrap the props below in .isRequired as they are passed in to
+  // CompanyPanel by PanelContainer.
+  showTreeView: PropTypes.number,
+  toggleTreeView: PropTypes.func,
+  goToView: PropTypes.func,
 };
 
 export default CompanyPanel;

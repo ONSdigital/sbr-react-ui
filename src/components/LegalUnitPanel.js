@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, Form, Label, Tabs, Tab, Grid, Row, Col } from 'react-bootstrap';
+import { Button } from 'registers-react-library';
+import { Panel, Form, Label, Tab, Grid, Row, Col, Nav, NavItem } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { getChildValues } from '../utils/helperMethods';
 import ChildrenTable from '../components/ChildrenTable';
@@ -11,9 +12,10 @@ import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
 import colours from '../config/colours';
 
-const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView }) {
+const LegalUnitPanel = ({ legalUnit, showTreeView, toggleTreeView, goToView }) => {
   function panelContent() {
-    const formTitle = (name, count, accessor) => (<p>{name} <Label bsStyle="primary" style={{ backgroundColor: colours[accessor] }}>{count}</Label></p>);    
+    const formTitle = (name, count, accessor) => (<p style={{ margin: '0px', padding: '0px' }}><Label bsStyle="primary" style={{ backgroundColor: colours[accessor], margin: '0px'}}>{count}</Label>&nbsp;{name}</p>);    
+    // const formTitle = (name, count, accessor) => (<p>{name} <Label bsStyle="primary" style={{ backgroundColor: colours[accessor] }}>{count}</Label></p>);    
     const chData = getChildValues(legalUnit.children, 'CH');
     const vatData = getChildValues(legalUnit.children, 'VAT');
     const payeData = getChildValues(legalUnit.children, 'PAYE');
@@ -31,7 +33,7 @@ const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView }) {
             </Col>
           </Form>
           <Col sm={5} xsOffset={1}>
-            <Tabs defaultActiveKey="1" animation={false} id="children-tabs" bsStyle="tabs">
+            {/* <Tabs defaultActiveKey="1" animation={false} id="children-tabs" bsStyle="tabs">
               <Tab disabled={chData.length === 0} eventKey="1" title={formTitle('CRN', chData.length, 'CRN')}>
                 <ChildrenTable unitData={chData} name={'Company Reference No.'} accessor={'CH'} />
               </Tab>
@@ -41,7 +43,37 @@ const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView }) {
               <Tab disabled={vatData.length === 0} eventKey="3" title={formTitle('VAT', vatData.length, 'VAT')}>
                 <ChildrenTable unitData={vatData} name={'VAT Reference'} accessor={'VAT'} />
               </Tab>
-            </Tabs>
+            </Tabs> */}
+            <Tab.Container id="left-tabs-example" defaultActiveKey={1}>
+              <Row className="clearfix">
+                <Col sm={4}>
+                  <Nav bsStyle="pills" stacked style={{ margin: '0px', padding: '0px' }}>
+                    <NavItem style={{ margin: '0px', padding: '0px' }} disabled={chData.length === 0} eventKey={1}>
+                      {formTitle('CRN', chData.length, 'CRN')}
+                    </NavItem>
+                    <NavItem style={{ margin: '0px', padding: '0px' }} disabled={payeData.length === 0} eventKey={2}>
+                      {formTitle('PAYE', payeData.length, 'PAYE')}
+                    </NavItem>
+                    <NavItem style={{ margin: '0px', padding: '0px' }} disabled={vatData.length === 0} eventKey={3}>
+                      {formTitle('VAT', vatData.length, 'VAT')}
+                    </NavItem>
+                  </Nav>
+                </Col>
+                <Col sm={8}>
+                  <Tab.Content animation style={{ margin: '0px', padding: '0px' }}>
+                    <Tab.Pane eventKey={1}>
+                      <ChildrenTable unitData={chData} name={'Company Reference No.'} accessor={'CH'} />
+                    </Tab.Pane>
+                    <Tab.Pane eventKey={2}>
+                      <ChildrenTable unitData={payeData} name={'PAYE Reference'} accessor={'PAYE'} />
+                    </Tab.Pane>
+                    <Tab.Pane eventKey={3}>
+                      <ChildrenTable unitData={vatData} name={'VAT Reference'} accessor={'VAT'} />
+                    </Tab.Pane>
+                  </Tab.Content>
+                </Col>
+              </Row>
+            </Tab.Container>
           </Col>
         </Row>
       </Grid>
@@ -69,29 +101,38 @@ const LegalUnitPanel = function ({ legalUnit, showTreeView, toggleTreeView }) {
   }
   const title = (
     <PanelTitle
-      toggle={() => toggleTreeView('LEU', legalUnit.parents.ENT)}
+      toggle={() => toggleTreeView()}
+      goToDataView={() => goToView(0)}
+      goToTreeView1={() => goToView(1)}
+      goToTreeView2={() => goToView(2)}
+      goToEditView={() => goToView(3)}
       name={legalUnit.vars.businessName}
-      id={legalUnit.vars.id}
+      id={legalUnit.vars.id.toString()}
+      accessor="legalUnit"
+      unitType="LEU"
     />
   );
   return (
-    <div>
-      <div className="bootstrap-iso">
-        <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
+    <div id="bootstrap-container" style={{ height: '100%' }}>
+      <div className="bootstrap-iso" style={{ height: '95%' }}>
+        <Panel id="panelContainer" className="bg-inverse" style={{ height: '100%', marginBottom: '0px' }} collapsible={false} defaultExpanded header={title}>
           {panelContent()}
         </Panel>
       </div>
-      <button className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" onClick={() => browserHistory.push('/RefSearch')}>
-        Return to search
-      </button>
+      <div className="margin-bottom-md--2" style={{ marginTop: '20px' }}>
+        <Button id="returnToSearchButton" size="wide" text="Return to search" onClick={() => browserHistory.push('/RefSearch')} ariaLabel="Return to search Button" type="submit" />
+      </div>
     </div>
   );
 };
 
 LegalUnitPanel.propTypes = {
   legalUnit: PropTypes.object.isRequired,
-  showTreeView: PropTypes.number.isRequired,
-  toggleTreeView: PropTypes.func.isRequired,
+  // We do not wrap the props below in .isRequired as they are passed in to
+  // LegalUnitPanel by PanelContainer.
+  showTreeView: PropTypes.number,
+  toggleTreeView: PropTypes.func,
+  goToView: PropTypes.func,
 };
 
 export default LegalUnitPanel;

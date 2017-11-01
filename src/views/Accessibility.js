@@ -1,18 +1,19 @@
 import React from 'react';
-import BreadCrumb from '../components/BreadCrumb';
-import TitleAndDescription from '../components/TitleAndDescription';
+import { TitleAndDescription, BreadCrumb } from 'registers-react-library';
 
 const Accessibility = () => {
-  const items = [
-    { name: 'Accessibility', link: '' },
-  ];
   return (
     <div>
-      <BreadCrumb breadCrumbItems={items} />
+      <BreadCrumb
+        breadCrumbItems={[
+          { name: 'Home', link: '/Home' },
+          { name: 'Accessibility', link: '' },
+        ]}
+      />
       <TitleAndDescription
         title="Accessibility"
         description="Accessibility details etc."
-        marginBottom={1}
+        marginBottom="1"
       />
     </div>
   );

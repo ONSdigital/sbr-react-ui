@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import CompanyPanel from '../components/CompanyPanel';
-import BreadCrumb from '../components/BreadCrumb';
 import PanelContainer from '../components/PanelContainer';
+import BreadCrumb from '../components/BreadCrumb';
 
 const CompanyView = ({ data }) => {
   const items = [

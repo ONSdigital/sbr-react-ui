@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Button, ButtonToolbar, ButtonGroup, Glyphicon } from 'react-bootstrap';
+import { saveSvgAsPng } from 'save-svg-as-png';
 import { findAndReplace } from '../utils/helperMethods';
 import colours from '../config/colours';
 
@@ -8,6 +10,7 @@ class TreeView2 extends React.Component {
   constructor(props) {
     super(props);
     this.drawGraph = this.drawGraph.bind(this);
+    this.downloadImage = this.downloadImage.bind(this);
   }
   componentDidMount() {
     this.drawGraph();
@@ -29,12 +32,49 @@ class TreeView2 extends React.Component {
 
     // Draw uses the draw method in resources/dndTree.js
     // This is imported in the index.html
+    /* eslint no-undef: "off" */
     draw(json, this.props.entryNodeId, colours.ENTRY_NODE, 300, colours);
+  }
+  fullScreen() {
+    const a = document.getElementById('tree-container');
+    const conf = confirm('Fullscreen mode?');
+    if (conf === true) {
+      if (a.requestFullscreen) {
+        a.requestFullscreen();
+      } else if (a.mozRequestFullScreen) {
+        a.mozRequestFullScreen();
+      } else if (a.webkitRequestFullscreen) {
+        a.webkitRequestFullscreen();
+      } else if (a.msRequestFullscreen) {
+        a.msRequestFullscreen();
+      }
+    }
+    document.getElementsByClassName('overlay')[0].style.height = '100%';
+    document.getElementsByClassName('overlay')[0].style.width = '100%';
+  }
+  downloadImage() {
+    saveSvgAsPng(document.getElementsByClassName('overlay')[0], `ENT-${this.props.enterpriseId}.png`);
   }
   render() {
     return (
-      <div id="tree-container">
-        {/* The SVG created by d3 will go here */}
+      <div>
+        <div style={{ borderBottom: '2px solid', paddingBottom: '5px' }}>
+          <ButtonToolbar>
+            <ButtonGroup style={{ height: '30px' }}>
+              <Button onClick={this.fullScreen} style={{ height: '100%' }} bsSize="small" bsStyle="info"><Glyphicon glyph="download-alt" />&nbsp;&nbsp;Full Screen</Button>
+              <Button onClick={this.downloadImage} style={{ height: '100%', marginLeft: '5px' }} bsSize="small" bsStyle="info"><Glyphicon glyph="download-alt" />&nbsp;&nbsp;Download Tree PNG</Button>
+            </ButtonGroup>
+          </ButtonToolbar>
+          <ButtonToolbar>
+            <ButtonGroup>
+              <br />
+              <Glyphicon glyph="info-sign" />&nbsp;Click on a node circle to collapse/expand a node.
+            </ButtonGroup>
+          </ButtonToolbar>
+        </div>
+        <div id="tree-container">
+          {/* The SVG created by d3 will go here */}
+        </div>
       </div>
     );
   }

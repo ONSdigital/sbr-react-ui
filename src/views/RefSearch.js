@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { TitleAndDescription, BreadCrumb } from 'registers-react-library';
 import { connect } from 'react-redux';
 import { refSearch, setQuery } from '../actions/ApiActions';
 import { SET_REF_QUERY } from '../constants/ApiConstants';
@@ -7,8 +8,6 @@ import ErrorModal from '../components/ErrorModal';
 import SearchRefForm from '../components/SearchRefForm';
 import SearchRefResultsTable from '../components/SearchRefResultsTable';
 import { validateRefSearch } from '../utils/validation';
-import BreadCrumb from '../components/BreadCrumb';
-import TitleAndDescription from '../components/TitleAndDescription';
 
 class Search extends React.Component {
   constructor(props) {
@@ -67,6 +66,7 @@ class Search extends React.Component {
   }
   render() {
     const items = [
+      { name: 'Home', link: '/Home' },
       { name: 'Search', link: '' },
     ];
     const results = (<SearchRefResultsTable results={this.props.data.results} />);
@@ -75,14 +75,14 @@ class Search extends React.Component {
       <div>
         <BreadCrumb breadCrumbItems={items} />
         <TitleAndDescription
-          marginBottom={1}
+          marginBottom="1"
           title="Reference Search"
           description="Search the Statistical Business Register for a reference (ERN/UBRN/VAT/CRN/PAYE)"
         />
         <div className="page-intro background--gallery">
           <div className="wrapper">
             <SearchRefForm
-              ref={(ch) => this.child = ch}
+              ref={(ch) => (this.child = ch)}
               currentlySending={this.props.data.currentlySending}
               onSubmit={this.onSubmit}
               onChange={this.changeQuery}

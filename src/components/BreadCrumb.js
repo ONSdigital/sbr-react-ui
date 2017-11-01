@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { getSpecificUnitType } from '../actions/ApiActions';
 
-const BreadCrumb = ({ breadCrumbItems, title, description, marginBottom, dispatch }) => {
+const BreadCrumb = ({ breadCrumbItems, dispatch }) => {
   function getBreadCrumbItems() {
     return breadCrumbItems.map((obj) => {
       if (obj.link === '') {
@@ -28,10 +28,8 @@ const BreadCrumb = ({ breadCrumbItems, title, description, marginBottom, dispatc
               <div className="breadcrumb print--hide">
                 <ol className="breadcrumb__list">
                   <li className="breadcrumb__item">
-                    <Link to="/Home">
-                      <a className="breadcrumb__link">
-                        Home
-                      </a>
+                    <Link to="/Home" className="breadcrumb__link">
+                      Home
                     </Link>
                   </li>
                   {getBreadCrumbItems()}
@@ -47,9 +45,6 @@ const BreadCrumb = ({ breadCrumbItems, title, description, marginBottom, dispatc
 
 
 BreadCrumb.propTypes = {
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  marginBottom: PropTypes.number.isRequired,
   breadCrumbItems: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
 };

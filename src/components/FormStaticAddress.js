@@ -6,44 +6,43 @@ const FormStaticAddress = ({ id, label, address1, address2, address3, address4, 
   const url = `https://www.google.co.uk/maps/place/${postcode}`;
   const mapsLink = <a href={url} target="_blank">{postcode}</a>;
   const addressArr = [address1, address2, address3, address4, address5, mapsLink];
-  // addressArr.filter(addressItem => addressItem !== '');
   return (
     <FormGroup controlId={id}>
       <Col componentClass={ControlLabel} sm={6}>
         {label}
       </Col>
       <Col sm={6}>
-        <FormControl.Static>
-          {
-            addressArr.map((addressItem) => {
-              if (addressItem !== '' && addressItem !== undefined) {
-                return (<div>{addressItem}<br /></div>);
-              }
-            })
-          }
-        </FormControl.Static>
+        {
+          addressArr.map((addressItem) => {
+            if (addressItem !== '' && addressItem !== undefined) {
+              return (<FormControl.Static key={`${id}-${addressItem}`} style={{ padding: '0px' }}>{addressItem}</FormControl.Static>);
+            }
+            return null;
+          })
+        }
       </Col>
     </FormGroup>
   );
 };
 
+FormStaticAddress.defaultProps = {
+  address1: '',
+  address2: '',
+  address3: '',
+  address4: '',
+  address5: '',
+  postcode: '',
+};
+
 FormStaticAddress.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  address1: PropTypes.string,
+  address2: PropTypes.string,
+  address3: PropTypes.string,
+  address4: PropTypes.string,
+  address5: PropTypes.string,
+  postcode: PropTypes.string,
 };
 
 export default FormStaticAddress;
-
-
-// {/*}
-// {address1}
-// <br />
-// {address2}
-// <br />
-// {address3}
-// <br />
-// {address4}
-// <br />
-// {address5}
-// <br />
-// */}

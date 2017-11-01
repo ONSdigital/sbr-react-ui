@@ -82,7 +82,9 @@ export function login(username, password) {
  */
 export function checkAuth(token) {
   return (dispatch) => {
+    dispatch(sendingRequest(true));
     auth.checkToken(token, (success, data) => {
+      dispatch(sendingRequest(false));
       dispatch(setAuthState(success));
       if (!success) {
         sessionStorage.clear();
@@ -112,9 +114,12 @@ export function logout() {
       if (success === true) {
         dispatch(sendingRequest(false));
         dispatch(setAuthState(false));
-        dispatch(resetState(undefined));
         localStorage.clear();
         browserHistory.push('/');
+        // This needs to go at the end, or else if we logout whilst on a page
+        // that uses the redux store, an error will occur before the user
+        // is redirected to '/'.
+        dispatch(resetState(undefined));
       } else {
         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
       }
@@ -174,14 +179,7 @@ export function sendingRequest(sending) {
  * @param message
  */
 function setErrorMessage(message) {
-  return (dispatch) => {
-    dispatch({ type: SET_ERROR_MESSAGE, message });
-
-    // Remove the error message after 3 seconds
-    setTimeout(() => {
-      dispatch({ type: SET_ERROR_MESSAGE, message: '' });
-    }, 3000);
-  };
+  return { type: SET_ERROR_MESSAGE, message };
 }
 
 /**

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'registers-react-library';
 import { Panel, Form, Grid, Row, Col } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
 import { formVatJson } from '../utils/formJson';
@@ -11,13 +12,19 @@ import PanelTitle from '../components/PanelTitle';
 import TreeView1 from '../components/TreeView1';
 import TreeView2 from '../components/TreeView2';
 
-const VATPanel = function ({ vat, showTreeView, toggleTreeView }) {
+const VATPanel = ({ vat, showTreeView, toggleTreeView, goToView }) => {
   const json = formVatJson(vat);
   const title = (
     <PanelTitle
       toggle={() => toggleTreeView('VAT', vat.parents.ENT)}
+      goToDataView={() => goToView(0)}
+      goToTreeView1={() => goToView(1)}
+      goToTreeView2={() => goToView(2)}
+      goToEditView={() => goToView(3)}
       name={json.name1}
       id={json.vatref}
+      accessor="vat"
+      unitType="VAT"
     />
   );
   function panelContent() {
@@ -73,23 +80,26 @@ const VATPanel = function ({ vat, showTreeView, toggleTreeView }) {
     return dataView;
   }
   return (
-    <div>
-      <div className="bootstrap-iso">
-        <Panel className="bg-inverse" collapsible={false} defaultExpanded header={title}>
+    <div id="bootstrap-container" style={{ height: '100%' }}>
+      <div className="bootstrap-iso" style={{ height: '95%' }}>
+        <Panel id="panelContainer" className="bg-inverse" style={{ height: '100%', marginBottom: '0px' }} collapsible={false} defaultExpanded header={title}>
           {panelContent()}
         </Panel>
       </div>
-      <button className="btn btn--primary margin-bottom-md--2" aria-label="Link back to Search page" onClick={() => browserHistory.push('/RefSearch')} bsStyle="info">
-        Return to search
-      </button>
+      <div className="margin-bottom-md--2" style={{ marginTop: '20px' }}>
+        <Button id="returnToSearchButton" size="wide" text="Return to search" onClick={() => browserHistory.push('/RefSearch')} ariaLabel="Return to search Button" type="submit" />
+      </div>
     </div>
   );
 };
 
 VATPanel.propTypes = {
   vat: PropTypes.object.isRequired,
-  showTreeView: PropTypes.number.isRequired,
-  toggleTreeView: PropTypes.func.isRequired,
+  // We do not wrap the props below in .isRequired as they are passed in to
+  // VATPanel by PanelContainer.
+  showTreeView: PropTypes.number,
+  toggleTreeView: PropTypes.func,
+  goToView: PropTypes.func,
 };
 
 export default VATPanel;

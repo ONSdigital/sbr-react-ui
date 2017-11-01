@@ -16,7 +16,6 @@ export SBR_UI_TEST_ADMIN_USERNAME=admin
 export SBR_UI_TEST_ADMIN_PASSWORD=admin
 export SBR_UI_TEST_USER_USERNAME=test
 export SBR_UI_TEST_USER_PASSWORD=test
-export JWT_SECRET=SECRET
 ```
 
 ## Running the Demo UI:

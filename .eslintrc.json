@@ -22,7 +22,7 @@
         "func-names": "off",
         "react/forbid-prop-types": "off",
         "arrow-body-style": "off",
-        "no-underscore-dangle": "off",
+        "no-underscore-dangle": "off"
     },
     "env": {
       "browser": true

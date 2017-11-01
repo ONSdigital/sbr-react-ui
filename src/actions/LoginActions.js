@@ -24,7 +24,7 @@
  */
 
 import { browserHistory } from 'react-router';
-import { SET_AUTH, USER_LOGOUT, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/LoginConstants';
+import { SET_AUTH, SET_CONFETTI, USER_LOGOUT, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/LoginConstants';
 import * as errorMessages from '../constants/MessageConstants';
 import auth from '../utils/auth';
 import { getUiInfo, getApiInfo } from '../actions/InfoActions';
@@ -52,6 +52,7 @@ export function login(username, password) {
       dispatch(setAuthState(success));
       if (success) {
         // If the login worked, forward the user to the dashboard and clear the form
+        dispatch(setConfetti(data.showConfetti));
         dispatch(setUserState({
           username,
           role: data.role,
@@ -121,13 +122,26 @@ export function logout() {
   };
 }
 
+/**
+ * Action for resetting the Redux store (see index reducer)
+ * @return {object}                    Formatted action for the reducer to handle
+ */
 export function resetState() {
   return { type: USER_LOGOUT };
 }
 
 /**
  * Sets the user details state of the application (username, role)
- * @param  {boolean} newState          The state of the user details
+ * @param  {boolean} show              Whether or not to show the the confetti
+ * @return {object}                    Formatted action for the reducer to handle
+ */
+export function setConfetti(show) {
+  return { type: SET_CONFETTI, show };
+}
+
+/**
+ * Sets the user details state of the application (username, role)
+ * @param  {object}  newState          The state of the user details
  * @param  {string}  newState.username The new text of the username
  * @param  {string}  newState.role     The new text of the user role
  * @param  {string}  newState.apiKey   The API key for the user
@@ -139,7 +153,7 @@ export function setUserState(newState) {
 
 /**
  * Sets the authentication state of the application
- * @param {boolean} newState True means a user is logged in, false means no user is logged in
+ * @param {object} newState True means a user is logged in, false means no user is logged in
  */
 export function setAuthState(newState) {
   return { type: SET_AUTH, newState };

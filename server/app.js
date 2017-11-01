@@ -98,6 +98,7 @@ app.post('/login', (req, res) => {
   // Get the username/password from the body of the POST
   const username = req.body.username;
   const password = req.body.password;
+  const showConfetti = (process.env.SHOW_CONFETTI === 'true');
 
   if (ENV === 'local') {
     /*
@@ -127,7 +128,7 @@ app.post('/login', (req, res) => {
       users[jToken] = { username, role };
 
       res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify({ jToken, username, role }));
+      res.send(JSON.stringify({ jToken, username, role, showConfetti }));
     } else {
       // Return 401 NOT AUTHORIZED if incorrect username/password
       res.sendStatus(401);

@@ -32,9 +32,10 @@ const auth = {
           const token: string = json.jToken;
           const loginName: string = json.username;
           const role: string = json.role;
+          const showConfetti: string = json.showConfetti;
           sessionStorage.setItem('token', token);
           // Send auth request to save token username pair
-          callback(true, { token, loginName, role });
+          callback(true, { token, loginName, role, showConfetti });
         });
       }
       return callback(false, { message: 'Unable to login.' });

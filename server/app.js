@@ -16,7 +16,7 @@ const urls = require('./config/urls');
 const timeouts = require('./config/timeouts');
 const cache = require('../server/helpers/cache');
 const rp = require('request-promise');
-const logger = require('./logger');
+const logger = require('./logger')(module);
 
 const ENV = process.env.ENV;
 const SERVE_HTML = (process.env.SERVE_HTML === 'true');

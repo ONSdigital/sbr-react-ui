@@ -1,5 +1,5 @@
 const uuidv4 = require('uuid/v4');
-const logger = require('../logger');
+const logger = require('../logger')(module);
 const config = require('../config/sessions');
 
 class JsonSession {

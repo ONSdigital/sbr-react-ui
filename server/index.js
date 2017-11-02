@@ -3,7 +3,7 @@
 /* eslint strict: "off" */
 
 const fork = require('child_process').fork;
-const logger = require('./logger');
+const logger = require('./logger')(module);
 const app = require('./app');
 
 const RedisSession = require('./sessions/RedisSession');

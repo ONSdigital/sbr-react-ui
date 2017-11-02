@@ -1,4 +1,4 @@
-const logger = require('../logger');
+const logger = require('../logger')(module);
 const RedisSessions = require('redis-sessions');
 const config = require('../config/sessions');
 

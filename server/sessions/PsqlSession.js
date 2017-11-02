@@ -1,7 +1,7 @@
 'use strict';
 
 const logger = require('../logger')(module);
-const { Pool } = require('pg');
+const Pool = require('pg').Pool;
 const uuidv4 = require('uuid/v4');
 
 const pool = new Pool();

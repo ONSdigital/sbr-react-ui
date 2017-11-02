@@ -15,13 +15,13 @@ const Template = function ({ location, children, currentlySending }) {
   const banner = (onProdEnv) ? '' : (<Banner />);
   if (location.pathname === '/' || location.pathname === 'Login') {
     return (
-      <div className={(props.currentlySending) ? 'blur' : ''}>
+      <div className={(currentlySending) ? 'blur' : ''}>
         {banner}
         <div className="container">
           <Header />
           {children}
         </div>
-        {props.currentlySending &&
+        {currentlySending &&
           <div className="spinner"></div>
         }
       </div>

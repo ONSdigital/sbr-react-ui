@@ -1,3 +1,5 @@
+'use strict';
+
 const logger = require('../logger')(module);
 const RedisSessions = require('redis-sessions');
 const config = require('../config/sessions');

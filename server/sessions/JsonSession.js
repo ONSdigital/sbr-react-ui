@@ -1,3 +1,5 @@
+'use strict';
+
 const uuidv4 = require('uuid/v4');
 const logger = require('../logger')(module);
 const config = require('../config/sessions');

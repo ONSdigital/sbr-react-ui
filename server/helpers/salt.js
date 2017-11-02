@@ -1,3 +1,5 @@
+'use strict';
+
 const btoa = require('btoa');
 
 /**

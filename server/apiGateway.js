@@ -1,7 +1,6 @@
 'use strict';
 
 /* eslint strict: "off" */
-/* eslint no-console: "off" */
 /* eslint comma-dangle: ["error", "never"] */
 
 const express = require('express');
@@ -23,19 +22,10 @@ const ADMIN_PASSWORD = process.env.SBR_UI_TEST_ADMIN_PASSWORD;
 const USER_USERNAME = process.env.SBR_UI_TEST_USER_USERNAME;
 const USER_PASSWORD = process.env.SBR_UI_TEST_USER_PASSWORD;
 
-// // Create the hashed password using the salt
-// const ADMIN_HASHED_PASSWORD = bcrypt.hashSync(ADMIN_PASSWORD, genSalt(ADMIN_USERNAME));
-// const USER_HASHED_PASSWORD = bcrypt.hashSync(USER_PASSWORD, genSalt(USER_USERNAME));
-
 // We use the users JSON as a mock database holding { username: hashed_password }
 const users = {};
 users[ADMIN_USERNAME] = `Basic ${base64.encode(`${ADMIN_USERNAME}:${ADMIN_PASSWORD}`)}`;
 users[USER_USERNAME] = `Basic ${base64.encode(`${USER_USERNAME}:${USER_PASSWORD}`)}`;
-
-// We use the users JSON as a mock database holding { username: hashed_password }
-// const users = {};
-// users[ADMIN_USERNAME] = ADMIN_HASHED_PASSWORD;
-// users[USER_USERNAME] = USER_HASHED_PASSWORD;
 
 // We need to store all the valid API keys that uuidv4() has made
 const validApiKeys = {};
@@ -146,6 +136,5 @@ function postApiEndpoint(url, postBody) {
 }
 
 app.listen(PORT, () => {
-  console.log(`sbr-ui-mock-api-gateway listening on port ${PORT}!`);
   logger.info(`sbr-ui-mock-api-gateway listening on port ${PORT}!`);
 });

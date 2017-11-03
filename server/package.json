@@ -14,14 +14,14 @@
     "body-parser": "^1.17.2",
     "express": "^4.14.0",
     "morgan": "^1.7.0",
-    "bcryptjs": "^2.4.3",
     "uuid": "^3.1.0",
     "redis-sessions": "^1.2.0",
     "request": "^2.81.0",
     "request-promise": "^4.2.2",
     "winston": "^2.4.0",
     "pg": "^6.4.2",
-    "btoa": "^1.1.2"
+    "btoa": "^1.1.2",
+    "base-64": "^0.1.0"
   },
   "engines": {
     "node": "5.10.1",

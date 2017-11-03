@@ -25,8 +25,6 @@
 
 import { browserHistory } from 'react-router';
 import base64 from 'base-64';
-import bcrypt from 'bcryptjs';
-import genSalt from '../utils/salt';
 import { SET_AUTH, USER_LOGOUT, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/LoginConstants';
 import * as errorMessages from '../constants/MessageConstants';
 import auth from '../utils/auth';
@@ -49,46 +47,35 @@ export function login(username, password) {
       return;
     }
 
-    // Generate salt for password encryption
-    const salt = genSalt(username);
-
-    // Encrypt password
-    bcrypt.hash(password, salt, (err, hash) => {
-      // Something went wrong while hashing
-      if (err) {
-        dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
-        return;
-      }
-      const basicAuth = base64.encode(`${username}:${password}`);
-      auth.login(username, basicAuth, (success, data) => {
-        // When the request is finished, hide the loading indicator
-        dispatch(sendingRequest(false));
-        dispatch(setAuthState(success));
-        if (success) {
-          // If the login worked, forward the user to the dashboard and clear the form
-          dispatch(setUserState({
-            username,
-            // role: data.role,
-            accessToken: data.accessToken,
-          }));
-          sessionStorage.setItem('accessToken', data.accessToken);
-          sessionStorage.setItem('username', username);
-          dispatch(getUiInfo());
-          dispatch(getApiInfo());
-          forwardTo('/Home');
-        } else {
-          switch (data.type) {
-            case 'user-doesnt-exist':
-              dispatch(setErrorMessage(errorMessages.USER_NOT_FOUND));
-              return;
-            case 'password-wrong':
-              dispatch(setErrorMessage(errorMessages.WRONG_PASSWORD));
-              return;
-            default:
-              dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
-          }
+    const basicAuth = base64.encode(`${username}:${password}`);
+    auth.login(username, basicAuth, (success, data) => {
+      // When the request is finished, hide the loading indicator
+      dispatch(sendingRequest(false));
+      dispatch(setAuthState(success));
+      if (success) {
+        // If the login worked, forward the user to the dashboard and clear the form
+        dispatch(setUserState({
+          username,
+          // role: data.role,
+          accessToken: data.accessToken,
+        }));
+        sessionStorage.setItem('accessToken', data.accessToken);
+        sessionStorage.setItem('username', username);
+        dispatch(getUiInfo());
+        dispatch(getApiInfo());
+        forwardTo('/Home');
+      } else {
+        switch (data.type) {
+          case 'user-doesnt-exist':
+            dispatch(setErrorMessage(errorMessages.USER_NOT_FOUND));
+            return;
+          case 'password-wrong':
+            dispatch(setErrorMessage(errorMessages.WRONG_PASSWORD));
+            return;
+          default:
+            dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
         }
-      });
+      }
     });
   };
 }

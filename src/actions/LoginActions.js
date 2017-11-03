@@ -24,6 +24,7 @@
  */
 
 import { browserHistory } from 'react-router';
+import base64 from 'base-64';
 import bcrypt from 'bcryptjs';
 import genSalt from '../utils/salt';
 import { SET_AUTH, USER_LOGOUT, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/LoginConstants';
@@ -58,7 +59,8 @@ export function login(username, password) {
         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
         return;
       }
-      auth.login(username, hash, (success, data) => {
+      const basicAuth = base64.encode(`${username}:${password}`);
+      auth.login(username, basicAuth, (success, data) => {
         // When the request is finished, hide the loading indicator
         dispatch(sendingRequest(false));
         dispatch(setAuthState(success));

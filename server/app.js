@@ -64,41 +64,59 @@ if (SERVE_HTML) {
 }
 
 app.post('/login', (req, res) => {
-  // Get the username/password from the body of the POST
+  logger.info('Logging user in');
+  // Get the username from the body of the POST
   const username = req.body.username;
-  const password = req.body.password;
 
-  const options = {
+  const basicAuth = req.get('Authorization');
+  let options = {
     method: 'POST',
     uri: urls.AUTH_URL,
     timeout: timeouts.API_GW,
-    headers: { 'content-type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${basicAuth}`
+    },
     json: true,
-    body: { username, password }
+    body: { username }
   };
+  if (ENV === 'prod') {
+    logger.info('Using request options for ENV=prod');
+    options = {
+      method: 'POST',
+      family: 4,
+      uri: urls.AUTH_URL,
+      timeout: timeouts.API_GW,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'Authorization': `${basicAuth}`
+      },
+      json: true
+    };
+  }
 
   rp(options)
-    .then((gatewayJson) => {
-      app.session.createSession(username, req.connection.remoteAddress, gatewayJson.key, gatewayJson.role)
-        .then((sessionJson) => {
-          logger.info('Successful login');
-          res.setHeader('Content-Type', 'application/json');
-          return res.send(JSON.stringify({
-            username,
-            accessToken: sessionJson.accessToken,
-            role: sessionJson.role
-          }));
-        })
-        .catch(() => {
-          logger.error('Login 500 server error');
-          res.sendStatus(500);
-        });
-    })
-    .catch((err) => {
-      logger.error('Unable to login, timeout or server error');
-      if (err.statusCode) return res.sendStatus(err.statusCode);
-      return res.sendStatus(504); // Timeout
-    });
+  .then((gatewayJson) => {
+    app.session.createSession(username, req.connection.remoteAddress, gatewayJson.key, gatewayJson.role)
+      .then((sessionJson) => {
+        logger.info('Successful login');
+        res.setHeader('Content-Type', 'application/json');
+        return res.send(JSON.stringify({
+          username,
+          accessToken: sessionJson.accessToken,
+          role: sessionJson.role
+        }));
+      })
+      .catch(() => {
+        logger.error('Login 500 server error');
+        res.sendStatus(500);
+      });
+  })
+  .catch((err) => {
+    logger.error('Unable to login, timeout or server error');
+    if (err.statusCode) return res.sendStatus(err.statusCode);
+    return res.sendStatus(504); // Timeout
+  });
 });
 
 app.post('/api', (req, res) => {

@@ -15,7 +15,7 @@ const auth = {
    * @param  {string}   password The password of the user
    * @param  {Function} callback Called after a user was logged in on the remote server
    */
-  login(username: string, password: string, callback: (success: boolean, data: {}) => void) {
+  login(username: string, basicAuth: string, callback: (success: boolean, data: {}) => void) {
     // Do not need to check if user is already logged in, this is done in
     // routes.js before this method is called
 
@@ -24,8 +24,9 @@ const auth = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Basic ${basicAuth}`,
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username }),
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {

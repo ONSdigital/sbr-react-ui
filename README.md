@@ -19,7 +19,7 @@ export SBR_UI_TEST_USER_PASSWORD=test
 export JWT_SECRET=123
 ```
 
-## Running the Demo UI:
+## Running the Demo UI (local):
 
 1. Clone this repo, install dependencies and start NPM
 
@@ -42,6 +42,15 @@ This will run Node and React on localhost:3001, since Node is serving
 
 To use hot-reloading, use `npm restart` which runs `react-scripts start`, this
 will start React on port 3000. To start the server, use `ENV=local node server/index.js`.
+
+## Running the Demo UI (Docker):
+
+Firstly, build and run the UI inside a Docker container.
+
+```shell
+docker build -t sbr-ui .
+docker run -p 3001:3001 sbr-ui
+```
 
 ## Running the API's
 

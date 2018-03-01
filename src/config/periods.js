@@ -1,6 +1,6 @@
 const periods = {
-  DEFAULT_PERIOD: '2017-06',
-  ALL_PERIODS: ['2017-06', '2017-08'],
+  DEFAULT_PERIOD: '2018-02',
+  ALL_PERIODS: ['2018-02', '2018-01'],
 };
 
 export default periods;

@@ -63,10 +63,10 @@ export function refSearch(query) {
 
 export function getSpecificUnitType(unitType, id, redirect = false) {
   return (dispatch) => {
-    if (unitType === 'LEU') {
-      // For LEU, period is not yet implemented, so get the default one
-      return dispatch(getUnitForDefaultPeriod(unitType, id, redirect));
-    }
+    // if (unitType === 'LEU') {
+    //   // For LEU, period is not yet implemented, so get the default one
+    //   return dispatch(getUnitForDefaultPeriod(unitType, id, redirect));
+    // }
     const period = store.getState().apiSearch.period.split('-').join('');
     return dispatch(getUnitForSpecificPeriod(unitType, id, period, redirect));
   };

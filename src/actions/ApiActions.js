@@ -106,7 +106,6 @@ export function refSearch(query) {
 
 export function getSpecificUnitType(unitType, id, redirect = false) {
   return (dispatch) => {
-    console.log('specific search...')
     // if (unitType === 'LEU') {
     //   // For LEU, period is not yet implemented, so get the default one
     //   return dispatch(getUnitForDefaultPeriod(unitType, id, redirect));
@@ -123,7 +122,6 @@ export function getSpecificUnitType(unitType, id, redirect = false) {
  */
 export function getUnitForDefaultPeriod(unitType, id, redirect = false) {
   return (dispatch) => {
-    console.log('defaul search...')
     dispatch(setErrorMessage(REFS[unitType].setError, '', ''));
     dispatch(sendingRequest(REFS[unitType].setSending, true));
     dispatch(setResults(REFS[unitType].setResults, { results: [] }));
@@ -158,7 +156,6 @@ export function getUnitForDefaultPeriod(unitType, id, redirect = false) {
  */
 export function getUnitForSpecificPeriod(unitType, id, period, redirect = false) {
   return (dispatch) => {
-    console.log('period search...')
     dispatch(setErrorMessage(REFS[unitType].setError, '', ''));
     dispatch(sendingRequest(REFS[unitType].setSending, true));
     // dispatch(setResults(REFS[unitType].setResults, { results: [] }));

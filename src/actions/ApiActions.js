@@ -31,22 +31,65 @@ export function refSearch(query) {
           headers: data.response,
         }));
 
-        // If the unitType that is returned is not an ENT, do an additional
-        // search to get that data
-        if (data.results[0].unitType !== 'ENT') {
-          apiSearch.getSpecificRefById(REFS['ENT'].apiEndpoint, data.results[0].parents['ENT'], (success, data) => {
-            if (success) {
-              dispatch(setResults(REFS['ENT'].setResults, {
-                results: [data.results],
-              }));
-              dispatch(setHeaders(REFS['ENT'].setHeaders, {
-                headers: data.response,
-              }));
+        // If bottom level reference (CH/VAT/PAYE), need to do a periods/:period/types/LEU/units/:id
+        // request to get the parent ENT of the LEU.
+        if (data.results[0].unitType !== 'ENT' && data.results[0].unitType !== 'LEU') {
+          apiSearch.getSpecificRefByIdAndPeriod(REFS['LEU'].apiEndpoint, data.results[0].parents['LEU'], data.results[0].period, (success1, data1) => {
+            if (success1) {
+              // console.log(`going to 2 ${REFS['ENT'].apiEndpoint} ${data1.results[0].parents['ENT']} ${data1.results[0].period}`)
+              // apiSearch.getSpecificRefByIdAndPeriod(REFS['ENT'].apiEndpoint, data1.results[0].parents['ENT'], data1.results[0].period, (success2, data2) => {
+              //   console.log("success2: ", success2)
+              //   if (success2) {
+              //     console.log("3")
+              //     dispatch(setResults(REFS['ENT'].setResults, {
+              //       results: [data2.results],
+              //     }));
+              //     console.log("4")
+              //     dispatch(setHeaders(REFS['ENT'].setHeaders, {
+              //       headers: data2.response,
+              //     }));
+              //   } else {
+              //     console.log("5")
+              //     dispatch(setErrorMessage(REFS['ENT'].setError, data2.message, Math.floor(new Date() / 1000)));
+              //     dispatch(addMostRecentError('ENT', data2.message, Math.floor(new Date() / 1000)));
+              //   }
+              // });
             } else {
-              dispatch(setErrorMessage(REFS['ENT'].setError, data.message, Math.floor(new Date() / 1000)));
-              dispatch(addMostRecentError('ENT', data.message, Math.floor(new Date() / 1000)));
+              dispatch(setErrorMessage(REFS['LEU'].setError, data1.message, Math.floor(new Date() / 1000)));
+              dispatch(addMostRecentError('LEU', data1.message, Math.floor(new Date() / 1000)));
             }
           });
+        }
+
+        // If the unitType that is returned is not an ENT, do an additional
+        // search to get that data
+        if (data.results[0].unitType === 'LEU') {
+          apiSearch.getSpecificRefByIdAndPeriod(REFS['ENT'].apiEndpoint, data.results[0].parents['ENT'], data.results[0].period, (success4, data4) => {
+            if (success4) {
+              dispatch(setResults(REFS['ENT'].setResults, {
+                results: [data4.results],
+              }));
+              dispatch(setHeaders(REFS['ENT'].setHeaders, {
+                headers: data4.response,
+              }));
+            } else {
+              dispatch(setErrorMessage(REFS['ENT'].setError, data4.message, Math.floor(new Date() / 1000)));
+              dispatch(addMostRecentError('ENT', data4.message, Math.floor(new Date() / 1000)));
+            }
+          });
+          // apiSearch.getSpecificRefById(REFS['ENT'].apiEndpoint, data.results[0].parents['ENT'], (success, data) => {
+          //   if (success) {
+          //     dispatch(setResults(REFS['ENT'].setResults, {
+          //       results: [data.results],
+          //     }));
+          //     dispatch(setHeaders(REFS['ENT'].setHeaders, {
+          //       headers: data.response,
+          //     }));
+          //   } else {
+          //     dispatch(setErrorMessage(REFS['ENT'].setError, data.message, Math.floor(new Date() / 1000)));
+          //     dispatch(addMostRecentError('ENT', data.message, Math.floor(new Date() / 1000)));
+          //   }
+          // });
         }
 
         // if (data.results.length === 1) {
@@ -63,6 +106,7 @@ export function refSearch(query) {
 
 export function getSpecificUnitType(unitType, id, redirect = false) {
   return (dispatch) => {
+    console.log('specific search...')
     // if (unitType === 'LEU') {
     //   // For LEU, period is not yet implemented, so get the default one
     //   return dispatch(getUnitForDefaultPeriod(unitType, id, redirect));
@@ -79,6 +123,7 @@ export function getSpecificUnitType(unitType, id, redirect = false) {
  */
 export function getUnitForDefaultPeriod(unitType, id, redirect = false) {
   return (dispatch) => {
+    console.log('defaul search...')
     dispatch(setErrorMessage(REFS[unitType].setError, '', ''));
     dispatch(sendingRequest(REFS[unitType].setSending, true));
     dispatch(setResults(REFS[unitType].setResults, { results: [] }));
@@ -113,6 +158,7 @@ export function getUnitForDefaultPeriod(unitType, id, redirect = false) {
  */
 export function getUnitForSpecificPeriod(unitType, id, period, redirect = false) {
   return (dispatch) => {
+    console.log('period search...')
     dispatch(setErrorMessage(REFS[unitType].setError, '', ''));
     dispatch(sendingRequest(REFS[unitType].setSending, true));
     // dispatch(setResults(REFS[unitType].setResults, { results: [] }));

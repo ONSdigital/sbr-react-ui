@@ -70,20 +70,16 @@ class PanelTitle extends React.Component {
           </CopyToClipboard>
         </Col>
         <Col lg={4} md={5} sm={6} xs={6} style={{ height: '30px', border: 'none' }}>
-          {(this.props.unitType !== 'LEU') &&
-            <select onChange={this.onPeriodChange} value={this.props.data.period} style={{ height: '34px', float: 'right' }}>
-              {
-                periods.ALL_PERIODS.map((period) => {
-                  return (<option key={period} value={period}>{period}</option>);
-                })
-              }
-            </select>
-          }
+          <select onChange={this.onPeriodChange} value={this.props.data.period} style={{ height: '34px', float: 'right' }}>
+            {
+              periods.ALL_PERIODS.map((period) => {
+                return (<option key={period} value={period}>{period}</option>);
+              })
+            }
+          </select>
           <ButtonToolbar className="pull-right" >
             <Button onClick={() => this.props.goToDataView()} data-for="data-tooltip" data-tip><Glyphicon glyph="list" /></Button>
-            {displayEditButton}
             <Button data-for="tree1-tooltip" data-tip style={style} onClick={() => this.props.goToTreeView1()}><Glyphicon glyph="tree-deciduous" /></Button>
-            <Button data-for="tree2-tooltip" data-tip style={style} onClick={() => this.props.goToTreeView2()}><Glyphicon glyph="tree-conifer" /></Button>
           </ButtonToolbar>
         </Col>
         {this.state.showTooltip &&
@@ -99,14 +95,8 @@ class PanelTitle extends React.Component {
         <ReactTooltip id="data-tooltip" type="info">
           <span>Data View</span>
         </ReactTooltip>
-        <ReactTooltip id="edit-tooltip" type="info">
-          <span>Edit Enterprise</span>
-        </ReactTooltip>
         <ReactTooltip id="tree1-tooltip" type="info">
-          <span>Tree View 1</span>
-        </ReactTooltip>
-        <ReactTooltip id="tree2-tooltip" type="info">
-          <span>Tree View 2</span>
+          <span>Tree View</span>
         </ReactTooltip>
       </Row>
     );

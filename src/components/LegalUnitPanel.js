@@ -9,7 +9,6 @@ import FormStaticValue from '../components/FormStaticValue';
 import FormStaticAddress from '../components/FormStaticAddress';
 import PanelTitle from '../components/PanelTitle';
 import TreeView1 from '../components/TreeView1';
-import TreeView2 from '../components/TreeView2';
 import colours from '../config/colours';
 
 const LegalUnitPanel = ({ legalUnit, showTreeView, toggleTreeView, goToView }) => {
@@ -81,15 +80,6 @@ const LegalUnitPanel = ({ legalUnit, showTreeView, toggleTreeView, goToView }) =
     if (showTreeView === 1) {
       dataView = (
         <TreeView1
-          entryNodeId={legalUnit.id}
-          unitType={'LEU'}
-          enterpriseId={legalUnit.parents.ENT}
-          childrenJson={{}}
-        />
-      );
-    } else if (showTreeView === 2) {
-      dataView = (
-        <TreeView2
           entryNodeId={legalUnit.id}
           unitType={'LEU'}
           enterpriseId={legalUnit.parents.ENT}

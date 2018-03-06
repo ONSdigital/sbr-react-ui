@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { Button } from 'registers-react-library';
 import { Panel, Form, Label, Tab, Grid, Row, Col, Nav, NavItem } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
-import { getChildValues } from '../utils/helperMethods';
+// import { getChildValues } from '../utils/helperMethods';
+import { formLEUJson } from '../utils/formJson';
 import ChildrenTable from '../components/ChildrenTable';
 import FormStaticValue from '../components/FormStaticValue';
 import FormStaticAddress from '../components/FormStaticAddress';
@@ -12,37 +13,27 @@ import TreeView1 from '../components/TreeView1';
 import colours from '../config/colours';
 
 const LegalUnitPanel = ({ legalUnit, showTreeView, toggleTreeView, goToView }) => {
+  const json = formLEUJson(legalUnit);
   function panelContent() {
     const formTitle = (name, count, accessor) => (<p style={{ margin: '0px', padding: '0px' }}><Label bsStyle="primary" style={{ backgroundColor: colours[accessor], margin: '0px'}}>{count}</Label>&nbsp;{name}</p>);    
     // const formTitle = (name, count, accessor) => (<p>{name} <Label bsStyle="primary" style={{ backgroundColor: colours[accessor] }}>{count}</Label></p>);    
-    const chData = getChildValues(legalUnit.children, 'CH');
-    const vatData = getChildValues(legalUnit.children, 'VAT');
-    const payeData = getChildValues(legalUnit.children, 'PAYE');
+    const chData = {}; // getChildValues(legalUnit.children, 'CH');
+    const vatData = {}; // getChildValues(legalUnit.children, 'VAT');
+    const payeData = {}; // getChildValues(legalUnit.children, 'PAYE');
     let dataView = (
       <Grid>
         <Row className="show-grid">
           <Form horizontal>
             <Col sm={3}>
-              <FormStaticAddress id="formAddress" label="Address" postcode={legalUnit.vars.postCode} />
-              <FormStaticValue id="formLegalStatus" label="Legal Status" value={legalUnit.vars.legalStatus} />
-              <FormStaticValue id="formTradingStatus" label="Trading Status" value={legalUnit.vars.tradingStatus} />
-              <FormStaticValue id="formIndustryCode" label="Industry Code" value={legalUnit.vars.industryCode} />
-              <FormStaticValue id="formEmployees" label="Employees" value={legalUnit.vars.employmentBands} />
-              <FormStaticValue id="formTurnover" label="Turnover" value={legalUnit.vars.turnover} />
+              <FormStaticAddress id="formAddress" label="Address" postcode={json.postCode} />
+              <FormStaticValue id="formLegalStatus" label="Legal Status" value={json.legalStatus} />
+              <FormStaticValue id="formTradingStatus" label="Trading Status" value={json.tradingStatus} />
+              <FormStaticValue id="formIndustryCode" label="Industry Code" value={json.industryCode} />
+              <FormStaticValue id="formEmployees" label="Employees" value={json.employmentBands} />
+              <FormStaticValue id="formTurnover" label="Turnover" value={json.turnover} />
             </Col>
           </Form>
           <Col sm={5} xsOffset={1}>
-            {/* <Tabs defaultActiveKey="1" animation={false} id="children-tabs" bsStyle="tabs">
-              <Tab disabled={chData.length === 0} eventKey="1" title={formTitle('CRN', chData.length, 'CRN')}>
-                <ChildrenTable unitData={chData} name={'Company Reference No.'} accessor={'CH'} />
-              </Tab>
-              <Tab disabled={payeData.length === 0} eventKey="2" title={formTitle('PAYE', payeData.length, 'PAYE')}>
-                <ChildrenTable unitData={payeData} name={'PAYE Reference'} accessor={'PAYE'} />
-              </Tab>
-              <Tab disabled={vatData.length === 0} eventKey="3" title={formTitle('VAT', vatData.length, 'VAT')}>
-                <ChildrenTable unitData={vatData} name={'VAT Reference'} accessor={'VAT'} />
-              </Tab>
-            </Tabs> */}
             <Tab.Container id="left-tabs-example" defaultActiveKey={1}>
               <Row className="clearfix">
                 <Col sm={4}>
@@ -96,8 +87,8 @@ const LegalUnitPanel = ({ legalUnit, showTreeView, toggleTreeView, goToView }) =
       goToTreeView1={() => goToView(1)}
       goToTreeView2={() => goToView(2)}
       goToEditView={() => goToView(3)}
-      name={legalUnit.vars.businessName}
-      id={legalUnit.vars.id.toString()}
+      name={json.businessName}
+      id={json.id}
       accessor="legalUnit"
       unitType="LEU"
     />

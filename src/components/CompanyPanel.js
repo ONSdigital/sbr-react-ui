@@ -140,8 +140,8 @@ const CompanyPanel = ({ company, showTreeView, toggleTreeView, goToView }) => {
       goToTreeView1={() => goToView(1)}
       goToTreeView2={() => goToView(2)}
       goToEditView={() => goToView(3)}
-      name={json.CompanyName}
-      id={json.CompanyNumber}
+      name={json.companyname}
+      id={json.companynumber}
       accessor="ch"
       unitType="CH"
     />

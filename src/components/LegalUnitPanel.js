@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button } from 'registers-react-library';
 import { Panel, Form, Label, Tab, Grid, Row, Col, Nav, NavItem } from 'react-bootstrap';
 import { browserHistory } from 'react-router';
-// import { getChildValues } from '../utils/helperMethods';
+import { getChildValues } from '../utils/helperMethods';
 import { formLEUJson } from '../utils/formJson';
 import ChildrenTable from '../components/ChildrenTable';
 import FormStaticValue from '../components/FormStaticValue';
@@ -16,10 +16,9 @@ const LegalUnitPanel = ({ legalUnit, showTreeView, toggleTreeView, goToView }) =
   const json = formLEUJson(legalUnit);
   function panelContent() {
     const formTitle = (name, count, accessor) => (<p style={{ margin: '0px', padding: '0px' }}><Label bsStyle="primary" style={{ backgroundColor: colours[accessor], margin: '0px'}}>{count}</Label>&nbsp;{name}</p>);    
-    // const formTitle = (name, count, accessor) => (<p>{name} <Label bsStyle="primary" style={{ backgroundColor: colours[accessor] }}>{count}</Label></p>);    
-    const chData = {}; // getChildValues(legalUnit.children, 'CH');
-    const vatData = {}; // getChildValues(legalUnit.children, 'VAT');
-    const payeData = {}; // getChildValues(legalUnit.children, 'PAYE');
+    const chData = getChildValues(legalUnit.children, 'CH');
+    const vatData = getChildValues(legalUnit.children, 'VAT');
+    const payeData = getChildValues(legalUnit.children, 'PAYE');
     let dataView = (
       <Grid>
         <Row className="show-grid">

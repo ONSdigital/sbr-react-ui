@@ -44,8 +44,6 @@ class PanelTitle extends React.Component {
     const style = {
       marginLeft: '0px',
     };
-    const editButton = (<Button data-for="edit-tooltip" data-tip onClick={() => this.props.goToEditView()} style={style}><Glyphicon glyph="edit" /></Button>);
-    const displayEditButton = (this.props.unitType === 'ENT') ? editButton : null;
     // Note: We should use a bootstrap tooltip/modal/overlay etc. for the title overflow,
     // however there is an issue with dynamic bootstrap elements not inheriting css, so
     // we use react-tooltip

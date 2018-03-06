@@ -42,8 +42,8 @@ class EnterprisePanel extends React.Component {
         goToTreeView1={() => this.props.goToView(1)}
         goToTreeView2={() => this.props.goToView(2)}
         goToEditView={() => this.props.goToView(3)}
-        name={getValueByKey(this.props.enterprise.vars, 'ent_name')}
-        id={getValueByKey(this.props.enterprise.vars, 'entref')}
+        name={getValueByKey(this.props.enterprise.vars, 'name')}
+        id={getValueByKey(this.props.enterprise.vars, 'ern')}
         accessor="enterprise"
         unitType="ENT"
       />

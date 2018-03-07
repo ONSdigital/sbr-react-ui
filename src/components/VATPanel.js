@@ -38,7 +38,7 @@ const VATPanel = ({ vat, showTreeView, toggleTreeView, goToView }) => {
             </Col>
             <Col sm={3}>
               <FormStaticValue id="formLegalStatus" label="Legal Status" value={json.legalstatus} />
-              <FormLink id="formEntRef" label="Ent. Ref." value={json.entref} unitType="ENT" />
+              <FormStaticValue id="formEntRef" label="IDBR. Ref." value={json.entref} />
               <FormLink id="formCRN" label="CRN" value={json.crn} unitType="CH" />
               <FormStaticValue id="formRecordType" label="Record Type" value={json.record_type} />
               <FormStaticValue id="formSic92" label="SIC (92)" value={json.sic92} />

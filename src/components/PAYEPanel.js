@@ -28,7 +28,7 @@ const PAYEPanel = ({ paye, showTreeView, toggleTreeView, goToView }) => {
             <Col sm={3}>
               <FormStaticValue id="formLegalStatus" label="Legal Status" value={json.legalstatus} />
               <FormStaticValue id="formPreviousPaye" label="Previous PAYE" value={json.prevpaye} />
-              <FormLink id="formEntRef" label="Ent. Ref." value={json.entref} unitType="ENT" />
+              <FormStaticValue id="formEntRef" label="IDBR Ref." value={json.entref} />
               <FormLink id="formCRN" label="CRN" value={json.crn} unitType="CH" />
               <Table condensed hover>
                 <thead>

@@ -37,6 +37,9 @@ export function refSearch(query) {
             dispatch(setResults(REFS['ENT'].setResults, {
               results: [{ id: data.results[0].parents.ENT }],
             }));
+            const source = data.results[0].unitType;
+            const destination = getDestination(source);
+            browserHistory.push(`/${destination}/${query}`);
           } else {
             apiSearch.getSpecificRefByIdAndPeriod(REFS['LEU'].apiEndpoint, data.results[0].parents['LEU'], data.results[0].period, (s, d) => {
               if (s) {

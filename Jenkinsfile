@@ -57,7 +57,7 @@ pipeline {
       }
     }
     stage('Install Dependancies & Build') {
-      agent { label 'build' }
+      agent { label 'GMU' }
       steps {
         colourText("info","Running 'npm install' and 'npm build'...")
         deleteDir()
@@ -83,7 +83,7 @@ pipeline {
       }
     }
     stage('Test - Unit, Component, Server, Coverage + Stress') {
-      agent { label 'build' }
+      agent { label 'GMU' }
       steps {
         parallel (
           "Unit" :  {
@@ -134,7 +134,7 @@ pipeline {
       }
     }
     stage('Zip Project') {
-      agent { label 'build' }
+      agent { label 'GMU' }
       when {
         anyOf {
           branch "develop"
@@ -164,7 +164,7 @@ pipeline {
       }
     }
     stage('Deploy - DEV') {
-      agent { label 'build' }
+      agent { label 'GMU' }
       when {
         anyOf {
           branch "develop"
@@ -182,7 +182,7 @@ pipeline {
       }
     }
     stage('Integration Tests') {
-      agent { label 'build' }
+      agent { label 'GMU' }
       when {
         anyOf {
           branch "release"
@@ -196,7 +196,7 @@ pipeline {
       }
     }
     stage('Deploy - TEST') {
-      agent { label 'build' }
+      agent { label 'GMU' }
       when {
         anyOf {
           branch "release"
@@ -211,7 +211,7 @@ pipeline {
       }
     }
     stage('Promote to BETA?') {
-      agent { label 'build' }
+      agent { label 'GMU' }
       when {
         anyOf {
           branch "master"
@@ -227,7 +227,7 @@ pipeline {
       }
     }
     stage('Deploy - BETA') {
-      agent { label 'build' }
+      agent { label 'GMU' }
       when {
         anyOf {
           branch "master"

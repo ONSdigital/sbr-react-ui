@@ -82,6 +82,7 @@
     "react-toggle": "^4.0.1",
     "react-tooltip": "^3.3.0",
     "redux": "^3.6.0",
+    "winston": "^2.4.0",
     "redux-thunk": "^2.2.0",
     "registers-react-library": "^1.0.0",
     "request": "^2.81.0",

@@ -31,29 +31,34 @@ export function refSearch(query) {
           headers: data.response,
         }));
 
-        // If the unitType that is returned is not an ENT, do an additional
-        // search to get that data
-        if (data.results[0].unitType !== 'ENT') {
-          apiSearch.getSpecificRefById(REFS['ENT'].apiEndpoint, data.results[0].parents['ENT'], (success, data) => {
-            if (success) {
-              dispatch(setResults(REFS['ENT'].setResults, {
-                results: [data.results],
-              }));
-              dispatch(setHeaders(REFS['ENT'].setHeaders, {
-                headers: data.response,
-              }));
-            } else {
-              dispatch(setErrorMessage(REFS['ENT'].setError, data.message, Math.floor(new Date() / 1000)));
-              dispatch(addMostRecentError('ENT', data.message, Math.floor(new Date() / 1000)));
-            }
-          });
-        }
-
-        // if (data.results.length === 1) {
+        const unitType = data.results[0].unitType;
+        if (unitType !== 'ENT') {
+          if (unitType === 'LEU') {
+            dispatch(setResults(REFS['ENT'].setResults, {
+              results: [{ id: data.results[0].parents.ENT }],
+            }));
+            const source = data.results[0].unitType;
+            const destination = getDestination(source);
+            browserHistory.push(`/${destination}/${query}`);
+          } else {
+            apiSearch.getSpecificRefByIdAndPeriod(REFS['LEU'].apiEndpoint, data.results[0].parents['LEU'], data.results[0].period, (s, d) => {
+              if (s) {
+                dispatch(setResults(REFS['ENT'].setResults, {
+                  results: [{ id: d.results.parents.ENT }],
+                }));
+                const source = data.results[0].unitType;
+                const destination = getDestination(source);
+                browserHistory.push(`/${destination}/${query}`);
+              } else {
+                dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message, Math.floor(new Date() / 1000)));
+              }
+            });
+          }
+        } else {
           const source = data.results[0].unitType;
           const destination = getDestination(source);
           browserHistory.push(`/${destination}/${query}`);
-        // }
+        }
       } else {
         dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message, Math.floor(new Date() / 1000)));
       }
@@ -63,10 +68,10 @@ export function refSearch(query) {
 
 export function getSpecificUnitType(unitType, id, redirect = false) {
   return (dispatch) => {
-    if (unitType === 'LEU') {
-      // For LEU, period is not yet implemented, so get the default one
-      return dispatch(getUnitForDefaultPeriod(unitType, id, redirect));
-    }
+    // if (unitType === 'LEU') {
+    //   // For LEU, period is not yet implemented, so get the default one
+    //   return dispatch(getUnitForDefaultPeriod(unitType, id, redirect));
+    // }
     const period = store.getState().apiSearch.period.split('-').join('');
     return dispatch(getUnitForSpecificPeriod(unitType, id, period, redirect));
   };

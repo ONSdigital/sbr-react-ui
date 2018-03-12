@@ -11,7 +11,6 @@ import FormStaticDatedValue from '../components/FormStaticDatedValue';
 import FormLink from '../components/FormLink';
 import PanelTitle from '../components/PanelTitle';
 import TreeView1 from '../components/TreeView1';
-import TreeView2 from '../components/TreeView2';
 
 const PAYEPanel = ({ paye, showTreeView, toggleTreeView, goToView }) => {
   const json = formPayeJson(paye);
@@ -29,7 +28,7 @@ const PAYEPanel = ({ paye, showTreeView, toggleTreeView, goToView }) => {
             <Col sm={3}>
               <FormStaticValue id="formLegalStatus" label="Legal Status" value={json.legalstatus} />
               <FormStaticValue id="formPreviousPaye" label="Previous PAYE" value={json.prevpaye} />
-              <FormLink id="formEntRef" label="Ent. Ref." value={json.entref} unitType="ENT" />
+              <FormStaticValue id="formEntRef" label="IDBR Ref." value={json.entref} />
               <FormLink id="formCRN" label="CRN" value={json.crn} unitType="CH" />
               <Table condensed hover>
                 <thead>
@@ -90,15 +89,6 @@ const PAYEPanel = ({ paye, showTreeView, toggleTreeView, goToView }) => {
     if (showTreeView === 1) {
       dataView = (
         <TreeView1
-          entryNodeId={paye.id}
-          unitType={'PAYE'}
-          enterpriseId={paye.parents.ENT}
-          childrenJson={{}}
-        />
-      );
-    } else if (showTreeView === 2) {
-      dataView = (
-        <TreeView2
           entryNodeId={paye.id}
           unitType={'PAYE'}
           enterpriseId={paye.parents.ENT}

@@ -8,7 +8,6 @@ import FormStaticValue from '../components/FormStaticValue';
 import FormStaticAddress from '../components/FormStaticAddress';
 import PanelTitle from '../components/PanelTitle';
 import TreeView1 from '../components/TreeView1';
-import TreeView2 from '../components/TreeView2';
 
 const CompanyPanel = ({ company, showTreeView, toggleTreeView, goToView }) => {
   const json = formCompanyJson(company);
@@ -125,15 +124,6 @@ const CompanyPanel = ({ company, showTreeView, toggleTreeView, goToView }) => {
     if (showTreeView === 1) {
       dataView = (
         <TreeView1
-          entryNodeId={company.id}
-          unitType={'CRN'}
-          enterpriseId={company.parents.ENT}
-          childrenJson={{}}
-        />
-      );
-    } else if (showTreeView === 2) {
-      dataView = (
-        <TreeView2
           entryNodeId={company.id}
           unitType={'CRN'}
           enterpriseId={company.parents.ENT}

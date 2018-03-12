@@ -10,7 +10,6 @@ import FormStaticThreePartValue from '../components/FormStaticThreePartValue';
 import FormLink from '../components/FormLink';
 import PanelTitle from '../components/PanelTitle';
 import TreeView1 from '../components/TreeView1';
-import TreeView2 from '../components/TreeView2';
 
 const VATPanel = ({ vat, showTreeView, toggleTreeView, goToView }) => {
   const json = formVatJson(vat);
@@ -39,7 +38,7 @@ const VATPanel = ({ vat, showTreeView, toggleTreeView, goToView }) => {
             </Col>
             <Col sm={3}>
               <FormStaticValue id="formLegalStatus" label="Legal Status" value={json.legalstatus} />
-              <FormLink id="formEntRef" label="Ent. Ref." value={json.entref} unitType="ENT" />
+              <FormStaticValue id="formEntRef" label="IDBR. Ref." value={json.entref} />
               <FormLink id="formCRN" label="CRN" value={json.crn} unitType="CH" />
               <FormStaticValue id="formRecordType" label="Record Type" value={json.record_type} />
               <FormStaticValue id="formSic92" label="SIC (92)" value={json.sic92} />
@@ -61,15 +60,6 @@ const VATPanel = ({ vat, showTreeView, toggleTreeView, goToView }) => {
     if (showTreeView === 1) {
       dataView = (
         <TreeView1
-          entryNodeId={vat.id}
-          unitType={'VAT'}
-          enterpriseId={vat.parents.ENT}
-          childrenJson={{}}
-        />
-      );
-    } else if (showTreeView === 2) {
-      dataView = (
-        <TreeView2
           entryNodeId={vat.id}
           unitType={'VAT'}
           enterpriseId={vat.parents.ENT}

@@ -29,6 +29,18 @@ pipeline {
     SBR_UI_TEST_USER_USERNAME="test"
     SBR_UI_TEST_USER_PASSWORD="test"
     JWT_SECRET="SECRET"
+
+    BRANCH_DEV = "develop"
+    BRANCH_TEST = "release"
+    BRANCH_PROD = "master"
+
+    DEPLOY_DEV = "dev"
+    DEPLOY_TEST = "test"
+    DEPLOY_PROD = "prod"
+
+    ORGANIZATION = "ons"
+    TEAM = "sbr"
+    MODULE_NAME = "sbr-ui"
   }
   stages {
     stage('Checkout') {
@@ -57,6 +69,16 @@ pipeline {
         // Install the node_modules for just the server
         dir('server') {
           sh 'npm install'
+        }
+
+        script {
+          if (BRANCH_NAME == BRANCH_DEV) {
+            env.DEPLOY_NAME = DEPLOY_DEV
+          } else if  (BRANCH_NAME == BRANCH_TEST) {
+            env.DEPLOY_NAME = DEPLOY_TEST
+          } else if (BRANCH_NAME == BRANCH_PROD) {
+            env.DEPLOY_NAME = DEPLOY_PROD
+          }
         }
       }
     }
@@ -105,9 +127,9 @@ pipeline {
         script {
           colourText("info","Zipping project...")
           colourText("info","Host is: ${env.CLOUD_FOUNDRY_ROUTE_SUFFIX}")
-          sh "sed -i -e 's|Local|dev|g' src/config/constants.js"
-          sh "sed -i -e 's|http://localhost:9002|https://dev-sbr-api.${env.CLOUD_FOUNDRY_ROUTE_SUFFIX}|g' src/config/api-urls.js"
-          sh "sed -i -e 's|http://localhost:3001|https://dev-sbr-ui.${env.CLOUD_FOUNDRY_ROUTE_SUFFIX}|g' src/config/api-urls.js"
+          sh "sed -i -e 's|Local|${env.DEPLOY_NAME}|g' src/config/constants.js"
+          sh "sed -i -e 's|http://localhost:9002|https://${env.DEPLOY_NAME}-sbr-api.${env.CLOUD_FOUNDRY_URL}|g' src/config/api-urls.js"
+          sh "sed -i -e 's|http://localhost:3001|https://${env.DEPLOY_NAME}-sbr-ui.${env.CLOUD_FOUNDRY_URL}|g' src/config/api-urls.js"
           sh 'npm run build'
           // For deployment, only need the node_modules/package.json for the server
           sh 'rm -rf node_modules'
@@ -117,14 +139,6 @@ pipeline {
           sh 'rm -rf manifest.yml'
           // Get the proper manifest from Gitlab
           sh 'cp conf/dev/manifest.yml .'
-          // Create the folder structure for dndTree.js
-          dir('build') {
-            sh 'mkdir src'
-          }
-          dir('build/src') {
-            sh 'mkdir resources'
-          }
-          sh 'cp src/resources/dndTree.js ./build/src/resources/dndTree.js'
           sh 'zip -r sbr-ui.zip build node_modules favicon.ico package.json server manifest.yml'
           stash name: 'zip'
         }
@@ -141,7 +155,10 @@ pipeline {
         script {
           colourText("info","Deploying to DEV...")
           unstash 'zip'
-          deployToCloudFoundry('cloud-foundry-sbr-dev-user','sbr','dev','dev-sbr-ui','sbr-ui.zip','manifest.yml')
+          cf_env = "${env.DEPLOY_NAME}".capitalize()
+          deployToCloudFoundry("${TEAM}-${env.DEPLOY_NAME}-cf", "SBR", "${cf_env}",'dev-sbr-ui','sbr-ui.zip','manifest.yml')
+
+          //deployToCloudFoundry('cloud-foundry-sbr-dev-user','sbr','dev','dev-sbr-ui','sbr-ui.zip','manifest.yml')
         }
       }
     }

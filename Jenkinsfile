@@ -100,10 +100,16 @@ pipeline {
             colourText("info","Running server tests...")
             sh "npm run-script test-server"
           },
+        )
+      }
+    }
+    stage('Static Analysis - Coverage & Style') {
+      agent { label 'GMU' }
+      steps {
+        parallel (
           "Coverage Report" : {
             colourText("info","Generating coverage report...")
             sh "npm run-script cover"
-            step([$class: 'CoberturaPublisher', coberturaReportFile: '**/coverage/cobertura-coverage.xml'])
           },
           "Style Report" : {
             colourText("info","Generating style report...")
@@ -112,6 +118,19 @@ pipeline {
             // checkstyle canComputeNew: false, canRunOnFailed: true, defaultEncoding: '', healthy: '', pattern: 'coverage/eslint-report-checkstyle.xml', unHealthy: ''
           }
         )
+      }
+      post {
+        success {
+          colourText("info","Static analysis complete, publishing reports...")
+          // Publish coverage report
+          step([$class: 'CoberturaPublisher', coberturaReportFile: '**/coverage/cobertura-coverage.xml'])
+          // Publish style report
+          // step([$class: 'CheckStylePublisher', pattern: 'coverage/eslint-report-checkstyle.xml'])
+          // checkstyle canComputeNew: false, canRunOnFailed: true, defaultEncoding: '', healthy: '', pattern: 'coverage/eslint-report-checkstyle.xml', unHealthy: ''
+        }
+        failure {
+          colourText("warn","Failed to publish static analysis reports.")
+        }
       }
     }
     stage('Zip Project') {

@@ -57,7 +57,7 @@ pipeline {
       }
     }
     stage('Install Dependancies & Build') {
-      agent { label 'build' }
+      agent { label 'GMU' }
       steps {
         colourText("info","Running 'npm install' and 'npm build'...")
         deleteDir()
@@ -83,7 +83,7 @@ pipeline {
       }
     }
     stage('Test - Unit, Component, Server, Coverage + Stress') {
-      agent { label 'build' }
+      agent { label 'GMU' }
       steps {
         parallel (
           "Unit" :  {
@@ -100,10 +100,16 @@ pipeline {
             colourText("info","Running server tests...")
             sh "npm run-script test-server"
           },
+        )
+      }
+    }
+    stage('Static Analysis - Coverage & Style') {
+      agent { label 'GMU' }
+      steps {
+        parallel (
           "Coverage Report" : {
             colourText("info","Generating coverage report...")
             sh "npm run-script cover"
-            step([$class: 'CoberturaPublisher', coberturaReportFile: '**/coverage/cobertura-coverage.xml'])
           },
           "Style Report" : {
             colourText("info","Generating style report...")
@@ -113,9 +119,22 @@ pipeline {
           }
         )
       }
+      post {
+        success {
+          colourText("info","Static analysis complete, publishing reports...")
+          // Publish coverage report
+          step([$class: 'CoberturaPublisher', coberturaReportFile: '**/coverage/cobertura-coverage.xml'])
+          // Publish style report
+          // step([$class: 'CheckStylePublisher', pattern: 'coverage/eslint-report-checkstyle.xml'])
+          // checkstyle canComputeNew: false, canRunOnFailed: true, defaultEncoding: '', healthy: '', pattern: 'coverage/eslint-report-checkstyle.xml', unHealthy: ''
+        }
+        failure {
+          colourText("warn","Failed to publish static analysis reports.")
+        }
+      }
     }
     stage('Zip Project') {
-      agent { label 'build' }
+      agent { label 'GMU' }
       when {
         anyOf {
           branch "develop"
@@ -145,7 +164,7 @@ pipeline {
       }
     }
     stage('Deploy - DEV') {
-      agent { label 'build' }
+      agent { label 'GMU' }
       when {
         anyOf {
           branch "develop"
@@ -163,7 +182,7 @@ pipeline {
       }
     }
     stage('Integration Tests') {
-      agent { label 'build' }
+      agent { label 'GMU' }
       when {
         anyOf {
           branch "release"
@@ -177,7 +196,7 @@ pipeline {
       }
     }
     stage('Deploy - TEST') {
-      agent { label 'build' }
+      agent { label 'GMU' }
       when {
         anyOf {
           branch "release"
@@ -192,7 +211,7 @@ pipeline {
       }
     }
     stage('Promote to BETA?') {
-      agent { label 'build' }
+      agent { label 'GMU' }
       when {
         anyOf {
           branch "master"
@@ -208,7 +227,7 @@ pipeline {
       }
     }
     stage('Deploy - BETA') {
-      agent { label 'build' }
+      agent { label 'GMU' }
       when {
         anyOf {
           branch "master"

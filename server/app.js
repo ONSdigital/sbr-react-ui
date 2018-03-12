@@ -14,6 +14,7 @@ const version = require('./package.json').version;
 const formatDate = require('./formatDate.js');
 const compression = require('compression');
 const mcache = require('memory-cache');
+const cache = require('./utilities/cache.js');
 
 // To allow hot-reloading, the node server only serves the React.js index.html
 // in the /build file if SERVE_HTML is true
@@ -30,32 +31,6 @@ const SECRET = process.env.JWT_SECRET;
 const users = {}; // For the user sessions
 const startTime = formatDate(new Date());
 const TOKEN_EXPIRE = 60 * 60 * 24;
-
-/*
- * Call cache(duration) to cache a response for a certain
- * duration, or an unlimited duration if no duration is passed in.
-*/
-const cache = (duration) => {
-  return (req, res, next) => {
-    const url = (req.originalUrl || req.url);
-    const key = `__express__${url}`;
-    const cachedBody = mcache.get(key);
-    if (cachedBody) {
-      res.send(cachedBody);
-      return;
-    }
-    res.sendResponse = res.send;
-    res.send = (body) => {
-      if (duration === undefined) {
-        mcache.put(key, body);
-      } else {
-        mcache.put(key, body, duration);
-      }
-      res.sendResponse(body);
-    };
-    next();
-  };
-};
 
 const app = express();
 

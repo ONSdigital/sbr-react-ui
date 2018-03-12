@@ -133,8 +133,8 @@ class TreeView1 extends React.Component {
     // The childrenJson from the API does not have a parent ENT, so we add
     // it in manually
     const json = [{
-      name: `ENT - ${this.props.enterpriseId}`,
-      newId: this.props.enterpriseId,
+      name: `ENT - ${this.props.results[0].id}`,
+      newId: this.props.results[0].id,
       type: 'ENT',
       children: data.childrenJson,
     }];

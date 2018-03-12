@@ -12,6 +12,9 @@ const ChildrenTable = ({ dispatch, data, unitData, name, accessor }) => {
   // for (let x in unitData) {
   //   unitData[x][accessor] = parseInt(unitData[x][accessor])
   // }
+  if (Object.keys(unitData).length === 0 && unitData.constructor === Object) {
+    return (<p>Error, no child data available.</p>);
+  }
 
   const columns = [
     {

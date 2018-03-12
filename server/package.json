@@ -19,8 +19,8 @@
     "morgan": "^1.7.0"
   },
   "engines": {
-    "node": "5.10.1",
-    "npm": "3.8.3"
+    "node": "6.11.5",
+    "npm": "3.10.10"
   },
   "scripts": {
     "start": "SERVE_HTML=true ENV=local node index.js"

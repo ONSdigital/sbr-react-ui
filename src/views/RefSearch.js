@@ -44,8 +44,8 @@ class Search extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     const query = this.props.data.query;
-    if (query.length > 5 && query.length < 13) {
-      this.props.dispatch(refSearch(query.toUpperCase()));
+    if (query.length > 3 && query.length < 20) {
+      this.props.dispatch(refSearch(query));
     } else {
       // Possibly swap this action with a redux way of doing it?
       this.props.data.results = 0;

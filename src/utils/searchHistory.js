@@ -1,4 +1,4 @@
-const formatDate = require('../../server/formatDate.js');
+const formatDate = require('../../server/utilities/formatDate.js');
 
 const searchHistory = {
   /**

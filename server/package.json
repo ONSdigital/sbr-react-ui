@@ -17,7 +17,11 @@
     "jsonwebtoken": "^7.1.9",
     "jwt-decode": "^2.2.0",
     "winston": "^2.4.0",
-    "morgan": "^1.7.0"
+    "uuid": "^3.1.0",
+    "redis-sessions": "^1.2.0",
+    "request-promise": "^4.2.2",
+    "morgan": "^1.7.0",
+    "dotenv": "^4.0.0"
   },
   "engines": {
     "node": "6.11.5",

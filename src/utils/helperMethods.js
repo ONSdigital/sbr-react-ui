@@ -1,21 +1,19 @@
-// @flow
-
-export function countStatus(history: Array<{}>, status: number) {
+export function countStatus(history, status) {
   if (history === []) {
     return 0;
   }
   return history.filter(h => h.HTTPCode === status).length;
 }
 
-export function countStatusBetween(history: Array<{}>, status: object) {
+export function countStatusBetween(history, status) {
   if (history === []) {
     return 0;
   }
   return history.filter(h => h.HTTPCode >= status.min && h.HTTPCode <= status.max).length;
 }
 
-export function getDestination(source: string) {
-  let destination: string;
+export function getDestination(source) {
+  let destination;
   switch (source) {
     case 'ENT':
       destination = 'Enterprises';
@@ -38,10 +36,10 @@ export function getDestination(source: string) {
   return destination;
 }
 
-export function formatResultsTable(results: Array<{}>) {
-  const formattedResults: Array<{}> = [];
+export function formatResultsTable(results) {
+  const formattedResults = [];
   results.forEach((i) => {
-    const record: Object = i;
+    const record = i;
     if (record.source === 'VAT' || record.source === 'Legal Unit') {
       record.name = record.businessName;
     }
@@ -50,15 +48,15 @@ export function formatResultsTable(results: Array<{}>) {
   return formattedResults;
 }
 
-export function getValueByKey(object: {}, toGet: string) {
+export function getValueByKey(object, toGet) {
   return (toGet in object) ? object[toGet] : '';
 }
 
-export function getChildValues(json: {}, compareString: string) {
-  const arr: Array<{}> = [];
+export function getChildValues(json, compareString) {
+  const arr = [];
   Object.keys(json).forEach((k) => {
     if (json[k] === compareString) {
-      const obj: {} = {};
+      const obj = {};
       obj[compareString] = k;
       arr.push(obj);
     }
@@ -66,7 +64,7 @@ export function getChildValues(json: {}, compareString: string) {
   return arr;
 }
 
-export function getLegalStatusDescription(status: string) {
+export function getLegalStatusDescription(status) {
   switch (status) {
     case '1':
       return 'Company';
@@ -87,14 +85,14 @@ export function getLegalStatusDescription(status: string) {
   }
 }
 
-export function getHeight(noOfItems: number) {
+export function getHeight(noOfItems) {
   if (noOfItems > 10) {
     return '400px';
   }
   return '100%';
 }
 
-export function findAndReplace(object: {}, value: string, replacevalue: string) {
+export function findAndReplace(object, value, replacevalue) {
   for (var x in object) {
     if (object.hasOwnProperty(x)) {
       if (typeof object[x] === 'object') {

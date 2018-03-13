@@ -1,5 +1,3 @@
-// @flow
-
 import config from '../config/api-urls';
 
 const { API_URL, API_VERSION } = config;
@@ -13,7 +11,7 @@ const apiEdit = {
    * Edits an Enterprise
    * @param  {Function} callback Called with returned data (none for this request).
    */
-  editEnterprise(id: string, body: {}, callback: (success: boolean, data: {}, response?: {}) => void) {
+  editEnterprise(id, body, callback) {
     fetch(`${API_URL}/${API_VERSION}/enterprises/${id}`, {
       method: 'POST',
       // Should be able to use the headers below, however a CORS issue prevents it

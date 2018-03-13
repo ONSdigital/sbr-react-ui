@@ -1,5 +1,3 @@
-// @flow
-
 import config from '../config/api-urls';
 
 const { AUTH_URL } = config;
@@ -15,27 +13,27 @@ const auth = {
    * @param  {string}   password The password of the user
    * @param  {Function} callback Called after a user was logged in on the remote server
    */
-  login(username: string, password: string, callback: (success: boolean, data: {}) => void) {
+  login(username, basicAuth, callback) {
     // Do not need to check if user is already logged in, this is done in
     // routes.js before this method is called
 
     // POST to the backend with username/password
-    fetch(`${AUTH_URL}/login`, {
+    fetch(`${AUTH_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Basic ${basicAuth}`,
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username }),
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {
-          const token: string = json.jToken;
-          const loginName: string = json.username;
-          const role: string = json.role;
-          const showConfetti: string = json.showConfetti;
-          sessionStorage.setItem('token', token);
+          const loginName = json.username;
+          const accessToken = json.accessToken;
+          const showConfetti = json.showConfetti;
+          const role = json.role;
           // Send auth request to save token username pair
-          callback(true, { token, loginName, role, showConfetti });
+          callback(true, { username: loginName, accessToken, showConfetti, role });
         });
       }
       return callback(false, { message: 'Unable to login.' });
@@ -44,21 +42,21 @@ const auth = {
       return callback(false, { message: 'Server error: request timed out.' });
     });
   },
-  checkToken(token: string, callback: (success: boolean, data: ?{}) => void) {
-    fetch(`${AUTH_URL}/checkToken`, {
+  checkToken(callback) {
+    fetch(`${AUTH_URL}/auth/checkToken`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': sessionStorage.accessToken,
       },
-      body: JSON.stringify({ token }),
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {
-          const newToken: string = json.token;
-          const username: string = json.username;
-          const role: string = json.role;
+          const newAccessToken = json.accessToken;
+          const username = json.username;
+          const role = json.role;
           // Send auth request to save token username pair
-          callback(true, { newToken, username, role });
+          callback(true, { username, newAccessToken, role });
         });
       }
       return callback(false);
@@ -70,19 +68,18 @@ const auth = {
   /**
    * Logs the current user out
    */
-  logout(callback: (success: boolean) => void) {
-    const token: string = sessionStorage.token;
-    fetch(`${AUTH_URL}/logout`, {
+  logout(callback) {
+    // const token: string = sessionStorage.token;
+    fetch(`${AUTH_URL}/auth/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': sessionStorage.accessToken,
       },
-      body: JSON.stringify({ token }),
-    }).then((response) => {
-      if (response.status === 200) {
-        sessionStorage.clear();
-        callback(true);
-      }
+    }).then(() => {
+      // Whatever the response, log the user out.
+      sessionStorage.clear();
+      callback(true);
     });
   },
   onChange() {},

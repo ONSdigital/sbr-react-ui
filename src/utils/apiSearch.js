@@ -1,8 +1,6 @@
-// @flow
-
 import config from '../config/api-urls';
 
-const { API_URL, API_VERSION } = config;
+const { REROUTE_URL, API_VERSION } = config;
 
 /**
  * API lib for getting info (version/last updated etc.)
@@ -13,9 +11,17 @@ const apiSearch = {
    * Gets ref details from API, search on any type of ref.
    * @param  {Function} callback Called with returned data.
    */
-  getRef(id: string, callback: (success: boolean, data: {}, response?: {}) => void) {
-    fetch(`${API_URL}/${API_VERSION}/search?id=${id}`, {
-      method: 'GET',
+  getRef(id, callback) {
+    fetch(REROUTE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': sessionStorage.getItem('accessToken'),
+      },
+      body: JSON.stringify({
+        method: 'GET',
+        endpoint: `${API_VERSION}/search?id=${id}`,
+      }),
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {
@@ -33,9 +39,17 @@ const apiSearch = {
    * Gets specific ref by id from API.
    * @param  {Function} callback Called with returned data.
    */
-  getSpecificRefById(unitType: string, id: string, callback: (success: boolean, data: {}, response?: {}) => void) {
-    fetch(`${API_URL}/${API_VERSION}/${unitType}/${id}`, {
-      method: 'GET',
+  getSpecificRefById(unitType, id, callback) {
+    fetch(REROUTE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': sessionStorage.getItem('accessToken'),
+      },
+      body: JSON.stringify({
+        method: 'GET',
+        endpoint: `${API_VERSION}/${unitType}/${id}`,
+      }),
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {
@@ -53,9 +67,17 @@ const apiSearch = {
    * Gets specific ref by id and period from API.
    * @param  {Function} callback Called with returned data.
    */
-  getSpecificRefByIdAndPeriod(unitType: string, id: string, period: string, callback: (success: boolean, data: {}, response?: {}) => void) {
-    fetch(`${API_URL}/${API_VERSION}/periods/${period}/${unitType}/${id}`, {
-      method: 'GET',
+  getSpecificRefByIdAndPeriod(unitType, id, period, callback) {
+    fetch(REROUTE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': sessionStorage.getItem('accessToken'),
+      },
+      body: JSON.stringify({
+        method: 'GET',
+        endpoint: `${API_VERSION}/periods/${period}/${unitType}/${id}`,
+      }),
     }).then((response) => {
       if (response.status === 200) {
         return response.json().then((json) => {

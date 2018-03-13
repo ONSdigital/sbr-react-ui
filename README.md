@@ -1,51 +1,54 @@
-# Statistical Business Register User Interface
+# sbr-ui
 
 [![phase](https://img.shields.io/badge/phase-ALPHA-blue.svg)](https://img.shields.io/badge/phase-ALPHA-blue.svg) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](./LICENSE) [![Dependency Status](https://www.versioneye.com/user/projects/59cb91720fb24f005d4bc6c6/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/59cb91720fb24f005d4bc6c6) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4e4fd30114bf491ba640872d0e902f3c)](https://www.codacy.com/app/ONSDigital/sbr-ui?utm_source=github.com&utm_medium=referral&utm_content=ONSdigital/sbr-ui&utm_campaign=badger)
+
+The Statistical Business Register User Interface allows a user to query `sbr-api`, which returns Enterprise, Legal Unit and Administrative (VAT/PAYE/CH) data.
 
 The following tutorials were used to help with the deployment using Node.js, the login with redux and the isolation of bootstrap styles: [Node](https://medium.com/@patriciolpezjuri/using-create-react-app-with-react-router-express-js-8fa658bf892d#.mt6bbdd8m
 ), [Login](https://github.com/mxstbr/login-flow) and [Bootstrap Isolation](https://formden.com/blog/isolate-bootstrap).
 
+### Table of Contents
+**[1. Environment Setup](#environment-setup-for-the-ui)**<br>
+**[2. Running the UI](#running-sbr-ui)**<br>
+**[3. Running the API's](#running-the-apis)**<br>
+**[4. Testing](#testing)**<br>
+**[5. Useful Extensions](#useful-extensions)**<br>
+**[6. Logging into the UI](#logging-into-sbr-ui)**<br>
+**[7. Troubleshooting](#troubleshooting)**<br>
+**[8. Contributing](#contributing)**<br>
+**[9. License](#license)**<br>
+
 ## Environment Setup for the UI
 
-1. Install NPM, it is included with Node.js ([Download](https://nodejs.org/en/))
+1. Install NPM, it is included with [Node.js](https://nodejs.org/en/)
 
-2. For testing locally, set the following environment variables (use `vim ~/.profile`):
+## Running sbr-ui:
 
-```shell
-export SBR_UI_TEST_ADMIN_USERNAME=admin
-export SBR_UI_TEST_ADMIN_PASSWORD=admin
-export SBR_UI_TEST_USER_USERNAME=test
-export SBR_UI_TEST_USER_PASSWORD=test
-export JWT_SECRET=123
-```
+### Devlopment Setup
 
-## Running the Demo UI (local):
-
-1. Clone this repo, install dependencies and start NPM
+1. Clone this repo and install dependencies:
 
 ```shell
 git clone https://github.com/ONSdigital/sbr-ui.git
 cd sbr-ui
 npm install
-npm start
 ```
 
-The NPM start command uses the following commands:
+2. Start the `React.js` development server (which uses hot-reloading):
 
 ```shell
-npm run build
-SERVE_HTML=true ENV=local node server
+npm run start:react
 ```
 
-This will run Node and React on localhost:3001, since Node is serving
-`index.html`, hot-reloading will not work.
+3. Start the `Node.js` server:
 
-To use hot-reloading, use `npm restart` which runs `react-scripts start`, this
-will start React on port 3000. To start the server, use `ENV=local node server/index.js`.
+```shell
+npm run start:server
+```
 
-## Running the Demo UI (Docker):
+### Docker Setup
 
-Firstly, build and run the UI inside a Docker container.
+Build and run the UI inside a Docker container.
 
 ```shell
 docker build -t sbr-ui .
@@ -109,9 +112,9 @@ The node server will carry on running afterwards, you can shut it down with `kil
 
 * [Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd) - for seeing what is happening in your Redux store
 
-## Logging into the Demo UI:
+## Logging into sbr-ui:
 
-Username and password are `test` or `admin`.
+Username and password are `admin`.
 
 ## Troubleshooting
 

@@ -24,9 +24,7 @@ The following tutorials were used to help with the deployment using Node.js, the
 
 ## Running sbr-ui:
 
-### Devlopment Setup
-
-1. Clone this repo and install dependencies:
+Clone this repo and install dependencies:
 
 ```shell
 git clone https://github.com/ONSdigital/sbr-ui.git
@@ -34,26 +32,32 @@ cd sbr-ui
 npm install
 ```
 
-2. Start the `React.js` development server (which uses hot-reloading):
+### Devlopment Setup
+
+1. Start the `React.js` development server (which uses hot-reloading):
 
 ```shell
 npm run start:react
 ```
 
-3. Start the `Node.js` server:
+2. Start the `Node.js` server:
 
 ```shell
 npm run start:server
 ```
 
+3. Go to [localhost:3000](http://localhost:3000) to see sbr-ui.
+
 ### Docker Setup
 
-Build and run the UI inside a Docker container.
+1. Build and run the UI inside a Docker container.
 
 ```shell
 docker build -t sbr-ui .
 docker run -p 3001:3001 sbr-ui
 ```
+
+2. Go to [localhost:3001](http://localhost:3001) to see sbr-ui.
 
 ## Running the API's
 

@@ -1,6 +1,6 @@
 # sbr-ui
 
-[![phase](https://img.shields.io/badge/phase-ALPHA-blue.svg)](https://img.shields.io/badge/phase-ALPHA-blue.svg) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](./LICENSE) (https://www.versioneye.com/user/projects/59cb91720fb24f005d4bc6c6) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4e4fd30114bf491ba640872d0e902f3c)](https://www.codacy.com/app/ONSDigital/sbr-ui?utm_source=github.com&utm_medium=referral&utm_content=ONSdigital/sbr-ui&utm_campaign=badger)
+[![phase](https://img.shields.io/badge/phase-ALPHA-blue.svg)](https://img.shields.io/badge/phase-ALPHA-blue.svg) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](./LICENSE) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4e4fd30114bf491ba640872d0e902f3c)](https://www.codacy.com/app/ONSDigital/sbr-ui?utm_source=github.com&utm_medium=referral&utm_content=ONSdigital/sbr-ui&utm_campaign=badger)
 
 The Statistical Business Register User Interface allows a user to query `sbr-api`, which returns Enterprise, Legal Unit and Administrative (VAT/PAYE/CH) data.
 

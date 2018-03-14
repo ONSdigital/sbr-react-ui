@@ -6,7 +6,7 @@ export function formEnterpriseJson(enterprise) {
     standard_vat_turnover: getValueByKey(enterprise.vars, 'standard_vat_turnover'),
     ent_address3: getValueByKey(enterprise.vars, 'ent_address3'),
     PAYE_jobs: getValueByKey(enterprise.vars, 'latestSum'),
-    employees: getValueByKey(enterprise.vars, 'avg'),
+    employees: getValueByKey(enterprise.vars, 'paye_employees'),
     ent_address2: getValueByKey(enterprise.vars, 'ent_address2'),
     ent_postcode: getValueByKey(enterprise.vars, 'postcode'),
     entref: getValueByKey(enterprise.vars, 'ern'),

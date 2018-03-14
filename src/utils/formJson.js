@@ -1,14 +1,12 @@
-// @flow
-
 import { getValueByKey } from './helperMethods';
 
-export function formEnterpriseJson(enterprise: object) {
+export function formEnterpriseJson(enterprise) {
   return {
     legalstatus: getValueByKey(enterprise.vars, 'legalstatus'),
     standard_vat_turnover: getValueByKey(enterprise.vars, 'standard_vat_turnover'),
     ent_address3: getValueByKey(enterprise.vars, 'ent_address3'),
-    PAYE_jobs: getValueByKey(enterprise.vars, 'latestSum'),
-    employees: getValueByKey(enterprise.vars, 'avg'),
+    PAYE_jobs: getValueByKey(enterprise.vars, 'paye_jobs'),
+    employees: getValueByKey(enterprise.vars, 'paye_employees'),
     ent_address2: getValueByKey(enterprise.vars, 'ent_address2'),
     ent_postcode: getValueByKey(enterprise.vars, 'postcode'),
     entref: getValueByKey(enterprise.vars, 'ern'),
@@ -21,7 +19,7 @@ export function formEnterpriseJson(enterprise: object) {
   };
 }
 
-export function formCompanyJson(company: object) {
+export function formCompanyJson(company) {
   return {
     accounts_accountrefmonth: getValueByKey(company.vars, 'Accounts.AccountRefMonth'),
     limitedpartnerships_numlimpartners: getValueByKey(company.vars, 'LimitedPartnerships.NumLimPartners'),

@@ -1,28 +1,4 @@
-/*
- * Actions change things in your application
- * Since this boilerplate uses a uni-directional data flow, specifically redux,
- * we have these actions which are the only way your application interacts with
- * your appliction state. This guarantees that your state is up to date and nobody
- * messes it up weirdly somewhere.
- *
- * To add a new Action:
- * 1) Import your constant
- * 2) Add a function like this:
- *    export function yourAction(var) {
- *        return { type: YOUR_ACTION_CONSTANT, var: var }
- *    }
- * 3) (optional) Add an async function like this:
- *    export function asyncYourAction(var) {
- *        return function(dispatch) {
- *             // Do async stuff here
- *             return dispatch(yourAction(var));
- *        }
- *    }
- *
- *    If you add an async function, remove the export from the function
- *    created in the second step
- */
-
+import base64 from 'base-64';
 import { browserHistory } from 'react-router';
 import { SET_AUTH, SET_CONFETTI, USER_LOGOUT, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/LoginConstants';
 import * as errorMessages from '../constants/MessageConstants';
@@ -46,20 +22,27 @@ export function login(username, password) {
       return;
     }
 
-    auth.login(username, password, (success, data) => {
+    const basicAuth = base64.encode(`${username}:${password}`);
+    auth.login(username, basicAuth, (success, data) => {
       // When the request is finished, hide the loading indicator
       dispatch(sendingRequest(false));
       dispatch(setAuthState(success));
       if (success) {
-        // If the login worked, forward the user to the dashboard and clear the form
         dispatch(setConfetti(data.showConfetti));
+        // If the login worked, forward the user to the dashboard and clear the form
         dispatch(setUserState({
           username,
           role: data.role,
-          apiKey: data.apiKey,
+          accessToken: data.accessToken,
         }));
+        sessionStorage.setItem('accessToken', data.accessToken);
+        sessionStorage.setItem('username', username);
         dispatch(getUiInfo());
         dispatch(getApiInfo());
+        // We setQuery to {} as a hacky solution to the issue below:
+        // https://github.com/ONSdigital/bi-ui/issues/3
+        // dispatch(setQuery(SET_MATCH_QUERY, {}));
+        // dispatch(setQuery(SET_RANGE_QUERY, {}));
         forwardTo('/Home');
       } else {
         switch (data.type) {
@@ -80,11 +63,9 @@ export function login(username, password) {
 /**
  * Check the users token
  */
-export function checkAuth(token) {
+export function checkAuth() {
   return (dispatch) => {
-    dispatch(sendingRequest(true));
-    auth.checkToken(token, (success, data) => {
-      dispatch(sendingRequest(false));
+    auth.checkToken((success, data) => {
       dispatch(setAuthState(success));
       if (!success) {
         sessionStorage.clear();
@@ -97,8 +78,10 @@ export function checkAuth(token) {
         dispatch(getApiInfo());
         dispatch(setUserState({
           username: data.username,
+          accessToken: data.newAccessToken,
           role: data.role,
         }));
+        sessionStorage.setItem('accessToken', data.newAccessToken);
       }
     });
   };
@@ -110,11 +93,11 @@ export function checkAuth(token) {
 export function logout() {
   return (dispatch) => {
     dispatch(sendingRequest(true));
-    auth.logout((success) => {
-      if (success === true) {
-        dispatch(sendingRequest(false));
+    auth.logout(success => {
+      dispatch(sendingRequest(false));
+      if (success) {
         dispatch(setAuthState(false));
-        localStorage.clear();
+        sessionStorage.clear();
         browserHistory.push('/');
         // This needs to go at the end, or else if we logout whilst on a page
         // that uses the redux store, an error will occur before the user
@@ -122,6 +105,9 @@ export function logout() {
         dispatch(resetState(undefined));
       } else {
         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
+        sessionStorage.clear();
+        browserHistory.push('/');
+        dispatch(resetState(undefined));
       }
     });
   };

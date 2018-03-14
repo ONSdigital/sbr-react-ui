@@ -14,11 +14,6 @@ Contributing guidelines
 * You can use eslint to lint your code using the `npm run-script lint` command
 * To use linting as you write code, find the correct [ESLint add-on](http://eslint.org/docs/user-guide/integrations) for your editor
 
-### Accessibility
-
-* We use [react-a11y](https://github.com/reactjs/react-a11y) which throws warnings in the console if any accessibility issues are encountered.
-* Look at the [Facebook documentation](https://facebook.github.io/react/docs/accessibility.html) for more information about accessibility and React.
-
 ### Type Annotation Using [Flow](https://flow.org/en/)
 
 * We use Flow as a static type checker for all files in /utils.

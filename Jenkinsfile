@@ -1,5 +1,5 @@
 #!groovy
-@Library('jenkins-pipeline-shared@develop') _
+@Library('jenkins-pipeline-shared@master') _
  
 /*
 * sbr-ui Jenkins Pipeline
@@ -18,29 +18,30 @@
 */
 pipeline {
   agent none
-  options {
-    skipDefaultCheckout()
-    buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '30'))
-    timeout(time: 60, unit: 'MINUTES')
-  }
   environment {
-    SBR_UI_TEST_ADMIN_USERNAME="admin"
-    SBR_UI_TEST_ADMIN_PASSWORD="admin"
-    SBR_UI_TEST_USER_USERNAME="test"
-    SBR_UI_TEST_USER_PASSWORD="test"
-    JWT_SECRET="SECRET"
-
     BRANCH_DEV = "develop"
     BRANCH_TEST = "release"
     BRANCH_PROD = "master"
 
     DEPLOY_DEV = "dev"
     DEPLOY_TEST = "test"
-    DEPLOY_PROD = "prod"
+    DEPLOY_PROD = "beta"
+
+    GITLAB_DEV = "dev"
+    GITLAB_TEST = "test"
+    GITLAB_PROD = "prod"
 
     ORGANIZATION = "ons"
     TEAM = "sbr"
     MODULE_NAME = "sbr-ui"
+
+    CF_PROJECT = "SBR"
+  }
+  options {
+    skipDefaultCheckout()
+    buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '30'))
+    timeout(time: 60, unit: 'MINUTES')
+    timestamps()
   }
   stages {
     stage('Checkout') {
@@ -51,54 +52,50 @@ pipeline {
         deleteDir()
         checkout scm
         dir('conf') {
-          git(url: "$GITLAB_URL/StatBusReg/sbr-ui.git", credentialsId: 'sbr-gitlab-id', branch: 'develop')
+          git(url: "$GITLAB_URL/StatBusReg/sbr-ui.git", credentialsId: 'sbr-gitlab-id', branch: 'feature/dot-env')
         }
         stash name: 'app'
       }
     }
-    stage('Install Dependancies & Build') {
+    stage('Install Dependancies') {
       agent { label 'GMU' }
       steps {
-        colourText("info","Running 'npm install' and 'npm build'...")
+        colourText("info","Running 'npm install'")
         deleteDir()
         sh 'node --version'
         sh 'npm --version'
         unstash 'app'
         sh 'npm install'
- 
-        // Install the node_modules for just the server
-        dir('server') {
-          sh 'npm install'
-        }
 
         script {
           if (BRANCH_NAME == BRANCH_DEV) {
             env.DEPLOY_NAME = DEPLOY_DEV
+            env.GITLAB_DIR = GITLAB_DEV
           } else if  (BRANCH_NAME == BRANCH_TEST) {
             env.DEPLOY_NAME = DEPLOY_TEST
+            env.GITLAB_DIR = GITLAB_TEST
           } else if (BRANCH_NAME == BRANCH_PROD) {
             env.DEPLOY_NAME = DEPLOY_PROD
+            env.GITLAB_DIR = GITLAB_PROD
           }
         }
       }
     }
-    stage('Test - Unit, Component, Server, Coverage + Stress') {
+    stage('Test - Unit, Server & Stress') {
       agent { label 'GMU' }
       steps {
         parallel (
           "Unit" :  {
             colourText("info","Running unit tests...")
-            sh 'npm run-script test-unit'
+            sh 'npm run test:unit'
           },
           "Stress" :  {
             colourText("info","Running stress tests...")
-            sh 'ENV=local node server/ & HOST=http://localhost:3001 REQUEST=5000 REQ_PER_SECOND=50 npm run-script test-load'
-            // sh 'killall node'
-            // The above command will leave node running, will this be closed along with the workspace?
+            sh 'ENV=local node server/ & HOST=http://localhost:3001 REQUEST=5000 REQ_PER_SECOND=50 npm run test:load'
           },
           "Server" : {
             colourText("info","Running server tests...")
-            sh "npm run-script test-server"
+            sh "npm run test:server"
           },
         )
       }
@@ -109,11 +106,11 @@ pipeline {
         parallel (
           "Coverage Report" : {
             colourText("info","Generating coverage report...")
-            sh "npm run-script cover"
+            sh "npm run cover"
           },
           "Style Report" : {
             colourText("info","Generating style report...")
-            sh 'npm run-script lint-report-xml'
+            sh 'npm run lint-report-xml'
             // step([$class: 'CheckStylePublisher', pattern: 'coverage/eslint-report-checkstyle.xml'])
             // checkstyle canComputeNew: false, canRunOnFailed: true, defaultEncoding: '', healthy: '', pattern: 'coverage/eslint-report-checkstyle.xml', unHealthy: ''
           }
@@ -137,47 +134,58 @@ pipeline {
       agent { label 'GMU' }
       when {
         anyOf {
-          branch "develop"
-          branch "release"
-          branch "master"
+          branch BRANCH_DEV
+          branch BRANCH_TEST
+          branch BRANCH_PROD
         }
       }
       steps {
         script {
           colourText("info","Zipping project...")
-          colourText("info","Host is: ${env.CLOUD_FOUNDRY_ROUTE_SUFFIX}")
-          sh "sed -i -e 's|Local|${env.DEPLOY_NAME}|g' src/config/constants.js"
-          sh "sed -i -e 's|http://localhost:9002|https://${env.DEPLOY_NAME}-sbr-api.${env.CLOUD_FOUNDRY_URL}|g' src/config/api-urls.js"
-          sh "sed -i -e 's|http://localhost:3001|https://${env.DEPLOY_NAME}-sbr-ui.${env.CLOUD_FOUNDRY_URL}|g' src/config/api-urls.js"
-          sh 'npm run build'
+
+          // Install the node_modules for just the server - already have the ui ones
+          dir('server') {
+            sh 'npm install'
+          }
+
+          // Get the CloudFoundry manifest from Gitlab
+          sh "cp conf/${env.GITLAB_DIR}/manifest.yml ."
+
+          // Replace the .env file with the Gitlab version
+          sh "rm -rf .env"
+          sh "cp conf/${env.GITLAB_DIR}/.env ."
+
+          // Run npm run build
+          sh "npm run build"
+
           // For deployment, only need the node_modules/package.json for the server
           sh 'rm -rf node_modules'
           sh 'cp -r server/node_modules .'
           sh 'rm -rf package.json'
           sh 'cp server/package.json .'
-          sh 'rm -rf manifest.yml'
-          // Get the proper manifest from Gitlab
-          sh 'cp conf/dev/manifest.yml .'
-          sh 'zip -r sbr-ui.zip build node_modules favicon.ico package.json server manifest.yml'
+
+          sh 'zip -r sbr-ui.zip build node_modules public/favicon.ico package.json server manifest.yml .env'
           stash name: 'zip'
         }
       }
     }
-    stage('Deploy - DEV') {
+    stage('Deploy') {
       agent { label 'GMU' }
       when {
         anyOf {
-          branch "develop"
+          branch BRANCH_DEV
+          branch BRANCH_TEST
+          branch BRANCH_PROD
         }
       }
       steps {
         script {
-          colourText("info","Deploying to DEV...")
+          colourText("info","Deploying to ${env.DEPLOY_NAME}")
           unstash 'zip'
-          cf_env = "${env.DEPLOY_NAME}".capitalize()
-          deployToCloudFoundry("${TEAM}-${env.DEPLOY_NAME}-cf", "SBR", "${cf_env}",'dev-sbr-ui','sbr-ui.zip','manifest.yml')
 
-          //deployToCloudFoundry('cloud-foundry-sbr-dev-user','sbr','dev','dev-sbr-ui','sbr-ui.zip','manifest.yml')
+          cf_env = "${env.DEPLOY_NAME}".capitalize()
+          deployToCloudFoundry("${env.TEAM}-${env.DEPLOY_NAME}-cf", "${env.CF_PROJECT}", "${cf_env}","${env.DEPLOY_NAME}-${env.MODULE_NAME}","${env.MODULE_NAME}.zip","manifest.yml")
+          env.APP_URL = "https://${env.DEPLOY_NAME}-${env.MODULE_NAME}.${env.OPEN_SOURCE_CLOUD_FOUNDRY_ROUTE_SUFFIX}"
         }
       }
     }
@@ -185,59 +193,40 @@ pipeline {
       agent { label 'GMU' }
       when {
         anyOf {
-          branch "release"
-          branch "master"
+          branch BRANCH_DEV
+          branch BRANCH_TEST
         }
       }
       steps {
         script {
           colourText("info","Running integration tests...")
+          // We will run selenium integration tests here
         }
       }
     }
-    stage('Deploy - TEST') {
-      agent { label 'GMU' }
+    stage('Checking App Health') {
+      agent any
       when {
         anyOf {
-          branch "release"
+          branch BRANCH_DEV
+          branch BRANCH_TEST
+          branch BRANCH_PROD
         }
       }
       steps {
         script {
-          colourText("info","Deploying to TEST...")
-          unstash 'zip'
-          deployToCloudFoundry('cloud-foundry-sbr-test-user','sbr','test','test-sbr-ui','sbr-ui.zip','manifest.yml')
-        }
-      }
-    }
-    stage('Promote to BETA?') {
-      agent { label 'GMU' }
-      when {
-        anyOf {
-          branch "master"
-        }
-      }
-      steps {
-        script {
-          colourText("info","Deploy to BETA?")
-          timeout(time: 10, unit: 'MINUTES') {
-            input 'Deploy to Beta?'
+          colourText("info","Checking deployed app health...")
+          colourText("info","Pinging ${env.APP_URL}/api/health...")
+          // We use --insecure to ignore certificate issues
+          APP_STATUS = sh (
+            script: "curl --insecure -sL -w '%{http_code}' '${env.APP_URL}/api/health' -o /dev/null",
+            returnStdout: true
+          ).trim()
+          colourText("info", "APP_STATUS: ${APP_STATUS}")
+          if (APP_STATUS != "200") {
+            colourText("error", "Error: deployed app repsoned to GET with ${APP_STATUS}")
+            error("Error: deployed app repsoned to GET with ${APP_STATUS}")
           }
-        }
-      }
-    }
-    stage('Deploy - BETA') {
-      agent { label 'GMU' }
-      when {
-        anyOf {
-          branch "master"
-        }
-      }
-      steps {
-        script {
-          colourText("info","Deploying to BETA...")
-          unstash 'zip'
-          deployToCloudFoundry('cloud-foundry-sbr-prod-user','sbr','beta','prod-sbr-ui','sbr-ui.zip','manifest.yml')
         }
       }
     }

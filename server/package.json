@@ -14,9 +14,14 @@
     "memory-cache": "^0.2.0",
     "body-parser": "^1.17.2",
     "express": "^4.14.0",
-    "jsonwebtoken": "^7.1.9",
-    "jwt-decode": "^2.2.0",
-    "morgan": "^1.7.0"
+    "winston": "^2.4.0",
+    "uuid": "^3.1.0",
+    "redis-sessions": "^1.2.0",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.2",
+    "morgan": "^1.7.0",
+    "pg": "^6.4.2",
+    "dotenv": "^4.0.0"
   },
   "engines": {
     "node": "6.11.5",

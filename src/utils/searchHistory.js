@@ -1,14 +1,12 @@
-// @flow
-
-const formatDate = require('../../server/formatDate.js');
+const formatDate = require('../../server/utilities/formatDate.js');
 
 const searchHistory = {
   /**
    * Gets version/lastUpdate info from the UI.
    * @param  {Function} callback Called with returned data.
    */
-  addToHistory(data: {}) {
-    let historyArr: Array<{}> = [];
+  addToHistory(data) {
+    let historyArr = [];
     const startTime = formatDate(new Date());
     if (localStorage.length !== 0) {
       historyArr = JSON.parse(localStorage.getItem('searchHistory'));
@@ -23,7 +21,7 @@ const searchHistory = {
   getSearchHistory() {
     if (localStorage.getItem('searchHistory')) {
       try {
-        const history: Object = JSON.parse(localStorage.getItem('searchHistory'));
+        const history = JSON.parse(localStorage.getItem('searchHistory'));
         return history;
       } catch (e) {
         console.log('Unable to retrieve search history.');

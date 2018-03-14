@@ -22,14 +22,6 @@ import TechnicalInformation from './views/TechnicalInformation';
 import reducer from './reducers/index';
 import { checkAuth } from './actions/LoginActions';
 
-// import config from './config/constants';
-// const a11y = require('react-a11y');
-// const { ENV } = config;
-// This will put react-a11y warnings in the console
-// Can use the following to cause errors:
-// a11y(React, { throw: true });
-// if (ENV === 'Local') a11y(React);
-
 // Creates the Redux reducer with the redux-thunk middleware, which allows us
 // to do asynchronous things in the actions
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
@@ -44,16 +36,16 @@ export const store = createStoreWithMiddleware(
 // if there the token gets checked with the node server for authentication
 // if no token is present, the user gets redirected back to the login.
 function checkAuthentication(nextState, replaceState) {
-  if (sessionStorage.token) {
-    store.dispatch(checkAuth(sessionStorage.token));
+  if (sessionStorage.accessToken) {
+    store.dispatch(checkAuth(sessionStorage.accessToken));
   } else {
     replaceState(null, '/');
   }
 }
 
 function checkLogin() {
-  if (sessionStorage.token) {
-    store.dispatch(checkAuth(sessionStorage.token));
+  if (sessionStorage.accessToken) {
+    store.dispatch(checkAuth(sessionStorage.accessToken));
   }
 }
 

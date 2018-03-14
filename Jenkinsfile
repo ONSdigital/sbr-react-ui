@@ -34,6 +34,8 @@ pipeline {
     ORGANIZATION = "ons"
     TEAM = "sbr"
     MODULE_NAME = "sbr-ui"
+
+    CF_PROJECT = "SBR"
   }
   options {
     skipDefaultCheckout()
@@ -162,7 +164,7 @@ pipeline {
           sh 'rm -rf package.json'
           sh 'cp server/package.json .'
 
-          sh 'zip -r sbr-ui.zip build node_modules favicon.ico package.json server manifest.yml .env'
+          sh 'zip -r sbr-ui.zip build node_modules public/favicon.ico package.json server manifest.yml .env'
           stash name: 'zip'
         }
       }

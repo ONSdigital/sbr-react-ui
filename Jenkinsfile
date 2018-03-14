@@ -1,5 +1,5 @@
 #!groovy
-@Library('jenkins-pipeline-shared@develop') _
+@Library('jenkins-pipeline-shared@master') _
  
 /*
 * sbr-ui Jenkins Pipeline
@@ -185,7 +185,7 @@ pipeline {
 
           cf_env = "${env.DEPLOY_NAME}".capitalize()
           deployToCloudFoundry("${env.TEAM}-${env.DEPLOY_NAME}-cf", "${env.CF_PROJECT}", "${cf_env}","${env.DEPLOY_NAME}-${env.MODULE_NAME}","${env.MODULE_NAME}.zip","manifest.yml")
-          env.APP_URL = "https://${env.DEPLOY_NAME}-${env.MODULE_NAME}.${env.OPEN_SOURCE_CLOUD_FOUNDRY_ROUTE_SUFFIX}"		            
+          env.APP_URL = "https://${env.DEPLOY_NAME}-${env.MODULE_NAME}.${env.OPEN_SOURCE_CLOUD_FOUNDRY_ROUTE_SUFFIX}"
         }
       }
     }

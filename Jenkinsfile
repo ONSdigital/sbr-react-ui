@@ -184,7 +184,7 @@ pipeline {
           unstash 'zip'
 
           cf_env = "${env.DEPLOY_NAME}".capitalize()
-          deployToCloudFoundry("${TEAM}-${env.DEPLOY_NAME}-cf", "${CF_PROJECT}", "${cf_env}","${env.DEPLOY_NAME}-${MODULE_NAME}","${MODULE_NAME}.zip","manifest.yml")
+          deployToCloudFoundry("${env.TEAM}-${env.DEPLOY_NAME}-cf", "${env.CF_PROJECT}", "${cf_env}","${env.DEPLOY_NAME}-${env.MODULE_NAME}","${env.MODULE_NAME}.zip","manifest.yml")
           env.APP_URL = "https://${env.DEPLOY_NAME}-${env.MODULE_NAME}.${env.OPEN_SOURCE_CLOUD_FOUNDRY_ROUTE_SUFFIX}"		            
         }
       }

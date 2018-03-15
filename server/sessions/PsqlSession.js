@@ -1,5 +1,4 @@
-'use strict';
-
+const Session = require('./Session');
 const logger = require('../utilities/logger')(module);
 const Pool = require('pg').Pool;
 const uuidv4 = require('uuid/v4');
@@ -19,9 +18,9 @@ pool.on('error', (err, client) => {
   process.exit(-1);
 });
 
-class PsqlSession {
-  constructor() {
-    this.name = 'psql';
+class PsqlSession extends Session {
+  constructor(name) {
+    super(name);
     this.tableName = 'sbr_sessions_dev';
   }
 

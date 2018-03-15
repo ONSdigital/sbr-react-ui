@@ -52,7 +52,7 @@ pipeline {
         deleteDir()
         checkout scm
         dir('conf') {
-          git(url: "$GITLAB_URL/StatBusReg/sbr-ui.git", credentialsId: 'sbr-gitlab-id', branch: 'feature/dot-env')
+          git(url: "$GITLAB_URL/StatBusReg/sbr-ui.git", credentialsId: 'sbr-gitlab-id', branch: 'develop')
         }
         stash name: 'app'
       }

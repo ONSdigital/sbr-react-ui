@@ -33,16 +33,16 @@ const session = ((db) => {
   switch (db) {
     case 'json':
       logger.debug('Creating new JsonSession');
-      return new JsonSession();
+      return new JsonSession('json');
     case 'redis':
       logger.debug('Creating new RedisSession');
-      return new RedisSession();
+      return new RedisSession('redis');
     case 'psql':
       logger.debug('Creating new PsqlSession');
-      return new PsqlSession();
+      return new PsqlSession('psql');
     default:
       logger.debug('Creating new JsonSession');
-      return new JsonSession();
+      return new JsonSession('json');
   }
 })(SESSION_DB);
 logger.info(`Using session type: ${session.name}`);

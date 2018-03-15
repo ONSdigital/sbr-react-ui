@@ -19,7 +19,7 @@ class PsqlSession extends Session {
     // The pool will emit an error on behalf of any idle clients it
     // contains if a backend error or network partition occurs
     this.pool.on('error', (err, client) => {
-      logger.error('Unexpected error on idle client', err);
+      logger.error('PostgreSQL connection error: Unexpected error on idle client', err);
       process.exit(-1);
     });
   }

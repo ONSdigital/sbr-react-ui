@@ -7,7 +7,7 @@ import FormStaticAddress from '../components/FormStaticAddress';
 import ChildrenTable from '../components/ChildrenTable';
 import colours from '../config/colours';
 
-const EnterpriseDataGrid = ({ json, leuData, chData, payeData, vatData }) => {
+const EnterpriseDataGrid = ({ json, leuData, chData, payeData, vatData, louData }) => {
   const formTitle = (name, count, accessor) => (<p style={{ margin: '0px', padding: '0px' }}><Label bsStyle="primary" style={{ backgroundColor: colours[accessor], margin: '0px'}}>{count}</Label>&nbsp;{name}</p>);
   return (
     <Grid>
@@ -37,6 +37,9 @@ const EnterpriseDataGrid = ({ json, leuData, chData, payeData, vatData }) => {
                   </NavItem>
                   <NavItem style={{ margin: '0px', padding: '0px' }} disabled={vatData.length === 0} eventKey={4}>
                     {formTitle('VAT', vatData.length, 'VAT')}
+                  </NavItem>
+                  <NavItem style={{ margin: '0px', padding: '0px' }} disabled={louData.length === 0} eventKey={5}>
+                    {formTitle('LOU', louData.length, 'LOU')}
                   </NavItem>
                 </Nav>
               </Col>

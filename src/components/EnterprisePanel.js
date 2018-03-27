@@ -20,6 +20,7 @@ class EnterprisePanel extends React.Component {
         chData={getChildValues(enterprise.children, 'CH')}
         payeData={getChildValues(enterprise.children, 'PAYE')}
         vatData={getChildValues(enterprise.children, 'VAT')}
+        louData={getChildValues(enterprise.children, 'LOU')}
       />
     );
     if (this.props.showTreeView === 1) {

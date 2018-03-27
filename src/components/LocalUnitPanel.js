@@ -16,7 +16,7 @@ const LocalUnitPanel = ({ localUnit, showTreeView, toggleTreeView, goToView }) =
       <Grid>
         <Row className="show-grid">
           <Form horizontal>
-            <Col sm={4}>
+            <Col sm={5}>
               <FormStaticValue id="formLuref" label="Local Unit Reference (IDBR)" value={json.luref} />
               <FormStaticValue id="formErn" label="Enterprise Reference Number" value={json.ern} />
               <FormStaticValue id="formEntref" label="Enterprise Reference (IDBR)" value={json.ern} />
@@ -25,7 +25,7 @@ const LocalUnitPanel = ({ localUnit, showTreeView, toggleTreeView, goToView }) =
               <FormStaticValue id="formSic07" label="SIC 07" value={json.sic07} />
               <FormStaticValue id="formEmployees" label="Employees" value={json.employees} />
             </Col>
-            <Col sm={4}>
+            <Col sm={3}>
               <FormStaticAddress id="formAddress" label="Address" address1={json.address1} address2={json.address2} address3={json.address3} address4={json.address4} address5={json.address5} postcode={json.postcode} />
             </Col>
           </Form>

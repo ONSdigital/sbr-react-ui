@@ -54,27 +54,91 @@ router.post('/api', authMiddleware, (req, res) => {
   const endpoint = req.body.endpoint;
 
   const key = req.apiKey;
-  if (method === 'GET') {
-    getApiEndpoint(`${urls.API_GW}/sbr/${endpoint}`, key)
-      .then((response) => {
-        logger.info('Returning GET response from API Gateway');
-        return res.send(response);
-      })
-      .catch((err) => {
-        logger.info('Error in API Gateway for GET request');
-        return res.sendStatus(err.statusCode);
-      });
-  } else if (method === 'POST') {
-    const postBody = req.body.postBody;
-    postApiEndpoint(`${urls.API_GW}/sbr/${endpoint}`, postBody, key)
-      .then((response) => {
-        logger.info('Returning POST response from API Gateway');
-        return res.send(response);
-      })
-      .catch((err) => {
-        logger.info('Error in API Gateway for POST request');
-        return res.sendStatus(err.statusCode);
-      });
+  // if (method === 'GET') {
+  //   getApiEndpoint(`${urls.API_GW}/sbr/${endpoint}`, key)
+  //     .then((response) => {
+  //       logger.info('Returning GET response from API Gateway');
+  //       return res.send(response);
+  //     })
+  //     .catch((err) => {
+  //       logger.info('Error in API Gateway for GET request');
+  //       return res.sendStatus(err.statusCode);
+  //     });
+  // } else if (method === 'POST') {
+  //   const postBody = req.body.postBody;
+  //   postApiEndpoint(`${urls.API_GW}/sbr/${endpoint}`, postBody, key)
+  //     .then((response) => {
+  //       logger.info('Returning POST response from API Gateway');
+  //       return res.send(response);
+  //     })
+  //     .catch((err) => {
+  //       logger.info('Error in API Gateway for POST request');
+  //       return res.sendStatus(err.statusCode);
+  //     });
+  // }
+  if (endpoint.includes('v1/periods/201802/lous/')) {
+    const id = endpoint.split('/').slice(-1)[0];
+    return res.json(
+      {
+        id,
+        "unitType":"LOU",
+        "period":"201802",
+        "parents": {
+          "ENT": "12345",
+        },
+        "vars":{
+          id,
+          "businessName": "Local Unit Name",
+          "legalStatus": "1",
+          "industryCode": "2",
+          "companyNo": "134234",
+          "turnover": "3423",
+          "tradingStatus": "7",
+          "postCode": "NP10 8XG",
+          "employmentBands": "A",
+        }
+      }
+    );
+  } else {
+    return res.json([
+      {
+        "id":"12345",
+        "children":{
+          "234234":"LOU",
+          "734563":"LOU",
+          "927492":"LOU",
+          "398493":"LOU",
+          "298742":"LOU",
+          "192837465999":"LEU",
+          "23847563":"CH",
+          "38576395":"PAYE",
+          "41037492":"VAT"
+        },
+        "childrenJson":[
+          {
+            "type":"LEU",
+            "id":"192837465999",
+            "children":[
+              {
+                "type":"23847563",
+                "id":"CH"
+              },{
+                "type":"38576395",
+                "id":"PAYE"
+              },{
+                "type":"41037492"
+                ,"id":"VAT"
+              }
+            ]}
+          ],
+        "unitType":"ENT",
+        "period":"201802",
+        "vars":{
+          "ent_name":"Tesco"
+          ,"entref":"12345"
+        }
+      }
+    ]);
   }
 });
 

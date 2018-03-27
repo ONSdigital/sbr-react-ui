@@ -26,35 +26,38 @@ const EnterpriseDataGrid = ({ json, leuData, chData, payeData, vatData, louData 
             <Row className="clearfix">
               <Col sm={4}>
                 <Nav bsStyle="pills" stacked style={{ margin: '0px', padding: '0px' }}>
-                  <NavItem style={{ margin: '0px', padding: '0px' }} disabled={leuData.length === 0} eventKey={1}>
+                  <NavItem style={{ margin: '0px', padding: '0px' }} disabled={louData.length === 0} eventKey={1}>
+                    {formTitle('LOU', louData.length, 'LOU')}
+                  </NavItem>
+                  <NavItem style={{ margin: '0px', padding: '0px' }} disabled={leuData.length === 0} eventKey={2}>
                     {formTitle('UBRN', leuData.length, 'LEU')}
                   </NavItem>
-                  <NavItem style={{ margin: '0px', padding: '0px' }} disabled={chData.length === 0} eventKey={2}>
+                  <NavItem style={{ margin: '0px', padding: '0px' }} disabled={chData.length === 0} eventKey={3}>
                     {formTitle('CRN', chData.length, 'CRN')}
                   </NavItem>
-                  <NavItem style={{ margin: '0px', padding: '0px' }} disabled={payeData.length === 0} eventKey={3}>
+                  <NavItem style={{ margin: '0px', padding: '0px' }} disabled={payeData.length === 0} eventKey={4}>
                     {formTitle('PAYE', payeData.length, 'PAYE')}
                   </NavItem>
-                  <NavItem style={{ margin: '0px', padding: '0px' }} disabled={vatData.length === 0} eventKey={4}>
+                  <NavItem style={{ margin: '0px', padding: '0px' }} disabled={vatData.length === 0} eventKey={5}>
                     {formTitle('VAT', vatData.length, 'VAT')}
-                  </NavItem>
-                  <NavItem style={{ margin: '0px', padding: '0px' }} disabled={louData.length === 0} eventKey={5}>
-                    {formTitle('LOU', louData.length, 'LOU')}
                   </NavItem>
                 </Nav>
               </Col>
               <Col sm={8}>
                 <Tab.Content animation style={{ margin: '0px', padding: '0px' }}>
                   <Tab.Pane eventKey={1}>
-                    <ChildrenTable unitData={leuData} name={'Universal Business Register No.'} accessor={'LEU'} />
+                    <ChildrenTable unitData={louData} name={'Local Unit Reference'} accessor={'LOU'} />
                   </Tab.Pane>
                   <Tab.Pane eventKey={2}>
-                    <ChildrenTable unitData={chData} name={'Company Reference No.'} accessor={'CH'} />
+                    <ChildrenTable unitData={leuData} name={'Universal Business Register No.'} accessor={'LEU'} />
                   </Tab.Pane>
                   <Tab.Pane eventKey={3}>
-                    <ChildrenTable unitData={payeData} name={'PAYE Reference'} accessor={'PAYE'} />
+                    <ChildrenTable unitData={chData} name={'Company Reference No.'} accessor={'CH'} />
                   </Tab.Pane>
                   <Tab.Pane eventKey={4}>
+                    <ChildrenTable unitData={payeData} name={'PAYE Reference'} accessor={'PAYE'} />
+                  </Tab.Pane>
+                  <Tab.Pane eventKey={5}>
                     <ChildrenTable unitData={vatData} name={'VAT Reference'} accessor={'VAT'} />
                   </Tab.Pane>
                 </Tab.Content>

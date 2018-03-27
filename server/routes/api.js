@@ -81,63 +81,58 @@ router.post('/api', authMiddleware, (req, res) => {
     return res.json(
       {
         id,
-        "unitType":"LOU",
-        "period":"201802",
-        "parents": {
-          "ENT": "12345",
+        unitType: 'LOU',
+        period: '201802',
+        parents: {
+          ENT: '12345',
         },
-        "vars":{
-          id,
-          "businessName": "Local Unit Name",
-          "legalStatus": "1",
-          "industryCode": "2",
-          "companyNo": "134234",
-          "turnover": "3423",
-          "tradingStatus": "7",
-          "postCode": "NP10 8XG",
-          "employmentBands": "A",
-        }
+        vars: {
+          lurn: id,
+          luref: `${id}-IDBRREF`,
+          ern: '12345',
+          entref: '12345-ENTREF',
+          name: 'Local Unit Name',
+          tradingStyle: '7',
+          address1: 'Government Offices',
+          address2: 'Newport',
+          address3: 'South Wales',
+          address4: 'Wales',
+          address5: 'UK',
+          postcode: 'NP10 8XG',
+          sic07: '11233',
+          employees: 'A',
+        },
       }
     );
   } else {
     return res.json([
       {
-        "id":"12345",
-        "children":{
-          "234234":"LOU",
-          "734563":"LOU",
-          "927492":"LOU",
-          "398493":"LOU",
-          "298742":"LOU",
-          "192837465999":"LEU",
-          "23847563":"CH",
-          "38576395":"PAYE",
-          "41037492":"VAT"
+        id: '12345',
+        children: {
+          234234: 'LOU',
+          734563: 'LOU',
+          927492: 'LOU',
+          398493: 'LOU',
+          298742: 'LOU',
+          192837465999: 'LEU',
+          23847563: 'CH',
+          38576395: 'PAYE',
+          41037492: 'VAT',
         },
-        "childrenJson":[
-          {
-            "type":"LEU",
-            "id":"192837465999",
-            "children":[
-              {
-                "type":"23847563",
-                "id":"CH"
-              },{
-                "type":"38576395",
-                "id":"PAYE"
-              },{
-                "type":"41037492"
-                ,"id":"VAT"
-              }
-            ]}
-          ],
-        "unitType":"ENT",
-        "period":"201802",
-        "vars":{
-          "ent_name":"Tesco"
-          ,"entref":"12345"
-        }
-      }
+        childrenJson: [
+          { type: 'LOU', id: '234234' },
+          { type: 'LOU', id: '734563' },
+          { type: 'LOU', id: '927492' },
+          { type: 'LOU', id: '398493' },
+          { type: 'LOU', id: '298742' },
+        ],
+        unitType: 'ENT',
+        period: '201802',
+        vars: {
+          ent_name: 'Tesco',
+          entref: '12345',
+        },
+      },
     ]);
   }
 });

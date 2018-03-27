@@ -16,13 +16,17 @@ const LocalUnitPanel = ({ localUnit, showTreeView, toggleTreeView, goToView }) =
       <Grid>
         <Row className="show-grid">
           <Form horizontal>
-            <Col sm={3}>
-              <FormStaticAddress id="formAddress" label="Address" postcode={json.postCode} />
-              <FormStaticValue id="formLegalStatus" label="Legal Status" value={json.legalStatus} />
-              <FormStaticValue id="formTradingStatus" label="Trading Status" value={json.tradingStatus} />
-              <FormStaticValue id="formIndustryCode" label="Industry Code" value={json.industryCode} />
-              <FormStaticValue id="formEmployees" label="Employees" value={json.employmentBands} />
-              <FormStaticValue id="formTurnover" label="Turnover" value={json.turnover} />
+            <Col sm={4}>
+              <FormStaticValue id="formLuref" label="Local Unit Reference (IDBR)" value={json.luref} />
+              <FormStaticValue id="formErn" label="Enterprise Reference Number" value={json.ern} />
+              <FormStaticValue id="formEntref" label="Enterprise Reference (IDBR)" value={json.ern} />
+              <FormStaticValue id="formName" label="Name" value={json.name} />
+              <FormStaticValue id="formTradingStatus" label="Trading Style" value={json.tradingStyle} />
+              <FormStaticValue id="formSic07" label="SIC 07" value={json.sic07} />
+              <FormStaticValue id="formEmployees" label="Employees" value={json.employees} />
+            </Col>
+            <Col sm={4}>
+              <FormStaticAddress id="formAddress" label="Address" address1={json.address1} address2={json.address2} address3={json.address3} address4={json.address4} address5={json.address5} postcode={json.postcode} />
             </Col>
           </Form>
         </Row>
@@ -47,8 +51,8 @@ const LocalUnitPanel = ({ localUnit, showTreeView, toggleTreeView, goToView }) =
       goToTreeView1={() => goToView(1)}
       goToTreeView2={() => goToView(2)}
       goToEditView={() => goToView(3)}
-      name={json.businessName}
-      id={json.id}
+      name={json.name}
+      id={json.lurn}
       accessor="localUnit"
       unitType="LOU"
     />

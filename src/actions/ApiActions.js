@@ -33,7 +33,7 @@ export function refSearch(query) {
 
         const unitType = data.results[0].unitType;
         if (unitType !== 'ENT') {
-          if (unitType === 'LEU') {
+          if (unitType === 'LEU' || unitType === 'LOU') {
             dispatch(setResults(REFS['ENT'].setResults, {
               results: [{ id: data.results[0].parents.ENT }],
             }));

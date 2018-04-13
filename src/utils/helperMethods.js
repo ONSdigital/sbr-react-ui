@@ -30,6 +30,9 @@ export function getDestination(source) {
     case 'CH':
       destination = 'Companies';
       break;
+    case 'LOU':
+      destination = 'LocalUnits';
+      break;
     default:
       destination = 'Enterprises';
   }

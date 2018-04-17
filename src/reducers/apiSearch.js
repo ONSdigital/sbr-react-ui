@@ -65,7 +65,7 @@ const initialState = {
     errorMessage: '',
     timeStamp: '',
   },
-}; 
+};
 
 // Takes care of changing the application state
 function refReducer(state = initialState, action) {

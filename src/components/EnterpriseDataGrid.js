@@ -76,6 +76,7 @@ EnterpriseDataGrid.propTypes = {
   chData: PropTypes.array.isRequired,
   payeData: PropTypes.array.isRequired,
   vatData: PropTypes.array.isRequired,
+  louData: PropTypes.array.isRequired,
 };
 
 export default EnterpriseDataGrid;

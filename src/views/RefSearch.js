@@ -77,7 +77,7 @@ class Search extends React.Component {
         <TitleAndDescription
           marginBottom="1"
           title="Reference Search"
-          description="Search the Statistical Business Register for a reference (ERN/UBRN/VAT/CRN/PAYE)"
+          description="Search the Statistical Business Register for a reference (ERN/LURN/UBRN/VAT/CRN/PAYE)"
         />
         <div className="page-intro background--gallery">
           <div className="wrapper">

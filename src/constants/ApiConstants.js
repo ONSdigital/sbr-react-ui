@@ -26,6 +26,13 @@ export const SENDING_LEGAL_UNIT_REQUEST = 'SENDING_LEGAL_UNIT_REQUEST';
 export const SET_LEGAL_UNIT_QUERY = 'SET_LEGAL_UNIT_QUERY';
 export const SET_LEGAL_UNIT_ERROR_MESSAGE = 'SET_LEGAL_UNIT_ERROR_MESSAGE';
 
+// Local Unit Search
+export const SET_LOCAL_UNIT_RESULTS = 'SET_LOCAL_UNIT_RESULTS';
+export const SET_LOCAL_UNIT_HEADERS = 'SET_LOCAL_UNIT_HEADERS';
+export const SENDING_LOCAL_UNIT_REQUEST = 'SENDING_LOCAL_UNIT_REQUEST';
+export const SET_LOCAL_UNIT_QUERY = 'SET_LOCAL_UNIT_QUERY';
+export const SET_LOCAL_UNIT_ERROR_MESSAGE = 'SET_LOCAL_UNIT_ERROR_MESSAGE';
+
 // VAT Search
 export const SET_VAT_RESULTS = 'SET_VAT_RESULTS';
 export const SET_VAT_HEADERS = 'SET_VAT_HEADERS';
@@ -65,6 +72,15 @@ export const REFS = {
     setSending: SENDING_LEGAL_UNIT_REQUEST,
     setQuery: SET_LEGAL_UNIT_QUERY,
     setError: SET_LEGAL_UNIT_ERROR_MESSAGE,
+  },
+  LOU: {
+    url: 'LocalUnits',
+    apiEndpoint: 'lous',
+    setResults: SET_LOCAL_UNIT_RESULTS,
+    setHeaders: SET_LOCAL_UNIT_HEADERS,
+    setSending: SENDING_LOCAL_UNIT_REQUEST,
+    setQuery: SET_LOCAL_UNIT_QUERY,
+    setError: SET_LOCAL_UNIT_ERROR_MESSAGE,
   },
   VAT: {
     url: 'Vats',

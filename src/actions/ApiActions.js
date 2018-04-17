@@ -33,7 +33,7 @@ export function refSearch(query) {
 
         const unitType = data.results[0].unitType;
         if (unitType !== 'ENT') {
-          if (unitType === 'LEU') {
+          if (unitType === 'LEU' || unitType === 'LOU') {
             dispatch(setResults(REFS['ENT'].setResults, {
               results: [{ id: data.results[0].parents.ENT }],
             }));
@@ -134,9 +134,7 @@ export function getUnitForSpecificPeriod(unitType, id, period, redirect = false)
         // If the user goes straight to /Enterprises/:id without going via
         // the search, we don't want to redirect them as they are already on
         // the correct page
-        if (redirect) {
-          browserHistory.push(`/${REFS[unitType].url}/${id}`);
-        }
+        if (redirect) browserHistory.push(`/${REFS[unitType].url}/${id}`);
       } else {
         dispatch(setErrorMessage(REFS[unitType].setError, data.message, Math.floor(new Date() / 1000)));
         dispatch(addMostRecentError(unitType, data.message, Math.floor(new Date() / 1000)));

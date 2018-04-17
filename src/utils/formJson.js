@@ -66,6 +66,25 @@ export function formLEUJson(leu) {
   };
 }
 
+export function formLOUJson(lou) {
+  return {
+    lurn: getValueByKey(lou.vars, 'lurn'),
+    luref: getValueByKey(lou.vars, 'luref'),
+    ern: getValueByKey(lou.vars, 'ern'),
+    entref: getValueByKey(lou.vars, 'entref'),
+    name: getValueByKey(lou.vars, 'name'),
+    tradingStyle: getValueByKey(lou.vars, 'tradingStyle'),
+    address1: getValueByKey(lou.vars, 'address1'),
+    address2: getValueByKey(lou.vars, 'address2'),
+    address3: getValueByKey(lou.vars, 'address3'),
+    address4: getValueByKey(lou.vars, 'address4'),
+    address5: getValueByKey(lou.vars, 'address5'),
+    postcode: getValueByKey(lou.vars, 'postcode'),
+    sic07: getValueByKey(lou.vars, 'sic07'),
+    employees: getValueByKey(lou.vars, 'employees'),
+  };
+}
+
 export function formPayeJson(paye) {
   return {
     payeref: getValueByKey(paye.vars, 'payeref'),

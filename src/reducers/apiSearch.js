@@ -1,4 +1,4 @@
-import { SET_PERIOD, REMOVE_LAST_ERROR, ADD_MOST_RECENT_ERROR, SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE, SET_ENTERPRISE_RESULTS, SET_ENTERPRISE_HEADERS, SENDING_ENTERPRISE_REQUEST, SET_ENTERPRISE_QUERY, SET_ENTERPRISE_ERROR_MESSAGE, SET_LEGAL_UNIT_RESULTS, SET_LEGAL_UNIT_HEADERS, SENDING_LEGAL_UNIT_REQUEST, SET_LEGAL_UNIT_QUERY, SET_LEGAL_UNIT_ERROR_MESSAGE, SET_VAT_RESULTS, SET_VAT_HEADERS, SENDING_VAT_REQUEST, SET_VAT_QUERY, SET_VAT_ERROR_MESSAGE, SET_PAYE_RESULTS, SET_PAYE_HEADERS, SENDING_PAYE_REQUEST, SET_PAYE_QUERY, SET_PAYE_ERROR_MESSAGE, SET_CH_RESULTS, SET_CH_HEADERS, SENDING_CH_REQUEST, SET_CH_QUERY, SET_CH_ERROR_MESSAGE } from '../constants/ApiConstants';
+import { SET_PERIOD, REMOVE_LAST_ERROR, ADD_MOST_RECENT_ERROR, SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE, SET_ENTERPRISE_RESULTS, SET_ENTERPRISE_HEADERS, SENDING_ENTERPRISE_REQUEST, SET_ENTERPRISE_QUERY, SET_ENTERPRISE_ERROR_MESSAGE, SET_LEGAL_UNIT_RESULTS, SET_LEGAL_UNIT_HEADERS, SENDING_LEGAL_UNIT_REQUEST, SET_LEGAL_UNIT_QUERY, SET_LEGAL_UNIT_ERROR_MESSAGE, SET_VAT_RESULTS, SET_VAT_HEADERS, SENDING_VAT_REQUEST, SET_VAT_QUERY, SET_VAT_ERROR_MESSAGE, SET_PAYE_RESULTS, SET_PAYE_HEADERS, SENDING_PAYE_REQUEST, SET_PAYE_QUERY, SET_PAYE_ERROR_MESSAGE, SET_CH_RESULTS, SET_CH_HEADERS, SENDING_CH_REQUEST, SET_CH_QUERY, SET_CH_ERROR_MESSAGE, SET_LOCAL_UNIT_RESULTS, SET_LOCAL_UNIT_ERROR_MESSAGE, SET_LOCAL_UNIT_HEADERS, SENDING_LOCAL_UNIT_REQUEST, SET_LOCAL_UNIT_QUERY } from '../constants/ApiConstants';
 import periods from '../config/periods';
 
 // Object.assign is not yet fully supported in all browsers, so we fallback to
@@ -26,6 +26,14 @@ const initialState = {
     timeStamp: '',
   },
   legalUnit: {
+    results: [],
+    headers: [],
+    query: '',
+    currentlySending: false,
+    errorMessage: '',
+    timeStamp: '',
+  },
+  localUnit: {
     results: [],
     headers: [],
     query: '',
@@ -100,6 +108,14 @@ function refReducer(state = initialState, action) {
           results: action.newState.results,
         },
       });
+    case SET_LOCAL_UNIT_RESULTS:
+      return assign({}, state, {
+        ...state,
+        localUnit: {
+          ...state.localUnit,
+          results: action.newState.results,
+        },
+      });
     case SET_VAT_RESULTS:
       return assign({}, state, {
         ...state,
@@ -153,6 +169,14 @@ function refReducer(state = initialState, action) {
           headers: action.newState.headers,
         },
       });
+    case SET_LOCAL_UNIT_HEADERS:
+      return assign({}, state, {
+        ...state,
+        localUnit: {
+          ...state.localUnit,
+          headers: action.newState.headers,
+        },
+      });
     case SET_VAT_HEADERS:
       return assign({}, state, {
         ...state,
@@ -198,6 +222,14 @@ function refReducer(state = initialState, action) {
         ...state,
         legalUnit: {
           ...state.legalUnit,
+          currentlySending: action.sending,
+        },
+      });
+    case SENDING_LOCAL_UNIT_REQUEST:
+      return assign({}, state, {
+        ...state,
+        localUnit: {
+          ...state.localUnit,
           currentlySending: action.sending,
         },
       });
@@ -249,6 +281,14 @@ function refReducer(state = initialState, action) {
           query: action.query,
         },
       });
+    case SET_LOCAL_UNIT_QUERY:
+      return assign({}, state, {
+        ...state,
+        localUnit: {
+          ...state.localUnit,
+          query: action.query,
+        },
+      });
     case SET_VAT_QUERY:
       return assign({}, state, {
         ...state,
@@ -296,6 +336,15 @@ function refReducer(state = initialState, action) {
         ...state,
         legalUnit: {
           ...state.legalUnit,
+          errorMessage: action.message,
+          timeStamp: action.timeStamp,
+        },
+      });
+    case SET_LOCAL_UNIT_ERROR_MESSAGE:
+      return assign({}, state, {
+        ...state,
+        localUnit: {
+          ...state.localUnit,
           errorMessage: action.message,
           timeStamp: action.timeStamp,
         },

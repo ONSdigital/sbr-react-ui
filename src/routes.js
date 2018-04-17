@@ -13,6 +13,7 @@ import Accessibility from './views/Accessibility';
 import RefSearch from './views/RefSearch';
 import EnterpriseView from './views/EnterpriseView';
 import LegalUnitView from './views/LegalUnitView';
+import LocalUnitView from './views/LocalUnitView';
 import CompanyView from './views/CompanyView';
 import VATView from './views/VATView';
 import PAYEView from './views/PAYEView';
@@ -60,6 +61,7 @@ const Routes = () => (
           <Route path={'/RefSearch'} component={RefSearch} />
           <Route path={'/Enterprises/:enterprise'} component={EnterpriseView} />
           <Route path={'/LegalUnits/:legalUnit'} component={LegalUnitView} />
+          <Route path={'/LocalUnits/:localUnit'} component={LocalUnitView} />
           <Route path={'/Vats/:vat'} component={VATView} />
           <Route path={'/Payes/:paye'} component={PAYEView} />
           <Route path={'/Companies/:company'} component={CompanyView} />

@@ -1,61 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import history from '../history';
+import { checkAuth } from '../actions/LoginActions';
 import Header from './Header';
-import NavBar from './NavBar';
-import Banner from './Banner';
 import Footer from './Footer';
-import ShowConfetti from '../components/Confetti';
 import config from '../config/constants';
 
-const { ENV } = config;
+const { SHOW_CONFETTI_TIME } = config;
 
-const Template = function ({ location, children, currentlySending }) {
-  const onProdEnv = (ENV === 'prod');
-  const banner = (onProdEnv) ? '' : (<Banner />);
-  if (location.pathname === '/' || location.pathname === 'Login') {
-    return (
-      <div className={(currentlySending) ? 'blur' : ''}>
-        {banner}
-        <div className="container">
-          <Header />
-          {children}
-        </div>
-        {currentlySending &&
-          <div className="spinner"></div>
-        }
-      </div>
-    );
+/**
+ * @const Template - The default template for all pages
+ */
+class Template extends React.Component {
+  componentDidMount = () => {
+    if (sessionStorage.accessToken) {
+      this.props.dispatch(checkAuth());
+    } else {
+      history.push('/');
+    }
   }
-  return (
-    <div className={(currentlySending) ? 'blur' : ''} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-      <ShowConfetti seconds={config.SHOW_CONFETTI_TIME} />
-      {banner}
-      <Header />
-      <NavBar primary={location.pathname} />
-      <div className="container">
-        {children}
-      </div>
-      <Footer />
-      {currentlySending &&
-        <div className="spinner"></div>
-      }
-    </div>
-  );
-};
-
-Template.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
-  children: PropTypes.object.isRequired,
-  currentlySending: PropTypes.bool.isRequired,
-};
-
-function select(state) {
-  return {
-    currentlySending: state.login.currentlySending,
+  render = () => {
+    // The components that are included in the template component do not change between
+    // logged in / not logged in states, we handle changes (i.e. not showing the sign
+    // out button) in the underlying components
+    return (
+      <section>
+        <Header location={location} />
+        {this.props.children}
+        <Footer />
+      </section>
+    );
   };
 }
 
-export default connect(select)(Template);
+Template.propTypes = {
+  location: PropTypes.object.isRequired,
+  children: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
+
+export default withRouter(connect()(Template));

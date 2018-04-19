@@ -96,37 +96,6 @@ const everyKeyMatches = (obj, value) => Object.keys(obj).map(key => (obj[key] ==
 
 
 /**
- * @const handleFormChange - This is used in SearchHOC for transforming the form
- * data when a change is made, e.g. delete empty keys
- *
- * @param {Object} form - The object with all the form values
- * @param {String} id - The id of the input that changed
- * @param {Any} value - This could be a string or an object
- *
- * @return {Object} - The transformed form JSON
- */
-const handleFormChange = (form, id, value) => {
-  // Take a copy of the form JSON so we don't mutate the original
-  const formCopy = { ...form };
-
-  // If setting to empty, delete
-  if (value.constructor === Object && everyKeyMatches(value, '')) {
-    delete formCopy[id];
-  } else if (value === '') {
-    delete formCopy[id];
-  } else if (Array.isArray(value) && value.length === 0) {
-    // Multiple select input will return an empty array if nothing is selected
-    delete formCopy[id];
-  } else if (id === 'BusinessName' || id === 'PostCode') {
-    formCopy[id] = value.toUpperCase();
-  } else {
-    formCopy[id] = value;
-  }
-  return formCopy;
-};
-
-
-/**
  * @const formSelectJson - Given some JSON including key value pairs (e.g. C: '2-4'),
  * transform the JSON into an array of JSON objects with the format:
  * { label: 'C [2-4]', value: 'C' }. This is to create the correct format for the
@@ -184,7 +153,7 @@ const anyKeyEmpty = (obj) => Object.keys(obj).map(key => (obj[key] === '')).redu
 
 
 export {
-  formatData, handleFormChange, formSelectJson, getHighlightedText,
+  formatData, formSelectJson, getHighlightedText,
   everyKeyMatches, anyKeyEmpty, maxSize, numberWithCommas, pipe,
   convertLegalStatus, convertTradingStatus, convertTurnover, convertEmploymentBands,
 };

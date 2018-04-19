@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { search, setQuery, resetResults, setToHighlight } from '../actions/ApiActions';
+import { search, setQuery, resetResults } from '../actions/ApiActions';
 import { SET_QUERY } from '../constants/ApiConstants';
-import { handleFormChange } from '../utils/helperMethods';
 
 /**
  * @function withSearch - This is a higher order component that accepts a component

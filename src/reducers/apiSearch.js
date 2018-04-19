@@ -1,10 +1,18 @@
-import { SET_TO_HIGHLIGHT, SET_FORMATTED_QUERY, SET_RESULTS, SET_QUERY, SET_SEARCH_ERROR_MESSAGE, SENDING_SEARCH_REQUEST } from '../constants/ApiConstants';
+import { SET_RESULTS, SET_UNIT_RESULT, SET_QUERY, SET_SEARCH_ERROR_MESSAGE, SENDING_SEARCH_REQUEST } from '../constants/ApiConstants';
 
 const initialState = {
   results: [],
   query: '',
   currentlySending: false,
   errorMessage: '',
+  units: {
+    ENT: {},
+    LEU: {},
+    LOU: {},
+    VAT: {},
+    PAYE: {},
+    CH: {},
+  }
 };
 
 /**
@@ -23,6 +31,14 @@ const searchReducer = (state = initialState, action) => {
         results: action.results,
         capped: action.capped,
       });
+    case SET_UNIT_RESULT:
+      return Object.assign({}, state, {
+        ...state,
+        units: {
+          ...state.units,
+          [action.unitType]: action.result,
+        },
+      });
     case SENDING_SEARCH_REQUEST:
       return Object.assign({}, state, {
         ...state,
@@ -32,11 +48,6 @@ const searchReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         ...state,
         query: action.query,
-      });
-    case SET_FORMATTED_QUERY:
-      return Object.assign({}, state, {
-        ...state,
-        formattedQuery: action.query,
       });
     case SET_SEARCH_ERROR_MESSAGE:
       return Object.assign({}, state, {

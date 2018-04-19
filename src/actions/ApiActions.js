@@ -1,6 +1,5 @@
-import { SET_RESULTS, SET_FORMATTED_QUERY, SET_SEARCH_ERROR_MESSAGE, SENDING_SEARCH_REQUEST, SET_QUERY } from '../constants/ApiConstants';
+import { SET_RESULTS, SET_UNIT_RESULT, SET_SEARCH_ERROR_MESSAGE, SENDING_SEARCH_REQUEST, SET_QUERY } from '../constants/ApiConstants';
 import accessAPI from '../utils/accessAPI';
-import { formQuery } from '../utils/formQuery';
 import config from '../config/api-urls';
 import history from '../history';
 
@@ -9,9 +8,19 @@ const { REROUTE_URL, API_VERSION } = config;
 const sendingRequest = (type, sending) => ({ type, sending });
 const setErrorMessage = (type, message) => ({ type, message });
 
+export const setUnitResult = (unitType, result) => ({ type: SET_UNIT_RESULT, unitType, result  });
 export const resetResults = () => ({ type: SET_RESULTS, results: [] });
 export const setResults = (type, results, capped) => ({ type, results, capped });
 export const setQuery = (type, query) => ({ type, query });
+
+const units = {
+  ENT: 'Enterprise',
+  LEU: 'LegalUnit',
+  LOU: 'LocalUnit',
+  VAT: 'VAT',
+  PAYE: 'PAYE',
+  CH: 'Company',
+}
 
 /**
  * @const search - This is an async action that will handle the whole process
@@ -29,29 +38,24 @@ export const search = (query, redirect) => (dispatch) => {
 
   accessAPI(REROUTE_URL, 'POST', sessionStorage.accessToken, JSON.stringify({
     method: 'GET',
-    endpoint: `${API_VERSION}/${query}`,
-  }), 'search').then(response =>
-    response.json().then(json => ({
-      json,
-      headers: {
-        'X-Total-Count': response.headers.get('X-Total-Count'),
-      },
-    })),
-  ).then(resp => {
-    const json = resp.json;
-    const capped = (resp.headers['X-Total-Count'] === null)
-    ? 'Error: Unable to get number of capped results.' : resp.headers['X-Total-Count'].toString();
+    endpoint: `${API_VERSION}/search?id=${query}`,
+  }), 'search').then(response => response.json()).then(json => {
     dispatch(sendingRequest(SENDING_SEARCH_REQUEST, false));
-    // This is a workaround for the API returning 200 {} for no results, should be 404
-    if (Object.keys(json).length === 0 && json.constructor === Object) {
-      dispatch(setErrorMessage(SET_SEARCH_ERROR_MESSAGE, '404: No results found.'));
-    } else if (Object.keys(json).length > 0 && json.constructor === Object) {
-      // Wrap the results in an array as we only get {} from the API
-      dispatch(setResults(SET_RESULTS, [json], capped));
+    console.log('json: ', json)
+    if (json.length === 1) {
+      // Since there is only one result, we can go directly to the profile page
+      const unitType = json[0].unitType
+      const id = json[0].id
+      dispatch(setUnitResult(unitType, json[0]));
+      if (redirect) history.push(`/Results/${units[unitType]}/${id}`);
+    } else if (json.length > 1) {
+      // We have multiple results, so either a business/postcode has been searched
+      // for, or there is a conflicting ID (e.g. if a LEU and VAT record have
+      // the same ID's)
+      dispatch(setResults(SET_RESULTS, json));
       if (redirect) history.push('/Results');
     } else {
-      dispatch(setResults(SET_RESULTS, json, capped));
-      if (redirect) history.push('/Results');
+      dispatch(setErrorMessage(SET_SEARCH_ERROR_MESSAGE, 'Error parsing results from the API.'));
     }
   }).catch(msg => {
     dispatch(sendingRequest(SENDING_SEARCH_REQUEST, false));

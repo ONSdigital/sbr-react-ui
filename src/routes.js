@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import history from './history';
 import reducer from './reducers/index';
 import Home from './views/Home';
+import Results from './views/Results';
 import NotFound from './views/NotFound';
 import Template from './templates/Template';
 import Login from './views/Login';
@@ -28,6 +29,7 @@ const Routes = () => (
           <Switch>
             <Route exact path="/" component={Login} />
             <Route exact path="/Home" component={withSearch(Home)} />
+            <Route exact path="/Results" component={Results} />
             <Route component={NotFound} />
           </Switch>
         </Template>

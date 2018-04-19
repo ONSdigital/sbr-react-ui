@@ -12,7 +12,7 @@ const initialState = {
     VAT: {},
     PAYE: {},
     CH: {},
-  }
+  },
 };
 
 /**

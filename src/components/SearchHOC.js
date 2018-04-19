@@ -69,8 +69,6 @@ export default function withSearch(Content) {
         query={this.props.query}
         errorMessage={this.state.errorMessage}
         results={this.props.results}
-        capped={this.props.capped}
-        toHighlight={this.props.toHighlight}
       />
     )
   }

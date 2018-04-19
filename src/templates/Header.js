@@ -13,7 +13,7 @@ import ONSLogo from '../resources/img/logo.svg';
  * component, e.g. show smaller title text whilst on /Results.
  */
 const Header = ({ loggedIn, currentlySending, location, dispatch, history }) => {
-  const headerText = (location.pathname === '/Results')
+  const headerText = (location.pathname.includes('/Results'))
   ? (<p className="saturn main_heading_sub_page">Statistical Business Register</p>)
   : (<h1 className="jupiter main_heading">Statistical Business Register</h1>);
   return (
@@ -48,7 +48,7 @@ const Header = ({ loggedIn, currentlySending, location, dispatch, history }) => 
           <div className="group">
             <div className="col-12">
               {headerText}
-              {!(location.pathname === '/Results') &&
+              {!(location.pathname.includes('/Results')) &&
                 <h2 className="neptune sub_heading">A comprehensive list of UK businesses used by government for statistical purposes</h2>
               }
             </div>

@@ -43,8 +43,8 @@ export const search = (query, redirect) => (dispatch) => {
     dispatch(sendingRequest(SENDING_SEARCH_REQUEST, false));
     if (json.length === 1) {
       // Since there is only one result, we can go directly to the profile page
-      const unitType = json[0].unitType
-      const id = json[0].id
+      const unitType = json[0].unitType;
+      const id = json[0].id;
       dispatch(setUnitResult(unitType, json[0]));
       if (redirect) history.push(`/Results/${units[unitType]}/${id}`);
     } else if (json.length > 1) {

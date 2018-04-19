@@ -9,6 +9,7 @@ import Home from './views/Home';
 import NotFound from './views/NotFound';
 import Template from './templates/Template';
 import Login from './views/Login';
+import withSearch from './components/SearchHOC';
 
 // Create the Redux store with the redux-thunk middleware (for async actions)
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
@@ -26,7 +27,7 @@ const Routes = () => (
         <Template>
           <Switch>
             <Route exact path="/" component={Login} />
-            <Route exact path="/Home" component={Home} />
+            <Route exact path="/Home" component={withSearch(Home)} />
             <Route component={NotFound} />
           </Switch>
         </Template>

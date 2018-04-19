@@ -1,192 +1,60 @@
-import { REFS, ADD_MOST_RECENT_ERROR, REMOVE_LAST_ERROR, SET_PERIOD, SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE } from '../constants/ApiConstants';
-import apiSearch from '../utils/apiSearch';
-import { getDestination } from '../utils/helperMethods';
-import { store } from '../routes';
-import periods from '../config/periods';
+import { SET_RESULTS, SET_FORMATTED_QUERY, SET_SEARCH_ERROR_MESSAGE, SENDING_SEARCH_REQUEST, SET_QUERY } from '../constants/ApiConstants';
+import accessAPI from '../utils/accessAPI';
+import { formQuery } from '../utils/formQuery';
+import config from '../config/api-urls';
+import history from '../history';
+
+const { REROUTE_URL, API_VERSION } = config;
+
+const sendingRequest = (type, sending) => ({ type, sending });
+const setErrorMessage = (type, message) => ({ type, message });
+
+export const resetResults = () => ({ type: SET_RESULTS, results: [] });
+export const setResults = (type, results, capped) => ({ type, results, capped });
+export const setQuery = (type, query) => ({ type, query });
 
 /**
- * Get info (version/last updated) from the Node server
- */
-export function refSearch(query) {
-  return (dispatch) => {
-    // Reset the period, so that the period toggle shows the
-    // correct default value on the data results page
-    dispatch(setPeriod(SET_PERIOD, periods.DEFAULT_PERIOD));
-
-    dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, '', ''));
-    dispatch(sendingRequest(SENDING_REF_REQUEST, true));
-    dispatch(setResults(SET_REF_RESULTS, { results: [] }));
-    dispatch(setQuery(SET_REF_QUERY, query));
-    apiSearch.getRef(query, (success, data) => {
-      dispatch(sendingRequest(SENDING_REF_REQUEST, false));
-      if (success) {
-        dispatch(setResults(SET_REF_RESULTS, {
-          results: data.results,
-        }));
-        dispatch(setResults(REFS[data.results[0].unitType].setResults, {
-          results: data.results,
-        }));
-        dispatch(setHeaders(SET_REF_HEADERS, {
-          headers: data.response,
-        }));
-
-        const unitType = data.results[0].unitType;
-        if (unitType !== 'ENT') {
-          if (unitType === 'LEU' || unitType === 'LOU') {
-            dispatch(setResults(REFS['ENT'].setResults, {
-              results: [{ id: data.results[0].parents.ENT }],
-            }));
-            const source = data.results[0].unitType;
-            const destination = getDestination(source);
-            // browserHistory.push(`/${destination}/${query}`);
-          } else {
-            apiSearch.getSpecificRefByIdAndPeriod(REFS['LEU'].apiEndpoint, data.results[0].parents['LEU'], data.results[0].period, (s, d) => {
-              if (s) {
-                dispatch(setResults(REFS['ENT'].setResults, {
-                  results: [{ id: d.results.parents.ENT }],
-                }));
-                const source = data.results[0].unitType;
-                const destination = getDestination(source);
-                // browserHistory.push(`/${destination}/${query}`);
-              } else {
-                dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message, Math.floor(new Date() / 1000)));
-              }
-            });
-          }
-        } else {
-          const source = data.results[0].unitType;
-          const destination = getDestination(source);
-          // browserHistory.push(`/${destination}/${query}`);
-        }
-      } else {
-        dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message, Math.floor(new Date() / 1000)));
-      }
-    });
-  };
-}
-
-export function getSpecificUnitType(unitType, id, redirect = false) {
-  return (dispatch) => {
-    // if (unitType === 'LEU') {
-    //   // For LEU, period is not yet implemented, so get the default one
-    //   return dispatch(getUnitForDefaultPeriod(unitType, id, redirect));
-    // }
-    const period = store.getState().apiSearch.period.split('-').join('');
-    return dispatch(getUnitForSpecificPeriod(unitType, id, period, redirect));
-  };
-}
-
-/**
- * Get specific unit by id
+ * @const search - This is an async action that will handle the whole process
+ * of doing a search, including setting spinners/error messages and the results.
  *
- * This is a generic method that can do a specific search for any REF type.
+ * @param {Object} query - THe query object
+ * @param {Function} formQuery - A function to transform the query object a string
+ * @param {Boolean} redirect - Whether or not to go to /Results after the search
  */
-export function getUnitForDefaultPeriod(unitType, id, redirect = false) {
-  return (dispatch) => {
-    dispatch(setErrorMessage(REFS[unitType].setError, '', ''));
-    dispatch(sendingRequest(REFS[unitType].setSending, true));
-    dispatch(setResults(REFS[unitType].setResults, { results: [] }));
-    dispatch(setQuery(REFS[unitType].setQuery, id));
-    apiSearch.getSpecificRefById(REFS[unitType].apiEndpoint, id, (success, data) => {
-      dispatch(sendingRequest(REFS[unitType].setSending, false));
-      if (success) {
-        dispatch(setResults(REFS[unitType].setResults, {
-          results: [data.results],
-        }));
-        dispatch(setHeaders(REFS[unitType].setHeaders, {
-          headers: data.response,
-        }));
-        // If the user goes straight to /Enterprises/:id without going via
-        // the search, we don't want to redirect them as they are already on
-        // the correct page
-        if (redirect) {
-          // browserHistory.push(`/${REFS[unitType].url}/${id}`);
-        }
-      } else {
-        dispatch(setErrorMessage(REFS[unitType].setError, data.message, Math.floor(new Date() / 1000)));
-        dispatch(addMostRecentError(unitType, data.message, Math.floor(new Date() / 1000)));
-      }
-    });
-  };
-}
+export const search = (query, redirect) => (dispatch) => {
+  dispatch(setErrorMessage(SET_SEARCH_ERROR_MESSAGE, ''));
+  dispatch(sendingRequest(SENDING_SEARCH_REQUEST, true));
+  dispatch(setResults(SET_RESULTS, [], ''));
+  dispatch(setQuery(SET_QUERY, query));
 
-/**
- * Get specific unit by id and period
- *
- * This is a generic method that can do a specific search for any REF type by specific period
- */
-export function getUnitForSpecificPeriod(unitType, id, period, redirect = false) {
-  return (dispatch) => {
-    dispatch(setErrorMessage(REFS[unitType].setError, '', ''));
-    dispatch(sendingRequest(REFS[unitType].setSending, true));
-    // dispatch(setResults(REFS[unitType].setResults, { results: [] }));
-    dispatch(setQuery(REFS[unitType].setQuery, id));
-    apiSearch.getSpecificRefByIdAndPeriod(REFS[unitType].apiEndpoint, id, period, (success, data) => {
-      dispatch(sendingRequest(REFS[unitType].setSending, false));
-      if (success) {
-        dispatch(setResults(REFS[unitType].setResults, {
-          results: [data.results],
-        }));
-        dispatch(setHeaders(REFS[unitType].setHeaders, {
-          headers: data.response,
-        }));
-        // If the user goes straight to /Enterprises/:id without going via
-        // the search, we don't want to redirect them as they are already on
-        // the correct page
-        // if (redirect) browserHistory.push(`/${REFS[unitType].url}/${id}`);
-      } else {
-        dispatch(setErrorMessage(REFS[unitType].setError, data.message, Math.floor(new Date() / 1000)));
-        dispatch(addMostRecentError(unitType, data.message, Math.floor(new Date() / 1000)));
-      }
-    });
-  };
-}
-
-/**
- * Change the period
- *
- * This is related to the period dropdown that is present on all the
- * data view pages (apart from LEU)
- */
-export function changePeriod(period) {
-  // Everytime the user changes the period, we need to get the
-  // childrenJson (for the tree view) again from the Enterprise.
-  return (dispatch) => {
-    dispatch(setPeriod(SET_PERIOD, period));
-    // There is always an Enterprise in the store, so get the id
-    const entId = store.getState().apiSearch.enterprise.results[0].id;
-    dispatch(getUnitForSpecificPeriod('ENT', entId, period.split('-').join(''), false));
-  };
-}
-
-export function addMostRecentError(unitType, errorMessage, timeStamp) {
-  return { type: ADD_MOST_RECENT_ERROR, unitType, errorMessage, timeStamp };
-}
-
-export function removeLastError() {
-  return { type: REMOVE_LAST_ERROR };
-}
-
-export function setResults(type, newState) {
-  return { type, newState };
-}
-
-export function setPeriod(type, period) {
-  return { type, period };
-}
-
-export function setQuery(type, query) {
-  return { type, query };
-}
-
-export function setHeaders(type, newState) {
-  return { type, newState };
-}
-
-export function sendingRequest(type, sending) {
-  return { type, sending };
-}
-
-function setErrorMessage(type, message, timeStamp) {
-  return { type, message, timeStamp };
-}
+  accessAPI(REROUTE_URL, 'POST', sessionStorage.accessToken, JSON.stringify({
+    method: 'GET',
+    endpoint: `${API_VERSION}/${query}`,
+  }), 'search').then(response =>
+    response.json().then(json => ({
+      json,
+      headers: {
+        'X-Total-Count': response.headers.get('X-Total-Count'),
+      },
+    })),
+  ).then(resp => {
+    const json = resp.json;
+    const capped = (resp.headers['X-Total-Count'] === null)
+    ? 'Error: Unable to get number of capped results.' : resp.headers['X-Total-Count'].toString();
+    dispatch(sendingRequest(SENDING_SEARCH_REQUEST, false));
+    // This is a workaround for the API returning 200 {} for no results, should be 404
+    if (Object.keys(json).length === 0 && json.constructor === Object) {
+      dispatch(setErrorMessage(SET_SEARCH_ERROR_MESSAGE, '404: No results found.'));
+    } else if (Object.keys(json).length > 0 && json.constructor === Object) {
+      // Wrap the results in an array as we only get {} from the API
+      dispatch(setResults(SET_RESULTS, [json], capped));
+      if (redirect) history.push('/Results');
+    } else {
+      dispatch(setResults(SET_RESULTS, json, capped));
+      if (redirect) history.push('/Results');
+    }
+  }).catch(msg => {
+    dispatch(sendingRequest(SENDING_SEARCH_REQUEST, false));
+    dispatch(setErrorMessage(SET_SEARCH_ERROR_MESSAGE, msg.toString()));
+  });
+};

@@ -1,14 +1,10 @@
 import { combineReducers } from 'redux';
 import login from './login';
-import info from './info';
 import apiSearch from './apiSearch';
-import edit from './edit';
 
 const appReducer = combineReducers({
   login,
-  info,
   apiSearch,
-  edit,
 });
 
 // Below is way of reseting the store on action USER_LOGOUT

@@ -1,4 +1,3 @@
-import { browserHistory } from 'react-router';
 import { REFS, ADD_MOST_RECENT_ERROR, REMOVE_LAST_ERROR, SET_PERIOD, SET_REF_RESULTS, SET_REF_HEADERS, SENDING_REF_REQUEST, SET_REF_QUERY, SET_REF_ERROR_MESSAGE } from '../constants/ApiConstants';
 import apiSearch from '../utils/apiSearch';
 import { getDestination } from '../utils/helperMethods';
@@ -39,7 +38,7 @@ export function refSearch(query) {
             }));
             const source = data.results[0].unitType;
             const destination = getDestination(source);
-            browserHistory.push(`/${destination}/${query}`);
+            // browserHistory.push(`/${destination}/${query}`);
           } else {
             apiSearch.getSpecificRefByIdAndPeriod(REFS['LEU'].apiEndpoint, data.results[0].parents['LEU'], data.results[0].period, (s, d) => {
               if (s) {
@@ -48,7 +47,7 @@ export function refSearch(query) {
                 }));
                 const source = data.results[0].unitType;
                 const destination = getDestination(source);
-                browserHistory.push(`/${destination}/${query}`);
+                // browserHistory.push(`/${destination}/${query}`);
               } else {
                 dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message, Math.floor(new Date() / 1000)));
               }
@@ -57,7 +56,7 @@ export function refSearch(query) {
         } else {
           const source = data.results[0].unitType;
           const destination = getDestination(source);
-          browserHistory.push(`/${destination}/${query}`);
+          // browserHistory.push(`/${destination}/${query}`);
         }
       } else {
         dispatch(setErrorMessage(SET_REF_ERROR_MESSAGE, data.message, Math.floor(new Date() / 1000)));
@@ -101,7 +100,7 @@ export function getUnitForDefaultPeriod(unitType, id, redirect = false) {
         // the search, we don't want to redirect them as they are already on
         // the correct page
         if (redirect) {
-          browserHistory.push(`/${REFS[unitType].url}/${id}`);
+          // browserHistory.push(`/${REFS[unitType].url}/${id}`);
         }
       } else {
         dispatch(setErrorMessage(REFS[unitType].setError, data.message, Math.floor(new Date() / 1000)));
@@ -134,7 +133,7 @@ export function getUnitForSpecificPeriod(unitType, id, period, redirect = false)
         // If the user goes straight to /Enterprises/:id without going via
         // the search, we don't want to redirect them as they are already on
         // the correct page
-        if (redirect) browserHistory.push(`/${REFS[unitType].url}/${id}`);
+        // if (redirect) browserHistory.push(`/${REFS[unitType].url}/${id}`);
       } else {
         dispatch(setErrorMessage(REFS[unitType].setError, data.message, Math.floor(new Date() / 1000)));
         dispatch(addMostRecentError(unitType, data.message, Math.floor(new Date() / 1000)));

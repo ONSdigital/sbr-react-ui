@@ -1,5 +1,5 @@
 import base64 from 'base-64';
-import { browserHistory } from 'react-router';
+// import { browserHistory } from 'react-router';
 import { SET_AUTH, SET_CONFETTI, USER_LOGOUT, SENDING_REQUEST, SET_ERROR_MESSAGE, SET_USER_DETAILS } from '../constants/LoginConstants';
 import * as errorMessages from '../constants/MessageConstants';
 import auth from '../utils/auth';
@@ -43,7 +43,7 @@ export function login(username, password) {
         // https://github.com/ONSdigital/bi-ui/issues/3
         // dispatch(setQuery(SET_MATCH_QUERY, {}));
         // dispatch(setQuery(SET_RANGE_QUERY, {}));
-        forwardTo('/Home');
+        // forwardTo('/Home');
       } else {
         switch (data.type) {
           case 'user-doesnt-exist':
@@ -69,10 +69,10 @@ export function checkAuth() {
       dispatch(setAuthState(success));
       if (!success) {
         sessionStorage.clear();
-        forwardTo('/');
+        // forwardTo('/');
       } else if (success) {
         if (window.location.pathname === '/') {
-          forwardTo('/Home');
+          // forwardTo('/Home');
         }
         dispatch(getUiInfo());
         dispatch(getApiInfo());
@@ -98,7 +98,7 @@ export function logout() {
       if (success) {
         dispatch(setAuthState(false));
         sessionStorage.clear();
-        browserHistory.push('/');
+        // browserHistory.push('/');
         // This needs to go at the end, or else if we logout whilst on a page
         // that uses the redux store, an error will occur before the user
         // is redirected to '/'.
@@ -106,7 +106,7 @@ export function logout() {
       } else {
         dispatch(setErrorMessage(errorMessages.GENERAL_ERROR));
         sessionStorage.clear();
-        browserHistory.push('/');
+        // browserHistory.push('/');
         dispatch(resetState(undefined));
       }
     });
@@ -172,9 +172,9 @@ function setErrorMessage(message) {
  * Forwards the user
  * @param {string} location The route the user should be forwarded to
  */
-function forwardTo(location) {
-  browserHistory.push(location);
-}
+// function forwardTo(location) {
+//   // browserHistory.push(location);
+// }
 
 
 /**

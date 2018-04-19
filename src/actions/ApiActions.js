@@ -20,7 +20,7 @@ const units = {
   VAT: 'VAT',
   PAYE: 'PAYE',
   CH: 'Company',
-}
+};
 
 /**
  * @const search - This is an async action that will handle the whole process
@@ -41,7 +41,6 @@ export const search = (query, redirect) => (dispatch) => {
     endpoint: `${API_VERSION}/search?id=${query}`,
   }), 'search').then(response => response.json()).then(json => {
     dispatch(sendingRequest(SENDING_SEARCH_REQUEST, false));
-    console.log('json: ', json)
     if (json.length === 1) {
       // Since there is only one result, we can go directly to the profile page
       const unitType = json[0].unitType

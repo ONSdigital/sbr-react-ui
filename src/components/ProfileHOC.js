@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ResultsSearchForm from './ResultsSearchForm';
+import BreadCrumb from './BreadCrumb';
 import { search, setQuery, resetResults } from '../actions/ApiActions';
 import { SET_QUERY } from '../constants/ApiConstants';
 
@@ -31,6 +32,7 @@ export default function withProfile(Profile) {
           onChange={this.props.onChange}
           onClear={this.props.onClear}
         />
+        <BreadCrumb />
         <Profile />
       </section>
     )

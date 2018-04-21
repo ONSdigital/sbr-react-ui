@@ -27,6 +27,34 @@ class EnterpriseProfile extends React.Component {
                 <h3 className="jupiter sml-margin">Tesco Stores Ltd Inc Tesco Distribution</h3>
                 <Badge name="Enterprise" colour="blue" />
                 <Id field="ERN" id={this.props.enterprise.id} />
+                <div className="panel panel--simple panel--info u-mb-l">
+                  <table className="unit-info">
+                    <tr>
+                      <th className="mars">Address</th>
+                      <td className="venus">123 Mini Street, Hatfield, AL7 1GA</td>
+                    </tr>
+                    <tr>
+                      <th className="mars">Industry</th>
+                      <td className="venus">74990 – Other professional, scientific and technical activities</td>
+                    </tr>
+                    <tr>
+                      <th className="mars">Legal status</th>
+                      <td className="venus">Company</td>
+                    </tr>
+                    <tr>
+                      <th className="mars">Trading status</th>
+                      <td className="venus">Active</td>
+                    </tr>
+                    <tr>
+                      <th className="mars">Employment band</th>
+                      <td className="venus">–</td>
+                    </tr>
+                    <tr>
+                      <th className="mars">Turnover band</th>
+                      <td className="venus">–</td>
+                    </tr>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

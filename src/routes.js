@@ -13,6 +13,7 @@ import Login from './views/Login';
 import withSearch from './components/SearchHOC';
 import withProfile from './components/ProfileHOC';
 import EnterpriseProfile from './components/EnterpriseProfile';
+import LegalUnitProfile from './components/LegalUnitProfile';
 
 // Create the Redux store with the redux-thunk middleware (for async actions)
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
@@ -34,7 +35,7 @@ const Routes = () => (
             <Route exact path="/Results" component={withSearch(Results)} />
             <Route exact path="/Results/Enterprise/:id" component={withSearch(withProfile(EnterpriseProfile))} />
             <Route exact path="/Results/LocalUnit/:id" component={withSearch(Results)} />
-            <Route exact path="/Results/LegalUnit/:id" component={withSearch(Results)} />
+            <Route exact path="/Results/LegalUnit/:id" component={withSearch(withProfile(LegalUnitProfile))} />
             <Route exact path="/Results/VAT/:id" component={withSearch(Results)} />
             <Route exact path="/Results/PAYE/:id" component={withSearch(Results)} />
             <Route exact path="/Results/CH/:id" component={withSearch(Results)} />

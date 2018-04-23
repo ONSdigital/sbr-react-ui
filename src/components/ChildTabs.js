@@ -10,7 +10,7 @@ class ChildTabs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeTab: 1,
+      activeTab: (props.unitType === 'ENT') ? 1 : 3,
     };
   }
   onChange = (newTabIndex) => this.setState({ ...this.state, activeTab: newTabIndex });

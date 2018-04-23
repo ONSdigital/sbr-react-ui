@@ -18,7 +18,6 @@ class EnterpriseProfile extends React.Component {
     };
   }
   render = () => {
-    console.log('THIS PROPS: ', this.props);
     const enterprise = this.props.enterprise;
     const breadCrumbItems = [
       { name: `Enterprise - ${enterprise.id}`, link: '' },
@@ -31,16 +30,16 @@ class EnterpriseProfile extends React.Component {
             <div className="wrapper">
               <div className="group">
                 <div className="col-12">
-                  <h3 className="jupiter sml-margin">Tesco Stores Ltd Inc Tesco Distribution</h3>
+                  <h3 className="jupiter sml-margin">{enterprise.vars.name}</h3>
                   <Badge name="Enterprise" colour="blue" />
-                  <Id field="ERN" id={this.props.enterprise.id} />
+                  <Id field="ERN" id={enterprise.id} />
                   <DataPanel
                     data={{
-                      EntRef: this.props.enterprise.vars.entref,
-                      PostCode: this.props.enterprise.vars.postcode,
-                      'Legal Status': this.props.enterprise.vars.legalstatus,
-                      'PAYE Employees': this.props.enterprise.vars.paye_employees,
-                      'PAYE Jobs': this.props.enterprise.vars.paye_jobs,
+                      EntRef: enterprise.vars.entref,
+                      PostCode: enterprise.vars.postcode,
+                      'Legal Status': enterprise.vars.legalstatus,
+                      'PAYE Employees': enterprise.vars.paye_employees,
+                      'PAYE Jobs': enterprise.vars.paye_jobs,
                     }}
                   />
                   <ChildTabs unitType="ENT" childRefs={enterprise.children} />

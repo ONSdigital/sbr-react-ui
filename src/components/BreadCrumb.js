@@ -12,6 +12,9 @@ class BreadCrumb extends React.Component {
     };
   }
   render = () => {
+    const breadCrumbItems = this.props.breadCrumbItems;
+    const itemsLength = breadCrumbItems.length;
+    const chevron = (<span className="breadcrumb__chevron">&nbsp;&gt;&nbsp;</span>);
     return (
       <section>
         <div className="wrapper">
@@ -21,9 +24,23 @@ class BreadCrumb extends React.Component {
                 <ul className="breadcrumb__items pluto">
                   <li className="breadcrumb__item">
                     <a href="home.html" className="breadcrumb__link">Search</a>
-                    <span className="breadcrumb__chevron">&nbsp;&gt;&nbsp;</span>
+                    {chevron}
                   </li>
-                  <li className="breadcrumb__item breadcrumb__item--current">Tesco Stores Ltd Inc Tesco Distribution</li>
+                  {
+                    this.props.breadCrumbItems.map((value, key) => {
+                      if (key === (itemsLength - 1)) {
+                        return (
+                          <li key={value.name} className="breadcrumb__item breadcrumb__item--current">{value.name}</li>
+                        );
+                      }
+                      return (
+                        <li key={value.name} className="breadcrumb__item">
+                          <a href="enterprise.html" className="breadcrumb__link">{value.name}</a>
+                          {chevron}
+                        </li>
+                      );
+                    })
+                  }
                 </ul>
               </nav>
             </div>
@@ -33,5 +50,9 @@ class BreadCrumb extends React.Component {
     );
   }
 }
+
+BreadCrumb.propTypes = {
+  breadCrumbItems: PropTypes.array.isRequired,
+};
 
 export default BreadCrumb;

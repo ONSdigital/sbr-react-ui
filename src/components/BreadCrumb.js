@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 /**
  * @class BreadCrumb - 
@@ -23,7 +24,7 @@ class BreadCrumb extends React.Component {
               <nav className="breadcrumb">
                 <ul className="breadcrumb__items pluto">
                   <li className="breadcrumb__item">
-                    <a href="home.html" className="breadcrumb__link">Search</a>
+                    <Link to="/Home" className="breadcrumb__link">Search</Link>
                     {chevron}
                   </li>
                   {
@@ -35,7 +36,7 @@ class BreadCrumb extends React.Component {
                       }
                       return (
                         <li key={value.name} className="breadcrumb__item">
-                          <a href="enterprise.html" className="breadcrumb__link">{value.name}</a>
+                          <Link to={value.link} className="breadcrumb__link">{value.name}</Link>
                           {chevron}
                         </li>
                       );

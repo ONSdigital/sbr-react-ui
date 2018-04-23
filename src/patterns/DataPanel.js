@@ -12,9 +12,9 @@ const DataPanel = ({ data }) => {
         <tbody>
           {
             Object.entries(data).map(([key, value]) => (
-              <tr key={value}>
-                <th className="mars">{key}</th>
-                <td className="venus">{value}</td>
+              <tr key={`${key}-${value}`}>
+                <th key={key} className="mars">{key}</th>
+                <td key={value} className="venus">{value}</td>
               </tr>
             ))
           }

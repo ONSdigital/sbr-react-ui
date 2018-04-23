@@ -20,7 +20,7 @@ class LegalUnitProfile extends React.Component {
   render = () => {
     const legalUnit = this.props.legalUnit;
     const breadCrumbItems = [
-      { name: `Enterprise - ${legalUnit.parents.ENT}`, link: '' },
+      { name: `Enterprise - ${legalUnit.parents.ENT}`, link: `/Results/Enterprise/${legalUnit.parents.ENT}` },
       { name: `Legal Unit - ${legalUnit.id}`, link: '' },
     ];
     return (

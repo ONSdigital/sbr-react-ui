@@ -14,7 +14,7 @@ class EnterpriseProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      opacity: 1,
+      error: false,
     };
   }
   render = () => {
@@ -53,8 +53,12 @@ class EnterpriseProfile extends React.Component {
   }
 }
 
+EnterpriseProfile.defaultProps = {
+  enterprise: null,
+};
+
 EnterpriseProfile.propTypes = {
-  enterprise: PropTypes.object.isRequired,
+  enterprise: PropTypes.object,
 };
 
 const select = (state) => ({ enterprise: state.apiSearch.units.ENT });

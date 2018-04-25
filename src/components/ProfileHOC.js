@@ -37,14 +37,14 @@ export default function withProfile(Profile, config) {
       } else if (config.unitType === 'LEU' || config.unitType === 'LOU') {
         // LEU and LOU are both children of an ENT
         return [
-          { name: `Enterprise - ${unit.parents.ENT}`, link: `/Results/Enterprise/${unit.parents.ENT}` },
+          { name: `Enterprise - ${unit.parents.ENT}`, link: `/Results/Period/${unit.period}/Enterprise/${unit.parents.ENT}` },
           { name: `${config.unitName} - ${unit.id}`, link: '' },
         ];
       }
       // VAT, PAYE & CH are all grandchildren of an ENT
       return [
-        { name: `Enterprise - ${ent.id}`, link: `/Results/Enterprise/${ent.id}` },
-        { name: `Legal Unit - ${unit.parents.LEU}`, link: `/Results/LegalUnit/${unit.parents.LEU}` },
+        { name: `Enterprise - ${ent.id}`, link: `/Results/Period/${unit.period}/Enterprise/${ent.id}` },
+        { name: `Legal Unit - ${unit.parents.LEU}`, link: `/Results/Period/${unit.period}/LegalUnit/${unit.parents.LEU}` },
         { name: `${config.unitName} - ${unit.id}`, link: '' },
       ];
     }

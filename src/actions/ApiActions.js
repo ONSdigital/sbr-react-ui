@@ -85,7 +85,7 @@ export const search = (query, redirect) => (dispatch) => {
           dispatch(setErrorMessage(SET_SEARCH_ERROR_MESSAGE, msg.toString()));
         });
       }
-      if (redirect) history.push(`/Results/${units[unitType]}/${id}`);
+      if (redirect) history.push(`/Results/Period/${json[0].period}/${units[unitType]}/${id}`);
     } else if (json.length > 1) {
       // We have multiple results, so either a business/postcode has been searched
       // for, or there is a conflicting ID (e.g. if a LEU and VAT record have

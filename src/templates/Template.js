@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import history from '../history';
 import { checkAuth } from '../actions/LoginActions';
+import ErrorBoundary from '../components/ErrorBoundary';
 import Header from './Header';
 import Footer from './Footer';
 import ShowConfetti from '../components/Confetti';
@@ -35,7 +36,9 @@ class Template extends React.Component {
       <section>
         {confetti}
         <Header location={location} />
-        {this.props.children}
+        <ErrorBoundary>
+          {this.props.children}
+        </ErrorBoundary>
         <Footer />
       </section>
     );

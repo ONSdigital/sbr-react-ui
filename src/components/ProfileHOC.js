@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Panel from '../patterns/Panel';
 import ResultsSearchForm from './ResultsSearchForm';
 import BreadCrumb from './BreadCrumb';
 import Badge from '../patterns/Badge';
@@ -61,6 +62,7 @@ export default function withProfile(Profile, config) {
             <section>
               <div className="main-content">
                 <div className="wrapper">
+                  <Panel id="searchErrorPanel" text={this.props.errorMessage} level="error" show={this.props.showError} close={this.props.closeModal} marginBottom="1rem" />
                   <div className="group">
                     <div className="col-12">
                       <h3 className="jupiter sml-margin">{unit.vars[config.nameKey]}</h3>
@@ -92,6 +94,9 @@ export default function withProfile(Profile, config) {
     unit: PropTypes.object.isRequired,
     enterprise: PropTypes.object.isRequired,
     currentlySending: PropTypes.bool.isRequired,
+    errorMessage: PropTypes.string.isRequired,
+    showError: PropTypes.bool.isRequired,
+    closeModal: PropTypes.func.isRequired,
     query: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,

@@ -52,6 +52,30 @@ const louConfig = {
   nameKey: 'name',
 };
 
+const vatConfig = {
+  unitType: 'VAT',
+  unitName: 'VAT',
+  colour: 'teal',
+  idName: 'VATREF',
+  nameKey: 'name',
+};
+
+const payeConfig = {
+  unitType: 'PAYE',
+  unitName: 'PAYE',
+  colour: 'teal',
+  idName: 'PAYEREF',
+  nameKey: 'name',
+};
+
+const chConfig = {
+  unitType: 'CH',
+  unitName: 'Company House',
+  colour: 'teal',
+  idName: 'COMPANY NUMBER',
+  nameKey: 'companyname',
+};
+
 const Routes = () => (
   <Provider store={store}>
     <Router history={history}>
@@ -64,9 +88,9 @@ const Routes = () => (
             <Route exact path="/Results/Enterprise/:id" component={withSearch(withProfile(EnterpriseProfile, entConfig))} />
             <Route exact path="/Results/LocalUnit/:id" component={withSearch(withProfile(LocalUnitProfile, louConfig))} />
             <Route exact path="/Results/LegalUnit/:id" component={withSearch(withProfile(LegalUnitProfile, leuConfig))} />
-            <Route exact path="/Results/VAT/:id" component={withSearch(withProfile(VATProfile))} />
-            <Route exact path="/Results/PAYE/:id" component={withSearch(withProfile(PAYEProfile))} />
-            <Route exact path="/Results/Company/:id" component={withSearch(withProfile(CompanyProfile))} />
+            <Route exact path="/Results/VAT/:id" component={withSearch(withProfile(VATProfile, vatConfig))} />
+            <Route exact path="/Results/PAYE/:id" component={withSearch(withProfile(PAYEProfile, payeConfig))} />
+            <Route exact path="/Results/Company/:id" component={withSearch(withProfile(CompanyProfile, chConfig))} />
             <Route component={NotFound} />
           </Switch>
         </Template>

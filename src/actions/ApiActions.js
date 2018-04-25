@@ -46,6 +46,45 @@ export const search = (query, redirect) => (dispatch) => {
       const unitType = json[0].unitType;
       const id = json[0].id;
       dispatch(setUnitResult(unitType, json[0]));
+
+      // If the unit is a grandchild, it will not have a the grandparent
+      // Enterprise in the parents, so we need to do another search
+      if (unitType === 'PAYE' || unitType === 'VAT' || unitType === 'CH') {
+        accessAPI(REROUTE_URL, 'POST', sessionStorage.accessToken, JSON.stringify({
+          method: 'GET',
+          endpoint: `${API_VERSION}/periods/${json[0].period}/leus/${json[0].parents.LEU}`,
+        }), 'search').then(response => response.json()).then(leuJson => {
+          // We save the result as this means that whenever the user uses the
+          // bread crumb to navigate to a parent LEU or ENT, a request won't have
+          // to be sent.
+          dispatch(setUnitResult('LEU', leuJson));
+          accessAPI(REROUTE_URL, 'POST', sessionStorage.accessToken, JSON.stringify({
+            method: 'GET',
+            endpoint: `${API_VERSION}/periods/${leuJson.period}/ents/${leuJson.parents.ENT}`,
+          }), 'search').then(response => response.json()).then(entJson => {
+            dispatch(setUnitResult('ENT', entJson));
+          }).catch(msg => {
+            dispatch(sendingRequest(SENDING_SEARCH_REQUEST, false));
+            dispatch(setErrorMessage(SET_SEARCH_ERROR_MESSAGE, msg.toString()));
+          });
+        }).catch(msg => {
+          dispatch(sendingRequest(SENDING_SEARCH_REQUEST, false));
+          dispatch(setErrorMessage(SET_SEARCH_ERROR_MESSAGE, msg.toString()));
+        });
+      } else if (unitType === 'LEU' || unitType === 'LOU') {
+        accessAPI(REROUTE_URL, 'POST', sessionStorage.accessToken, JSON.stringify({
+          method: 'GET',
+          endpoint: `${API_VERSION}/periods/${json[0].period}/ents/${json[0].parents.ENT}`,
+        }), 'search').then(response => response.json()).then(entJson => {
+          // We save the result as this means that whenever the user uses the
+          // bread crumb to navigate to a parent LEU or ENT, a request won't have
+          // to be sent.
+          dispatch(setUnitResult('ENT', entJson));
+        }).catch(msg => {
+          dispatch(sendingRequest(SENDING_SEARCH_REQUEST, false));
+          dispatch(setErrorMessage(SET_SEARCH_ERROR_MESSAGE, msg.toString()));
+        });
+      }
       if (redirect) history.push(`/Results/${units[unitType]}/${id}`);
     } else if (json.length > 1) {
       // We have multiple results, so either a business/postcode has been searched

@@ -5,10 +5,7 @@ import ResultsSearchForm from './ResultsSearchForm';
 import BreadCrumb from './BreadCrumb';
 import Badge from '../patterns/Badge';
 import Id from '../patterns/Id';
-import DataPanel from '../patterns/DataPanel';
 import ChildTabs from './ChildTabs';
-import { search, setQuery, resetResults } from '../actions/ApiActions';
-import { SET_QUERY } from '../constants/ApiConstants';
 
 /**
  * @function withProfile - This is a higher order component that accepts a component
@@ -71,7 +68,7 @@ export default function withProfile(Profile, config) {
                       <Id field={config.idName} id={unit.id} />
                       <Profile unit={unit} />
                       {(unitType === 'ENT' || unitType === 'LEU') &&
-                        <ChildTabs unitType={unitType} childRefs={unit.children} />
+                        <ChildTabs period={unit.period} unitType={unitType} childRefs={unit.children} />
                       }
                     </div>
                   </div>

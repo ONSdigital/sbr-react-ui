@@ -68,7 +68,6 @@ export default function withSearch(Content) {
         currentlySending={this.props.currentlySending}
         query={this.props.query}
         errorMessage={this.state.errorMessage}
-        results={this.props.results}
       />
     )
   }

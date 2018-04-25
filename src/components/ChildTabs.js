@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { getUnitForPeriod } from '../actions/ApiActions';
 
 /**
  * @class ChildTabs - The ChildTabs are shown on parent units such as the Enterprise
@@ -24,16 +26,16 @@ class ChildTabs extends React.Component {
         <table className="unit-info">
           <tbody>
             <tr><th className="venus legal">{unitType}</th></tr>
-            {this.generateTabContent(this.getChildRef(unitType))}
+            {this.generateTabContent(unitType, this.getChildRef(unitType))}
           </tbody>
         </table>
       </div>);
     }
     return null;
   };
-  generateTabContent = (refsArr) => (refsArr.length === 0 ?
+  generateTabContent = (unitType, refsArr) => (refsArr.length === 0 ?
     (<tr key={0}><th className="mars legal">No child references</th></tr>) :
-    (refsArr.map(ref => <tr key={ref}><th className="mars legal">{ref}</th></tr>)));
+    (refsArr.map(ref => <tr key={ref}><th className="mars legal"><a style={{ cursor: 'pointer' }} className="breadcrumb__link"onClick={() => this.props.getUnitForPeriod(ref, unitType, this.props.period, true)}>{ref}</a></th></tr>)));
   render = () => {
     const activeTab = this.state.activeTab;
     const activeClassName = (index) => ((index === this.state.activeTab) ? 'active' : '');
@@ -68,8 +70,10 @@ class ChildTabs extends React.Component {
 }
 
 ChildTabs.propTypes = {
+  period: PropTypes.string.isRequired,
   unitType: PropTypes.string.isRequired,
   childRefs: PropTypes.object.isRequired,
+  getUnitForPeriod: PropTypes.func.isRequired,
 };
 
-export default ChildTabs;
+export default connect(null, { getUnitForPeriod })(ChildTabs);

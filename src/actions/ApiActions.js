@@ -22,6 +22,15 @@ const units = {
   CH: 'Company',
 };
 
+const apiUnits = {
+  ENT: 'ents',
+  LEU: 'leus',
+  LOU: 'lous',
+  VAT: 'vats',
+  PAYE: 'payes',
+  CH: 'crns',
+};
+
 /**
  * @const search - This is an async action that will handle the whole process
  * of doing a search, including setting spinners/error messages and the results.
@@ -30,7 +39,7 @@ const units = {
  * @param {Function} formQuery - A function to transform the query object a string
  * @param {Boolean} redirect - Whether or not to go to /Results after the search
  */
-export const search = (query, redirect) => (dispatch) => {
+const search = (query, redirect) => (dispatch) => {
   dispatch(setErrorMessage(SET_SEARCH_ERROR_MESSAGE, ''));
   dispatch(sendingRequest(SENDING_SEARCH_REQUEST, true));
   dispatch(setResults(SET_RESULTS, [], ''));
@@ -40,7 +49,6 @@ export const search = (query, redirect) => (dispatch) => {
     method: 'GET',
     endpoint: `${API_VERSION}/search?id=${query}`,
   }), 'search').then(response => response.json()).then(json => {
-    dispatch(sendingRequest(SENDING_SEARCH_REQUEST, false));
     if (json.length === 1) {
       // Since there is only one result, we can go directly to the profile page
       const unitType = json[0].unitType;
@@ -80,19 +88,23 @@ export const search = (query, redirect) => (dispatch) => {
           // bread crumb to navigate to a parent LEU or ENT, a request won't have
           // to be sent.
           dispatch(setUnitResult('ENT', entJson));
+          dispatch(sendingRequest(SENDING_SEARCH_REQUEST, false));
         }).catch(msg => {
           dispatch(sendingRequest(SENDING_SEARCH_REQUEST, false));
           dispatch(setErrorMessage(SET_SEARCH_ERROR_MESSAGE, msg.toString()));
         });
       }
+      dispatch(sendingRequest(SENDING_SEARCH_REQUEST, false));
       if (redirect) history.push(`/Results/Period/${json[0].period}/${units[unitType]}/${id}`);
     } else if (json.length > 1) {
       // We have multiple results, so either a business/postcode has been searched
       // for, or there is a conflicting ID (e.g. if a LEU and VAT record have
       // the same ID's)
       dispatch(setResults(SET_RESULTS, json));
+      dispatch(sendingRequest(SENDING_SEARCH_REQUEST, false));
       if (redirect) history.push('/Results');
     } else {
+      dispatch(sendingRequest(SENDING_SEARCH_REQUEST, false));
       dispatch(setErrorMessage(SET_SEARCH_ERROR_MESSAGE, 'Error parsing results from the API.'));
     }
   }).catch(msg => {
@@ -101,10 +113,18 @@ export const search = (query, redirect) => (dispatch) => {
   });
 };
 
-export const tryExactMatch = (id, period, unitType) => (dispatch) => {
-  // firstly, check the store to see if already have the data
+const getUnitForPeriod = (id, unitType, period, redirect) => (dispatch) => {
+  dispatch(setErrorMessage(SET_SEARCH_ERROR_MESSAGE, ''));
+  dispatch(sendingRequest(SENDING_SEARCH_REQUEST, true));
 
-  // if we have it, redirect
-
-  // if we don't, do a search
+  accessAPI(REROUTE_URL, 'POST', sessionStorage.accessToken, JSON.stringify({
+    method: 'GET',
+    endpoint: `${API_VERSION}/periods/${period}/${apiUnits[unitType]}/${id}`,
+  }), 'search').then(response => response.json()).then(json => {
+    dispatch(setUnitResult(unitType, json));
+    dispatch(sendingRequest(SENDING_SEARCH_REQUEST, false));
+    if (redirect) history.push(`/Results/Period/${json.period}/${units[unitType]}/${id}`);
+  });
 };
+
+export { search, getUnitForPeriod };

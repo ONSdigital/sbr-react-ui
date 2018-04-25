@@ -76,7 +76,6 @@ export default function withSearch(Content) {
   const select = (state) => ({
     currentlySending: state.apiSearch.currentlySending,
     query: state.apiSearch.query,
-    results: state.apiSearch.results,
     errorMessage: state.apiSearch.errorMessage,
   });
 
@@ -84,7 +83,6 @@ export default function withSearch(Content) {
     dispatch: PropTypes.func.isRequired,
     currentlySending: PropTypes.bool.isRequired,
     query: PropTypes.string.isRequired,
-    results: PropTypes.array.isRequired,
     errorMessage: PropTypes.string.isRequired,
   };
 

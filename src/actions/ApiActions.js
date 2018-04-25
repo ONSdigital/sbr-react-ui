@@ -61,3 +61,11 @@ export const search = (query, redirect) => (dispatch) => {
     dispatch(setErrorMessage(SET_SEARCH_ERROR_MESSAGE, msg.toString()));
   });
 };
+
+export const tryExactMatch = (id, period, unitType) => (dispatch) => {
+  // firstly, check the store to see if already have the data
+
+  // if we have it, redirect
+
+  // if we don't, do a search
+};

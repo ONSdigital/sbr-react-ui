@@ -16,15 +16,10 @@ import ChildTabs from './ChildTabs';
  * https://reactjs.org/docs/higher-order-components.html
  *
  * @param {Object} Profile - The child react component
+ * @param {Object} config - The configuration for json fields, reducer fields etc.
  */
 export default function withProfile(Profile, config) {
   class ProfileHOC extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        showError: false,
-      };
-    }
     createBreadCrumbItems = () => {
       const unit = this.props.unit;
       const ent = this.props.enterprise;
@@ -42,7 +37,12 @@ export default function withProfile(Profile, config) {
       // VAT, PAYE & CH are all grandchildren of an ENT
       return [
         { name: `Enterprise - ${ent.id}`, link: `/Results/Period/${unit.period}/Enterprise/${ent.id}` },
-        { name: `Legal Unit - ${unit.parents.LEU}`, link: `/Results/Period/${unit.period}/LegalUnit/${unit.parents.LEU}` },
+        {
+          name: `Legal Unit - ${unit.parents.LEU}`,
+          link: `/Results/Period/${unit.period}/LegalUnit/${unit.parents.LEU}`,
+          id: unit.parents.LEU,
+          period: unit.period,
+        },
         { name: `${config.unitName} - ${unit.id}`, link: '' },
       ];
     }

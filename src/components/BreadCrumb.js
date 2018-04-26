@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { getUnitForPeriod } from '../actions/ApiActions';
 
 /**
  * @class BreadCrumb - 
@@ -34,12 +36,22 @@ class BreadCrumb extends React.Component {
                           <li key={value.name} className="breadcrumb__item breadcrumb__item--current">{value.name}</li>
                         );
                       }
-                      return (
-                        <li key={value.name} className="breadcrumb__item">
-                          <Link to={value.link} className="breadcrumb__link">{value.name}</Link>
-                          {chevron}
-                        </li>
-                      );
+                      if (value.name.includes('Legal Unit')) {
+                        // We might not have the parent legal unit in the store, so we need to search for it
+                        return (
+                          <li key={value.name} className="breadcrumb__item">
+                            <a style={{ cursor: 'pointer' }} onClick={() => this.props.getUnitForPeriod(value.id, 'LEU', value.period, true)} className="breadcrumb__link">{value.name}</a>
+                            {chevron}
+                          </li>
+                        );
+                      } else {
+                        return (
+                          <li key={value.name} className="breadcrumb__item">
+                            <Link to={value.link} className="breadcrumb__link">{value.name}</Link>
+                            {chevron}
+                          </li>
+                        );
+                      }
                     })
                   }
                 </ul>
@@ -54,6 +66,7 @@ class BreadCrumb extends React.Component {
 
 BreadCrumb.propTypes = {
   breadCrumbItems: PropTypes.array.isRequired,
+  getUnitForPeriod: PropTypes.func.isRequired,
 };
 
-export default BreadCrumb;
+export default connect(null, { getUnitForPeriod })(BreadCrumb);

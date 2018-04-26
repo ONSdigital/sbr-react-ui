@@ -152,8 +152,34 @@ const getHighlightedText = (row, higlight) => {
 const anyKeyEmpty = (obj) => Object.keys(obj).map(key => (obj[key] === '')).reduce((a, b) => a || b);
 
 
+/**
+ * @const createBreadCrumbItems - Create the structure for the bread crumb
+ *
+ * @param {Object} unit - The current record
+ * @param {Object} ent - The parent Enterprise
+ * @param {Object} config - A config object
+ */
+const createBreadCrumbItems = (unit, ent, config) => {
+  if (config.unitType === 'ENT') {
+    return [{ name: `Enterprise - ${unit.id}`, link: '' }];
+  } else if (config.unitType === 'LEU' || config.unitType === 'LOU') {
+    // LEU and LOU are both children of an ENT
+    return [
+      { name: `Enterprise - ${unit.parents.ENT}`, link: `/Results/Period/${unit.period}/Enterprise/${unit.parents.ENT}` },
+      { name: `${config.unitName} - ${unit.id}`, link: '' },
+    ];
+  }
+  // VAT, PAYE & CH are all grandchildren of an ENT
+  return [
+    { name: `Enterprise - ${ent.id}`, link: `/Results/Period/${unit.period}/Enterprise/${ent.id}` },
+    { name: `Legal Unit - ${unit.parents.LEU}`, link: `/Results/Period/${unit.period}/LegalUnit/${unit.parents.LEU}`, id: unit.parents.LEU, period: unit.period },
+    { name: `${config.unitName} - ${unit.id}`, link: '' },
+  ];
+};
+
+
 export {
-  formatData, formSelectJson, getHighlightedText,
-  everyKeyMatches, anyKeyEmpty, maxSize, numberWithCommas, pipe,
-  convertLegalStatus, convertTradingStatus, convertTurnover, convertEmploymentBands,
+  formatData, formSelectJson, getHighlightedText, everyKeyMatches, anyKeyEmpty,
+  maxSize, numberWithCommas, pipe, convertLegalStatus, convertTradingStatus,
+  convertTurnover, convertEmploymentBands, createBreadCrumbItems,
 };

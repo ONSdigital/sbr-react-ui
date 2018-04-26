@@ -41,7 +41,7 @@ const leuConfig = {
   unitName: 'Legal Unit',
   colour: 'teal',
   idName: 'UBRN',
-  nameKey: 'businessName',
+  nameKey: 'BusinessName',
 };
 
 const louConfig = {

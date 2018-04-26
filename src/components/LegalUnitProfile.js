@@ -17,13 +17,13 @@ class LegalUnitProfile extends React.Component {
     return (
       <DataPanel
         data={{
-          PostCode: legalUnit.vars.postCode,
-          'Industry Code': legalUnit.vars.industryCode,
-          'Legal Status': legalUnit.vars.legalStatus,
-          'Trading Status': legalUnit.vars.tradingStatus,
-          Turnover: legalUnit.vars.turnover,
-          'Employment Bands': legalUnit.vars.employmentBands,
-          'Company Number': legalUnit.vars.companyNo,
+          PostCode: legalUnit.vars.PostCode,
+          'Industry Code': legalUnit.vars.IndustryCode,
+          'Legal Status': legalUnit.vars.LegalStatus,
+          'Trading Status': legalUnit.vars.TradingStatus,
+          Turnover: legalUnit.vars.Turnover,
+          'Employment Bands': legalUnit.vars.EmploymentBands,
+          'Company Number': legalUnit.vars.CompanyNo,
         }}
       />
     );

@@ -65,7 +65,6 @@ app.get('/sbr/*', (req, res) => {
   // Check if the API Key is valid
   const apiKey = req.get('Authorization');
   if (validApiKey(apiKey)) {
-    logger.error(`going here: ${urls.API_URL}   -- ${url}`);
     getApiEndpoint(`${urls.API_URL}${url}`)
     .then((response) => {
       logger.info('Returning re-routed GET API request');

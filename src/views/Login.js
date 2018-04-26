@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import history from '../history';
 import { login, resetLoginErrorMsg } from '../actions/LoginActions';
 import Button from '../patterns/Button';
 import LinkButton from '../patterns/LinkButton';
@@ -19,6 +20,7 @@ class Login extends React.Component {
       errorMessage: '',
     };
   }
+  componentDidMount = () => (this.props.loggedIn ? history.push('/Home') : null);
   onSubmit = (evt) => {
     evt.preventDefault(); // Stop the page from refreshing
     this.props.dispatch(login(this.usernameInput.textInput.value, this.passwordInput.textInput.value));
@@ -63,11 +65,13 @@ Login.propTypes = {
   dispatch: PropTypes.func.isRequired,
   currentlySending: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
 };
 
 const select = (state) => ({
   currentlySending: state.login.currentlySending,
   errorMessage: state.login.errorMessage,
+  loggedIn: state.login.loggedIn,
 });
 
 export default connect(select)(Login);

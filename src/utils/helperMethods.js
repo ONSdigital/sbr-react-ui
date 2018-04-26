@@ -1,6 +1,7 @@
 import React from 'react';
 import { employmentBands, legalStatusBands, tradingStatusBands, turnoverBands } from './convertBands';
 
+
 /**
  * @const _pipe - Given two functions, f and g and curried arguments (...args), pass
  * the result of f(...args) into g, returning the resulting function
@@ -12,6 +13,7 @@ import { employmentBands, legalStatusBands, tradingStatusBands, turnoverBands } 
  * of f(...args)
  */
 const _pipe = (f, g) => (...args) => g(f(...args));
+
 
 /**
  * @const pipe - Given any number of functions, run those functions on a curried

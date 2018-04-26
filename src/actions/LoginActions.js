@@ -15,14 +15,17 @@ const setAuthState = (newState) => ({ type: SET_AUTH, newState });
 const sendingRequest = (sending) => ({ type: SENDING_REQUEST, sending });
 const setErrorMessage = (message) => ({ type: SET_ERROR_MESSAGE, message });
 const forwardTo = (location) => history.push(location);
+const resetLoginErrorMsg = () => ({ type: SET_ERROR_MESSAGE, message: '' });
 
-export const resetLoginErrorMsg = () => ({ type: SET_ERROR_MESSAGE, message: '' });
 
 /**
  * @const login - This will set the appropriate reducer state (spinners etc.) and
  * log the user in, or show an error message if there is a problem.
+ *
+ * @param {String} username - The username string
+ * @param {String} password - The unencoded password string
  */
-export const login = (username, password) => (dispatch) => {
+const login = (username, password) => (dispatch) => {
   dispatch(sendingRequest(true));
 
   // If no username or password was specified, throw a field-missing error
@@ -54,11 +57,12 @@ export const login = (username, password) => (dispatch) => {
   });
 };
 
+
 /**
  * @const checkAuth - On a refresh, this method is called to check that the users
  * accessToken is valid, if not the user will be logged out.
  */
-export const checkAuth = () => (dispatch) => {
+const checkAuth = () => (dispatch) => {
   accessAPI(`${AUTH_URL}/auth/checkToken`, 'POST', sessionStorage.accessToken, {}, 'checkAuth')
   .then(response => response.json())
   .then(json => {
@@ -76,10 +80,11 @@ export const checkAuth = () => (dispatch) => {
   });
 };
 
+
 /**
  * @const logout - Log the user out and clear sessionStorage
  */
-export const logout = () => (dispatch) => {
+const logout = () => (dispatch) => {
   dispatch(sendingRequest(true));
   accessAPI(`${AUTH_URL}/auth/logout`, 'POST', sessionStorage.accessToken, {}, 'logout')
   .then(response => response.json())
@@ -99,3 +104,6 @@ export const logout = () => (dispatch) => {
     dispatch(resetState(undefined));
   });
 };
+
+
+export { resetLoginErrorMsg, login, logout, checkAuth };

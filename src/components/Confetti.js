@@ -15,25 +15,25 @@ class ShowConfetti extends React.Component {
       opacity: 1,
       count: 0,
     };
-    if (this.props.showConfetti) {
-      this.interval = setInterval(this.tick, 250);
-    }
+    if (this.props.showConfetti) this.interval = setInterval(this.tick, 250);
   }
   componentWillUnmount = () => clearInterval(this.interval);
   tick = () => {
-    if (this.state.count > (this.props.seconds / 0.25)) {
-      clearInterval(this.interval);
-    }
+    if (this.state.count > (this.props.seconds / 0.25)) clearInterval(this.interval);
     this.setState({
       ...this.state,
       count: this.state.count + 1,
-      opacity: this.state.opacity - (0.25 / this.props.seconds)
+      opacity: this.state.opacity - (0.25 / this.props.seconds),
     });
   }
   render = () => (
     <div>
       {(this.state.count < (this.props.seconds / 0.25) && this.props.showConfetti) &&
-        <Confetti opacity={this.state.opacity} width={window.innerWidth - 100} height={window.innerHeight} />
+        <Confetti
+          opacity={this.state.opacity}
+          width={window.innerWidth - 100}
+          height={window.innerHeight}
+        />
       }
     </div>
   );
@@ -44,8 +44,6 @@ ShowConfetti.propTypes = {
   seconds: PropTypes.number.isRequired,
 };
 
-const select = (state) => ({
-  showConfetti: state.login.showConfetti,
-});
+const select = (state) => ({ showConfetti: state.login.showConfetti });
 
 export default connect(select)(ShowConfetti);

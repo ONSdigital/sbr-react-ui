@@ -7,11 +7,11 @@ const { REROUTE_URL, API_VERSION } = config;
 
 const sendingRequest = (type, sending) => ({ type, sending });
 const setErrorMessage = (type, message) => ({ type, message });
+const setUnitResult = (unitType, result) => ({ type: SET_UNIT_RESULT, unitType, result  });
+const resetResults = () => ({ type: SET_RESULTS, results: [] });
+const setResults = (type, results, capped) => ({ type, results, capped });
+const setQuery = (type, query) => ({ type, query });
 
-export const setUnitResult = (unitType, result) => ({ type: SET_UNIT_RESULT, unitType, result  });
-export const resetResults = () => ({ type: SET_RESULTS, results: [] });
-export const setResults = (type, results, capped) => ({ type, results, capped });
-export const setQuery = (type, query) => ({ type, query });
 
 const units = {
   ENT: 'Enterprise',
@@ -30,6 +30,7 @@ const apiUnits = {
   PAYE: 'payes',
   CH: 'crns',
 };
+
 
 /**
  * @const search - This is an async action that will handle the whole process
@@ -113,6 +114,16 @@ const search = (query, redirect) => (dispatch) => {
   });
 };
 
+
+/**
+ * @const getUnitForPeriod - This is an async action that will search the API
+ * for an id for a specific unit type and period.
+ *
+ * @param {String} id - The ID of the unit to search (UBRN/ERN etc.)
+ * @param {String} unitType - The unit type e.g. ENT or LEU
+ * @param {String} period - The period to search, e.g. 201802
+ * @param {Boolean} redirect - Whether to redirect the user to the results page
+ */
 const getUnitForPeriod = (id, unitType, period, redirect) => (dispatch) => {
   dispatch(setErrorMessage(SET_SEARCH_ERROR_MESSAGE, ''));
   dispatch(sendingRequest(SENDING_SEARCH_REQUEST, true));
@@ -120,11 +131,12 @@ const getUnitForPeriod = (id, unitType, period, redirect) => (dispatch) => {
   accessAPI(REROUTE_URL, 'POST', sessionStorage.accessToken, JSON.stringify({
     method: 'GET',
     endpoint: `${API_VERSION}/periods/${period}/${apiUnits[unitType]}/${id}`,
-  }), 'search').then(response => response.json()).then(json => {
+  }), 'getUnitForPeriod').then(response => response.json()).then(json => {
     dispatch(setUnitResult(unitType, json));
     dispatch(sendingRequest(SENDING_SEARCH_REQUEST, false));
     if (redirect) history.push(`/Results/Period/${json.period}/${units[unitType]}/${id}`);
   });
 };
 
-export { search, getUnitForPeriod };
+
+export { search, getUnitForPeriod, setUnitResult, resetResults, setResults, setQuery };

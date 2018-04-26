@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import DataPanel from '../patterns/DataPanel';
 
 /**
- * @class PAYEProfile - The panel to display PAYE data
+ * @const PAYEProfile - The panel to display PAYE data
  */
 const PAYEProfile = ({ unit }) => (
   <DataPanel

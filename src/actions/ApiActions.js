@@ -7,7 +7,7 @@ const { REROUTE_URL, API_VERSION } = config;
 
 const sendingRequest = (type, sending) => ({ type, sending });
 const setErrorMessage = (type, message) => ({ type, message });
-const setUnitResult = (unitType, result) => ({ type: SET_UNIT_RESULT, unitType, result  });
+const setUnitResult = (unitType, result) => ({ type: SET_UNIT_RESULT, unitType, result });
 const resetResults = () => ({ type: SET_RESULTS, results: [] });
 const setResults = (type, results, capped) => ({ type, results, capped });
 const setQuery = (type, query) => ({ type, query });
